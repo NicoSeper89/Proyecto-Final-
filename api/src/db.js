@@ -7,6 +7,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME
 } = process.env;
 
+
 let sequelize =
   process.env.NODE_ENV === "production"
     ? new Sequelize({
@@ -34,7 +35,6 @@ let sequelize =
         `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/lookHouse`,
         { logging: false, native: false }
       );
-
 
 const basename = path.basename(__filename);
 
