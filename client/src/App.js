@@ -1,11 +1,10 @@
-import './App.css';
+import "./App.css";
+import React from "react";
+import { Route } from "react-router-dom";
+import Home from "./components/Home/home.jsx";
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Henry Videogames</h1>
-    </div>
-  );
+  return <Route exact path="/" component={Home} />;
 }
 
 export default App;
