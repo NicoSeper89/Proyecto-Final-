@@ -26,7 +26,7 @@ router.get('/', async (req, res, next) => {
             publications = sortByParam(publications, sorting)
         }
 
-        res.status(200).send(publications)
+        res.status(200).send(publications) // las envia
     }
     catch (error) {
        // next(error)

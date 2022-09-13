@@ -3,7 +3,7 @@ const { Publication, Property, Service, TypeOfProp, City, PropetyImage, Report }
 
 //habria que agregar FilterByParams que recibe publicaciones y filtros y devuelve las
 //publis correspondientes. Si no se puede hacer flexible, habria que hacer un Filter por criterio
-// y en el llamado desde la ruta, hacer un loop que llame a todas
+// y en el llamado desde la ruta, hacer un loop que llame a todas.
 //habria que agregar un sort que recibe las publicaciones y el criterio, y las ordena de 
 //acuerdo a eso, de nuevo, revisar si se puede hacer flexible, sino un sort por criterio
 
