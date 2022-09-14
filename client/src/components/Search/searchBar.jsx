@@ -9,7 +9,7 @@ const SerchBar = () => {
         
         
       <div>
-        <input type="text" className={sty.select} placeholder="Buscar Ciuedad..."/>
+        <input type="text" className={sty.Serch} placeholder="Buscar Ciuedad..."/>
         <button className={sty.btn}>
             {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
         </button>

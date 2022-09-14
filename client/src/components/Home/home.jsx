@@ -1,14 +1,14 @@
 import React from "react";
 import NavBar from '../NavBar/NavBar.jsx';
-import SearchBar from "../Search/serchBar";
+import SearchBar from "../Serch/SearchBar";
 
 const Home = () => {
   return (
-
     <>  
        <NavBar />
        <SearchBar/>
       
+
 
     </>
   );
