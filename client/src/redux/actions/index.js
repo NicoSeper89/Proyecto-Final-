@@ -1,4 +1,5 @@
 import axios from "axios"
+import Cities from "../../components/Cities/Cities"
 
 
 export function getDetail(id) {
@@ -21,4 +22,10 @@ export function clean(){
     return {
         type: "CLEAN",
     }
+}
+
+export const searcHouse = (city)=> async (dispatch)=> {
+//    const houses = await axios(`http://localhost:3001/${name}`) proximament....
+    const houses = Cities.filter(e => e.ciudad.includes(city))
+    dispatch({type: "SEARCH", payload:houses })
 }

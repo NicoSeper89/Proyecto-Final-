@@ -1,5 +1,5 @@
 const initialState = {
-
+  houses:[],
   detail:{}
 };
 
@@ -17,6 +17,11 @@ export default function rootReducer(state = initialState, action) {
           ...state,
           detail:{}
         }
+        case "SEARCH":
+          return{
+          ...state,
+          houses: action.payload
+          }
     default:
       return state;
   }
