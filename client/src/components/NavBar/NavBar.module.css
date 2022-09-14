@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0rem 1rem;
+    border: black solid 2px;
+}
+
+.container > img {
+    width: 100px;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.buttons button {
+    color:rgb(87, 87, 87);
+    border: none;
+    width: 7rem;
+    height: 2.5rem;
+    padding: .7rem;
+    border-radius: 4px;
+}
+
+.buttons button:hover{
+    scale: 1.02;
+}
+
+.buttons button:active{
+    scale: 0.98;
+}
+
+.displayMenu {
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+}
+
+.displayMenu > button {
+    border-radius: 0;
+    border:none
+}
+
+.displayMenu > button:hover {
+    color: brown;
+    background-color: rgb(3, 3, 3);
+}
