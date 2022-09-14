@@ -41,10 +41,15 @@ const basename = path.basename(__filename);
 const modelDefiners = [];
 
 // Leemos todos los archivos de la carpeta Models, los requerimos y agregamos al arreglo modelDefiners
-fs.readdirSync(path.join(__dirname, '/models'))
+fs.readdirSync(path.join(__dirname, '/models/publicationModels'))
   .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
   .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, '/models', file)));
+    modelDefiners.push(require(path.join(__dirname, '/models/publicationModels', file)));
+  });
+fs.readdirSync(path.join(__dirname, '/models/userModels'))
+  .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+  .forEach((file) => {
+    modelDefiners.push(require(path.join(__dirname, '/models/userModels', file)));
   });
 
 // Injectamos la conexion (sequelize) a todos los modelos
@@ -59,7 +64,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { City, Property, Publication, PropertyImage, Report, Service, TypeOfProp,
   LoginInfo, TypeOfUser, User, UserImage } = sequelize.models;
 
-//Relaciones usario
+// //Relaciones usario
 User.hasOne(LoginInfo);      // 1 a 1
 LoginInfo.belongsTo(User);   // 1 a 1
 User.hasOne(UserImage);      // 1 a 1
@@ -67,12 +72,14 @@ UserImage.belongsTo(User);   // 1 a 1
 User.belongsTo(TypeOfUser);  // N a 1
 TypeOfUser.hasMany(User);    // 1 a N
 User.hasMany(Publication);   //1 a N
-//Relaciones publicación
+
+// //Relaciones publicación
 Publication.belongsTo(User); // N a 1
 Publication.belongsToMany(Report, { through: "reportsPublications" });// N a N
 Report.belongsToMany(Publication, { through: "reportsPublications" });// N a N
 Publication.hasOne(Property); // 1 a 1
-//Relaciones propiedad
+
+// //Relaciones propiedad
 Property.belongsTo(Publication); // 1 a 1
 Property.hasMany(PropertyImage);  // 1 a N
 PropertyImage.belongsTo(Property); // N a 1

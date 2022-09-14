@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  sequelize.define('propImg', {
+  sequelize.define('propertyImage', {
     url: {
       type: DataTypes.JSON,
  //     defaultValue: pegar url de default

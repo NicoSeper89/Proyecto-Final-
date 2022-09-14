@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { Publication, Property, Service, TypeOfProp, City, PropetyImage, Report } = require('../../db')
 const router = Router();
 const { getAll, filterByParam,sortByParam } = require('./controllers')
-
+const postPorperty = require('./controllers')
 //para el home y para el searchbar get con query
 router.get('/', async (req, res, next) => {
     try {
@@ -52,3 +52,7 @@ router.get('/:id', async (req, res, next) => {
     }
 
 })
+
+// router.post('/postProperty', postPorperty (req, res, next))
+
+module.exports = router;
