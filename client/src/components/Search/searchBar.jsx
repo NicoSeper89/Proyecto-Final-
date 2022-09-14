@@ -33,10 +33,7 @@ const SearchBar = () => {
         </select>
       </div>
 
-
-
-  {/* "holaaaaa" */}
-
+      {/* "holaaaaa" */}
     </div>
   );
 };
