@@ -1,9 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
+import NavBar from '../NavBar/NavBar.jsx';
 
 const Home = () => {
   return (
     <>
-      <h1>Holaaaaaaaaaaaaaaa</h1>
+      <NavBar />
     </>
   );
 };
