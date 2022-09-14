@@ -1,13 +1,14 @@
-import React, { Fragment } from "react";
-
+import React from "react";
+import NavBar from '../NavBar/NavBar.jsx';
 import SerchBar from "../Serch/serchBar";
+
 const Home = () => {
   return (
-    <>  
-    
-       <SerchBar/>
-      <h1>Holaaaaaaaaaaaaaaa</h1>
 
+    <>  
+       <NavBar />
+       <SerchBar/>
+      
 
     </>
   );
