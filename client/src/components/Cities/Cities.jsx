@@ -1,12 +1,4 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import Card from "./Card";
-import style from "./Cards.module.css";
-
-export default function Cards() {
-  const houses = useSelector(state => state.houses)
-  //Data moqueada
-  const data = [
+const Cities = [
     {
       img: [
         "https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2019/9/16/0/IO_Tongue-and-Groove_Beech-Street_3.jpg.rend.hgtvcom.616.411.suffix/1568648112267.jpeg",
@@ -49,25 +41,6 @@ export default function Cards() {
       ambientes: 4,
       mascota: false,
     },
-  ];
-  return (
-    <div>
-      {houses.map((r) => {
-        return (
-          <div className={style.contenedor}>
-            <Card
-              img={r.img}
-              precio={r.precio}
-              ciudad={r.ciudad}
-              metros={r.metros}
-              baño={r.baño}
-              dormitorio={r.dormitorio}
-              ambientes={r.ambientes}
-              mascota={r.mascota}
-            />
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+  ]
+
+  export default Cities
