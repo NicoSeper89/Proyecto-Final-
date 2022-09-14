@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBar = () => {
-  return ( 
+  return (
     <div className={sty.continer}>
       <div>
         <input type="text" className={sty.Serch} placeholder="Buscar Ciuedad..." />
