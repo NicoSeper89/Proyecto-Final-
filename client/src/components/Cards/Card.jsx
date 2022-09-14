@@ -23,7 +23,7 @@ export default function Card({
       <img src={img || imgNotAvailable} alt="Img not found" />
       <div className={style.contenedor2}>
         <FontAwesomeIcon className={style.contenedorIcon} icon={faHeart} />
-        <h2>{ciudad}</h2>
+        <h3>{ciudad}</h3>
         <h3>$ {precio}</h3>
       </div>
       <div className={style.contenedorInfo}>
