@@ -4,7 +4,6 @@ import SearchBar from "../Serch/SearchBar";
 
 const Home = () => {
   return (
-
     <>  
        <NavBar />
        <SearchBar/>
