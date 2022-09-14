@@ -1,5 +1,5 @@
 import React from "react";
-import sty from "./serchBar.module.css"
+import sty from "./SearchBar.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons"
 
