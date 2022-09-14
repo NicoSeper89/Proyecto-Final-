@@ -1,5 +1,5 @@
 import React from "react";
-import sty from "./serchBar.module.css"
+import sty from "./SerchBar.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons"
 
@@ -9,7 +9,7 @@ const SerchBar = () => {
         
         
       <div>
-        <input type="text" className={sty.select} placeholder="Buscar Ciuedad..."/>
+        <input type="text" className={sty.Serch} placeholder="Buscar Ciuedad..."/>
         <button className={sty.btn}>
             {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
         </button>

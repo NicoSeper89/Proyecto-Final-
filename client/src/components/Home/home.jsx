@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from '../NavBar/NavBar.jsx';
-import SerchBar from "../Serch/serchBar";
+import SerchBar from "../Serch/SerchBar";
 
 const Home = () => {
   return (
@@ -8,8 +8,7 @@ const Home = () => {
     <>  
        <NavBar />
        <SerchBar/>
-      
-
+       
     </>
   );
 };
