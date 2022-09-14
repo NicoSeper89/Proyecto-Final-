@@ -1,9 +1,9 @@
 import React from "react";
-import sty from "./SerchBar.module.css"
+import sty from "./SearchBar.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons"
 
-const SearchBar = () => {
+const SerchBar = () => {
     return(
     <div className={sty.continer}>
         
