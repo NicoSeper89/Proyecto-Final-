@@ -17,7 +17,7 @@ export default function rootReducer(state = initialState, action) {
           ...state,
           detail:{}
         }
-        case "SEARCH":
+        case "HOUSES":
           return{
           ...state,
           houses: action.payload

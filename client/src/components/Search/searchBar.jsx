@@ -4,12 +4,15 @@ import sty from "./SearchBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { searcHouse } from "../../redux/actions";
+import { filter } from "../../redux/actions";
 
 const SearchBar = () => {
 const dispatch = useDispatch()
 
+const select = (e) => {
+dispatch(filter(e.target.name, e.target.value))
 
-
+}
 
 const search_House = (e) => {
   dispatch(searcHouse(e.target.value))
@@ -23,13 +26,17 @@ const search_House = (e) => {
         </button>
       </div>
       <div>
-        <select id="1" className={sty.select}>
-          <option>Propiedad</option>
+        <select name="Propiedad" className={sty.select} onChange={select}>
+          <option >Propiedad</option>
+         
         </select>
       </div>
       <div>
-        <select id="2" className={sty.select}>
+        <select name="ambientes" className={sty.select} onChange={select}>
           <option>Ambientes</option>
+          <option>4</option>
+          <option>5</option>
+
         </select>
       </div>
       <div>
