@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const property = {
   address,
-}
+};
 //address, surface, price, environments, bathrooms, rooms, garage, yard, pets, age
 // image url
 
@@ -16,7 +16,7 @@ const property = {
 // typeofProp
 // name
 
-//user 
+//user
 // name, description, rating
 
 //user Image
@@ -42,26 +42,22 @@ export default function Detail() {
             <span>garage</span>
           </div>
           <hgroup>
-            <div>
-              address
-            </div>
-          <ul>
-            <li>surface</li>
-            <li>environments</li>
-            <li>bathrooms</li>
-            <li>garage</li>
-            <li>yard</li>
-            <li>pets</li>
-            <li>age</li>
-            <li></li>
-          </ul>
+            <div>address</div>
+            <ul>
+              <li>surface</li>
+              <li>environments</li>
+              <li>bathrooms</li>
+              <li>garage</li>
+              <li>yard</li>
+              <li>pets</li>
+              <li>age</li>
+              <li></li>
+            </ul>
 
-          <div>
-            <p>
-              description
-            </p>
-          </div>
-          {/* <div>
+            <div>
+              <p>description</p>
+            </div>
+            {/* <div>
             <textarea placeholder="preguntar aca">
       
             </textarea>
@@ -69,7 +65,6 @@ export default function Detail() {
            preguntar
             </button>
           </div> */}
-
           </hgroup>
           <div>DATOS PERSONA</div>
         </article>
