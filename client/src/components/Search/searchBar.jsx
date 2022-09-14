@@ -32,6 +32,11 @@ const SearchBar = () => {
           <option>Sort By</option>
         </select>
       </div>
+
+
+
+  {/* "holaaaaa" */}
+
     </div>
   );
 };
