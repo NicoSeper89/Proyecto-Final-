@@ -1,4 +1,7 @@
 .container {
   display: flex;
   justify-content: center;
+  min-height: 100%;
+  position: relative;
+  /* padding-bottom: 150px; */
 }

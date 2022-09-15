@@ -1,11 +1,35 @@
 .container {
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  height: 200px;
+  height: 150px;
   padding: 0px 16px;
   border-top: 1px solid rgb(97, 97, 97);
 }
 
-.container h2 {
+.container h3 {
   color: rgb(87, 87, 87);
   font-size: 1rem;
+  margin: 14px 0px;
+}
+
+.containerIcons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 15px;
+  padding-right: 20px;
+  font-size: 30px;
+  border-right: 1px solid rgb(97, 97, 97);
+}
+
+.containerItems {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-left: 20px;
+}
+
+.containerItems a {
+  text-decoration: none;
 }

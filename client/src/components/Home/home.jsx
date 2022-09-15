@@ -9,8 +9,8 @@ import Footer from "../Footer/Footer.jsx";
 import style from "./Home.module.css";
 
 const Home = () => {
-  const dispatch = useDispatch()
-  useEffect(() => dispatch(searcHouse("")),[dispatch])
+  const dispatch = useDispatch();
+  useEffect(() => dispatch(searcHouse("")), [dispatch]);
   return (
     <>
       <NavBar />
@@ -18,7 +18,9 @@ const Home = () => {
       <div className={style.container}>
         <Cards />
       </div>
-      <Footer />
+      <div className={style.footer}>
+        <Footer />
+      </div>
     </>
   );
 };
