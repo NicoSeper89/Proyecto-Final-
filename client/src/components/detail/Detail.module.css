@@ -1,0 +1,9 @@
+.container2 {
+    display: flex;
+
+    position: relative;
+  }
+
+  .infoConteiner {
+    border: black solid;
+  }

@@ -4,6 +4,14 @@ import { useParams } from "react-router-dom";
 import {getDetail, clean} from "../../redux/actions"
 import { useEffect } from "react";
 import Cities from "../Cities/Cities";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faToilet } from "@fortawesome/free-solid-svg-icons";
+import { faBed } from "@fortawesome/free-solid-svg-icons";
+import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+import { faPaw, faHouse,faGarage } from "@fortawesome/free-solid-svg-icons";
+import style from "./Detail.module.css"
+import {Link} from "react-router-dom"
 
 
  //property
@@ -30,6 +38,7 @@ import Cities from "../Cities/Cities";
 export default function Detail(props) {
   const dispatch = useDispatch()
   const miStateDetail = useSelector((state) => state.detail)
+  // const miUseerState = useSelector((state) => state.user)
   console.log(miStateDetail)
   var url = window.location.href.split("/")
 
@@ -41,19 +50,23 @@ export default function Detail(props) {
 
 
   return (
-    <div>
+    <div className={style.container2} >
+     <Link to={"/"}> <button className={style.buttons}>volver al home </button></Link>
       {miStateDetail.length > 0 ? (
-        <article>
+        <article >
           <div>
             <img src ={miStateDetail[0].img}/>
           </div>
 
-          <div>
+          <div className={style.infoConteiner}>
+            <FontAwesomeIcon icon={faHeart} />
             <h1>price: {miStateDetail[0].precio}</h1>
             <h3>typeofProp: {miStateDetail[0].typeofProp}</h3>
+            <FontAwesomeIcon icon={faHouse} />
             <h4>city: {miStateDetail[0].ciudad}</h4>
-            <span>superficie: {miStateDetail[0].superficie}</span>
+            <span>superficie: {miStateDetail[0].ciudad}</span>
             <span>environments: {miStateDetail[0].ambientes}</span>
+            <FontAwesomeIcon icon={faDoorOpen} />
             <span>garage: {miStateDetail[0].garage}</span>
           </div>
           <hgroup>
@@ -62,10 +75,13 @@ export default function Detail(props) {
               <li>surface: {miStateDetail[0].metros}</li>
               <li>environments: {miStateDetail[0].environments}</li>
               <li>bathrooms: {miStateDetail[0].baño}</li>
+              <FontAwesomeIcon icon={faToilet} />
               <li>rooms: {miStateDetail[0].dormitorio}</li>
+              <FontAwesomeIcon icon={faBed} />
               <li>garage: {miStateDetail[0].garage}</li>
               <li>yard: {miStateDetail[0].yard}</li>
               <li>pets: {miStateDetail[0].mascota}</li>
+              <FontAwesomeIcon icon={faPaw} />
               <li>age: {miStateDetail[0].age}</li>
               <li></li>
             </ul>
@@ -82,7 +98,14 @@ export default function Detail(props) {
             </button>
           </div> */}
           </hgroup>
-          <div>DATOS PERSONA</div>
+          <div>DATOS PROPIETARIO
+
+            {/* <h1>{miUseerState[0].name}</h1>
+            
+            <h3>{miUseerState.mail}</h3>
+            <h3>{miUseerState[0].rating}</h3>
+            <h3>{miUseerState[0].description}</h3> */}
+          </div>
         </article>
       ) : (
         <div>no hay propiedad</div>
