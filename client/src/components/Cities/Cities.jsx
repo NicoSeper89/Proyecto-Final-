@@ -13,6 +13,7 @@ const Cities = [
     dormitorio: 2,
     ambientes: 4,
     mascota: true,
+    Propiedad: "casa"
   },
   {
     id: 2,
@@ -28,6 +29,7 @@ const Cities = [
     dormitorio: 3,
     ambientes: 5,
     mascota: true,
+    Propiedad: "departamento"
   },
   {
     id: 3,
@@ -43,6 +45,7 @@ const Cities = [
     dormitorio: 2,
     ambientes: 4,
     mascota: false,
+    Propiedad: "casa"
   },
   {
     id: 4,
@@ -58,6 +61,7 @@ const Cities = [
     dormitorio: 2,
     ambientes: 4,
     mascota: true,
+    
   },
   {
     id: 5,
