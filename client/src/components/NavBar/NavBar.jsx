@@ -10,7 +10,7 @@ const NavBar = () => {
   const onClickMenu = (e) => {
     e.preventDefault();
     setDisplayMenu(!displayMenu);
-  }
+  };
 
   const buttonCreatePost = (e) => {
     e.preventDefault();
@@ -27,13 +27,14 @@ const NavBar = () => {
           <button>Registrarse</button>
           <div>
             <button onClick={onClickMenu}>Menu</button>
-            {(displayMenu? <div className={style.displayMenu}>
-                              <button>Link 1</button>
-                              <button>Link 2</button>
-                              <button>Link 3</button>
-                              <button>Link 4</button>
-                           </div>
-                          :null)}
+            {displayMenu ? (
+              <div className={style.displayMenu}>
+                <button>Link 1</button>
+                <button>Link 2</button>
+                <button>Link 3</button>
+                <button>Link 4</button>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

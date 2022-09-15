@@ -19,23 +19,23 @@ export default function Card({
   mascota,
 }) {
   return (
-    <div className={style.contenedor}>
+    <div className={style.container}>
       <img src={img || imgNotAvailable} alt="Img not found" />
-      <div className={style.contenedor2}>
-        <FontAwesomeIcon className={style.contenedorIcon} icon={faHeart} />
+      <div className={style.container2}>
+        <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
         <h3>{ciudad}</h3>
         <h3>$ {precio}</h3>
       </div>
-      <div className={style.contenedorInfo}>
+      <div className={style.containerInfo}>
         <h4>{metros} m²</h4>
-        <FontAwesomeIcon className={style.contenedorIcon} icon={faToilet} />
+        <FontAwesomeIcon className={style.containerIcon} icon={faToilet} />
         <h4>{baño}</h4>
-        <FontAwesomeIcon className={style.contenedorIcon} icon={faBed} />
+        <FontAwesomeIcon className={style.containerIcon} icon={faBed} />
         <h4>{dormitorio}</h4>
-        <FontAwesomeIcon className={style.contenedorIcon} icon={faDoorOpen} />
+        <FontAwesomeIcon className={style.containerIcon} icon={faDoorOpen} />
         <h4>{ambientes}</h4>
         {mascota === true ? (
-          <FontAwesomeIcon className={style.contenedorIcon} icon={faPaw} />
+          <FontAwesomeIcon className={style.containerIcon} icon={faPaw} />
         ) : (
           <></>
         )}

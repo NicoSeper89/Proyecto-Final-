@@ -4,14 +4,13 @@ import Card from "./Card";
 import style from "./Cards.module.css";
 
 export default function Cards() {
-  const houses = useSelector(state => state.houses)
-  //Data moqueada
-  
+  const houses = useSelector((state) => state.houses);
+
   return (
-    <div>
+    <div className={style.container}>
       {houses.map((r) => {
         return (
-          <div className={style.contenedor}>
+          <div key={r.id}>
             <Card
               img={r.img}
               precio={r.precio}
