@@ -17,7 +17,7 @@ function App() {
       <Route path="/about" component={About} />
       <Route path="/help" component={Help} />
       <Route path="/details/:id" render={({match})=>{return <Detail id={match.params.id}></Detail>}}/>
-      <Route path="/logi" />
+      <Route path="/login" component={Login} />
     </>
   );
 }
