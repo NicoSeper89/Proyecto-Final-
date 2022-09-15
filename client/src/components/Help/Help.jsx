@@ -17,6 +17,8 @@ export default function Help() {
         <br />
         <h2>¿Cómo puedo realizar una publicación?</h2>
         <p>Proximamente te explicamos...</p>
+        <h2>¿Cómo puedo solicitar una cita para visitar la propiedad?</h2>
+        <p>Proximamente te explicamos...</p>
       </div>
       <div className={style.containerFooter}>
         <Footer />
