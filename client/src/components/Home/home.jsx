@@ -1,6 +1,6 @@
 import React from "react";
 import NavBar from "../NavBar/NavBar.jsx";
-import SearchBar from "../Search/searchBar.jsx";
+import SearchBar from "../Search/SearchBar.jsx";
 import Cards from "../Cards/Cards";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,3 +47,4 @@ const Home = () => {
 };
 
 export default Home;
+ 
