@@ -1,0 +1,12 @@
+.paginado {
+  display: flex;
+  justify-content: space-around;
+}
+
+.paginadoBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}

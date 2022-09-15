@@ -1,6 +1,8 @@
 .container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   /* width: 320px;
   height: 400px; */
-  margin: 50px;
+  margin: 60px;
 }

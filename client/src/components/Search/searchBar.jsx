@@ -9,15 +9,14 @@ import { filter } from "../../redux/actions";
 const SearchBar = () => {
   const dispatch = useDispatch();
 
-const select = (e) => {
-dispatch(filter(e.target.name, e.target.value))
+  const select = (e) => {
+    dispatch(filter(e.target.name, e.target.value));
+  };
 
-}
-
-const search_House = (e) => {
-  dispatch(searcHouse(e.target.value))
-}
-  return ( 
+  const search_House = (e) => {
+    dispatch(searcHouse(e.target.value));
+  };
+  return (
     <div className={sty.continer}>
       <div>
         <input
@@ -32,8 +31,7 @@ const search_House = (e) => {
       </div>
       <div>
         <select name="Propiedad" className={sty.select} onChange={select}>
-          <option >Propiedad</option>
-         
+          <option>Propiedad</option>
         </select>
       </div>
       <div>
@@ -41,7 +39,6 @@ const search_House = (e) => {
           <option>Ambientes</option>
           <option>4</option>
           <option>5</option>
-
         </select>
       </div>
       <div>

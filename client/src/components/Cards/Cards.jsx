@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import Card from "./Card";
 import style from "./Cards.module.css";
 
-export default function Cards() {
+export default function Cards({ currentHouse }) {
   const houses = useSelector((state) => state.houses);
 
   return (
     <div className={style.container}>
-      {houses.map((r) => {
+      {currentHouse?.map((r) => {
         return (
           <div key={r.id}>
             <Card
