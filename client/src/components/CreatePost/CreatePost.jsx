@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import style from './CreatePost.module.css'
+import style from './CreatePost.module.css';
+import axios from 'axios';
 
 
 const CreatePost = () => {
@@ -40,9 +41,19 @@ const CreatePost = () => {
         });
     }
 
-    const onSubmitForm = (e) => {
+    const onSubmitForm = async (e) => {
         e.preventDefault();
-        /* console.log(infoForm) */
+
+        try {
+            
+            return await axios.post('http://localhost:3001/publication/createProperty', {...infoForm})
+
+        } catch (err) {
+            
+            console.log(err)
+
+        }
+
     }
 
 

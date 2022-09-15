@@ -1,19 +1,24 @@
 import axios from "axios";
 import Cities from "../../components/Cities/Cities";
 
-export function getDetail(id) {
-  return async function (dispatch) {
-    try {
-      var details = await axios("http://localhost:3001/" + id);
-      console.log(details);
-      return dispatch({
-        type: "GET_DETAILS",
-        payload: details.data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+// export function getDetail(id) {
+//   return async function (dispatch) {
+//     try {
+//       var details = await axios("http://localhost:3001/" + id);
+//       console.log(details);
+//       return dispatch({
+//         type: "GET_DETAILS",
+//         payload: details,
+//       });
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// }
+
+export const getDetail = (id) => async (dispatch) =>{
+ const houseId = Cities.filter((e) => e.id ===id)
+ dispatch({ type:"GET_DETAILS", payload:houseId})
 }
 
 /* ************ FILTROS & ORDENAMIENTOS ************ */

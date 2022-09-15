@@ -12,6 +12,7 @@ export default function Cards({ currentHouse }) {
         return (
           <div key={r.id}>
             <Card
+              id ={r.id}
               img={r.img}
               precio={r.precio}
               ciudad={r.ciudad}
