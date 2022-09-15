@@ -1,8 +1,8 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
-import Home from "./components/Home/Home.jsx";
-import CreatePost from './components/CreatePost/CreatePost.jsx'
+import { Route } from "react-router-dom";
+import Home from "./components/Home/home.jsx";
+import CreatePost from "./components/CreatePost/CreatePost.jsx";
 import About from "./components/About/About";
 import Help from "./components/Help/Help";
 
