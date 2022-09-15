@@ -4,11 +4,11 @@ import axios from "axios"
 export function getDetail(id) {
     return async function (dispatch) {
         try {
-            var details = await axios("http://localhost:3001/" + id)
-           console.log(details)
+            var detail = await axios("http://localhost:3001/" + id)
+           console.log(detail)
            return dispatch({
             type:"GET_DETAILS",
-            payload: details.data
+            payload: detail.data
            })
         }
          catch (error) {
