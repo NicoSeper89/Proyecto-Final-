@@ -1,0 +1,20 @@
+    .continer{
+        margin-top: 200px;
+        margin-left: 600px;
+        display: inline-block;
+        
+    border: 1px solid black;  
+    padding: 50px;  
+
+}
+.div{
+   display: grid;
+   margin: 20px;
+}
+
+.btn{
+    
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
