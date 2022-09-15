@@ -1,21 +1,28 @@
-import React, { useState } from "react";
-import style from "./NavBar.module.css";
+import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import style from './NavBar.module.css';
 
 const NavBar = () => {
+
+  const history = useHistory();
   const [displayMenu, setDisplayMenu] = useState(false);
 
   const onClickMenu = (e) => {
     e.preventDefault();
-
     setDisplayMenu(!displayMenu);
   };
+
+  const buttonCreatePost = (e) => {
+    e.preventDefault();
+    history.push("/createPost")
+  }
 
   return (
     <>
       <div className={style.container}>
         <img src="https://i.postimg.cc/K8TW0jTZ/Logo-Look-House.png" alt="homeLogo" />
         <div className={style.buttons}>
-          <button>Publicar</button>
+          <button onClick={buttonCreatePost}>Publicar</button>
           <button>Ingresar</button>
           <button>Registrarse</button>
           <div>
