@@ -3,15 +3,14 @@ import { useSelector } from "react-redux";
 import Card from "./Card";
 import style from "./Cards.module.css";
 
-export default function Cards() {
-  const houses = useSelector(state => state.houses)
-  //Data moqueada
-  
+export default function Cards({ currentHouse }) {
+  const houses = useSelector((state) => state.houses);
+
   return (
-    <div>
-      {houses.map((r) => {
+    <div className={style.container}>
+      {currentHouse?.map((r) => {
         return (
-          <div className={style.contenedor}>
+          <div key={r.id}>
             <Card
               img={r.img}
               precio={r.precio}

@@ -41,14 +41,12 @@ router.get('/', async (req, res, next) => {
 //para el detail
 router.get('/:id', async (req, res, next) => {
     try {
-       const {id} = req.params
-        const info = await getAll();
-        if (id) {
-            let publications = await info.filter(el => el.id == id); //revisar como se guarda el id en publications
-            publications.length ?
-                res.status(200).send(publications) :
-                res.status(404).send('No existe una casa con ese id')
-        }
+        const {id} = req.params
+        const detail = await Publication.findByPk(id)
+        const property = await Property.findAll()
+        const allDetails = property.filter(p => p.publicationId === id)
+        const allpubdetails = [detail, allDetails]
+        res.send(allpubdetails)
     } catch (error) {
         next(error)
     }
