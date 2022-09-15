@@ -7,8 +7,10 @@ import { faToilet } from "@fortawesome/free-solid-svg-icons";
 import { faBed } from "@fortawesome/free-solid-svg-icons";
 import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 import { faPaw } from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom"
 
 export default function Card({
+  id,
   img,
   precio,
   ciudad,
@@ -20,12 +22,14 @@ export default function Card({
 }) {
   return (
     <div className={style.container}>
+      <Link to={"/details/" + id} >
       <img src={img || imgNotAvailable} alt="Img not found" />
       <div className={style.container2}>
         <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
         <h3>{ciudad}</h3>
         <h3>$ {precio}</h3>
       </div>
+        </Link>
       <div className={style.containerInfo}>
         <h4>{metros} m²</h4>
         <FontAwesomeIcon className={style.containerIcon} icon={faToilet} />
