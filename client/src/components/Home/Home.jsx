@@ -8,6 +8,7 @@ import { searcHouse } from "../../redux/actions/index.js";
 import Footer from "../Footer/Footer.jsx";
 import style from "./Home.module.css";
 import Paginado from "../Paginado/Paginado.jsx";
+import { Box } from '@chakra-ui/react';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -28,20 +29,20 @@ const Home = () => {
     <>
       <NavBar />
       <SearchBar />
-      <div className={style.paginado}>
+      <Box className={style.paginado}>
         <Paginado
           housePage={housePage} //el nº de recetas por pagina
           house={houses.length} //el total de recipes
           paginado={paginado} //setea el estado de page
           page={page} //la pagina
         />
-      </div>
-      <div className={style.container}>
+      </Box>
+      <Box className={style.container}>
         <Cards currentHouse={currentHouse} />
-      </div>
-      <div className={style.footer}>
+      </Box>
+      <Box className={style.footer}>
         <Footer />
-      </div>
+      </Box>
     </>
   );
 };
