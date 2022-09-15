@@ -6,7 +6,7 @@ const initialState = {
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
 
-    case "GET_DETAIL":
+    case "GET_DETAILS":
       return {
         ...state,
         detail: action.payload
