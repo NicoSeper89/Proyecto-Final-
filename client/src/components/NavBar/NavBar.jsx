@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import style from './NavBar.module.css';
+import logoImg from '../../Image/Logo LookHouse.png'
 
 const NavBar = () => {
 
@@ -20,7 +21,7 @@ const NavBar = () => {
   return (
     <>
       <div className={style.container}>
-        <img src="https://i.postimg.cc/K8TW0jTZ/Logo-Look-House.png" alt="homeLogo" />
+        <img src={logoImg} alt="homeLogo" />
         <div className={style.buttons}>
           <button onClick={buttonCreatePost}>Publicar</button>
           <button>Ingresar</button>
