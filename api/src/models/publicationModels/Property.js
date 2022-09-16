@@ -42,7 +42,7 @@ module.exports = (sequelize) => {
         },
         pets: {
             type: DataTypes.BOOLEAN,
-            allowNull: false,
+            
         },
         age:{
             type: DataTypes.INTEGER,
