@@ -1,7 +1,10 @@
-import { GET_PUBLICATIONS, GET_PUBLICATIONS_DETAIL, GET_DETAILS, HOUSES, CLEAN } from "../actions";
+import { GET_PUBLICATIONS, GET_PUBLICATIONS_DETAIL, GET_DETAILS,GET_CITIES,GET_SERVICES,GET_PROPERTY_TYPES, HOUSES, CLEAN } from "../actions";
 
 const initialState = {
   houses: [],
+  services:[],
+  typeOfProperties:[],
+  cities:[],
   detail: {},
   filters: {
     publication: [], //se lo llena con {name:'nombre como en el modelo',value:'string o num'},
@@ -40,7 +43,21 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
-
+    case GET_CITIES:
+      return {
+        ...state,
+        cities: action.payload,
+      }
+    case GET_SERVICES:
+      return {
+        ...state,
+        services: action.payload,
+      }
+    case GET_PROPERTY_TYPES:
+      return {
+        ...state,
+        typeOfProperties: action.payload,
+      }
     default:
       return state;
   }
