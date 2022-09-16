@@ -62,9 +62,10 @@ const getDetail = async (id) => {
     });
 };
 const getFiltered = async (publications, filters) => {
-    let filtered = [];
+    let filtered = []
     await publications.forEach(async function (publi) {
         let publiFiltered = [];
+        
         await filters.publication.forEach(filter => {
             if (publi[filter.name] === filter.value) { publiFiltered.push(publi); };
         }
@@ -76,7 +77,7 @@ const getFiltered = async (publications, filters) => {
             };
         })
         if (publiFiltered.length === filters.publication.length && propertyFiltered.length === filters.property.length) {
-            if (publi.property.TypeOfProp.dataValues.name === filters.TypeOfProp || filters.TypeOfProp === '') { filtered.push(publi) }
+            if (publi.property.TypeOfProp.dataValues.name === filters.typeOfProp || filters.typeOfProp === '') { filtered.push(publi) }
         }
     })
     return filtered
