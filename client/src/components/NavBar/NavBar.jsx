@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import style from './NavBar.module.css';
+import { Link } from 'react-router-dom';
 import logoImg from '../../Image/Logo LookHouse.png'
 
 const NavBar = () => {
@@ -24,8 +25,12 @@ const NavBar = () => {
         <img src={logoImg} alt="homeLogo" />
         <div className={style.buttons}>
           <button onClick={buttonCreatePost}>Publicar</button>
-          <button>Ingresar</button>
-          <button>Registrarse</button>
+          <Link to="/login">
+            <button>Ingresar</button>
+          </Link>
+          <Link to="/checkin">
+            <button >Registrarse</button>
+          </Link>
           <div>
             <button onClick={onClickMenu}>Menu</button>
             {displayMenu ? (
