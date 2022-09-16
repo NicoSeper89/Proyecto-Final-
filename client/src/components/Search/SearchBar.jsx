@@ -3,12 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import sty from "./SearchBar.module.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { searcHouse } from "../../redux/actions";
-import { filter } from "../../redux/actions";
-import { precio } from "../../redux/actions";
+import { getPublications } from "../../redux/actions";
+
+// import { searcHouse } from "../../redux/actions";
+// import { filter } from "../../redux/actions";
+// import { precio } from "../../redux/actions";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
+  const filters = useSelector((state) => state.filters);
+  const sorting = useSelector((state) => state.sorting);
 
   const select = (e) => {
     dispatch(filter(e.target.name, e.target.value));
@@ -19,9 +23,8 @@ const SearchBar = () => {
   };
 
   const BucarPorPrecio = (e) => {
-   dispatch(precio(e.target.value))
-  
-  }
+    dispatch(precio(e.target.value));
+  };
   return (
     <div className={sty.continer}>
       <div>
@@ -31,15 +34,13 @@ const SearchBar = () => {
           placeholder="Buscar Ciuedad..."
           onChange={search_House}
         />
-        <button className={sty.btn}>
-          
-        </button>
+        <button className={sty.btn}></button>
       </div>
       <div>
         <select name="Propiedad" className={sty.select} onChange={select}>
           <option>Propiedad</option>
-          <option >casa</option>
-          <option >departamento</option>
+          <option>casa</option>
+          <option>departamento</option>
         </select>
       </div>
       <div>
@@ -51,7 +52,7 @@ const SearchBar = () => {
       </div>
       <div>
         <select id="3" className={sty.select} onChange={BucarPorPrecio}>
-          <option >Precio</option>
+          <option>Precio</option>
           <option>Mayor Precio</option>
           <option>Menor Precio</option>
         </select>
