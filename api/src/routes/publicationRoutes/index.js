@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { Publication, Property, Service, TypeOfProp, City, PropertyImage, Report } = require('../../db')
 const router = Router();
-const { getAll, getDetail, getFiltered, sortBy, cityArr, propTypArr } = require('./controllers')
+const { getAll, getDetail, getFiltered, sortBy, cityArr, propTypArr,serviceTypes } = require('./controllers')
 
 //para el home y para el searchbar get con query
 
@@ -47,21 +47,6 @@ router.post('/', async (req, res, next) => {
 })
 
 
-
-//para el detail
-router.get('/:id', async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const publication = await getDetail(id);
-        res.send(publication);
-    } catch (error) {
-        next(error)
-    }
-
-})
-
-
-
 router.get('/city', async (req, res, next) => {
     try {
         cityArr.map((c) => City.findOrCreate({ where: { name: c } }))
@@ -72,7 +57,15 @@ router.get('/city', async (req, res, next) => {
     }
 })
 
-
+router.get('/serviceTypes', async (req, res, next) => {
+    try {
+        serviceTypes.map((c) => Service.findOrCreate({ where: { name: c } }))
+        let newService = await Service.findAll()
+        res.send(newService)
+    } catch (error) {
+        next(error)
+    }
+})
 
 router.get('/propertyTypes', async (req, res, next) => {
     try {
@@ -83,8 +76,6 @@ router.get('/propertyTypes', async (req, res, next) => {
         next(error)
     }
 })
-
-
 
 router.post('/postReport', async (req, res, next) => {
     try {
@@ -98,9 +89,18 @@ router.post('/postReport', async (req, res, next) => {
     }
 })
 
+//para el detail
+router.get('/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const publication = await getDetail(id);
+        res.send(publication);
+    } catch (error) {
+        next(error)
+    }
+})
 
-
-router.post('/createService', async (req, res, next) => {
+/* router.post('/createService', async (req, res, next) => {
     try {
         if (!req.body.name) res.status(404).send('no services')
         await Service.findOrCreate({
@@ -110,9 +110,7 @@ router.post('/createService', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-})
-
-
+}) */
 
 router.post('/createProperty', async (req, res, next) => {
     const { address, surface, price, environments, bathrooms, rooms, garage, yard, pets, age, city, service, typProp, propImg } = req.body
@@ -138,12 +136,10 @@ router.post('/createProperty', async (req, res, next) => {
             })
             property.addService(ser)
         }
-
         let location = await City.findOne({
             where: { name: city }
         })
         property.setCity(location)
-
         let type = await TypeOfProp.findOne({
             where: { name: typProp }
         })
@@ -159,8 +155,6 @@ router.post('/createProperty', async (req, res, next) => {
         next(error)
     }
 })
-
-
 
 router.post('/postProperty', async (req, res, next) => {
     const { description, status, premium, report, id } = req.body
