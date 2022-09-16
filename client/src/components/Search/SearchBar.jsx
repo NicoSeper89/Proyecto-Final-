@@ -11,6 +11,8 @@ import { getPublications } from "../../redux/actions";
 
 
 // http://localhost:3001/publication/propertyTypes   ruta para traer los tipos de propiedades ya esta lista
+  // pasar ciudad para que la pueda encontrar esta nos llega desde el input
+  // para el sort by podemos ordenar por orden alfabetico
 
 const ambientes = [1, 2, 3, 4]
 
@@ -25,7 +27,7 @@ const SearchBar = () => {
   };
 
   const search_House = (e) => {
-    // dispatch(searcHouse(e.target.value));
+    dispatch(getPublications(null, "default",e.target.value))
   };
 
   const BucarPorPrecio = (e) => {

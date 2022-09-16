@@ -79,8 +79,8 @@ const getFiltered = async (publications, filters) => {
   await publications.forEach(async function (publi) {
     let publiFiltered = [];
 
-    await filters.publication.forEach((filter) => {
-      if (publi[filter.name] === filter.value) {
+    await filters.publication.forEach((filter) => {          /// preguntar com funciona IMPORRRTANNNTEEE
+      if (publi[filter.name] === filter.value) {               
         publiFiltered.push(publi);
       }
     });
@@ -112,7 +112,7 @@ const sortBy = async (publications, sorting) => {
       if (a.property[sorting.name] > b.property[sorting.name]) return 1;
       else if (a.property[sorting.name] < b.property[sorting.name]) return -1;
       return 0;
-    });
+    });                                                                          // preguntar qu me ordena este sort???
   } else if (sorting.direccion === "maxMin") {
     result = await publications.sort(function (a, b) {
       if (a.property[sorting.name] < b.property[sorting.name]) return 1;
