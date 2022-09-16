@@ -3,6 +3,11 @@ import Cities from "../../components/Cities/Cities";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_DETAIL = "GET_PUBLICATIONS_DETAIL";
 export const GET_DETAILS = "GET_DETAILS";
+export const GET_CITIES = "GET_CITIES";
+export const GET_SERVICES = "GET_SERVICES,";
+export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
+
+
 export const CLEAN = "CLEAN";
 
 //esto va?
@@ -46,6 +51,47 @@ export function getPublicationsDetail(id) {
     }
   };
 }
+
+export function getCities() {
+  return async function (dispatch) {
+    try {
+      let infoBack = await axios.get('/publication/city');
+      return dispatch({
+        type: GET_CITIES,
+        payload: infoBack.data
+      });
+    } catch (error) {
+      if (error.response) { alert(error.response.data) }
+    }
+  }
+}
+export function getServices() {
+  return async function (dispatch) {
+    try {
+      let infoBack = await axios.get('/publication/serviceTypes');
+      return dispatch({
+        type: GET_SERVICES,
+        payload: infoBack.data
+      });
+    } catch (error) {
+      if (error.response) { alert(error.response.data) }
+    }
+  }
+}
+export function getTypesOfProperties() {
+  return async function (dispatch) {
+    try {
+      let infoBack = await axios.get('/publication/propertyTypes')
+      return dispatch({
+        type: GET_PROPERTY_TYPES,
+        payload: infoBack.data
+      });
+    } catch (error) {
+      if (error.response) { alert(error.response.data) }
+    }
+  }
+}
+
 
 export function clean() {
   return {
