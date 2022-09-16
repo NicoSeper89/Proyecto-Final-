@@ -4,7 +4,7 @@ import SearchBar from "../Search/SearchBar.jsx";
 import Cards from "../Cards/Cards";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searcHouse, getPublications } from "../../redux/actions/index.js";
+import { searcHouse, getPublications, getCities,getServices,getTypesOfProperties } from "../../redux/actions/index.js";
 import Footer from "../Footer/Footer.jsx";
 import style from "./Home.module.css";
 import Paginado from "../Paginado/Paginado.jsx";
@@ -15,8 +15,16 @@ const Home = () => {
   const houses = useSelector((state) => state.houses);
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
+  const cities = useSelector((state) => state.cities);
+  const services = useSelector((state) => state.services);
+  const typeOfProperties = useSelector((state) => state.typeOfProperties);
   // useEffect(() => dispatch(searcHouse("")), [dispatch]);
-  useEffect(() => dispatch(getPublications(filters, sorting, "")), [dispatch]);
+  useEffect(() => {
+    dispatch(getCities());
+    dispatch(getServices());
+    dispatch(getTypesOfProperties());
+    dispatch(getPublications(filters, sorting, ""));
+  }, [dispatch]);
 
   /* ************ PAGINADO ************ */
   const [page, setPage] = useState(1);
