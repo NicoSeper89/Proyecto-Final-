@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {getDetail, clean} from "../../redux/actions"
+import {getPublicationsDetail, clean} from "../../redux/actions"
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -46,10 +46,8 @@ export default function Detail() {
   var url = window.location.href.split("/")
 
   useEffect(() => {
-         dispatch(getDetail(url[url.length-1]*1))
-       return ()=> {dispatch(clean())}
-      }
-  ,[dispatch])
+    dispatch(getPublicationsDetail(props.match.params.id))
+  }, [dispatch, props.match.params.id])
 
 
   return (
