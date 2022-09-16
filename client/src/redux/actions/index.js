@@ -14,7 +14,7 @@ export const HOUSES = "HOUSES";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
-export function getPublications(filters, sorting, city) {
+export function getPublications(filters, sorting, city){
   return async function (dispatch) {
     try {
       let info = {
