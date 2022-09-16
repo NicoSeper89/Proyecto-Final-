@@ -1,40 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import {getPublicationsDetail, clean} from "../../redux/actions"
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faToilet } from "@fortawesome/free-solid-svg-icons";
-import { faBed } from "@fortawesome/free-solid-svg-icons";
-import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
-import { faPaw, faHouse,faGarage } from "@fortawesome/free-solid-svg-icons";
-import style from "./Detail.module.css"
+import { faHeart, faToilet, faBed, faDoorOpen, faPaw, faHouse, faCircleUser} from "@fortawesome/free-solid-svg-icons";
+// import { faToilet } from "@fortawesome/free-solid-svg-icons";
+// import { faBed } from "@fortawesome/free-solid-svg-icons";
+// import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
+// import { faPaw, faHouse } from "@fortawesome/free-solid-svg-icons";
+// import {faCircleUser} from "@fortawesome/free-solid-svg-icons"
 import {Link} from "react-router-dom"
 import NavBar from "../NavBar/NavBar.jsx";
 import SearchBar from "../Search/SearchBar.jsx";
 import Footer from "../Footer/Footer.jsx";
-
-
- //property
-
-//address, surface, price, environments, rooms, bathrooms, rooms, garage, yard, pets, age
-// image url
-
-// publication
-// description, status
-
-// PropertyImage // URL
-
-// typeofProp
-// name
-
-//user
-// name, description, rating
-
-//user Image 
-// url
-
+import { Box, Image, Text, ListItem, Button, UnorderedList } from '@chakra-ui/react'
 
 
 export default function Detail(props) {
@@ -43,7 +22,6 @@ export default function Detail(props) {
   // const miUseerState = useSelector((state) => state.user)
   // const miPublicationState = useSelector((state) => state.publication)
   // console.log(miStateDetail)
-  var url = window.location.href.split("/")
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id))
@@ -52,63 +30,64 @@ export default function Detail(props) {
 
 
   return (
-    <div>
+    <Box>
       <NavBar />
       <SearchBar />
-     <Link to={"/"}> <button className={style.buttons}>volver al home </button></Link>
+     <Link to={"/"}> <Button bg="violet">volver al home </Button></Link>
       {miStateDetail.length > 0 ? (
-        <div >
-          <div>
-            <img src ={miStateDetail[0].img}/>
-            <h1>{miStateDetail[0].property.premium}</h1>
-          </div>
+        <Box >
+          <Box> DATOS PUBLICACION
+            {/* <Image src ={miStateDetail[0].img}/> */}
+            <Text>{miStateDetail[0].property.premium}</Text>
+          </Box>
 
-          <div>
+          <Box>
             <FontAwesomeIcon icon={faHeart} />
-            <h1>price: {miStateDetail[0].property.price}</h1>
-            <h3>typeofProp: {miStateDetail[0].property.typeofProp.name}</h3>
+            <Text>price: {miStateDetail[0].property.price}</Text>
+            <Text>typeofProp: {miStateDetail[0].property.typeofProp.name}</Text>
             <FontAwesomeIcon icon={faHouse} />
-            <h4>city: {miStateDetail[0].property.city.name}</h4>
-            <span>superficie: {miStateDetail[0].property.surface}</span>
-            <span>environments: {miStateDetail[0].property.environments}</span>
+            <Text>city: {miStateDetail[0].property.city.name}</Text>
+            <Text>superficie: {miStateDetail[0].property.surface}</Text>
+            <Text>environments: {miStateDetail[0].property.environments}</Text>
             <FontAwesomeIcon icon={faDoorOpen} />
-            <span>garage: {miStateDetail[0].property.garage}</span>
-          </div>
-          <div>
-            <div>address: {miStateDetail[0].property.address}</div>
-            <ul>
-              <li>surface: {miStateDetail[0].property.metros}</li>
-              <li>environments: {miStateDetail[0].property.environments}</li>
-              <li>bathrooms: {miStateDetail[0].property.bathrooms}</li>
+            <Text>garage: {miStateDetail[0].property.garage}</Text>
+          </Box>
+          <Box>
+            <Box>address: {miStateDetail[0].property.address}</Box>
+            <UnorderedList>
+              <ListItem>surface: {miStateDetail[0].property.yard}</ListItem>
+              <ListItem>environments: {miStateDetail[0].property.environments}</ListItem>
+              <ListItem>bathrooms: {miStateDetail[0].property.bathrooms}</ListItem>
               <FontAwesomeIcon icon={faToilet} />
-              <li>rooms: {miStateDetail[0].property.rooms}</li>
+              <ListItem>rooms: {miStateDetail[0].property.rooms}</ListItem>
               <FontAwesomeIcon icon={faBed} />
-              <li>garage: {miStateDetail[0].property.garage}</li>
-              <li>yard: {miStateDetail[0].property.yard}</li>
-              <li>pets: {miStateDetail[0].property.pets}</li>
+              <ListItem>garage: {miStateDetail[0].property.garage}</ListItem>
+              <ListItem>yard: {miStateDetail[0].property.yard}</ListItem>
+              <ListItem>pets: {miStateDetail[0].property.pets}</ListItem>
               <FontAwesomeIcon icon={faPaw} />
-              <li>age: {miStateDetail[0].property.age}</li>
-              <li>{miStateDetail[0].property.service.name}</li>
-            </ul>
-
-            <div>
-              <p>description: {miStateDetail[0].property.description}</p>
-            </div>
-          </div>
-          <div>DATOS PROPIETARIO
-
+              <ListItem>age: {miStateDetail[0].property.age}</ListItem>
+              <ListItem>{miStateDetail[0].property.service[0].name}</ListItem>
+            </UnorderedList>
+            <Box>
+              <Text>description: {miStateDetail[0].property.description}</Text>
+            </Box>
+          </Box>
+          <Box>DATOS PROPIETARIO
+          {/* <FontAwesomeIcon icon={faUser} /> */}
+          <FontAwesomeIcon icon={faCircleUser} />
             {/* <h1>{miUseerState[0].name}</h1>
             
             <h3>{miUseerState.mail}</h3>
             <h3>{miUseerState[0].rating}</h3>
             <h3>{miUseerState[0].description}</h3> */}
-          </div>
+
+          </Box>
           <Footer />
-        </div>
+        </Box>
         
       ) : (
-        <div>no hay propiedad</div>
+        <Box bg="red">no hay propiedad</Box>
       )}
-    </div>
+    </Box>
   );
 }
