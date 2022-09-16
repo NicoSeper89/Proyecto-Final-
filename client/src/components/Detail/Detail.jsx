@@ -12,7 +12,7 @@ import { faPaw, faHouse,faGarage } from "@fortawesome/free-solid-svg-icons";
 import style from "./Detail.module.css"
 import {Link} from "react-router-dom"
 import NavBar from "../NavBar/NavBar.jsx";
-import SearchBar from "../Search/searchBar.jsx";
+import SearchBar from "../Search/SearchBar.jsx";
 import Footer from "../Footer/Footer.jsx";
 
 
