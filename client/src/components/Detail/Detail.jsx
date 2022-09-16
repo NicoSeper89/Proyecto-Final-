@@ -37,7 +37,7 @@ import Footer from "../Footer/Footer.jsx";
 
 
 
-export default function Detail() {
+export default function Detail(props) {
   const dispatch = useDispatch()
   const miStateDetail = useSelector((state) => state.detail)
   // const miUseerState = useSelector((state) => state.user)
@@ -47,6 +47,7 @@ export default function Detail() {
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id))
+    dispatch(clean())
   }, [dispatch, props.match.params.id])
 
 
@@ -59,48 +60,41 @@ export default function Detail() {
         <div >
           <div>
             <img src ={miStateDetail[0].img}/>
+            <h1>{miStateDetail[0].property.premium}</h1>
           </div>
 
           <div>
             <FontAwesomeIcon icon={faHeart} />
-            <h1>price: {miStateDetail[0].precio}</h1>
-            <h3>typeofProp: {miStateDetail[0].typeofProp}</h3>
+            <h1>price: {miStateDetail[0].property.price}</h1>
+            <h3>typeofProp: {miStateDetail[0].property.typeofProp.name}</h3>
             <FontAwesomeIcon icon={faHouse} />
-            <h4>city: {miStateDetail[0].ciudad}</h4>
-            <span>superficie: {miStateDetail[0].ciudad}</span>
-            <span>environments: {miStateDetail[0].ambientes}</span>
+            <h4>city: {miStateDetail[0].property.city.name}</h4>
+            <span>superficie: {miStateDetail[0].property.surface}</span>
+            <span>environments: {miStateDetail[0].property.environments}</span>
             <FontAwesomeIcon icon={faDoorOpen} />
-            <span>garage: {miStateDetail[0].garage}</span>
+            <span>garage: {miStateDetail[0].property.garage}</span>
           </div>
-          <hgroup>
-            <div>address: {miStateDetail[0].address}</div>
+          <div>
+            <div>address: {miStateDetail[0].property.address}</div>
             <ul>
-              <li>surface: {miStateDetail[0].metros}</li>
-              <li>environments: {miStateDetail[0].environments}</li>
-              <li>bathrooms: {miStateDetail[0].baño}</li>
+              <li>surface: {miStateDetail[0].property.metros}</li>
+              <li>environments: {miStateDetail[0].property.environments}</li>
+              <li>bathrooms: {miStateDetail[0].property.bathrooms}</li>
               <FontAwesomeIcon icon={faToilet} />
-              <li>rooms: {miStateDetail[0].dormitorio}</li>
+              <li>rooms: {miStateDetail[0].property.rooms}</li>
               <FontAwesomeIcon icon={faBed} />
-              <li>garage: {miStateDetail[0].garage}</li>
-              <li>yard: {miStateDetail[0].yard}</li>
-              <li>pets: {miStateDetail[0].mascota}</li>
+              <li>garage: {miStateDetail[0].property.garage}</li>
+              <li>yard: {miStateDetail[0].property.yard}</li>
+              <li>pets: {miStateDetail[0].property.pets}</li>
               <FontAwesomeIcon icon={faPaw} />
-              <li>age: {miStateDetail[0].age}</li>
-              <li></li>
+              <li>age: {miStateDetail[0].property.age}</li>
+              <li>{miStateDetail[0].property.service.name}</li>
             </ul>
 
             <div>
-              <p>description: {miStateDetail[0].description}</p>
+              <p>description: {miStateDetail[0].property.description}</p>
             </div>
-            {/* <div>
-            <textarea placeholder="preguntar aca">
-      
-            </textarea>
-            <button>
-           preguntar
-            </button>
-          </div> */}
-          </hgroup>
+          </div>
           <div>DATOS PROPIETARIO
 
             {/* <h1>{miUseerState[0].name}</h1>
