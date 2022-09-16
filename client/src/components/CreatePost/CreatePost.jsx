@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 /* import axios from 'axios'; */
 import {
-    Stack, Input, Text, Flex, NumberInput, NumberInputField,
+    Stack, Input, Text, Textarea, Flex, NumberInput, NumberInputField,
     NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper,
-    Checkbox, CheckboxGroup, Select, Button, FormControl, FormLabel, Box,
+    Checkbox, CheckboxGroup, Select, Button, /* FormControl, */ FormLabel, Box,
+
 
 } from '@chakra-ui/react';
 import { useEffect } from "react";
@@ -11,22 +12,29 @@ import { useEffect } from "react";
 const CreatePost = () => {
 
     const [infoFormProp, setInfoFormProp] = useState({
-        city: "",               //
-        address: "",            //
-        propImg: "",            //
-        typProp: "",            //
-        price: "",              //
-        age: "",                //
-        surface: "",            //
-        environments: "",       //
-        bathrooms: "",          //
-        rooms: "",              //
-        garage: "",             //
+        city: "",
+        address: "",
+        propImg: "",
+        typProp: "",
+        price: "",
+        age: "",
+        surface: "",
+        environments: "",
+        bathrooms: "",
+        rooms: "",
+        garage: "",
         yard: "",
         pets: false,
         service: []
     });
 
+    const [infoFormPub, setInfoFormPub] = useState({
+        description: "",
+        status: "",
+        premium: false,
+        report: "",
+        id: null
+    })
 
     const [disableBUttonSubmit, setDisableButtonSubmit] = useState(true);
 
@@ -46,7 +54,7 @@ const CreatePost = () => {
 
     }, [setDisableButtonSubmit, infoFormProp])
 
-    const onChangeInput = (e) => {
+    const onChangeInputProp = (e) => {
         e.preventDefault();
 
         setInfoFormProp({
@@ -55,12 +63,13 @@ const CreatePost = () => {
         })
     }
 
-    const selectCheckBoxPets = (e) => {
+    const onChangeInputPub = (e) => {
+        e.preventDefault();
 
-        return setInfoFormProp({
-            ...infoFormProp,
-            [e.target.name]: (e.target.checked === true)
-        });
+        setInfoFormPub({
+            ...infoFormPub,
+            [e.target.name]: e.target.value,
+        })
     }
 
     const selectCheckBoxService = (e) => {
@@ -95,22 +104,22 @@ const CreatePost = () => {
 
             <Text w={'90%'} textAlign={"center"} fontSize='2em'>Formulario de Creación de Propiedad</Text>
 
-            <Box display={'flex'} flexDirection={'column'} p={'1rem'} w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden' onSubmit={onSubmitForm}>
+            <Box display={'flex'} flexDirection={'column'} p={'1rem'} w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden'>
 
                 <FormLabel >Ciudad
-                    <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInput} />
+                    <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} />
                 </FormLabel>
 
                 <FormLabel >Dirección
-                    <Input type="text" name={"address"} value={infoFormProp.address} onChange={onChangeInput} />
+                    <Input type="text" name={"address"} value={infoFormProp.address} onChange={onChangeInputProp} />
                 </FormLabel >
 
                 <FormLabel >Imagen
-                    <Input type="text" name={"propImg"} value={infoFormProp.propImg} onChange={onChangeInput} />
+                    <Input type="text" name={"propImg"} value={infoFormProp.propImg} onChange={onChangeInputProp} />
                 </FormLabel>
 
                 <FormLabel >Tipo
-                    <Select name={"typProp"} onChange={onChangeInput} >
+                    <Select name={"typProp"} onChange={onChangeInputProp} >
                         {types.map((type, i) => <option key={i}
                             value={type}
                         >{type}
@@ -132,7 +141,7 @@ const CreatePost = () => {
 
                 <FormLabel >Antigüedad
                     <NumberInput value={infoFormProp.age}
-                        onChange={(value) => setInfoFormProp({ ...infoFormProp, age:value })}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, age: value })}
                         min={0}>
                         <NumberInputField />
                         <NumberInputStepper  >
@@ -159,7 +168,7 @@ const CreatePost = () => {
                         onChange={(value) => setInfoFormProp({ ...infoFormProp, environments: value })}
                         min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"environments"} value={infoFormProp.environments} onChange={onChangeInput}>
+                        <NumberInputStepper type="number" name={"environments"} value={infoFormProp.environments} onChange={onChangeInputProp}>
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -216,27 +225,72 @@ const CreatePost = () => {
 
                 <CheckboxGroup colorScheme='green' >
                     <Stack spacing={[1, 5]} direction={['column', 'row']}>
-                        <Checkbox name={"pets"} value='pets' onChange={selectCheckBoxPets}>Mascotas</Checkbox>
+                        <Checkbox name={"pets"}
+                            onChange={(e) => setInfoFormProp({
+                                ...infoFormProp,
+                                [e.target.name]: (e.target.checked === true)
+                            })}>
+                            Mascotas
+                        </Checkbox>
                     </Stack>
                 </CheckboxGroup>
 
                 <CheckboxGroup colorScheme='green' >
                     <Stack spacing={[1, 5]} direction={['column', 'row']}>
 
-                        {services.map((s, i) => <Checkbox key={i} 
-                                                          name={s} 
-                                                          value={s}
-                                                          onChange={selectCheckBoxService} >
-                                                {s[0].toUpperCase() + s.substring(1)}
-                                                </Checkbox>)}
+                        {services.map((s, i) => <Checkbox key={i}
+                            name={s}
+                            value={s}
+                            onChange={selectCheckBoxService} >
+                            {s[0].toUpperCase() + s.substring(1)}
+                        </Checkbox>)}
                     </Stack>
                 </CheckboxGroup>
 
-                <Button disabled={disableBUttonSubmit} alignSelf={'flex-end'} colorScheme='blue' type="submit" value={"enviar"} >Enviar</Button>
+                <Button disabled={disableBUttonSubmit}
+                    alignSelf={'flex-end'}
+                    colorScheme='blue'
+                    type="submit"
+                    value={"enviar"}
+                    onClick={onSubmitForm}>
+                    Enviar
+                </Button>
             </Box>
 
-            <FormControl w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden' onSubmit={onSubmitForm}>
-            </FormControl>
+            <Box display={'flex'} flexDirection={'column'} p={'1rem'} w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden' >
+
+                <FormLabel borderWidth='1px' borderRadius='14px' p={"1rem"} borderColor={"gray.200"}>
+                    <Text mb='8px'>Descripcion</Text>
+                    <Textarea borderRadius='8px'
+                        name={'description'}
+                        value={infoFormPub.description}
+                        size='sm'
+                        resize={"none"}
+                        onChange={onChangeInputPub}
+                    />
+                </FormLabel>
+
+                <FormLabel >Estado
+                    <Input type="text" name={"status"} value={infoFormPub.status} onChange={onChangeInputPub} />
+                </FormLabel>
+
+                <FormLabel >Reporte
+                    <Input type="text" name={"report"} value={infoFormPub.report} onChange={onChangeInputPub} />
+                </FormLabel>
+
+                <CheckboxGroup colorScheme='green' >
+                    <Stack spacing={[1, 5]} direction={['column', 'row']}>
+                        <Checkbox name={"premium"}
+                            onChange={(e) => setInfoFormPub({
+                                ...infoFormPub,
+                                [e.target.name]: (e.target.checked === true)
+                            })}>
+                            Premium
+                        </Checkbox>
+                    </Stack>
+                </CheckboxGroup>
+
+            </Box>
 
         </Flex>
     );
