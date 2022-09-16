@@ -1,42 +1,57 @@
-const { Router } = require('express');
-const { Publication, Property, Service, TypeOfProp, City, PropertyImage, Report } = require('../../db')
+const { Router } = require("express");
+const {
+  Publication,
+  Property,
+  Service,
+  TypeOfProp,
+  City,
+  PropertyImage,
+  Report,
+} = require("../../db");
 const router = Router();
+const { getAll, getDetail, getFiltered, sortBy, cityArr, propTypArr } = require("./controllers");
 const { getAll, getDetail, getFiltered, sortBy, cityArr, propTypArr,serviceTypes } = require('./controllers')
 
 //para el home y para el searchbar get con query
 
+// router.post('/', async (req, res, next) => {
+//     try {
+//         let city = req.query.city;
+//         let {
+//             filters,
+//             sorting
+//         } = req.body;
 
-router.post('/', async (req, res, next) => {
-    try {
-        let city = req.query.city;
-        let {
-            filters,
-            sorting
-        } = req.body;
+//         /* let filters = {
+//         publication: [{name:"status", value:"disponible"}],
+//         property: [{name:"pets", value:true},{name:"age", value:5}],
+//         typeOfProp:'',
+//         services:[{name: "luz"},{name: "agua"}]
+//         } */
+//        /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
+//         let publications = await getAll();
 
-        /* let filters = {
-        publication: [{name:"status", value:"disponible"}],
-        property: [{name:"pets", value:true},{name:"age", value:5}],
-        typeOfProp:'',
-        services:[{name: "luz"},{name: "agua"}]
-        } */
-       /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
-        let publications = await getAll();
-        
-        publications = await getFiltered(publications, filters)
+//         publications = await getFiltered(publications, filters)
 
-        if (city) {                   //aca filtra por searchbar(revisar si se quiere hacer independiente)
-            city = city.toLowerCase(); //revisar como se guarda city en publications
-            let cityFiltered = await publications.filter(el => el.property.city.dataValues.name.toLowerCase().includes(city));
-            cityFiltered.length ?
-                publications = cityFiltered :
-                res.status(404).send('No hay publicaciones en esa ciudad')
-        }
+//         if (city) {                   //aca filtra por searchbar(revisar si se quiere hacer independiente)
+//             city = city.toLowerCase(); //revisar como se guarda city en publications
+//             let cityFiltered = await publications.filter(el => el.property.city.dataValues.name.toLowerCase().includes(city));
+//             cityFiltered.length ?
+//                 publications = cityFiltered :
+//                 res.status(404).send('No hay publicaciones en esa ciudad')
+//         }
 
+//         if (sorting.name !== 'default') { // aca las sortea
+//             publications = await sortBy(publications, sorting);
+//         }
 
-        if (sorting.name !== 'default') { // aca las sortea
-            publications = await sortBy(publications, sorting);
-        }
+//         res.status(200).send(publications) // las envia
+//     }
+//     catch (error) {
+//          next(error)
+//        /*  res.status(404).send('No hay publicaciones') */
+//     }
+// })
 
         res.status(200).send(publications) // las envia
     }
@@ -87,7 +102,6 @@ router.post('/postReport', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-})
 
 //para el detail
 router.get('/:id', async (req, res, next) => {
@@ -154,32 +168,8 @@ router.post('/createProperty', async (req, res, next) => {
     } catch (error) {
         next(error)
     }
-})
 
 router.post('/postProperty', async (req, res, next) => {
     const { description, status, premium, report, id } = req.body
     try {
         if (!description) res.status(404).send('fill out description')
-
-        let post = await Publication.create({
-            description,
-            status,
-            premium,
-        })
-        if (report) {
-            let rep = await Report.findAll({
-                where: { name: report }
-            })
-            post.addReport(rep)
-        }
-
-        let property = await Property.findByPk(id)
-        post.setProperty(property)
-
-        res.send("post created")
-    } catch (error) {
-        next(error)
-    }
-})
-
-module.exports = router;
