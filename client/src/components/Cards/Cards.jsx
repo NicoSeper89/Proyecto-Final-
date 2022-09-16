@@ -9,18 +9,19 @@ export default function Cards({ currentHouse }) {
   return (
     <div className={style.container}>
       {currentHouse?.map((r) => {
+        console.log(r.property.city.name)
         return (
           <div key={r.id}>
             <Card
-              id ={r.id}
+               id ={r.id}
               img={r.img}
-              precio={r.precio}
-              ciudad={r.ciudad}
-              metros={r.metros}
-              baño={r.baño}
-              dormitorio={r.dormitorio}
-              ambientes={r.ambientes}
-              mascota={r.mascota}
+              precio={r.property.price}
+              ciudad={r.property.city.name}
+              metros={r.property.surface}
+              baño={r.property.bathrooms}
+              dormitorio={r.property.rooms}
+              ambientes={r.property.environments}
+              mascota={r.property.pets} 
             />
           </div>
         );

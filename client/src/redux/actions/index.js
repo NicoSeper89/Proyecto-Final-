@@ -81,7 +81,7 @@ export function getPublications(filters, sorting,city) {
         filters,
         sorting
       }
-      let infoBack = await axios.get('/publication?city='+city,info);//, info
+      let infoBack = await axios.post('/publication?city='+city, info);//,?city='+city
       return dispatch({
         type: GET_PUBLICATIONS,
         payload: infoBack.data
@@ -95,7 +95,7 @@ export function getPublications(filters, sorting,city) {
 export function getPublicationsDetail(id) {
   return async function (dispatch) {
     try {
-      let infoBack = await axios.get('/publication/',id);//, info
+      let infoBack = await axios.get('/publication/'+id);//, info
       return dispatch({
         type: GET_PUBLICATIONS_DETAIL,
         payload: infoBack.data

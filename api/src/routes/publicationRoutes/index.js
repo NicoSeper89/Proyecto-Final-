@@ -6,15 +6,14 @@ const { getAll, getDetail, getFiltered, sortBy, cityArr, propTypArr } = require(
 //para el home y para el searchbar get con query
 
 
-router.get('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         let city = req.query.city;
         let {
             filters,
             sorting
         } = req.body;
-        /* console.log(req.body) */
-        
+
         /* let filters = {
         publication: [{name:"status", value:"disponible"}],
         property: [{name:"pets", value:true},{name:"age", value:5}],
