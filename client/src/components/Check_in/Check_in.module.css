@@ -1,19 +1,18 @@
-    .continer{
-        margin-top: 200px;
+.form{
+   
+    margin-top: 200px;
         margin-left: 600px;
         display: inline-block;
         
     border: 1px solid black;  
     padding: 50px;  
-
 }
+
 .input{
     margin: 20px;
 }
 
-.btn{
-    
-    margin: 20px;
+.titulo{
+    font-size: 20px;
     text-align: center;
-   
 }
