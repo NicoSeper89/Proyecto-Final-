@@ -13,22 +13,19 @@ router.get('/', async (req, res, next) => {
             filters,
             sorting
         } = req.body;
-        let publications = await getAll();
-        /* let mockFilters = {
+        /* console.log(req.body) */
+        
+        /* let filters = {
         publication: [{name:"status", value:"disponible"}],
-        property: [{name:"surface", value:12},{name:"age", value:5}],
-        TypeOfProp:'apartment',
+        property: [{name:"pets", value:true},{name:"age", value:5}],
+        typeOfProp:'',
         services:[{name: "luz"},{name: "agua"}]
         } */
-        let mockFilters = {
-            publication: [],
-            property: [],
-            TypeOfProp: '',
-            services: [{ name: "luz" }, { name: "agua" }]
-        }
-        let sortingg = { name: 'price', direccion: 'maxMin' }
-        publications = await getFiltered(publications, mockFilters)
-        /* console.log(city) */
+       /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
+        let publications = await getAll();
+        
+        publications = await getFiltered(publications, filters)
+
         if (city) {                   //aca filtra por searchbar(revisar si se quiere hacer independiente)
             city = city.toLowerCase(); //revisar como se guarda city en publications
             let cityFiltered = await publications.filter(el => el.property.city.dataValues.name.toLowerCase().includes(city));
@@ -38,8 +35,8 @@ router.get('/', async (req, res, next) => {
         }
 
 
-        if (sortingg !== 'default') { // aca las sortea
-            publications = await sortBy(publications, sortingg,);
+        if (sorting.name !== 'default') { // aca las sortea
+            publications = await sortBy(publications, sorting);
         }
 
         res.status(200).send(publications) // las envia
