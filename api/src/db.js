@@ -77,10 +77,10 @@ User.hasMany(Publication);   //1 a N
 Publication.belongsTo(User); // N a 1
 Publication.belongsToMany(Report, { through: "reportsPublications" });// N a N
 Report.belongsToMany(Publication, { through: "reportsPublications" });// N a N
-Publication.hasOne(Property); // 1 a 1
+Publication.belongsTo(Property); // 1 a 1
 
 // //Relaciones propiedad
-Property.belongsTo(Publication); // 1 a 1
+Property.hasOne(Publication); // 1 a 1
 Property.hasMany(PropertyImage);  // 1 a N
 PropertyImage.belongsTo(Property); // N a 1
 Property.belongsToMany(Service, { through: 'PropertyServices' }); //N a N
