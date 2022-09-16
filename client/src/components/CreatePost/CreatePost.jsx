@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {useSelector} from 'react-redux';
 /* import axios from 'axios'; */
 import {
     Stack, Input, Text, Textarea, Flex, NumberInput, NumberInputField,
     NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper,
     Checkbox, CheckboxGroup, Select, Button, /* FormControl, */ FormLabel, Box,
-
-
 } from '@chakra-ui/react';
-import { useEffect } from "react";
 
 const CreatePost = () => {
+
+    const propertys = useSelector((state) => state.typeOfProperties);
+    const services = useSelector((state) => state.services);
 
     const [infoFormProp, setInfoFormProp] = useState({
         city: "",
@@ -37,9 +38,6 @@ const CreatePost = () => {
     })
 
     const [disableBUttonSubmit, setDisableButtonSubmit] = useState(true);
-
-    const types = ["Departamento", "Casa", "Local Comercial", "Garage"]
-    const services = ["agua", "gas", "luz", "internet"]
 
     useEffect(() => {
 
@@ -118,11 +116,11 @@ const CreatePost = () => {
                     <Input type="text" name={"propImg"} value={infoFormProp.propImg} onChange={onChangeInputProp} />
                 </FormLabel>
 
-                <FormLabel >Tipo
+                <FormLabel >Tipo de propiedad
                     <Select name={"typProp"} onChange={onChangeInputProp} >
-                        {types.map((type, i) => <option key={i}
-                            value={type}
-                        >{type}
+                        {propertys.map((type, i) => <option key={i}
+                            value={type.name}
+                        >{type.name}
                         </option>)}
                     </Select>
                 </FormLabel>
@@ -237,12 +235,11 @@ const CreatePost = () => {
 
                 <CheckboxGroup colorScheme='green' >
                     <Stack spacing={[1, 5]} direction={['column', 'row']}>
-
                         {services.map((s, i) => <Checkbox key={i}
-                            name={s}
-                            value={s}
+                            name={s.name}
+                            value={s.name}
                             onChange={selectCheckBoxService} >
-                            {s[0].toUpperCase() + s.substring(1)}
+                            {s.name[0].toUpperCase() + s.name.substring(1)}
                         </Checkbox>)}
                     </Stack>
                 </CheckboxGroup>
@@ -289,9 +286,8 @@ const CreatePost = () => {
                         </Checkbox>
                     </Stack>
                 </CheckboxGroup>
-
             </Box>
-
+            
         </Flex>
     );
 };
