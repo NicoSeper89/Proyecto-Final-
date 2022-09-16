@@ -9,24 +9,31 @@ import { getPublications } from "../../redux/actions";
 // import { filter } from "../../redux/actions";
 // import { precio } from "../../redux/actions";
 
+
+// http://localhost:3001/publication/propertyTypes   ruta para traer los tipos de propiedades ya esta lista
+
+const ambientes = [1, 2, 3, 4]
+
 const SearchBar = () => {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
+  const propertys = useSelector((state) => state.typeOfProperties)
 
   const select = (e) => {
-    dispatch(filter(e.target.name, e.target.value));
+    // dispatch(filter(e.target.name, e.target.value));
   };
 
   const search_House = (e) => {
-    dispatch(searcHouse(e.target.value));
+    // dispatch(searcHouse(e.target.value));
   };
 
   const BucarPorPrecio = (e) => {
-    dispatch(precio(e.target.value));
+    // dispatch(precio(e.target.value));
   };
   return (
     <div className={sty.continer}>
+
       <div>
         <input
           type="text"
@@ -39,15 +46,18 @@ const SearchBar = () => {
       <div>
         <select name="Propiedad" className={sty.select} onChange={select}>
           <option>Propiedad</option>
-          <option>casa</option>
-          <option>departamento</option>
+          {propertys.map(e => {
+            return <option key={e.id}>{e.name}</option>
+          })}
         </select>
       </div>
       <div>
         <select name="ambientes" className={sty.select} onChange={select}>
           <option>Ambientes</option>
-          <option>4</option>
-          <option>5</option>
+          {ambientes.map(e => {
+            return <option key={e}>{e}</option>
+          })}
+          <option>5+</option>
         </select>
       </div>
       <div>
@@ -59,11 +69,13 @@ const SearchBar = () => {
       </div>
       <div>
         <select id="4" className={sty.select}>
-          <option>Sort By</option>
+          <option>Mascotas</option>
+          <option>si</option>
+          <option>no</option>
+
         </select>
       </div>
     </div>
-    // proando joseee
   );
 };
 
