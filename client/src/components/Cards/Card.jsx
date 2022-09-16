@@ -2,12 +2,8 @@ import React from "react";
 import style from "./Card.module.css";
 import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faToilet } from "@fortawesome/free-solid-svg-icons";
-import { faBed } from "@fortawesome/free-solid-svg-icons";
-import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
-import { faPaw } from "@fortawesome/free-solid-svg-icons";
-import {Link} from "react-router-dom"
+import { faHeart, faToilet, faBed, faDoorOpen, faPaw } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export default function Card({
   id,
@@ -23,13 +19,13 @@ export default function Card({
   return (
     <div className={style.container}>
       <img src={img || imgNotAvailable} alt="Img not found" />
-      <Link to={"/details/" + id} >
-      <div className={style.container2}>
-        <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
-        <h3>{ciudad}</h3>
-        <h3>$ {precio}</h3>
-      </div>
-        </Link>
+      <Link to={"/details/" + id}>
+        <div className={style.container2}>
+          <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
+          <h3>{ciudad}</h3>
+          <h3>$ {precio}</h3>
+        </div>
+      </Link>
       <div className={style.containerInfo}>
         <h4>{metros} m²</h4>
         <FontAwesomeIcon className={style.containerIcon} icon={faToilet} />

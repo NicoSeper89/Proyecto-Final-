@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   sequelize.define('userImage', {
     url: {
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
  //     defaultValue: pegar url de pp default
     },
   });

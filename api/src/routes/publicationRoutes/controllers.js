@@ -122,6 +122,12 @@ const propTypArr = [
     "castle",
     "mansion"
 ]
+const serviceTypes=[
+    "light",
+    "water",
+    "gas",
+    "internet",
+    "calefaction"
+]
 
-
-module.exports = { getAll, getDetail, getFiltered, sortBy, cityArr, propTypArr }
+module.exports = { getAll, getDetail, getFiltered, sortBy, cityArr, propTypArr,serviceTypes }
