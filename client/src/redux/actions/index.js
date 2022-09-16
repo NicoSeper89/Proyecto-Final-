@@ -7,7 +7,7 @@ export const GET_PUBLICATIONS_DETAIL = "GET_PUBLICATIONS_DETAIL";
 // export function getDetail(id) {
 //   return async function (dispatch) {
 //     try {
-//       var details = await axios("http://localhost:3001/" + id);
+//       var details = await axios("http://localhost:3001/property" + id);
 //       console.log(details);
 //       return dispatch({
 //         type: "GET_DETAILS",

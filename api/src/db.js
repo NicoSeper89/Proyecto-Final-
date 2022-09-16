@@ -32,7 +32,7 @@ let sequelize =
       ssl: true,
     })
     : new Sequelize(
-      `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/lookHouse`,
+      `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/lookhouse`,
       { logging: false, native: false }
     );
 
