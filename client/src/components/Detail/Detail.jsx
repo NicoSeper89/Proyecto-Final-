@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {getDetail, clean} from "../../redux/actions"
+import {getPublicationsDetail, clean} from "../../redux/actions"
 import { useEffect } from "react";
 import Cities from "../Cities/Cities";
 
@@ -34,10 +34,8 @@ export default function Detail(props) {
   var url = window.location.href.split("/")
 
   useEffect(() => {
-         dispatch(getDetail(url[url.length-1]*1))
-       return ()=> {dispatch(clean())}
-      }
-  ,[dispatch])
+    dispatch(getPublicationsDetail(props.match.params.id))
+  }, [dispatch, props.match.params.id])
 
 
   return (

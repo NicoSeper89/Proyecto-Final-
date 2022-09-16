@@ -16,7 +16,7 @@ function App() {
       <Route exact path="/createPost" component={CreatePost} />
       <Route path="/about" component={About} />
       <Route path="/help" component={Help} />
-      <Route path="/details/:id" render={({match})=>{return <Detail id={match.params.id}></Detail>}}/>
+      <Route path="/details/:id" component={Detail}/>
       {/* <Route path="/login" component={Login} /> */}
     </>
   );
