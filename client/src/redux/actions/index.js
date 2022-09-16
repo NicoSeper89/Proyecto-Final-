@@ -43,6 +43,28 @@ export const filter = (tipo, data) => async (dispatch) => {
   else dispatch({ type: "HOUSES", payload: Cities });
 };
 
+//    ********** Filtro de Mayor y Menor Precio **************
+
+export const precio = (data) => (dispatch) => {
+  
+    var ordenScore = (a, z) => {
+      var peso1 = a.precio
+      var peso2 = z.precio
+      if (peso1 > peso2) {
+        return data === "Menor Precio" ? 1 : -1
+      }
+      if (peso1 < peso2) {
+        return data === "Menor Precio" ? -1 : 1
+      }
+      return 0
+    }
+    var houses3 = [...Cities.sort(ordenScore)]
+    
+     dispatch({ type: "HOUSES", payload: houses3 })
+     
+
+  }
+
 export function clean() {
   return {
     type: "CLEAN",

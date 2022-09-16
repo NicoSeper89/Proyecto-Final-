@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import dotenv from "dotenv";
 import { Provider } from "react-redux";
+import { ChakraProvider } from '@chakra-ui/react';
 import store from "./redux/store/index";
 import { BrowserRouter } from "react-router-dom";
 dotenv.config();
@@ -13,13 +14,15 @@ dotenv.config();
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </BrowserRouter>
-  </Provider>,
+  <ChakraProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </BrowserRouter>
+    </Provider>
+  </ChakraProvider>,
   document.getElementById("root")
 );
 
