@@ -1,58 +1,93 @@
 import React, { useState } from "react";
-// import style from './CreatePost.module.css';
-import axios from 'axios';
+/* import axios from 'axios'; */
 import {
     Stack, Input, Text, Flex, NumberInput, NumberInputField,
     NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper,
-    Checkbox, CheckboxGroup, Select, Button, FormControl, FormLabel, Box
+    Checkbox, CheckboxGroup, Select, Button, FormControl, FormLabel, Box,
+
 } from '@chakra-ui/react';
+import { useEffect } from "react";
 
 const CreatePost = () => {
 
-    const [infoForm, setInfoForm] = useState({
-        address: "",
-        surface: "",
-        price: "",
-        environments: "",
-        bathrooms: "",
-        rooms: "",
-        garage: "",
+    const [infoFormProp, setInfoFormProp] = useState({
+        city: "",               //
+        address: "",            //
+        propImg: "",            //
+        typProp: "",            //
+        price: "",              //
+        age: "",                //
+        surface: "",            //
+        environments: "",       //
+        bathrooms: "",          //
+        rooms: "",              //
+        garage: "",             //
         yard: "",
         pets: false,
-        age: "",
-        propImg: "",
-        typProp: "",
-        service: "",
-        city: ""
+        service: []
     });
 
+
+    const [disableBUttonSubmit, setDisableButtonSubmit] = useState(true);
+
     const types = ["Departamento", "Casa", "Local Comercial", "Garage"]
+    const services = ["agua", "gas", "luz", "internet"]
+
+    useEffect(() => {
+
+        const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age } = infoFormProp
+
+        if (!city || !address || !surface || !price || !environments || !bathrooms || !rooms || !garage || !yard || !age) {
+            setDisableButtonSubmit(true)
+        }
+        else {
+            setDisableButtonSubmit(false)
+        }
+
+    }, [setDisableButtonSubmit, infoFormProp])
 
     const onChangeInput = (e) => {
         e.preventDefault();
 
-        setInfoForm({
-            ...infoForm,
+        setInfoFormProp({
+            ...infoFormProp,
             [e.target.name]: e.target.value,
         })
     }
 
-    const selectCheckBox = (e) => {
+    const selectCheckBoxPets = (e) => {
 
-        return setInfoForm({
-            ...infoForm,
+        return setInfoFormProp({
+            ...infoFormProp,
             [e.target.name]: (e.target.checked === true)
         });
+    }
+
+    const selectCheckBoxService = (e) => {
+
+        if (e.target.checked === false) {
+            setInfoFormProp({
+                ...infoFormProp,
+                service: infoFormProp.service.filter(s => s !== e.target.value)
+            })
+        } else {
+            setInfoFormProp({
+                ...infoFormProp,
+                service: [...infoFormProp.service, e.target.value]
+            });
+        }
     }
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
-        try {
-            return await axios.post('http://localhost:3001/publication/createProperty', { ...infoForm })
+        console.log(infoFormProp)
+
+        /* try {
+            return await axios.post('http://localhost:3001/publication/createProperty', { ...infoFormProp })
         } catch (err) {
             console.log(err)
-        }
+        } */
     }
 
     return (
@@ -63,15 +98,15 @@ const CreatePost = () => {
             <Box display={'flex'} flexDirection={'column'} p={'1rem'} w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden' onSubmit={onSubmitForm}>
 
                 <FormLabel >Ciudad
-                    <Input type="text" name={"city"} value={infoForm.city} onChange={onChangeInput} />
+                    <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInput} />
                 </FormLabel>
 
                 <FormLabel >Dirección
-                    <Input type="text" name={"address"} value={infoForm.address} onChange={onChangeInput} />
+                    <Input type="text" name={"address"} value={infoFormProp.address} onChange={onChangeInput} />
                 </FormLabel >
 
                 <FormLabel >Imagen
-                    <Input type="text" name={"propImg"} value={infoForm.propImg} onChange={onChangeInput} />
+                    <Input type="text" name={"propImg"} value={infoFormProp.propImg} onChange={onChangeInput} />
                 </FormLabel>
 
                 <FormLabel >Tipo
@@ -84,9 +119,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel > Precio
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.price}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, price: value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"price"} value={infoForm.price} onChange={onChangeInput}>
+                        <NumberInputStepper >
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -94,9 +131,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel >Antigüedad
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.age}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, age:value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"age"} value={infoForm.age} onChange={onChangeInput} >
+                        <NumberInputStepper  >
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -104,9 +143,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel > Superficie
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.surface}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, surface: value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="text" name={"surface"} value={infoForm.surface} onChange={onChangeInput}>
+                        <NumberInputStepper >
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -114,9 +155,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel > Ambientes
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.environments}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, environments: value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"environments"} value={infoForm.environments} onChange={onChangeInput}>
+                        <NumberInputStepper type="number" name={"environments"} value={infoFormProp.environments} onChange={onChangeInput}>
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -124,9 +167,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel > Baños
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.bathrooms}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, bathrooms: value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"bathrooms"} value={infoForm.bathrooms} onChange={onChangeInput}>
+                        <NumberInputStepper >
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -134,9 +179,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel > Habitaciones
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.rooms}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, rooms: value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"rooms"} value={infoForm.rooms} onChange={onChangeInput}>
+                        <NumberInputStepper >
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -144,9 +191,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel > Garage
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.garage}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, garage: value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"garage"} value={infoForm.garage} onChange={onChangeInput} >
+                        <NumberInputStepper  >
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -154,9 +203,11 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel >Patios
-                    <NumberInput>
+                    <NumberInput value={infoFormProp.yard}
+                        onChange={(value) => setInfoFormProp({ ...infoFormProp, yard: value })}
+                        min={0}>
                         <NumberInputField />
-                        <NumberInputStepper type="number" name={"yard"} value={infoForm.yard} onChange={onChangeInput} >
+                        <NumberInputStepper >
                             <NumberIncrementStepper />
                             <NumberDecrementStepper />
                         </NumberInputStepper>
@@ -165,23 +216,23 @@ const CreatePost = () => {
 
                 <CheckboxGroup colorScheme='green' >
                     <Stack spacing={[1, 5]} direction={['column', 'row']}>
-                        <Checkbox name={"pets"} value='pets' onChange={selectCheckBox}>Mascotas</Checkbox>
+                        <Checkbox name={"pets"} value='pets' onChange={selectCheckBoxPets}>Mascotas</Checkbox>
                     </Stack>
                 </CheckboxGroup>
-
-
 
                 <CheckboxGroup colorScheme='green' >
                     <Stack spacing={[1, 5]} direction={['column', 'row']}>
-                        <Checkbox name={"agua"} value='agua' >Agua</Checkbox>
-                        <Checkbox name={"gas"} value='gas' >Gas</Checkbox>
-                        <Checkbox name={"luz"} value='luz' >Luz</Checkbox>
-                        <Checkbox name={"internet"} value='internet' >Internet</Checkbox>
+
+                        {services.map((s, i) => <Checkbox key={i} 
+                                                          name={s} 
+                                                          value={s}
+                                                          onChange={selectCheckBoxService} >
+                                                {s[0].toUpperCase() + s.substring(1)}
+                                                </Checkbox>)}
                     </Stack>
                 </CheckboxGroup>
 
-                <Button alignSelf={'flex-end'} colorScheme='blue' type="submit" value={"enviar"} >Enviar</Button>
-
+                <Button disabled={disableBUttonSubmit} alignSelf={'flex-end'} colorScheme='blue' type="submit" value={"enviar"} >Enviar</Button>
             </Box>
 
             <FormControl w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden' onSubmit={onSubmitForm}>
@@ -192,3 +243,4 @@ const CreatePost = () => {
 };
 
 export default CreatePost;
+
