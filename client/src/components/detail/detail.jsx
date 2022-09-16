@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {getDetail, clean} from "../../redux/actions"
 import { useEffect } from "react";
-import Cities from "../Cities/Cities";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faToilet } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +11,9 @@ import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
 import { faPaw, faHouse,faGarage } from "@fortawesome/free-solid-svg-icons";
 import style from "./Detail.module.css"
 import {Link} from "react-router-dom"
+import NavBar from "../NavBar/NavBar.jsx";
+import SearchBar from "../Search/searchBar.jsx";
+import Footer from "../Footer/Footer.jsx";
 
 
  //property
@@ -30,16 +32,17 @@ import {Link} from "react-router-dom"
 //user
 // name, description, rating
 
-//user Image
+//user Image 
 // url
 
 
 
-export default function Detail(props) {
+export default function Detail() {
   const dispatch = useDispatch()
   const miStateDetail = useSelector((state) => state.detail)
   // const miUseerState = useSelector((state) => state.user)
-  console.log(miStateDetail)
+  // const miPublicationState = useSelector((state) => state.publication)
+  // console.log(miStateDetail)
   var url = window.location.href.split("/")
 
   useEffect(() => {
@@ -50,15 +53,17 @@ export default function Detail(props) {
 
 
   return (
-    <div className={style.container2} >
+    <div>
+      <NavBar />
+      <SearchBar />
      <Link to={"/"}> <button className={style.buttons}>volver al home </button></Link>
       {miStateDetail.length > 0 ? (
-        <article >
+        <div >
           <div>
             <img src ={miStateDetail[0].img}/>
           </div>
 
-          <div className={style.infoConteiner}>
+          <div>
             <FontAwesomeIcon icon={faHeart} />
             <h1>price: {miStateDetail[0].precio}</h1>
             <h3>typeofProp: {miStateDetail[0].typeofProp}</h3>
@@ -106,7 +111,9 @@ export default function Detail(props) {
             <h3>{miUseerState[0].rating}</h3>
             <h3>{miUseerState[0].description}</h3> */}
           </div>
-        </article>
+          <Footer />
+        </div>
+        
       ) : (
         <div>no hay propiedad</div>
       )}
