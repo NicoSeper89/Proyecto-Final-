@@ -1,6 +1,19 @@
+import {
+  GET_PUBLICATIONS,
+  GET_PUBLICATIONS_DETAIL,
+  
+} from '../actions';
+
 const initialState = {
-  houses:[],
-  detail:{}
+  houses: [],
+  detail: {},
+  filters: {
+    publication: [], //se lo llena con {name:'nombre como en el modelo',value:'string o num'},
+    property: [],//se lo llena con {name:'nombre como en el modelo',value:'string o num'},
+    typeOfProp: '', // es un string que si no se lo usa tiene que estar vacio, y sino va el name de la propiedad
+    services: [] //{ name: "luz" }, { name: "agua" }, etc
+  },
+  sorting:{ name: 'default', direccion: 'minMax' }// va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -12,16 +25,27 @@ export default function rootReducer(state = initialState, action) {
         detail: action.payload
       }
 
-      case "CLEAN":
+    case "CLEAN":
+      return {
+        ...state,
+        detail: {}
+      }
+    case "HOUSES":
+      return {
+        ...state,
+        houses: action.payload
+      }
+      case GET_PUBLICATIONS:
         return{
           ...state,
-          detail:{}
+          houses:action.payload
         }
-        case "HOUSES":
+        case GET_PUBLICATIONS_DETAIL:
           return{
-          ...state,
-          houses: action.payload
+            ...state,
+            detail:action.payload
           }
+         
     default:
       return state;
   }
