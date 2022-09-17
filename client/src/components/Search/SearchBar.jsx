@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import sty from "./SearchBar.module.css";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { getPublications } from "../../redux/actions";
+import { getPublications, updateFilter } from "../../redux/actions";
 
 // import { searcHouse } from "../../redux/actions";
 // import { filter } from "../../redux/actions";
@@ -23,7 +23,8 @@ const SearchBar = () => {
   const propertys = useSelector((state) => state.typeOfProperties)
 
   const select = (e) => {
-    // dispatch(filter(e.target.name, e.target.value));
+    dispatch(updateFilter(e.target.value))
+    dispatch(getPublications(filters, sorting, ""))
   };
 
   const search_House = (e) => {
@@ -46,10 +47,10 @@ const SearchBar = () => {
         <button className={sty.btn}></button>
       </div>
       <div>
-        <select name="Propiedad" className={sty.select} onChange={select}>
+        <select name="property" className={sty.select} onChange={select}>
           <option>Propiedad</option>
           {propertys.map(e => {
-            return <option key={e.id}>{e.name}</option>
+            return <option key={e.id} value={e.name}>{e.name}</option>
           })}
         </select>
       </div>
