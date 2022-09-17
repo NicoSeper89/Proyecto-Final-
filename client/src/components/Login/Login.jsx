@@ -13,6 +13,8 @@ import {
 } from "@chakra-ui/react";
 import logoImg from "../../Image/Logo LookHouse.png";
 
+var gmail = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/ //ragex para validar gmail
+
 const Login = () => {
   const [login, setLogin] = useState({ gmail: "", contraseña: "" });
   const [show, setShow] = React.useState(false);
