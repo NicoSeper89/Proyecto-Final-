@@ -20,7 +20,9 @@ const ambientes = [1, 2, 3, 4, "5+"];
 
 const SearchBar = ({ paginado }) => {
   const dispatch = useDispatch();
-  /* const [, setOrden] = useState('') */
+
+  
+
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
@@ -47,10 +49,17 @@ const SearchBar = ({ paginado }) => {
     dispatch(getPublications(filters, sorting, city));
   };
 
+  
+
   const orderByPrice = (e) => {
-    dispatch(updateSortingPrice(e.target.value));
-   /*  dispatch(getPublications(filters, sorting, city)); */
-    /* setOrden(`Ordenado ${e.target.value}`); */
+    var orden 
+
+    if(e.target.value === "Precio") orden  = {name: "default", direccion: 'minMax'}
+    else orden = {name: 'price', direccion: e.target.value}
+  
+    dispatch(getPublications(filters, orden, city))
+    ; 
+    
   };
 
   function handleResetFilter(e) {
@@ -96,6 +105,14 @@ const SearchBar = ({ paginado }) => {
           placeholder="Ambientes..."
           onChange={selectAmbients}
         />
+        <select name="ambientes" className={sty.select} onChange={selectAmbients}>
+          <option>Ambientes</option>
+          {ambientes.map((e) => {
+            return <option key={e}>
+              {e}
+              </option>;
+          })}
+        </select>
       </div>
       <div>
         <select id="4" className={sty.select} onChange={selectPets}>
@@ -110,10 +127,12 @@ const SearchBar = ({ paginado }) => {
           <option value='maxMin'>Mayor Precio</option>
           <option value='minMax'>Menor Precio</option>
         </select>
-        <button className={sty.btn} onClick={() => dispatch(getPublications(filters, sorting, city))}>Sort</button>
+        {/* <button className={sty.btn} onClick={() => dispatch(getPublications(filters, sorting, city))}>
+          Sort
+          </button> */}
       </div>
     </div>
   );
 };
 
-export default SearchBar;
+export default SearchBar;  
