@@ -127,7 +127,7 @@ router.get("/:id", async (req, res, next) => {
 router.post("/image", async (req, res, next) => {
   const { url } = req.body
   try {
-    if (!url) res.status(404).send('no image to upload')
+    if (!url) return res.status(404).send('no image to upload')
     await PropertyImage.create({
         url
     })

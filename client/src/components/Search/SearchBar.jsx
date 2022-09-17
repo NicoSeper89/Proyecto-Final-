@@ -87,7 +87,7 @@ const SearchBar = ({ paginado }) => {
         <button className={sty.btn} onClick={search_House}>Buscar</button>
       </div>
       <div>
-        <select name="property" className={sty.select} onChange={selectPropType}>
+        <select name="property" className={sty.select} >
           <option>Propiedad</option>
           {propertys.map((e) => {
             return (
