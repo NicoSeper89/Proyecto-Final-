@@ -29,7 +29,7 @@ const SearchBar = ({ paginado }) => {
    setCity(e.target.value)
   }
   const select = (e) => {
-    dispatch(updateFilter(e.target.value));
+    // dispatch(updateFilter(e.target.value));
     dispatch(getPublications(filters, sorting, ""));
   };
   const selectAmbients = (e) => {
@@ -71,7 +71,7 @@ const SearchBar = ({ paginado }) => {
         <button className={sty.btn} onClick={search_House}>Buscar</button>
       </div>
       <div>
-        <select name="property" className={sty.select} onChange={selectPropType}>
+        <select name="property" className={sty.select} >
           <option>Propiedad</option>
           {propertys.map((e) => {
             return (
@@ -89,7 +89,7 @@ const SearchBar = ({ paginado }) => {
           placeholder="Ambientes..."
           onChange={selectAmbients}
         />
-        {/* <select name="ambientes" className={sty.select} onChange={selectAmbients}>
+        <select name="ambientes" className={sty.select} onChange={selectAmbients}>
           <option>Ambientes</option>
           {ambientes.map((e) => {
             return <option key={e}>

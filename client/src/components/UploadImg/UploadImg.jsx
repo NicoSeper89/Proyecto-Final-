@@ -22,12 +22,12 @@ export default function UploadImg() {
     }
     const upload = () => {
         const formData = new FormData()
-        formData.append('file', infoFormProp)
+        formData.append('file', fileInput)
         formData.append('upload_preset', 'czwgzdiw')
 
         axios.post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
         .then((resp)=>{
-          dispatch(imgUpload(resp.data.secure_url))
+          dispatch(imgUpload({url: resp.data.secure_url}))
           setImage([...image, resp.data.secure_url])
         })
         .catch((err)=>console.log(err))

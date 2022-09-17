@@ -4,6 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define('propertyImage', {
     url: {
       type: DataTypes.STRING,
+      unique: true
  //     defaultValue: pegar url de default
     },
   });
