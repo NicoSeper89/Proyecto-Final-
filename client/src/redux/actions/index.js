@@ -101,6 +101,7 @@ export function getTypesOfProperties() {
     }
   };
 }
+//propfilter
 export function updateFilter(value) {
   return {
     type: FILTER_PROP,
