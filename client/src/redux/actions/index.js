@@ -13,9 +13,9 @@ export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
 
-
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
+export const CURRENT_PAGE = "CURRENT_PAGE";
 
 //esto va?
 export const HOUSES = "HOUSES";
@@ -46,15 +46,15 @@ export function getPublications(filters, sorting, city) {
 //Esto es para ver el detalle de la publicación
 export function getPublicationsDetail(id) {
   return async function (dispatch) {
-    console.log(id,"id")
- 
-      let infoBack = await axios.get("/publication/" + id); //, info
-      console.log(infoBack, "infoback")
-      return dispatch({
-        type: GET_PUBLICATIONS_DETAIL,
-        payload: infoBack.data,
-      
-  })}
+    console.log(id, "id");
+
+    let infoBack = await axios.get("/publication/" + id); //, info
+    console.log(infoBack, "infoback");
+    return dispatch({
+      type: GET_PUBLICATIONS_DETAIL,
+      payload: infoBack.data,
+    });
+  };
 }
 
 //Esto trae las Provincias
@@ -111,27 +111,29 @@ export function getTypesOfProperties() {
 export function updateFilterProp(value) {
   return {
     type: FILTER_PROP,
-    payload: value
+    payload: value,
   };
 }
 export function updateFilterAmbient(value) {
   return {
     type: FILTER_AMB,
-    payload: value
+    payload: value,
   };
 }
 export function updateFilterPets(value) {
   return {
     type: FILTER_PET,
-    payload: value
+    payload: value,
   };
 }
 export function updateSortingPrice(value) {
   return {
     type: SORT_PRICE,
-    payload: value
+    payload: value,
   };
 }
+
+//Esto limpia los filtros.
 export function clearFilters() {
   return {
     type: CLEAR_FILTERS,
@@ -146,25 +148,32 @@ export function clean() {
 }
 
 //Esto sube la imagen a la tabla propertyImages
-export function imgUpload(value){
+export function imgUpload(value) {
   return async function (dispatch) {
     try {
-      await axios.post("/publication/image", value)
+      await axios.post("/publication/image", value);
       return dispatch({
         type: ULPOAD_IMG,
-      })
+      });
     } catch (error) {
       if (error.response) {
         alert(error.response.data);
       }
     }
-  }
+  };
 }
 
 export function loading(payload) {
   return {
     type: LOADING,
     payload,
+  };
+}
+
+export function setCurrentPage(page) {
+  return {
+    type: CURRENT_PAGE,
+    payload: page,
   };
 }
 

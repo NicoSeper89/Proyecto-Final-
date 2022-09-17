@@ -1,3 +1,45 @@
+.containerAll {
+  display: flex;
+  margin-top: 5rem;
+}
+
+.paginado {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.paginadoBtn {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-transform: uppercase;
+  gap: 0.5rem;
+}
+
+.paginadoBtn li {
+  padding: 0.8rem;
+  border: 1px solid;
+  border-color: black;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.paginadoBtn li:hover {
+  background-color: rgb(71, 89, 141);
+  color: white;
+}
+
+.paginadoBtn li.active {
+  padding: 0.5rem;
+  border: 2px solid;
+  border-color: royalblue;
+  cursor: pointer;
+  background-color: rgb(71, 89, 141);
+  color: white;
+}
+
 .container {
   display: flex;
   flex-wrap: wrap;
