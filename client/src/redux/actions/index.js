@@ -6,7 +6,7 @@ export const GET_DETAILS = "GET_DETAILS";
 export const GET_CITIES = "GET_CITIES";
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
-
+export const FILTER_PROP = "FILTER_PROP";
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 
@@ -103,7 +103,13 @@ export function getTypesOfProperties() {
     }
   };
 }
-
+//propfilter
+export function updateFilter(value) {
+  return {
+    type: FILTER_PROP,
+    payload: value
+  };
+}
 //Esto limpia el estado.
 export function clean() {
   return {

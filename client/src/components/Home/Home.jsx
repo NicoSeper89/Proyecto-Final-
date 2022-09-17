@@ -36,7 +36,7 @@ const Home = () => {
     setPage(numPage);
   };
 
-  //aaaa
+  //
   return (
     <>
       <Box className={style.header}>

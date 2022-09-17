@@ -6,6 +6,7 @@ import {
   GET_SERVICES,
   GET_PROPERTY_TYPES,
   CLEAN,
+  FILTER_PROP
   LOADING,
 } from "../actions";
 
@@ -63,6 +64,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         typeOfProperties: action.payload,
       };
+    case FILTER_PROP:
+      if(action.payload==='Propiedad'){
+        state.filters.typeOfProp=''
+      }else{
+        state.filters.typeOfProp=action.payload
+      }
+      return {
+        ...state,
+      };
+
     case LOADING:
       return {
         ...state,
