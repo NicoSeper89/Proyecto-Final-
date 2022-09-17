@@ -1,37 +1,42 @@
-import React, { useState } from 'react';
+import React from "react";
 import { useHistory } from "react-router-dom";
-import style from './NavBar.module.css';
-import { Link } from 'react-router-dom';
-import logoImg from '../../Image/Logo LookHouse.png'
+import style from "./NavBar.module.css";
+import { Link } from "react-router-dom";
+import logoImg from "../../Image/Logo LookHouse.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import SearchBar from "../Search/SearchBar";
 
-const NavBar = () => {
-
+const NavBar = ({ paginado }) => {
   const history = useHistory();
-  const [displayMenu, setDisplayMenu] = useState(false);
+  // const [displayMenu, setDisplayMenu] = useState(false);
 
-  const onClickMenu = (e) => {
-    e.preventDefault();
-    setDisplayMenu(!displayMenu);
-  };
+  // const onClickMenu = (e) => {
+  //   e.preventDefault();
+  //   setDisplayMenu(!displayMenu);
+  // };
 
   const buttonCreatePost = (e) => {
     e.preventDefault();
-    history.push("/createPost")
-  }
+    history.push("/createPost");
+  };
 
   return (
     <>
       <div className={style.container}>
-        <img src={logoImg} alt="homeLogo" />
+        <Link to="/">
+          <img src={logoImg} alt="homeLogo" />
+        </Link>
         <div className={style.buttons}>
+          <SearchBar />
           <button onClick={buttonCreatePost}>Publicar</button>
-          <Link to="/login">
-            <button>Ingresar</button>
-          </Link>
           <Link to="/checkin">
-            <button >Registrarse</button>
+            <button>Registro</button>
           </Link>
-          <div>
+          <Link to="/login">
+            <FontAwesomeIcon icon={faCircleUser} className={style.img} />
+          </Link>
+          {/* <div>
             <button onClick={onClickMenu}>Menu</button>
             {displayMenu ? (
               <div className={style.displayMenu}>
@@ -41,7 +46,7 @@ const NavBar = () => {
                 <button>Link 4</button>
               </div>
             ) : null}
-          </div>
+          </div> */}
         </div>
       </div>
     </>
