@@ -6,7 +6,9 @@ export const GET_DETAILS = "GET_DETAILS";
 export const GET_CITIES = "GET_CITIES";
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
+export const ULPOAD_IMG = "ULPOAD_IMG";
 export const FILTER_PROP = "FILTER_PROP";
+export const FILTER_AMB = "FILTER_AMB";
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 
@@ -39,18 +41,15 @@ export function getPublications(filters, sorting, city) {
 //Esto es para ver el detalle de la publicación
 export function getPublicationsDetail(id) {
   return async function (dispatch) {
-    try {
+    console.log(id,"id")
+ 
       let infoBack = await axios.get("/publication/" + id); //, info
+      console.log(infoBack, "infoback")
       return dispatch({
         type: GET_PUBLICATIONS_DETAIL,
         payload: infoBack.data,
-      });
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      }
-    }
-  };
+      
+  })}
 }
 
 //Esto trae las Provincias
@@ -104,9 +103,15 @@ export function getTypesOfProperties() {
   };
 }
 //propfilter
-export function updateFilter(value) {
+export function updateFilterProp(value) {
   return {
     type: FILTER_PROP,
+    payload: value
+  };
+}
+export function updateFilterAmbient(value) {
+  return {
+    type: FILTER_AMB,
     payload: value
   };
 }
@@ -115,6 +120,22 @@ export function clean() {
   return {
     type: CLEAN,
   };
+}
+
+//Esto sube la imagen a la tabla propertyImages
+export function imgUpload(value){
+  return async function (dispatch) {
+    try {
+      await axios.post("/publication/image", value)
+      return dispatch({
+        type: ULPOAD_IMG,
+      })
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  }
 }
 
 export function loading(payload) {
