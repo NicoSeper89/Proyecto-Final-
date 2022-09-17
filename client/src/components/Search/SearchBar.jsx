@@ -3,10 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import sty from "./SearchBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { getPublications, clearFilters, updateFilterProp, updateFilterAmbient, updateFilterPets, updateSortingPrice } from "../../redux/actions";
+import { getPublications, clearFilters, updateFilterProp, updateFilterAmbient, updateFilterPets,  } from "../../redux/actions";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
 import { useState } from "react";
+import {
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper
+} from "@chakra-ui/react";
 
 // import { searcHouse } from "../../redux/actions";
 // import { filter } from "../../redux/actions";
@@ -36,8 +43,8 @@ const SearchBar = ({ paginado }) => {
     dispatch(getPublications(filters, sorting, city));
   };
   const selectAmbients = (e) => {
-
-    dispatch(updateFilterAmbient(e.target.value));
+     
+    dispatch(updateFilterAmbient(e));
     dispatch(getPublications(filters, sorting, city));
   };
   const selectPets = (e) => {
@@ -98,22 +105,13 @@ const SearchBar = ({ paginado }) => {
           })}
         </select>
       </div>
-      <div>
-        <input
-          type="number"
-          className={sty.Serch}
-          placeholder="Ambientes..."
-          onChange={selectAmbients}
-        />
-        <select name="ambientes" className={sty.select} onChange={selectAmbients}>
-          <option>Ambientes</option>
-          {ambientes.map((e) => {
-            return <option key={e}>
-              {e}
-              </option>;
-          })}
-        </select>
-      </div>
+      <NumberInput defaultValue={2} min={1} max={20} onChange={selectAmbients} >
+  <NumberInputField  />
+  <NumberInputStepper>
+    <NumberIncrementStepper />
+    <NumberDecrementStepper />
+  </NumberInputStepper>
+</NumberInput>
       <div>
         <select id="4" className={sty.select} onChange={selectPets}>
           <option value='Mascotas'>Mascotas</option>
