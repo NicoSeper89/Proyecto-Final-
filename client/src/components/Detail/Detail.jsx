@@ -1,9 +1,9 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {getPublicationsDetail, clean} from "../../redux/actions"
+import { getPublicationsDetail, clean } from "../../redux/actions"
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faToilet, faBed, faDoorOpen, faPaw, faHouse, faCircleUser} from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faToilet, faBed, faDoorOpen, faPaw, faHouse, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 // import { faToilet } from "@fortawesome/free-solid-svg-icons";
 // import { faBed } from "@fortawesome/free-solid-svg-icons";
 // import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
@@ -20,26 +20,29 @@ export default function Detail(props) {
   const miStateDetail = useSelector((state) => state.detail)
   // const miUseerState = useSelector((state) => state.user)
   // const miPublicationState = useSelector((state) => state.publication)
-  
+
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id))
   }, [dispatch, props.match.params.id])
-  
+
   console.log(miStateDetail, "estado")
 
 
   return (
     <Box>
       <Box>
-      <NavBarForms />
+        <NavBarForms />
       </Box>
       <Box>
-      <SearchBar />
+        <SearchBar />
       </Box>
       {Object.entries(miStateDetail).length > 0 ? (
         <Box >
           <Box> DATOS PUBLICACION
             {/* <Image src ={miStateDetail[0].img}/> */}
+            <UnorderedList>
+              {miStateDetail.property.propertyImages?.map((e, i) => <ListItem key={i} ><Image src={e.url} /></ListItem>)}
+            </UnorderedList>
             <Text>{miStateDetail.property.premium}</Text>
           </Box>
 
@@ -68,29 +71,29 @@ export default function Detail(props) {
               <FontAwesomeIcon icon={faPaw} />
               <ListItem>garage: {miStateDetail.property.garage}</ListItem>
               <ListItem>age: {miStateDetail.property.age}</ListItem>
-              <ListItem>{miStateDetail.property.services.map((e)=>e.name +", ")}</ListItem>
+              <ListItem>{miStateDetail.property.services.map((e) => e.name + ", ")}</ListItem>
             </UnorderedList>
             <Box>
               <Text>description: {miStateDetail.property.description}</Text>
             </Box>
           </Box>
           <Box>DATOS PROPIETARIO
-          {/* <FontAwesomeIcon icon={faUser} /> */}
-          <FontAwesomeIcon icon={faCircleUser} />
+            {/* <FontAwesomeIcon icon={faUser} /> */}
+            <FontAwesomeIcon icon={faCircleUser} />
             {/* <Text>{miUseerState[0].name}</Text>
             
             <Text>{miUseerState.mail}</Text>
             <Text>{miUseerState[0].rating}</Text>
             <Text>{miUseerState[0].description}</Text> */}
-{/* <Text>service: {miStateDetail.property.service.name}</Text> */}
+            {/* <Text>service: {miStateDetail.property.service.name}</Text> */}
           </Box>
         </Box>
-        
-        ) : (
-          <Box bg="red">no hay propiedad</Box>
-          )}
 
-          <Footer />
+      ) : (
+        <Box bg="red">no hay propiedad</Box>
+      )}
+
+      <Footer />
     </Box>
   );
 }
