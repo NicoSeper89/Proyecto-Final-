@@ -7,17 +7,19 @@ export const GET_CITIES = "GET_CITIES";
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
-
+export const FILTER_PROP = "FILTER_PROP";
 export const CLEAN = "CLEAN";
+export const LOADING = "LOADING";
 
 //esto va?
 export const HOUSES = "HOUSES";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
-export function getPublications(filters, sorting, city){
+export function getPublications(filters, sorting, city) {
   return async function (dispatch) {
     try {
+      dispatch(loading());
       let info = {
         filters,
         sorting,
@@ -38,18 +40,15 @@ export function getPublications(filters, sorting, city){
 //Esto es para ver el detalle de la publicación
 export function getPublicationsDetail(id) {
   return async function (dispatch) {
-    try {
+    console.log(id,"id")
+ 
       let infoBack = await axios.get("/publication/" + id); //, info
+      console.log(infoBack, "infoback")
       return dispatch({
         type: GET_PUBLICATIONS_DETAIL,
         payload: infoBack.data,
-      });
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      }
-    }
-  };
+      
+  })}
 }
 
 //Esto trae las Provincias
@@ -102,7 +101,13 @@ export function getTypesOfProperties() {
     }
   };
 }
-
+//propfilter
+export function updateFilter(value) {
+  return {
+    type: FILTER_PROP,
+    payload: value
+  };
+}
 //Esto limpia el estado.
 export function clean() {
   return {
@@ -125,6 +130,14 @@ export function imgUpload(value){
     }
   }
 }
+
+export function loading(payload) {
+  return {
+    type: LOADING,
+    payload,
+  };
+}
+
 //ESTO HAY QUE BORRAR
 /* ************ FILTROS & ORDENAMIENTOS ************ */
 // export const searcHouse = (city) => async (dispatch) => {

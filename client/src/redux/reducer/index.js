@@ -7,6 +7,8 @@ import {
   GET_PROPERTY_TYPES,
   CLEAN,
   ULPOAD_IMG,
+  FILTER_PROP,
+  LOADING,
 } from "../actions";
 
 const initialState = {
@@ -22,6 +24,7 @@ const initialState = {
     services: [], //{ name: "luz" }, { name: "agua" }, etc
   },
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
+  loading: false,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -43,6 +46,7 @@ export default function rootReducer(state = initialState, action) {
         houses: action.payload,
       };
     case GET_PUBLICATIONS_DETAIL:
+      console.log(action.payload ,"action")
       return {
         ...state,
         detail: action.payload,
@@ -66,6 +70,21 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state
     }
+    case FILTER_PROP:
+      if (action.payload === "Propiedad") {
+        state.filters.typeOfProp = "";
+      } else {
+        state.filters.typeOfProp = action.payload;
+      }
+      return {
+        ...state,
+      };
+
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     default:
       return state;
   }

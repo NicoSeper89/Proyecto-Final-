@@ -1,12 +1,12 @@
 import React from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 import style from "./About.module.css";
 
 export default function About() {
   return (
     <div className={style.container}>
-      <NavBar />
+      <NavBarForms />
       <div className={style.containerText}>
         <div>
           <h1>Acerca de LookHouse</h1>

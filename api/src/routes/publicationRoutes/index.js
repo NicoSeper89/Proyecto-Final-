@@ -33,9 +33,9 @@ router.post("/", async (req, res, next) => {
         services:[{name: "luz"},{name: "agua"}]
         } */
     /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
-    let publications = await getAll();
+    let publications = await getAll();  /// me trae todas las casas con sus propiedades
 
-    publications = await getFiltered(publications, filters);
+    publications = await getFiltered(publications, filters);  // envia todas las casas y un filtro 
 
     if (city) {
       //aca filtra por searchbar(revisar si se quiere hacer independiente)

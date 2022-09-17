@@ -22,7 +22,7 @@ export default function UploadImg() {
     }
     const upload = () => {
         const formData = new FormData()
-        formData.append('file', fileInput)
+        formData.append('file', infoFormProp)
         formData.append('upload_preset', 'czwgzdiw')
 
         axios.post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
@@ -53,6 +53,6 @@ export default function UploadImg() {
           <button onClick={()=>upload()}>Upload</button>
           {preview && <img src={preview} alt="chosen" className="uploadedImg"/>}
           {successMsg && <p>{successMsg}</p>}
-        </>
+        </>       
     )
 }
