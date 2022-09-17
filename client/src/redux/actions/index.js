@@ -8,15 +8,17 @@ export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 
 export const CLEAN = "CLEAN";
+export const LOADING = "LOADING";
 
 //esto va?
 export const HOUSES = "HOUSES";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
-export function getPublications(filters, sorting, city){
+export function getPublications(filters, sorting, city) {
   return async function (dispatch) {
     try {
+      dispatch(loading());
       let info = {
         filters,
         sorting,
@@ -106,6 +108,13 @@ export function getTypesOfProperties() {
 export function clean() {
   return {
     type: CLEAN,
+  };
+}
+
+export function loading(payload) {
+  return {
+    type: LOADING,
+    payload,
   };
 }
 

@@ -1,58 +1,76 @@
 import React from "react";
-import style from "./Check_in.module.css"
-import { Input, Box, InputGroup, Button, InputRightElement, Stack, Checkbox } from '@chakra-ui/react'
-
+import style from "./Check_in.module.css";
+import {
+  Input,
+  Box,
+  InputGroup,
+  Button,
+  InputRightElement,
+  Stack,
+  Checkbox,
+} from "@chakra-ui/react";
+import logoImg from "../../Image/Logo LookHouse.png";
+import { Link } from "react-router-dom";
 
 const NewUser = () => {
-    const [show, setShow] = React.useState(false)
-    const handleClick = () => setShow(!show)
-    return (
-        <form className={style.form}>
-            <Box className={style.titulo}>
-                <h1>Crear Usuario</h1>
-            </Box>
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+  return (
+    <Box>
+      <Box className={style.containerNav}>
+        <Link to="/">
+          <img src={logoImg} alt="homeLogo" />
+        </Link>
+        <Box className={style.buttons}>
+          <Link to="/">
+            <button>Atras</button>
+          </Link>
+        </Box>
+      </Box>
 
-            <Box className={style.input}>
-                <label htmlFor="">Nombre</label>
-                <Input placeholder='Nombre...' />
-            </Box>
-            <Box className={style.input}>
-                <label htmlFor="">E-mail</label>
-                <Input placeholder='E-mail...' />
-            </Box>
+      <form className={style.form}>
+        <Box className={style.titulo}>
+          <h1>Crear Usuario</h1>
+        </Box>
 
-            <Box className={style.input}>
-                <label htmlFor="">Contraseña</label>
-                <InputGroup size='md'  >
-                    <Input
-                        pr='4.5rem'
-                        type={show ? 'text' : 'password'}
-                        placeholder='Contraseña..'
-                    />
-                    <InputRightElement width='4.5rem'>
-                        <Button h='1.75rem' size='sm' onClick={handleClick}>
-                            {show ? 'Hide' : 'Show'}
-                        </Button>
-                    </InputRightElement>
-                </InputGroup>
-            </Box>
+        <Box className={style.input}>
+          <label htmlFor="">Nombre</label>
+          <Input placeholder="Nombre..." />
+        </Box>
+        <Box className={style.input}>
+          <label htmlFor="">E-mail</label>
+          <Input placeholder="E-mail..." />
+        </Box>
 
-            <Box className={style.titulo}>
-                <label htmlFor="">Tipo De Usuario</label>
-            </Box>
+        <Box className={style.input}>
+          <label htmlFor="">Contraseña</label>
+          <InputGroup size="md">
+            <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="Contraseña.." />
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={handleClick}>
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </Box>
 
-            <Box className={style.input}>
-                <Stack spacing={5} direction='row'>
-                    <Checkbox colorScheme='red' defaultChecked>
-                        Propietario
-                    </Checkbox>
-                    <Checkbox colorScheme='green' defaultChecked>
-                        Inquilino
-                    </Checkbox>
-                </Stack>
-            </Box>
-        </form>
-    )
-}
+        <Box className={style.titulo}>
+          <label htmlFor="">Tipo De Usuario</label>
+        </Box>
 
-export default NewUser
+        <Box className={style.input}>
+          <Stack spacing={5} direction="row">
+            <Checkbox colorScheme="red" defaultChecked>
+              Propietario
+            </Checkbox>
+            <Checkbox colorScheme="green" defaultChecked>
+              Inquilino
+            </Checkbox>
+          </Stack>
+        </Box>
+      </form>
+    </Box>
+  );
+};
+
+export default NewUser;

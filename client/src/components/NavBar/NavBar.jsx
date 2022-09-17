@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import style from "./NavBar.module.css";
 import { Link } from "react-router-dom";
@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../Search/SearchBar";
 
-const NavBar = () => {
+const NavBar = ({ paginado }) => {
   const history = useHistory();
   // const [displayMenu, setDisplayMenu] = useState(false);
 

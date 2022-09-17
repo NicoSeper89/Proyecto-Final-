@@ -16,6 +16,7 @@
 }
 .select:hover {
   scale: 1.02;
+  cursor: pointer;
 }
 
 .btn {
@@ -33,4 +34,9 @@
   margin: 0 0px 0 10px;
   font-size: 15px;
   background-color: #e7e7e7;
+}
+
+.img {
+  height: 25px;
+  cursor: pointer;
 }

@@ -1,9 +1,21 @@
+.header {
+  background-image: url("../../Image/imgHeader.jpg");
+  background-size: cover;
+  background-repeat: repeat;
+  height: 520px;
+  width: 100%;
+  box-shadow: 3px 3px 20px 3px rgba(0, 0, 0, 0.45);
+  z-index: 100;
+  overflow: hidden;
+}
+
 .container {
   display: flex;
   justify-content: center;
   min-height: 100%;
   position: relative;
   /* padding-bottom: 150px; */
+  z-index: 90;
 }
 
 .paginado {
@@ -11,4 +23,5 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  z-index: 80;
 }

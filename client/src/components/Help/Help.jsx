@@ -1,12 +1,12 @@
 import React from "react";
-import NavBar from "../NavBar/NavBar";
+import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 import style from "./Help.module.css";
 
 export default function Help() {
   return (
     <div className={style.container}>
-      <NavBar />
+      <NavBarForms />
       <div className={style.containerText}>
         <h1>Ayuda</h1>
         <h2>¿Cómo me registro en LookHouse?</h2>

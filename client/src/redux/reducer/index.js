@@ -6,6 +6,7 @@ import {
   GET_SERVICES,
   GET_PROPERTY_TYPES,
   CLEAN,
+  LOADING,
 } from "../actions";
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
     services: [], //{ name: "luz" }, { name: "agua" }, etc
   },
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
+  loading: false,
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -60,6 +62,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         typeOfProperties: action.payload,
+      };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
       };
     default:
       return state;

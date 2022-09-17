@@ -1,9 +1,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import sty from "./SearchBar.module.css";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { getPublications } from "../../redux/actions";
+import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import style from "./SearchBar.module.css";
 
 // import { searcHouse } from "../../redux/actions";
 // import { filter } from "../../redux/actions";
@@ -15,7 +17,7 @@ import { getPublications } from "../../redux/actions";
 
 const ambientes = [1, 2, 3, 4];
 
-const SearchBar = () => {
+const SearchBar = ({ paginado }) => {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
@@ -32,8 +34,21 @@ const SearchBar = () => {
   const BucarPorPrecio = (e) => {
     // dispatch(precio(e.target.value));
   };
+
+  function handleResetFilter(e) {
+    e.preventDefault();
+    dispatch(getPublications());
+    paginado(1);
+  }
+
   return (
     <div className={sty.continer}>
+      <FontAwesomeIcon
+        icon={faFilterCircleXmark}
+        onClick={(e) => handleResetFilter(e)}
+        className={style.img}
+      />
+      {/* <button onClick={(e) => handleResetFilter(e)}>Reset</button> */}
       <div>
         <input
           type="text"
@@ -61,17 +76,17 @@ const SearchBar = () => {
         </select>
       </div>
       <div>
-        <select id="3" className={sty.select} onChange={BucarPorPrecio}>
-          <option>Precio</option>
-          <option>Mayor Precio</option>
-          <option>Menor Precio</option>
-        </select>
-      </div>
-      <div>
         <select id="4" className={sty.select}>
           <option>Mascotas</option>
           <option>si</option>
           <option>no</option>
+        </select>
+      </div>
+      <div>
+        <select id="3" className={sty.select} onChange={BucarPorPrecio}>
+          <option>Precio</option>
+          <option>Mayor Precio</option>
+          <option>Menor Precio</option>
         </select>
       </div>
     </div>
