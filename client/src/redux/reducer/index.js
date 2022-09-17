@@ -6,6 +6,7 @@ import {
   GET_SERVICES,
   GET_PROPERTY_TYPES,
   CLEAN,
+  ULPOAD_IMG,
   FILTER_PROP,
   LOADING,
 } from "../actions";
@@ -65,6 +66,10 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         typeOfProperties: action.payload,
       };
+    case ULPOAD_IMG:
+      return {
+        ...state
+    }
     case FILTER_PROP:
       if (action.payload === "Propiedad") {
         state.filters.typeOfProp = "";

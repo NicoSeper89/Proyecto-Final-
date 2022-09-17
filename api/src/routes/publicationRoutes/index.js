@@ -124,6 +124,21 @@ router.get("/:id", async (req, res, next) => {
     }
 }) */
 
+router.post("/image", async (req, res, next) => {
+  const { url } = req.body
+  try {
+    if (!url) res.status(404).send('no image to upload')
+    await PropertyImage.create({
+        url
+    })
+    res.send('image upload successful')
+  } catch (error) {
+    next(error)
+  }
+})
+
+
+
 router.post("/createProperty", async (req, res, next) => {
   const {
     address,
@@ -174,10 +189,10 @@ router.post("/createProperty", async (req, res, next) => {
     });
     property.setTypeOfProp(type);
 
-    // let img = await PropertyImage.findOne({
-    //     where: { url: propImg }
-    // })
-    // property.addPropertyImage(img)
+    let img = await PropertyImage.findAll({
+        where: { url: propImg }
+    })
+    property.addPropertyImage(img)
 
     res.send(property.id);
   } catch (error) {
@@ -210,5 +225,16 @@ router.post("/postProperty", async (req, res, next) => {
     next(error);
   }
 });
+
+
+router.delete('/image/:id', async (req, res, next)=>{
+  const {id} = req.params
+  try {
+    await PropertyImage.destroy({ where: { id: id }})
+    res.send(`image id ${id} was deleted`)
+  } catch (error) {
+    next(err)
+  }
+})
 
 module.exports = router;
