@@ -31,7 +31,7 @@ const CreatePost = () => {
   const [infoFormProp, setInfoFormProp] = useState({
     city: "",
     address: "",
-    propImg: "",
+    propImg: [],
     typProp: "",
     price: "",
     age: "",
@@ -56,13 +56,16 @@ const CreatePost = () => {
   const [disableBUttonSubmit, setDisableButtonSubmit] = useState(true);
 
   useEffect(() => {
-    const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age } =
+    const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age, typProp } =
       infoFormProp;
 
     if (
-      !city ||
+      !city || 
+      (city === "default") ||
       !address ||
       !surface ||
+      !typProp ||
+      (typProp === "default") ||
       !price ||
       !environments ||
       !bathrooms ||
@@ -146,253 +149,249 @@ const CreatePost = () => {
   };
 
   return (
-    <Box>
+    <>
       <NavBarForms />
-
-      <Flex
-        gap={"2rem"}
-        position="relative"
-        m={"1rem"}
-        p={"1rem"}
-        justifyContent={"center"}
-        wrap="wrap"
-        borderWidth="1px"
-        borderRadius="14px"
-        overflow="hidden"
-      >
-        <Text w={"90%"} textAlign={"center"} fontSize="2em">
-          Formulario de Creación de Propiedad
-        </Text>
-
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
+      <Box>
+        <Flex 
+          gap={"2rem"}
+          position="relative"
+          m={"1rem"}
           p={"1rem"}
-          w={"45%"}
-          gap=".5rem"
+          justifyContent={"center"}
+          wrap="wrap"
           borderWidth="1px"
           borderRadius="14px"
           overflow="hidden"
         >
-          <FormLabel>
-            Ciudad
-            {/*  <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} /> */}
-            <Select name={"city"} onChange={onChangeInputProp}>
-              {cities.map((type, i) => (
-                <option key={i} value={type.name}>
-                  {type.name}
-                </option>
-              ))}
-            </Select>
-          </FormLabel>
+          <Text w={"90%"} textAlign={"center"} fontSize="2em">
+            Formulario de Creación de Propiedad
+          </Text>
 
-          <FormLabel>
-            Dirección
-            <Input
-              type="text"
-              name={"address"}
-              value={infoFormProp.address}
-              onChange={onChangeInputProp}
-            />
-          </FormLabel>
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            p={"1rem"}
+            w={"45%"}
+            gap=".5rem"
+            borderWidth="1px"
+            borderRadius="14px"
+            overflow="hidden"
+          >
+            <FormLabel>
+              Provincia
+              {/*  <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} /> */}
+              <Select name={"city"} onChange={onChangeInputProp}>
+                <option value="default" >Default</option>
+                {cities.map((type, i) => (
+                  <option key={i} value={type.name}>
+                    {type.name}
+                  </option>
+                ))}
+              </Select>
+            </FormLabel>
 
-          <FormLabel>
-            Imagen
-            <UploadImg setInfoFormProp={setInfoFormProp} infoFormProp={infoFormProp} />
-          </FormLabel>
-
-          <FormLabel>
-            Tipo de propiedad
-            <Select name={"typProp"} onChange={onChangeInputProp}>
-              {propertys.map((type, i) => (
-                <option key={i} value={type.name}>
-                  {type.name}
-                </option>
-              ))}
-            </Select>
-          </FormLabel>
-
-          <FormLabel>
-            {" "}
-            Precio
-            <NumberInput
-              value={infoFormProp.price}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, price: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
-
-          <FormLabel>
-            Antigüedad
-            <NumberInput
-              value={infoFormProp.age}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, age: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
-
-          <FormLabel>
-            {" "}
-            Superficie
-            <NumberInput
-              value={infoFormProp.surface}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, surface: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
-
-          <FormLabel>
-            {" "}
-            Ambientes
-            <NumberInput
-              value={infoFormProp.environments}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, environments: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper
-                type="number"
-                name={"environments"}
-                value={infoFormProp.environments}
+            <FormLabel>
+              Dirección
+              <Input
+                type="text"
+                name={"address"}
+                value={infoFormProp.address}
                 onChange={onChangeInputProp}
+              />
+            </FormLabel>
+
+            <FormLabel>
+              Tipo de propiedad
+              <Select name={"typProp"} onChange={onChangeInputProp}>
+                <option value="default" >Default</option>
+                {propertys.map((type, i) => (
+                  <option key={i} value={type.name}>
+                    {type.name}
+                  </option>
+                ))}
+              </Select>
+            </FormLabel>
+
+            <FormLabel>
+              {" "}
+              Precio
+              <NumberInput
+                value={infoFormProp.price}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, price: value })}
+                min={0}
               >
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
 
-          <FormLabel>
-            {" "}
-            Baños
-            <NumberInput
-              value={infoFormProp.bathrooms}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, bathrooms: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
-
-          <FormLabel>
-            {" "}
-            Habitaciones
-            <NumberInput
-              value={infoFormProp.rooms}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, rooms: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
-
-          <FormLabel>
-            {" "}
-            Garage
-            <NumberInput
-              value={infoFormProp.garage}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, garage: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
-
-          <FormLabel>
-            Patios
-            <NumberInput
-              value={infoFormProp.yard}
-              onChange={(value) => setInfoFormProp({ ...infoFormProp, yard: value })}
-              min={0}
-            >
-              <NumberInputField />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
-          </FormLabel>
-
-          <CheckboxGroup colorScheme="green">
-            <Stack spacing={[1, 5]} direction={["column", "row"]}>
-              <Checkbox
-                name={"pets"}
-                onChange={(e) =>
-                  setInfoFormProp({
-                    ...infoFormProp,
-                    [e.target.name]: e.target.checked === true,
-                  })
-                }
+            <FormLabel>
+              Antigüedad
+              <NumberInput
+                value={infoFormProp.age}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, age: value })}
+                min={0}
               >
-                Mascotas
-              </Checkbox>
-            </Stack>
-          </CheckboxGroup>
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
 
-          <CheckboxGroup colorScheme="green">
-            <Stack spacing={[1, 5]} direction={["column", "row"]}>
-              {services.map((s, i) => (
-                <Checkbox key={i} name={s.name} value={s.name} onChange={selectCheckBoxService}>
-                  {s.name[0].toUpperCase() + s.name.substring(1)}
+            <FormLabel>
+              Superficie
+              <NumberInput
+                value={infoFormProp.surface}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, surface: value })}
+                min={0}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
+
+            <FormLabel>
+              {" "}
+              Ambientes
+              <NumberInput
+                value={infoFormProp.environments}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, environments: value })}
+                min={0}
+              >
+                <NumberInputField />
+                <NumberInputStepper
+                  type="number"
+                  name={"environments"}
+                  value={infoFormProp.environments}
+                  onChange={onChangeInputProp}
+                >
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
+
+            <FormLabel>
+              {" "}
+              Baños
+              <NumberInput
+                value={infoFormProp.bathrooms}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, bathrooms: value })}
+                min={0}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
+
+            <FormLabel>
+              {" "}
+              Habitaciones
+              <NumberInput
+                value={infoFormProp.rooms}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, rooms: value })}
+                min={0}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
+
+            <FormLabel>
+              {" "}
+              Garage
+              <NumberInput
+                value={infoFormProp.garage}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, garage: value })}
+                min={0}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
+
+            <FormLabel>
+              Patios
+              <NumberInput
+                value={infoFormProp.yard}
+                onChange={(value) => setInfoFormProp({ ...infoFormProp, yard: value })}
+                min={0}
+              >
+                <NumberInputField />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormLabel>
+
+            <CheckboxGroup colorScheme="green">
+              <Stack spacing={[1, 5]} direction={["column", "row"]}>
+                <Checkbox
+                  name={"pets"}
+                  onChange={(e) =>
+                    setInfoFormProp({
+                      ...infoFormProp,
+                      [e.target.name]: e.target.checked === true,
+                    })
+                  }
+                >
+                  Mascotas
                 </Checkbox>
-              ))}
-            </Stack>
-          </CheckboxGroup>
-        </Box>
+              </Stack>
+            </CheckboxGroup>
 
-        <Box
-          display={"flex"}
-          flexDirection={"column"}
-          p={"1rem"}
-          w={"45%"}
-          gap=".5rem"
-          borderWidth="1px"
-          borderRadius="14px"
-          overflow="hidden"
-        >
-          <FormLabel borderWidth="1px" borderRadius="14px" p={"1rem"} borderColor={"gray.200"}>
-            <Text mb="8px">Descripcion</Text>
-            <Textarea
-              borderRadius="8px"
-              name={"description"}
-              value={infoFormPub.description}
-              size="sm"
-              resize={"none"}
-              onChange={onChangeInputPub}
-            />
-          </FormLabel>
+            <CheckboxGroup colorScheme="green">
+              <Stack spacing={[1, 5]} direction={["column", "row"]}>
+                {services.map((s, i) => (
+                  <Checkbox key={i} name={s.name} value={s.name} onChange={selectCheckBoxService}>
+                    {s.name[0].toUpperCase() + s.name.substring(1)}
+                  </Checkbox>
+                ))}
+              </Stack>
+            </CheckboxGroup>
+          </Box>
 
-          {/* <FormLabel >Estado
+          <Box
+            display={"flex"}
+            flexDirection={"column"}
+            p={"1rem"}
+            w={"45%"}
+            gap=".5rem"
+            borderWidth="1px"
+            borderRadius="14px"
+            overflow="hidden"
+          >
+            <FormLabel borderWidth="1px" borderRadius="14px" p={"1rem"} borderColor={"gray.200"}>
+              <Text mb="8px">Descripcion</Text>
+              <Textarea
+                borderRadius="8px"
+                name={"description"}
+                value={infoFormPub.description}
+                size="sm"
+                resize={"none"}
+                onChange={onChangeInputPub}
+              />
+            </FormLabel>
+
+            {/* <FormLabel >Estado
                     <Input type="text" name={"status"} value={infoFormPub.status} onChange={onChangeInputPub} />
                 </FormLabel>
 
@@ -400,35 +399,43 @@ const CreatePost = () => {
                     <Input type="text" name={"report"} value={infoFormPub.report} onChange={onChangeInputPub} />
                 </FormLabel> */}
 
-          <CheckboxGroup colorScheme="green">
-            <Stack spacing={[1, 5]} direction={["column", "row"]}>
-              <Checkbox
-                name={"premium"}
-                onChange={(e) =>
-                  setInfoFormPub({
-                    ...infoFormPub,
-                    [e.target.name]: e.target.checked === true,
-                  })
-                }
-              >
-                Premium
-              </Checkbox>
-            </Stack>
-          </CheckboxGroup>
-        </Box>
+            <CheckboxGroup colorScheme="green">
+              <Stack spacing={[1, 5]} direction={["column", "row"]}>
+                <Checkbox
+                  name={"premium"}
+                  onChange={(e) =>
+                    setInfoFormPub({
+                      ...infoFormPub,
+                      [e.target.name]: e.target.checked === true,
+                    })
+                  }
+                >
+                  Premium
+                </Checkbox>
+              </Stack>
+            </CheckboxGroup>
+            
+            <FormLabel  >
+              Imagen
+              <UploadImg setInfoFormProp={setInfoFormProp} infoFormProp={infoFormProp} />
+            </FormLabel>
+            
+            <Button
+            disabled={disableBUttonSubmit}
+            alignSelf={"flex-end"}
+            colorScheme="blue"
+            type="submit"
+            value={"enviar"}
+            onClick={onSubmitForm}
+          >
+            Enviar
+          </Button>
 
-        <Button
-          disabled={disableBUttonSubmit}
-          alignSelf={"flex-end"}
-          colorScheme="blue"
-          type="submit"
-          value={"enviar"}
-          onClick={onSubmitForm}
-        >
-          Enviar
-        </Button>
-      </Flex>
-    </Box>
+          </Box>
+
+        </Flex>
+      </Box>
+    </>
   );
 };
 
