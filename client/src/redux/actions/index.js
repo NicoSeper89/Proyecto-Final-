@@ -9,6 +9,11 @@ export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
 export const FILTER_PROP = "FILTER_PROP";
 export const FILTER_AMB = "FILTER_AMB";
+export const FILTER_PET = "FILTER_PET";
+export const SORT_PRICE = "SORT_PRICE";
+export const CLEAR_FILTERS = "CLEAR_FILTERS";
+
+
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 
@@ -115,6 +120,24 @@ export function updateFilterAmbient(value) {
     payload: value
   };
 }
+export function updateFilterPets(value) {
+  return {
+    type: FILTER_PET,
+    payload: value
+  };
+}
+export function updateSortingPrice(value) {
+  return {
+    type: SORT_PRICE,
+    payload: value
+  };
+}
+export function clearFilters() {
+  return {
+    type: CLEAR_FILTERS,
+  };
+}
+
 //Esto limpia el estado.
 export function clean() {
   return {
