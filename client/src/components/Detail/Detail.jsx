@@ -3,12 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {getPublicationsDetail, clean} from "../../redux/actions"
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faToilet, faBed, faDoorOpen, faPaw, faHouse, faCircleUser} from "@fortawesome/free-solid-svg-icons";
-// import { faToilet } from "@fortawesome/free-solid-svg-icons";
-// import { faBed } from "@fortawesome/free-solid-svg-icons";
-// import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
-// import { faPaw, faHouse } from "@fortawesome/free-solid-svg-icons";
-// import {faCircleUser} from "@fortawesome/free-solid-svg-icons"
+import { faHeart, faToilet, faBed, faDoorOpen, faPaw, faHouse, faCircleUser, faCalendar, faCheck, faX} from "@fortawesome/free-solid-svg-icons";
 import NavBarForms from "../NavBar/NavBarForms";
 import SearchBar from "../Search/SearchBar.jsx";
 import Footer from "../Footer/Footer.jsx";
@@ -23,13 +18,22 @@ export default function Detail(props) {
   
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id))
+    dispatch(clean())
   }, [dispatch, props.match.params.id])
   
   console.log(miStateDetail, "estado")
 
 
   return (
-    <Box>
+    <Box gap={"2rem"}
+    position="relative"
+    m={"1rem"}
+    p={"1rem"}
+    justifyContent={"center"}
+    wrap="wrap"
+    borderWidth="1px"
+    borderRadius="14px"
+    overflow="hidden">
       <Box>
       <NavBarForms />
       </Box>
@@ -38,13 +42,32 @@ export default function Detail(props) {
       </Box>
       {Object.entries(miStateDetail).length > 0 ? (
         <Box >
-          <Box> DATOS PUBLICACION
-            {/* <Image src ={miStateDetail[0].img}/> */}
+          <Box display={"flex"}
+          flexDirection={"column"}
+          p={"1rem"}
+          w={"45%"}
+          gap=".5rem"
+          borderWidth="1px"
+          borderRadius="14px"
+          overflow="hidden"> DATOS PUBLICACION
+            {/* <Image src ={miStateDetail.property.imgen}/> */}
             <Text>{miStateDetail.property.premium}</Text>
           </Box>
 
-          <Box>
+          <Box display={"flex"}
+          flexDirection={"column"}
+          p={"1rem"}
+          w={"45%"}
+          gap=".5rem"
+          borderWidth="1px"
+          borderRadius="14px"
+          overflow="hidden">
             <FontAwesomeIcon icon={faHeart} />
+            {/* <ListItem>premium: {miStateDetail.premium === true? (
+                <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faX} />
+        )}</ListItem> */}
             <Text>price: {miStateDetail.property.price}</Text>
             <Text>typeofProp: {miStateDetail.property.TypeOfProp.name}</Text>
             <FontAwesomeIcon icon={faHouse} />
@@ -54,7 +77,14 @@ export default function Detail(props) {
             <FontAwesomeIcon icon={faDoorOpen} />
             <Text>garage: {miStateDetail.property.garage}</Text>
           </Box>
-          <Box>
+          <Box display={"flex"}
+          flexDirection={"column"}
+          p={"1rem"}
+          w={"45%"}
+          gap=".5rem"
+          borderWidth="1px"
+          borderRadius="14px"
+          overflow="hidden">
             <Box>address: {miStateDetail.property.address}</Box>
             <UnorderedList>
               <ListItem>surface: {miStateDetail.property.yard}</ListItem>
@@ -64,14 +94,20 @@ export default function Detail(props) {
               <ListItem>rooms: {miStateDetail.property.rooms}</ListItem>
               <FontAwesomeIcon icon={faBed} />
               <ListItem>yard: {miStateDetail.property.yard}</ListItem>
-              <ListItem>pets: {miStateDetail.property.pets}</ListItem>
+              <ListItem>pets: {miStateDetail.property.pets === true? (
+                <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faX} />
+        )}</ListItem>
               <FontAwesomeIcon icon={faPaw} />
               <ListItem>garage: {miStateDetail.property.garage}</ListItem>
+              {/* <FontAwesomeIcon icon={faGarage} /> */}
               <ListItem>age: {miStateDetail.property.age}</ListItem>
+              <FontAwesomeIcon icon={faCalendar} />
               <ListItem>{miStateDetail.property.services.map((e)=>e.name +", ")}</ListItem>
             </UnorderedList>
             <Box>
-              <Text>description: {miStateDetail.property.description}</Text>
+              <Text>description: {miStateDetail.description}</Text>
             </Box>
           </Box>
           <Box>DATOS PROPIETARIO
