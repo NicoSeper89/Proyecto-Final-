@@ -9,19 +9,19 @@ export default function Cards({ currentHouse }) {
   return (
     <div className={style.container}>
       {currentHouse?.map((r) => {
-        
         return (
           <div key={r.id}>
             <Card
                id ={r.id}
               img={r.img}
               precio={r.property.price}
-              ciudad={r.property.city.nombre}
+              ciudad={r.property.city.name}
               metros={r.property.surface}
               baño={r.property.bathrooms}
               dormitorio={r.property.rooms}
               ambientes={r.property.environments}
               mascota={r.property.pets} 
+              premium={r.premium}
             />
           </div>
         );
