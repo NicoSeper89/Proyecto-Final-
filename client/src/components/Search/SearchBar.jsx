@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import sty from "./SearchBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { getPublications, updateFilterProp,updateFilterAmbient } from "../../redux/actions";
+import { getPublications, clearFilters, updateFilterProp, updateFilterAmbient, updateFilterPets, updateSortingPrice } from "../../redux/actions";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
 import { useState } from "react";
@@ -20,37 +20,44 @@ const ambientes = [1, 2, 3, 4, "5+"];
 
 const SearchBar = ({ paginado }) => {
   const dispatch = useDispatch();
+  /* const [, setOrden] = useState('') */
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
-  const[city, setCity] = useState("")
-   
+  const [city, setCity] = useState("")
+
   const changes = (e) => {
-   setCity(e.target.value)
+    setCity(e.target.value)
   }
-  const select = (e) => {
-    dispatch(updateFilter(e.target.value));
-    dispatch(getPublications(filters, sorting, ""));
+  const selectPropType = (e) => {
+    dispatch(updateFilterProp(e.target.value));
+    dispatch(getPublications(filters, sorting, city));
   };
   const selectAmbients = (e) => {
-    console.log(e.target.value)
+
     dispatch(updateFilterAmbient(e.target.value));
-    dispatch(getPublications(filters, sorting, ""));
+    dispatch(getPublications(filters, sorting, city));
+  };
+  const selectPets = (e) => {
+    dispatch(updateFilterPets(e.target.value));
+    dispatch(getPublications(filters, sorting, city));
   };
 
   const search_House = () => {
-    dispatch(getPublications("", "", city));
-    console.log(city)
+    dispatch(getPublications(filters, sorting, city));
   };
 
-  const BucarPorPrecio = (e) => {
-    // dispatch(precio(e.target.value));
+  const orderByPrice = (e) => {
+    dispatch(updateSortingPrice(e.target.value));
+   /*  dispatch(getPublications(filters, sorting, city)); */
+    /* setOrden(`Ordenado ${e.target.value}`); */
   };
 
   function handleResetFilter(e) {
     e.preventDefault();
-    dispatch(getPublications());
-    paginado(1);
+    dispatch(clearFilters());
+    dispatch(getPublications(filters, sorting, city));
+    /* paginado(1); */
   }
 
   return (
@@ -83,34 +90,27 @@ const SearchBar = ({ paginado }) => {
         </select>
       </div>
       <div>
-      <input
+        <input
           type="number"
           className={sty.Serch}
           placeholder="Ambientes..."
           onChange={selectAmbients}
         />
-        {/* <select name="ambientes" className={sty.select} onChange={selectAmbients}>
-          <option>Ambientes</option>
-          {ambientes.map((e) => {
-            return <option key={e}>
-              {e}
-              </option>;
-          })}
+      </div>
+      <div>
+        <select id="4" className={sty.select} onChange={selectPets}>
+          <option value='Mascotas'>Mascotas</option>
+          <option value={true}>si</option>
+          <option value={false}>no</option>
         </select>
       </div>
       <div>
-        <select id="4" className={sty.select}>
-          <option>Mascotas</option>
-          <option>si</option>
-          <option>no</option>
+        <select id="3" className={sty.select} onChange={orderByPrice}>
+          <option value='Precio'>Precio</option>
+          <option value='maxMin'>Mayor Precio</option>
+          <option value='minMax'>Menor Precio</option>
         </select>
-      </div>
-      <div>
-        <select id="3" className={sty.select} onChange={BucarPorPrecio}>
-          <option>Precio</option>
-          <option>Mayor Precio</option>
-          <option>Menor Precio</option>
-        </select>
+        <button className={sty.btn} onClick={() => dispatch(getPublications(filters, sorting, city))}>Sort</button>
       </div>
     </div>
   );
