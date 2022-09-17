@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {useSelector} from 'react-redux';
-/* import axios from 'axios'; */
+import { useSelector } from 'react-redux';
+import UploadImg from "../UploadImg/UploadImg";
+import axios from 'axios';
 import {
     Stack, Input, Text, Textarea, Flex, NumberInput, NumberInputField,
     NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper,
-    Checkbox, CheckboxGroup, Select, Button, /* FormControl, */ FormLabel, Box,
+    Checkbox, CheckboxGroup, Select, Button, FormLabel, Box,
 } from '@chakra-ui/react';
 
 const CreatePost = () => {
@@ -43,14 +44,14 @@ const CreatePost = () => {
 
         const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age } = infoFormProp
 
-        if (!city || !address || !surface || !price || !environments || !bathrooms || !rooms || !garage || !yard || !age) {
+        if (!city || !address || !surface || !price || !environments || !bathrooms || !rooms || !garage || !yard || !age || !infoFormPub.description) {
             setDisableButtonSubmit(true)
         }
         else {
             setDisableButtonSubmit(false)
         }
 
-    }, [setDisableButtonSubmit, infoFormProp])
+    }, [setDisableButtonSubmit, infoFormProp, infoFormPub.description])
 
     const onChangeInputProp = (e) => {
         e.preventDefault();
@@ -88,13 +89,31 @@ const CreatePost = () => {
     const onSubmitForm = async (e) => {
         e.preventDefault();
 
-        console.log(infoFormProp)
+        try {
 
-        /* try {
-            return await axios.post('http://localhost:3001/publication/createProperty', { ...infoFormProp })
-        } catch (err) {
-            console.log(err)
-        } */
+            // No carga la imagen
+
+            /* let img = '';
+
+            if (typeof infoFormProp.propImg === 'object') {
+
+                const formData = new FormData();
+                formData.append('file', infoFormProp.propImg);
+                formData.append('upload_preset', 'czwgzdiw');
+
+                img = await axios.post("https://api.cloudinary.com/v1_1/petelegant/image/upload", formData)
+                img = img.data
+            } */
+
+            let res = await axios.post('http://localhost:3001/publication/createProperty', { ...infoFormProp })
+
+            await axios.post('http://localhost:3001/publication/postProperty', { ...infoFormPub, id: res.data })
+
+            window.alert(res)
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
@@ -113,7 +132,9 @@ const CreatePost = () => {
                 </FormLabel >
 
                 <FormLabel >Imagen
-                    <Input type="text" name={"propImg"} value={infoFormProp.propImg} onChange={onChangeInputProp} />
+
+                    <UploadImg setInfoFormProp={setInfoFormProp} infoFormProp={infoFormProp} />
+
                 </FormLabel>
 
                 <FormLabel >Tipo de propiedad
@@ -244,14 +265,6 @@ const CreatePost = () => {
                     </Stack>
                 </CheckboxGroup>
 
-                <Button disabled={disableBUttonSubmit}
-                    alignSelf={'flex-end'}
-                    colorScheme='blue'
-                    type="submit"
-                    value={"enviar"}
-                    onClick={onSubmitForm}>
-                    Enviar
-                </Button>
             </Box>
 
             <Box display={'flex'} flexDirection={'column'} p={'1rem'} w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden' >
@@ -287,7 +300,16 @@ const CreatePost = () => {
                     </Stack>
                 </CheckboxGroup>
             </Box>
-            
+
+            <Button disabled={disableBUttonSubmit}
+                alignSelf={'flex-end'}
+                colorScheme='blue'
+                type="submit"
+                value={"enviar"}
+                onClick={onSubmitForm}>
+                Enviar
+            </Button>
+
         </Flex>
     );
 };

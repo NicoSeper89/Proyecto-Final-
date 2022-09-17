@@ -1,29 +1,29 @@
 import React from "react";
-import axios from 'axios'
-import { useState } from "react";
+import {  Box, Input } from '@chakra-ui/react';
 
-export default function UploadImg() {
-    
-    const [fileInput, setFileInput] = useState('')
-    const upload = (event) => {
+export default function UploadImg({setInfoFormProp, infoFormProp}) {
+
+  /*   const upload = (event) => {
         event.preventDefault()
         const formData = new FormData()
-        formData.append('file', fileInput)
+        formData.append('file', infoFormProp)
         formData.append('upload_preset', 'czwgzdiw')
 
         axios.post("https://api.cloudinary.com/v1_1/petelegant/image/upload", formData)
         .then((resp)=>console.log(resp))
         .catch((err)=>console.log(err))
-        .finally(setFileInput(''))
-    }
+        .finally(setInfoFormProp({...infoFormProp, propImg: ''}))
+    } */
+
     const handleChange = (event) => {
-        setFileInput(event.target.files[0])
+        setInfoFormProp({...infoFormProp, propImg: event.target.files[0] })
     }
 
     return (
-        <fom>
-            <input type='file' onChange={handleChange}/>
-            <button onClick={upload}>Upload</button>
-        </fom>
+        
+        <Box borderWidth='1px' borderRadius='14px' p={"1rem"} borderColor={"gray.200"}>
+            <Input accept="image/png, .jpeg, .jpg" type='file' onChange={handleChange}/>
+        </Box>
+         
     )
 }
