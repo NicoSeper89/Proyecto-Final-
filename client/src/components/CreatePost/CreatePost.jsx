@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 import UploadImg from "../UploadImg/UploadImg";
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import {
     Stack, Input, Text, Textarea, Flex, NumberInput, NumberInputField,
     NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper,
@@ -11,8 +12,9 @@ import {
 const CreatePost = () => {
 
     const propertys = useSelector((state) => state.typeOfProperties);
+    const cities = useSelector((state) => state.cities);
     const services = useSelector((state) => state.services);
-
+    const history = useHistory();
     const [infoFormProp, setInfoFormProp] = useState({
         city: "",
         address: "",
@@ -109,8 +111,9 @@ const CreatePost = () => {
 
             await axios.post('http://localhost:3001/publication/postProperty', { ...infoFormPub, id: res.data })
 
-            window.alert(res)
-
+            /* window.alert(res) */
+            window.alert('Publicacion creada')
+            history.push('/')
         } catch (error) {
             console.log(error)
         }
@@ -124,7 +127,13 @@ const CreatePost = () => {
             <Box display={'flex'} flexDirection={'column'} p={'1rem'} w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden'>
 
                 <FormLabel >Ciudad
-                    <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} />
+                   {/*  <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} /> */}
+                    <Select name={"city"} onChange={onChangeInputProp} >
+                        {cities.map((type, i) => <option key={i}
+                            value={type.name}
+                        >{type.name}
+                        </option>)}
+                    </Select>
                 </FormLabel>
 
                 <FormLabel >Dirección
@@ -280,13 +289,13 @@ const CreatePost = () => {
                     />
                 </FormLabel>
 
-                <FormLabel >Estado
+                {/* <FormLabel >Estado
                     <Input type="text" name={"status"} value={infoFormPub.status} onChange={onChangeInputPub} />
                 </FormLabel>
 
                 <FormLabel >Reporte
                     <Input type="text" name={"report"} value={infoFormPub.report} onChange={onChangeInputPub} />
-                </FormLabel>
+                </FormLabel> */}
 
                 <CheckboxGroup colorScheme='green' >
                     <Stack spacing={[1, 5]} direction={['column', 'row']}>
