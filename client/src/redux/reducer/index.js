@@ -14,6 +14,7 @@ import {
   CLEAR_FILTERS,
   LOADING,
   CURRENT_PAGE,
+  VALUE_FILTER,
 } from "../actions";
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
   loading: false,
   currentPage: 1,
+  valueFilter: "",
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -158,6 +160,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         currentPage: action.payload,
+      };
+    case VALUE_FILTER:
+      return {
+        ...state,
+        valueFilter: action.payload,
       };
     default:
       return state;

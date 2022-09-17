@@ -10,6 +10,7 @@ import {
   updateFilterAmbient,
   updateFilterPets,
   setCurrentPage,
+  valueFilter,
 } from "../../redux/actions";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
@@ -47,6 +48,7 @@ const SearchBar = () => {
     dispatch(updateFilterProp(e.target.value));
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
+    dispatch(valueFilter(e.target.name));
   };
   const selectAmbients = (e) => {
     dispatch(updateFilterAmbient(e));
@@ -57,6 +59,7 @@ const SearchBar = () => {
     dispatch(updateFilterPets(e.target.value));
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
+    dispatch(valueFilter(e.target.name));
   };
 
   const search_House = () => {
@@ -72,6 +75,7 @@ const SearchBar = () => {
     else orden = { name: "price", direccion: e.target.value };
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, orden, city));
+    dispatch(valueFilter(e.target.name));
   };
 
   function handleResetFilter(e) {
@@ -89,7 +93,6 @@ const SearchBar = () => {
         onClick={(e) => handleResetFilter(e)}
         className={style.img}
       />
-      {/* <button onClick={(e) => handleResetFilter(e)}>Reset</button> */}
       <div>
         <input
           type="text"
@@ -104,7 +107,7 @@ const SearchBar = () => {
         </button>
       </div>
       <div>
-        <select name="property" className={sty.select} onChange={selectPropType}>
+        <select name="property" value={"property"} className={sty.select} onChange={selectPropType}>
           {/* volví a agregar el handle selectPropType, se ve que se borró sin querer y no andaba ese filtro. Mel */}
           <option>Propiedad</option>
           {propertys.map((e) => {
@@ -124,14 +127,20 @@ const SearchBar = () => {
         </NumberInputStepper>
       </NumberInput>
       <div>
-        <select id="4" className={sty.select} onChange={selectPets}>
+        <select id="4" name={"pets"} value={"pets"} className={sty.select} onChange={selectPets}>
           <option value="Mascotas">Mascotas</option>
           <option value={true}>si</option>
           <option value={false}>no</option>
         </select>
       </div>
       <div>
-        <select id="3" className={sty.select} onChange={orderByPrice}>
+        <select
+          id="3"
+          name={"price"}
+          value={"price"}
+          className={sty.select}
+          onChange={orderByPrice}
+        >
           <option value="Precio">Precio</option>
           <option value="maxMin">Mayor Precio</option>
           <option value="minMax">Menor Precio</option>
