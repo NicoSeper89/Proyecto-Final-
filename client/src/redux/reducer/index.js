@@ -8,7 +8,7 @@ const initialState = {
   detail: {},
   filters: {
     publication: [], //se lo llena con {name:'nombre como en el modelo',value:'string o num'},
-    property: [], //se lo llena con {name:'nombre como en el modelo',value:'string o num'},
+    property: [], //se lo llena con {name:'nombre como en el modelo',value:'string o num o boolean'},
     typeOfProp: "", // es un string que si no se lo usa tiene que estar vacio, y sino va el name de la propiedad
     services: [], //{ name: "luz" }, { name: "agua" }, etc
   },

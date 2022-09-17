@@ -52,6 +52,7 @@ router.post('/', async (req, res, next) => {
 
 router.get('/city', async (req, res, next) => {
     try {
+        
         cityArr.map((c) => City.findOrCreate({ where: { name: c } }))
         let newCity = await City.findAll()
         res.send(newCity)
@@ -152,7 +153,7 @@ router.post('/createProperty', async (req, res, next) => {
         // })
         // property.addPropertyImage(img)
 
-        res.send("property created")
+        res.send(property.id)
     } catch (error) {
         next(error)
     }
