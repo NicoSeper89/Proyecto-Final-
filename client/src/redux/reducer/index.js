@@ -9,6 +9,9 @@ import {
   ULPOAD_IMG,
   FILTER_PROP,
   FILTER_AMB,
+  FILTER_PET,
+  SORT_PRICE,
+  CLEAR_FILTERS,
   LOADING,
 } from "../actions";
 
@@ -70,7 +73,7 @@ export default function rootReducer(state = initialState, action) {
     case ULPOAD_IMG:
       return {
         ...state
-    }
+      }
     case FILTER_PROP:
       if (action.payload === "Propiedad") {
         state.filters.typeOfProp = "";
@@ -81,19 +84,64 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case FILTER_AMB:
-      console.log('entre a filter amb')
-      if (action.payload === "") {
+      if (action.payload === "") {//default action entonces limpia el filtro
         let index = state.filters.property.findIndex(i => i.name === 'environments');
         if (index > -1) {
           state.filters.property.splice(index, 1);
         }
-      } else {
+      } else { // primero limpia el filtro anterior y despues pushea el actual que queremos usar
         let index = state.filters.property.findIndex(i => i.name === 'environments');
         if (index > -1) {
           state.filters.property.splice(index, 1);
         }
         state.filters.property.push({ name: 'environments', value: parseInt(action.payload) });
       }
+      return {
+        ...state,
+      };
+    case FILTER_PET:
+      let value = true;
+      if (action.payload === "Mascotas") {
+        let index = state.filters.property.findIndex(i => i.name === 'pets');
+        if (index > -1) {
+          state.filters.property.splice(index, 1);
+        }
+      } else {
+        if (action.payload === 'true') {
+          value = true
+        }
+        else if (action.payload === 'false') {
+          value = false
+        }
+        let index = state.filters.property.findIndex(i => i.name === 'pets');
+        if (index > -1) {
+          state.filters.property.splice(index, 1);
+        }
+        state.filters.property.push({ name: 'pets', value: value });
+      }
+      return {
+        ...state,
+      };
+    case SORT_PRICE:
+      if (action.payload === "Precio") {
+        state.sorting = { name: "default", direccion: "minMax" }
+        return {
+          ...state,
+        };
+      } else {
+        state.sorting = { name: "price", direccion: action.payload }
+        return {
+          ...state,
+        };
+      }
+      case CLEAR_FILTERS:
+        state.filters= {
+          publication: [],  
+          property: [], 
+          typeOfProp: "", 
+          services: [],
+        }
+        state.sorting= { name: "default", direccion: "minMax" }
       return {
         ...state,
       };
