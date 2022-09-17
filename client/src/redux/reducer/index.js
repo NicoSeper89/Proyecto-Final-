@@ -45,6 +45,7 @@ export default function rootReducer(state = initialState, action) {
         houses: action.payload,
       };
     case GET_PUBLICATIONS_DETAIL:
+      console.log(action.payload ,"action")
       return {
         ...state,
         detail: action.payload,

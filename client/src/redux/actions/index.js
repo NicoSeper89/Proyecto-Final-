@@ -39,18 +39,15 @@ export function getPublications(filters, sorting, city) {
 //Esto es para ver el detalle de la publicación
 export function getPublicationsDetail(id) {
   return async function (dispatch) {
-    try {
+    console.log(id,"id")
+ 
       let infoBack = await axios.get("/publication/" + id); //, info
+      console.log(infoBack, "infoback")
       return dispatch({
         type: GET_PUBLICATIONS_DETAIL,
         payload: infoBack.data,
-      });
-    } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      }
-    }
-  };
+      
+  })}
 }
 
 //Esto trae las Provincias
