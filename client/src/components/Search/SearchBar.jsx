@@ -24,8 +24,8 @@ const SearchBar = ({ paginado }) => {
   const propertys = useSelector((state) => state.typeOfProperties);
 
   const select = (e) => {
-    dispatch(updateFilter(e.target.value))
-    dispatch(getPublications(filters, sorting, ""))
+    dispatch(updateFilter(e.target.value));
+    dispatch(getPublications(filters, sorting, ""));
   };
 
   const search_House = (e) => {
@@ -62,8 +62,12 @@ const SearchBar = ({ paginado }) => {
       <div>
         <select name="property" className={sty.select} onChange={select}>
           <option>Propiedad</option>
-          {propertys.map(e => {
-            return <option key={e.id} value={e.name}>{e.name}</option>
+          {propertys.map((e) => {
+            return (
+              <option key={e.id} value={e.name}>
+                {e.name}
+              </option>
+            );
           })}
         </select>
       </div>
