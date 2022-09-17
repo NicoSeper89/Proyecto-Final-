@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import sty from "./SearchBar.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { getPublications, updateFilter } from "../../redux/actions";
+import { getPublications, updateFilterProp,updateFilterAmbient } from "../../redux/actions";
 import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
 
@@ -23,8 +23,13 @@ const SearchBar = ({ paginado }) => {
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
 
-  const select = (e) => {
-    dispatch(updateFilter(e.target.value));
+  const selectPropType = (e) => {
+    dispatch(updateFilterProp(e.target.value));
+    dispatch(getPublications(filters, sorting, ""));
+  };
+  const selectAmbients = (e) => {
+    console.log(e.target.value)
+    dispatch(updateFilterAmbient(e.target.value));
     dispatch(getPublications(filters, sorting, ""));
   };
 
@@ -60,7 +65,7 @@ const SearchBar = ({ paginado }) => {
         <button className={sty.btn}>Buscar</button>
       </div>
       <div>
-        <select name="property" className={sty.select} onChange={select}>
+        <select name="property" className={sty.select} onChange={selectPropType}>
           <option>Propiedad</option>
           {propertys.map((e) => {
             return (
@@ -72,13 +77,20 @@ const SearchBar = ({ paginado }) => {
         </select>
       </div>
       <div>
-        <select name="ambientes" className={sty.select} onChange={select}>
+      <input
+          type="number"
+          className={sty.Serch}
+          placeholder="Ambientes..."
+          onChange={selectAmbients}
+        />
+        {/* <select name="ambientes" className={sty.select} onChange={selectAmbients}>
           <option>Ambientes</option>
           {ambientes.map((e) => {
-            return <option key={e}>{e}</option>;
+            return <option key={e} value={e.name}>{e}</option>;
           })}
           <option>5+</option>
-        </select>
+
+        </select> */}
       </div>
       <div>
         <select id="4" className={sty.select}>
