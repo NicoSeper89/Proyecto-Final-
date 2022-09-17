@@ -1,28 +1,28 @@
 import React from "react";
 import NavBar from "../NavBar/NavBar.jsx";
-import SearchBar from "../Search/SearchBar.jsx";
 import Cards from "../Cards/Cards";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { searcHouse, getPublications, getCities,getServices,getTypesOfProperties } from "../../redux/actions/index.js";
+import { getPublications } from "../../redux/actions/index.js";
 import Footer from "../Footer/Footer.jsx";
 import style from "./Home.module.css";
 import Paginado from "../Paginado/Paginado.jsx";
 import { Box } from "@chakra-ui/react";
+import Header from "../Header/Header.jsx";
+import Loading from "../Loading/Loading.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();
   const houses = useSelector((state) => state.houses);
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
-  const cities = useSelector((state) => state.cities);
-  const services = useSelector((state) => state.services);
-  const typeOfProperties = useSelector((state) => state.typeOfProperties);
+  const loading = useSelector((state) => state.loading);
+  // const cities = useSelector((state) => state.cities);
+  // const services = useSelector((state) => state.services);
+  // const typeOfProperties = useSelector((state) => state.typeOfProperties);
+
   // useEffect(() => dispatch(searcHouse("")), [dispatch]);
   useEffect(() => {
-    dispatch(getCities());
-    dispatch(getServices());
-    dispatch(getTypesOfProperties());
     dispatch(getPublications(filters, sorting, ""));
   }, [dispatch]);
 
@@ -36,11 +36,12 @@ const Home = () => {
     setPage(numPage);
   };
 
-  //aaaa
+  //
   return (
     <>
-      <NavBar />
-      <SearchBar />
+      <Box className={style.header}>
+        <NavBar paginado={paginado} />
+      </Box>
       <Box className={style.paginado}>
         <Paginado
           housePage={housePage} //el nº de recetas por pagina
@@ -50,7 +51,7 @@ const Home = () => {
         />
       </Box>
       <Box className={style.container}>
-        <Cards currentHouse={currentHouse} />
+        {loading ? <Loading /> : <Cards currentHouse={currentHouse} />}
       </Box>
       <Box className={style.footer}>
         <Footer />

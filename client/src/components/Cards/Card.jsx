@@ -2,7 +2,7 @@ import React from "react";
 import style from "./Card.module.css";
 import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faToilet, faBed, faDoorOpen, faPaw } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faToilet, faBed, faDoorOpen, faPaw,faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 export default function Card({
@@ -15,6 +15,7 @@ export default function Card({
   dormitorio,
   ambientes,
   mascota,
+  premium
 }) {
   return (
     <div className={style.container}>
@@ -24,6 +25,11 @@ export default function Card({
           <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
           <h3>{ciudad}</h3>
           <h3>$ {precio}</h3>
+          {premium === true ? (
+          <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
+        ) : (
+          <></>
+        )}
         </div>
       </Link>
       <div className={style.containerInfo}>
