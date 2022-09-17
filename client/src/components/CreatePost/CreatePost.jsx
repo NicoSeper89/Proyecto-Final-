@@ -95,25 +95,34 @@ const CreatePost = () => {
 
             // No carga la imagen
 
-            /* let img = '';
+            let img = '';
 
             if (typeof infoFormProp.propImg === 'object') {
 
                 const formData = new FormData();
                 formData.append('file', infoFormProp.propImg);
-                formData.append('upload_preset', 'czwgzdiw');
+                formData.append('upload_preset', 'zrn7bvte');
 
-                img = await axios.post("https://api.cloudinary.com/v1_1/petelegant/image/upload", formData)
-                img = img.data
-            } */
+               const imgRes = await axios.post("https://api.cloudinary.com/v1_1/dwv5z8s5p/image/upload", formData)
+               
+                    /* .catch((err) => console.log(err)) https://res.cloudinary.com/dwv5z8s5p/image/upload/v1663399134/v0jobpcbfgmusc8tcnzd.webp
+                    .finally(() => {
+                        window.alert('Publicacion creada')
+                        history.push('/')
+                    }) */
+                /* img = img.data */
+                img = imgRes.data.url
+            }
 
-            let res = await axios.post('http://localhost:3001/publication/createProperty', { ...infoFormProp })
+            let res = await axios.post('http://localhost:3001/publication/createProperty', { ...infoFormProp, propImg: img })
 
             await axios.post('http://localhost:3001/publication/postProperty', { ...infoFormPub, id: res.data })
 
-            /* window.alert(res) */
             window.alert('Publicacion creada')
-            history.push('/')
+                        history.push('/')
+
+            /* window.alert(res) */
+           
         } catch (error) {
             console.log(error)
         }
@@ -127,7 +136,7 @@ const CreatePost = () => {
             <Box display={'flex'} flexDirection={'column'} p={'1rem'} w={'45%'} gap='.5rem' borderWidth='1px' borderRadius='14px' overflow='hidden'>
 
                 <FormLabel >Ciudad
-                   {/*  <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} /> */}
+                    {/*  <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} /> */}
                     <Select name={"city"} onChange={onChangeInputProp} >
                         {cities.map((type, i) => <option key={i}
                             value={type.name}
