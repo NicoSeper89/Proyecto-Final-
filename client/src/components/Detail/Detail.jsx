@@ -21,7 +21,7 @@ export default function Detail(props) {
   const miStateDetail = useSelector((state) => state.detail)
   // const miUseerState = useSelector((state) => state.user)
   // const miPublicationState = useSelector((state) => state.publication)
-  // console.log(miStateDetail)
+  console.log(miStateDetail)
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id))
