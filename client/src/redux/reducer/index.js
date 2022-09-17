@@ -6,6 +6,7 @@ import {
   GET_SERVICES,
   GET_PROPERTY_TYPES,
   CLEAN,
+  ULPOAD_IMG,
 } from "../actions";
 
 const initialState = {
@@ -61,6 +62,10 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         typeOfProperties: action.payload,
       };
+    case ULPOAD_IMG:
+      return {
+        ...state
+    }
     default:
       return state;
   }

@@ -6,6 +6,7 @@ export const GET_DETAILS = "GET_DETAILS";
 export const GET_CITIES = "GET_CITIES";
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
+export const ULPOAD_IMG = "ULPOAD_IMG";
 
 export const CLEAN = "CLEAN";
 
@@ -109,6 +110,21 @@ export function clean() {
   };
 }
 
+//Esto sube la imagen a la tabla propertyImages
+export function imgUpload(value){
+  return async function (dispatch) {
+    try {
+      await axios.post("/publication/image", value)
+      return dispatch({
+        type: ULPOAD_IMG,
+      })
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  }
+}
 //ESTO HAY QUE BORRAR
 /* ************ FILTROS & ORDENAMIENTOS ************ */
 // export const searcHouse = (city) => async (dispatch) => {
