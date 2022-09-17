@@ -1,36 +1,36 @@
-.continer{
-    padding: 10px;
-    display: flex;
-    justify-content: center;
+.continer {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.select{
-    background-color: #e7e7e7;
-    width: 7rem;
-    height: 2.5rem;
-    margin: 0 10px 0 10px;
-    font-size: 15px;
-    color:rgb(87, 87, 87);
-    border: none;
-    border-radius: 4px;
-    
+.select {
+  background-color: #e7e7e7;
+  width: 5.5rem;
+  height: 2.5rem;
+  margin: 0 10px 0 10px;
+  font-size: 15px;
+  color: rgb(87, 87, 87);
+  border: none;
+  border-radius: 4px;
 }
-.select:hover{
-    scale: 1.02
+.select:hover {
+  scale: 1.02;
 }
 
-
-.btn{
-    background-color: white;
-    border: 0px;
+.btn {
+  background-color: white;
+  border: 0px;
+  padding: 2px;
 }
-.btn:hover{
-    cursor: pointer;
+.btn:hover {
+  cursor: pointer;
 }
-.Serch{
-   border: none;
-    padding: 11px 11px 11px 11px;
-    border-radius: 8px; 
-    margin: 0 10px 0 10px;
-    font-size: 15px;
-    background-color: #e7e7e7
+.Serch {
+  border: none;
+  padding: 11px 11px 11px 11px;
+  border-radius: 8px;
+  margin: 0 0px 0 10px;
+  font-size: 15px;
+  background-color: #e7e7e7;
 }

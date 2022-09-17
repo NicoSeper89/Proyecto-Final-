@@ -4,11 +4,12 @@ import SearchBar from "../Search/SearchBar.jsx";
 import Cards from "../Cards/Cards";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublications} from "../../redux/actions/index.js";
+import { getPublications } from "../../redux/actions/index.js";
 import Footer from "../Footer/Footer.jsx";
 import style from "./Home.module.css";
 import Paginado from "../Paginado/Paginado.jsx";
 import { Box } from "@chakra-ui/react";
+import Header from "../Header/Header.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,9 +22,7 @@ const Home = () => {
 
   // useEffect(() => dispatch(searcHouse("")), [dispatch]);
   useEffect(() => {
-    
     dispatch(getPublications(filters, sorting, ""));
-
   }, [dispatch]);
 
   /* ************ PAGINADO ************ */
@@ -40,7 +39,7 @@ const Home = () => {
   return (
     <>
       <NavBar />
-      <SearchBar />
+      <Header />
       <Box className={style.paginado}>
         <Paginado
           housePage={housePage} //el nº de recetas por pagina
