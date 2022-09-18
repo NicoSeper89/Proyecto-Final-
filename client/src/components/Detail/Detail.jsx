@@ -73,8 +73,8 @@ export default function Detail(props) {
               DATOS PUBLICACION
               <Image
                 src={
-                  miStateDetail.property.imgen
-                    ? miStateDetail.property.imgen
+                  miStateDetail.property.propertyImages
+                    ? miStateDetail.property.propertyImages
                     : imgNotAvailable
                 }
               />
