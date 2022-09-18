@@ -23,6 +23,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
+import Loading from "../Loading/Loading"
 import { Box, Image, Text, ListItem, UnorderedList } from "@chakra-ui/react";
 
 export default function Detail(props) {
@@ -182,7 +183,7 @@ export default function Detail(props) {
             </Box>
           </Box>
         ) : (
-          <Box bg="red">NO HAY PROPIEDAD</Box>
+          <Loading/>
         )}
       </Box>
 
