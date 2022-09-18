@@ -52,8 +52,15 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
   }
   const handleChange = (event) => {
     const file = event.target.files[0]
-    previewFile(file)
-    setFileInput(event.target.files[0])
+    if(file){
+      previewFile(file)
+      setFileInput(event.target.files[0])
+    }
+  }
+  const handleDelete = (id) => {
+    // dispatch(deletePropImg(id))
+    axios.post("https://api.cloudinary.com/v1_1/lookhouse/image/destroy", id)
+    .catch((err) => console.log(err))
   }
 
   return (

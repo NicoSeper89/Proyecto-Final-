@@ -224,6 +224,69 @@ router.post("/postProperty", async (req, res, next) => {
   }
 });
 
+
+
+router.put("/editProperty/:id", async (req, res, next) => {
+  const {id} = req.params
+  const {
+    address,
+    surface,
+    price,
+    environments,
+    bathrooms,
+    rooms,
+    garage,
+    yard,
+    pets,
+    age,
+    city,
+    service,
+    typProp,
+    propImg,
+  } = req.body;
+  try {
+    let updatedProperty = Property.findByPk(id)
+    let property = await Property.upsert({
+      id: id,
+      address,
+      surface,
+      price,
+      environments,
+      bathrooms,
+      rooms,
+      garage,
+      yard,
+      pets,
+      age,
+    });
+    if (service) {
+      let ser = await Service.findAll({
+        where: { name: service },
+      });
+      property.addService(ser);
+    }
+    let location = await City.findOne({
+      where: { name: city },
+    });
+    property.setCity(location);
+    let type = await TypeOfProp.findOne({
+      where: { name: typProp },
+    });
+    property.setTypeOfProp(type);
+
+    let img = await PropertyImage.findAll({
+      where: { url: propImg },
+    });
+    property.addPropertyImage(img);
+
+    res.send(property.id);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 router.delete("/image/:id", async (req, res, next) => {
   const { id } = req.params;
   try {

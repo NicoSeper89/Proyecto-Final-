@@ -67,7 +67,7 @@ export default function Cards() {
                 <div key={r.id}>
                   <Card
                     id={r.id}
-                    img={r.img}
+                    img={r.property.propertyImages}
                     precio={r.property.price}
                     ciudad={r.property.city.name}
                     metros={r.property.surface}
