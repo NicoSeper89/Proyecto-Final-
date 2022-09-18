@@ -71,13 +71,15 @@ export default function Detail(props) {
             >
               {" "}
               DATOS PUBLICACION
-              <Image
+              <Image 
                 src={
-                  miStateDetail.property.imgen
-                    ? miStateDetail.property.imgen
+                  miStateDetail.property.propertyImages[0] 
+                    ? miStateDetail.property.propertyImages[0].url
                     : imgNotAvailable
                 }
+                
               />
+             {miStateDetail.property.propertyImages?.map((e, i)=> <Image key={i} src={ e.url}/>)}  
               <Text>{miStateDetail.property.premium}</Text>
             </Box>
 
