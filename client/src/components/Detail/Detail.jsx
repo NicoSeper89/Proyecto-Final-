@@ -18,7 +18,6 @@ import {
 // import { faPaw, faHouse } from "@fortawesome/free-solid-svg-icons";
 // import {faCircleUser} from "@fortawesome/free-solid-svg-icons"
 import NavBarForms from "../NavBar/NavBarForms";
-import SearchBar from "../Search/SearchBar.jsx";
 import Footer from "../Footer/Footer.jsx";
 import { Box, Image, Text, ListItem, UnorderedList } from "@chakra-ui/react";
 

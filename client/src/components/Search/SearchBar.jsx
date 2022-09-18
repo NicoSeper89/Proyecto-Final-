@@ -41,25 +41,9 @@ const SearchBar = () => {
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
 
+  //BUSCADOR
   const changes = (e) => {
     setCity(e.target.value);
-  };
-  const selectPropType = (e) => {
-    dispatch(updateFilterProp(e.target.value));
-    dispatch(setCurrentPage(1));
-    dispatch(getPublications(filters, sorting, city));
-    dispatch(valueFilter(e.target.name));
-  };
-  const selectAmbients = (e) => {
-    dispatch(updateFilterAmbient(e));
-    dispatch(setCurrentPage(1));
-    dispatch(getPublications(filters, sorting, city));
-  };
-  const selectPets = (e) => {
-    dispatch(updateFilterPets(e.target.value));
-    dispatch(setCurrentPage(1));
-    dispatch(getPublications(filters, sorting, city));
-    dispatch(valueFilter(e.target.name));
   };
 
   const search_House = () => {
@@ -68,6 +52,30 @@ const SearchBar = () => {
     setCity(""); /* esto es para que se setee el estado del input */
   };
 
+  //SELECT PROPIEDADES
+  const selectPropType = (e) => {
+    dispatch(updateFilterProp(e.target.value));
+    dispatch(setCurrentPage(1));
+    dispatch(getPublications(filters, sorting, city));
+    dispatch(valueFilter(e.target.name));
+  };
+
+  //SELECT AMBIENTES
+  const selectAmbients = (e) => {
+    dispatch(updateFilterAmbient(e));
+    dispatch(setCurrentPage(1));
+    dispatch(getPublications(filters, sorting, city));
+  };
+
+  //SELECT MASCOTAS
+  const selectPets = (e) => {
+    dispatch(updateFilterPets(e.target.value));
+    dispatch(setCurrentPage(1));
+    dispatch(getPublications(filters, sorting, city));
+    dispatch(valueFilter(e.target.name));
+  };
+
+  //SORT PLATA
   const orderByPrice = (e) => {
     var orden;
 
@@ -78,6 +86,7 @@ const SearchBar = () => {
     dispatch(valueFilter(e.target.name));
   };
 
+  //RESET FILTROS
   function handleResetFilter(e) {
     e.preventDefault();
     dispatch(clearFilters());
