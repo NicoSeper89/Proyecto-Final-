@@ -153,25 +153,26 @@ const CreatePost = () => {
   return (
     <>
       <NavBarForms />
-      <Box color={"gray.700"} p={"1.5rem"}>
-
-        <Heading textAlign={"center"} fontSize="2.5rem">
-          Formulario de Creación de Propiedad
-        </Heading>
+      <Box position={"relative"} display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"flex-start"} color={"gray.700"} p={"1rem 0rem"}>
+        <Box bg={"facebook.300"} borderRadius={".2rem"} w={"57.7%"} p={"1rem"} >
+          <Heading color={"white"} textShadow={"gray .1rem .1rem .2rem"} textAlign={"center"} fontSize="2.5rem">
+            Publicar Propiedad
+          </Heading>
+        </Box>
 
         <Flex
           position="relative"
-          m={"1rem"}
-          p={"1rem"}
-          justifyContent="space-evenly"
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          bg={"Light"}
+          minWidth={"57.7%"}
         >
-          {(continueForm) ?
+          {(!continueForm) ?
             (<Box display={"flex"} flexDirection={"column"} p={"1rem"} w={"60%"} gap=".5rem" overflow="hidden">
               <Box display={"flex"} flexDirection="column" p=".9rem" border="1px" borderColor="gray.200" >
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="yellowgreen">Provincia</Text>
+                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Provincia</Text>
                   <Select color="gray.500" placeholder=' ' borderColor="gray.200" name={"city"} onChange={onChangeInputProp}>
                     {/* <option value="default" >Default</option> */}
                     {cities.map((type, i) => (
@@ -182,7 +183,7 @@ const CreatePost = () => {
                   </Select>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="yellowgreen">Dirección</Text>
+                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Dirección</Text>
                   <Input color="gray.500"
                     autoComplete={"true"}
                     type="text"
@@ -192,7 +193,7 @@ const CreatePost = () => {
                   />
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="yellowgreen">Tipo De Inmueble</Text>
+                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Tipo De Inmueble</Text>
                   <Select color="gray.500" placeholder=' ' name={"typProp"} onChange={onChangeInputProp}>
                     {/* <option value="default" >Default</option> */}
                     {propertys.map((type, i) => (
@@ -204,7 +205,7 @@ const CreatePost = () => {
                 </FormLabel>
               </Box>
 
-              <Box display={"flex"} justifyContent={"space-around"}  flexWrap={"wrap"} p=".5rem" border="1px" borderColor="gray.200" >
+              <Box display={"flex"} justifyContent={"space-around"} flexWrap={"wrap"} p=".5rem" border="1px" borderColor="gray.200" >
                 <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Precio</Text>
                   <NumberInput color="gray.500"
                     value={infoFormProp.price}
@@ -234,7 +235,7 @@ const CreatePost = () => {
                 </FormLabel>
               </Box>
 
-              <Box display={"flex"} justifyContent={"space-around"}  flexWrap={"wrap"} p=".5rem" border="1px" borderColor="gray.200" >
+              <Box display={"flex"} justifyContent={"space-around"} flexWrap={"wrap"} p=".5rem" border="1px" borderColor="gray.200" >
 
                 <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Superficie</Text>
                   <NumberInput
@@ -381,11 +382,11 @@ const CreatePost = () => {
 
             </Box>)
             :
-            (<Box display={"flex"} flexDirection={"column"} alignItems={"stretch"} p={"1rem"} w={"60%"} gap=".5rem" overflow="hidden">
+            (<Box display={"flex"} flexDirection={"column"} p={"1rem"} w={"100%"} alignItems={"center"}  gap=".5rem" overflow="hidden">
 
-              <Box display={"flex"} flexDirection="column" p=".9rem" border="1px" borderColor="gray.200" >
+              <Box display={"flex"} flexDirection="column" p=".9rem" w={"100%"} border="1px" borderColor="gray.200" >
                 <FormLabel >
-                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="yellowgreen">Descripcion</Text>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Descripcion</Text>
                   <Textarea
                     name={"description"}
                     value={infoFormPub.description}
@@ -395,10 +396,10 @@ const CreatePost = () => {
                   />
                 </FormLabel>
               </Box>
-
-              <FormLabel >
+              
+              <Box w={"100%"}>
                 <UploadImg setInfoFormProp={setInfoFormProp} infoFormProp={infoFormProp} />
-              </FormLabel>
+              </Box>
 
               <Button
                 disabled={disableButtonSubmit}
