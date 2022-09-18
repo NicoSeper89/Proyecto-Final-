@@ -58,8 +58,8 @@ const SearchBar = () => {
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
     dispatch(valueFilter(e.target.name));
-  };
-
+  }; 
+ 
   //SELECT AMBIENTES
   const selectAmbients = (e) => {
     dispatch(updateFilterAmbient(e));
