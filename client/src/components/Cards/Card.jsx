@@ -29,6 +29,8 @@ export default function Card({
 
   return (
     <Box className={style.container}>
+      <img src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
+      {/* <img src={img ? img.url : imgNotAvailable} alt="Img not found" /> */}
       <Link to={"/details/" + id}>
         {/* <img src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" /> */}
         <Image src={img ? img.url : imgNotAvailable} alt="Img not found" />

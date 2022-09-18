@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPublicationsDetail, clean } from "../../redux/actions";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
   faHeart,
   faToilet,
@@ -11,14 +12,18 @@ import {
   faPaw,
   faHouse,
   faCircleUser,
+  faCalendar,
+  faCheck,
+  faX,
+  faStar,
+  faPhone,
+  faComment,
+  faCity,
+  faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
-// import { faToilet } from "@fortawesome/free-solid-svg-icons";
-// import { faBed } from "@fortawesome/free-solid-svg-icons";
-// import { faDoorOpen } from "@fortawesome/free-solid-svg-icons";
-// import { faPaw, faHouse } from "@fortawesome/free-solid-svg-icons";
-// import {faCircleUser} from "@fortawesome/free-solid-svg-icons"
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
+import Loading from "../Loading/Loading"
 import { Box, Image, Text, ListItem, UnorderedList } from "@chakra-ui/react";
 
 export default function Detail(props) {
@@ -29,73 +34,158 @@ export default function Detail(props) {
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
+    dispatch(clean());
   }, [dispatch, props.match.params.id]);
 
-  console.log(miStateDetail, "estado");
+  useEffect(() => {
+    dispatch(getPublicationsDetail(props.match.params.id));
+  }, [dispatch, props.match.params.id]);
 
   return (
-    <Box>
-      <Box>
-        <NavBarForms />
-      </Box>
-      {Object.entries(miStateDetail).length > 0 ? (
-        <Box>
-          <Box>
-            {" "}
-            DATOS PUBLICACION
-            {/* <Image src ={miStateDetail[0].img}/> */}
-            <UnorderedList>
-              {miStateDetail.property.propertyImages?.map((e, i) => <ListItem key={i} ><Image src={e.url} /></ListItem>)}
-            </UnorderedList>
-            <Text>{miStateDetail.property.premium}</Text>
-          </Box>
+    <Box
+      gap={"2rem"}
+      position="relative"
+      m={"1rem"}
+      p={"1rem"}
+      justifyContent={"center"}
+      wrap="wrap"
+      borderWidth="1px"
+      borderRadius="14px"
+      overflow="hidden"
+    >
+      <Box w={"100%"} textAlign={"center"} fontSize="1.2em">
+        <Box w={"100%"} textAlign={"center"} fontSize="1.2em">
+          <NavBarForms w={"100%"} textAlign={"center"} fontSize="1.2em" />
+        </Box>
 
+        {Object.entries(miStateDetail).length > 0 ? (
           <Box>
-            <FontAwesomeIcon icon={faHeart} />
-            <Text>price: {miStateDetail.property.price}</Text>
-            <Text>typeofProp: {miStateDetail.property.TypeOfProp.name}</Text>
-            <FontAwesomeIcon icon={faHouse} />
-            <Text>city: {miStateDetail.property.city.name}</Text>
-            <Text>superficie: {miStateDetail.property.surface}</Text>
-            <Text>environments: {miStateDetail.property.environments}</Text>
-            <FontAwesomeIcon icon={faDoorOpen} />
-            <Text>garage: {miStateDetail.property.garage}</Text>
-          </Box>
-          <Box>
-            <Box>address: {miStateDetail.property.address}</Box>
-            <UnorderedList>
-              <ListItem>surface: {miStateDetail.property.yard}</ListItem>
-              <ListItem>environments: {miStateDetail.property.environments}</ListItem>
-              <ListItem>bathrooms: {miStateDetail.property.bathrooms}</ListItem>
-              <FontAwesomeIcon icon={faToilet} />
-              <ListItem>rooms: {miStateDetail.property.rooms}</ListItem>
-              <FontAwesomeIcon icon={faBed} />
-              <ListItem>yard: {miStateDetail.property.yard}</ListItem>
-              <ListItem>pets: {miStateDetail.property.pets}</ListItem>
-              <FontAwesomeIcon icon={faPaw} />
-              <ListItem>garage: {miStateDetail.property.garage}</ListItem>
-              <ListItem>age: {miStateDetail.property.age}</ListItem>
-              <ListItem>{miStateDetail.property.services.map((e) => e.name + ", ")}</ListItem>
-            </UnorderedList>
-            <Box>
-              <Text>description: {miStateDetail.property.description}</Text>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              p={"1rem"}
+              w={"45%"}
+              gap=".5rem"
+              borderWidth="1px"
+              borderRadius="14px"
+              overflow="hidden"
+            >
+              {" "}
+              DATOS PUBLICACION
+              <Image
+                src={
+                  miStateDetail.property.imgen
+                    ? miStateDetail.property.imgen
+                    : imgNotAvailable
+                }
+              />
+              <Text>{miStateDetail.property.premium}</Text>
             </Box>
-          </Box>
-          <Box>
-            DATOS PROPIETARIO
-            {/* <FontAwesomeIcon icon={faUser} /> */}
-            <FontAwesomeIcon icon={faCircleUser} />
-            {/* <Text>{miUseerState[0].name}</Text>
+
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              p={"1rem"}
+              w={"45%"}
+              gap=".5rem"
+              borderWidth="1px"
+              borderRadius="14px"
+              overflow="hidden"
+            >
+              <FontAwesomeIcon icon={faHeart} />
+              {/* <ListItem>premium: {miStateDetail.premium === true? (
+                <FontAwesomeIcon icon={faCheck} />
+                ) : (
+                  <FontAwesomeIcon icon={faX} />
+        )}</ListItem> */}
+              <Text>Precio: {miStateDetail.property.price} $</Text>
+              <Text>
+                Tipo De Propiedad: {miStateDetail.property.TypeOfProp.name}{" "}
+                <FontAwesomeIcon icon={faHouse} />
+              </Text>
+              <Text>
+                Provincia: {miStateDetail.property.city.name}, Argentina{" "}
+                <FontAwesomeIcon icon={faCity} />
+              </Text>
+              <Text>Superficie: {miStateDetail.property.surface}m²</Text>
+              <Text>
+                Dormitorios: {miStateDetail.property.environments}{" "}
+                <FontAwesomeIcon icon={faDoorOpen} />
+              </Text>
+              <Text>Garage: {miStateDetail.property.garage}</Text>
+            </Box>
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              p={"1rem"}
+              w={"45%"}
+              gap=".5rem"
+              borderWidth="1px"
+              borderRadius="14px"
+              overflow="hidden"
+            >
+              <Box>
+                Dirección: {miStateDetail.property.address}{" "}
+                <FontAwesomeIcon icon={faLocationDot} />
+              </Box>
+              <UnorderedList>
+                <ListItem>
+                  Dormitorios: {miStateDetail.property.environments}{" "}
+                  <FontAwesomeIcon icon={faDoorOpen} />
+                </ListItem>
+                <ListItem>
+                  Baños: {miStateDetail.property.bathrooms}{" "}
+                  <FontAwesomeIcon icon={faToilet} />
+                </ListItem>
+                <ListItem>
+                  Cuartos: {miStateDetail.property.rooms}{" "}
+                  <FontAwesomeIcon icon={faBed} />
+                </ListItem>
+                <ListItem>
+                  Mascotas:{" "}
+                  {miStateDetail.property.pets === true ? (
+                    <FontAwesomeIcon icon={faCheck} />
+                  ) : (
+                    <FontAwesomeIcon icon={faX} />
+                  )}
+                  <FontAwesomeIcon icon={faPaw} />
+                </ListItem>
+
+                <ListItem>Garage: {miStateDetail.property.garage}</ListItem>
+                {/* <FontAwesomeIcon icon={faGarage} /> */}
+                <ListItem>
+                  Antigüedad: {miStateDetail.property.age}{" "}
+                  <FontAwesomeIcon icon={faCalendar} />
+                </ListItem>
+                <ListItem>
+                  Servicios:{" "}
+                  {miStateDetail.property.services.map((e) => e.name + ", ")}{" "}
+                  <FontAwesomeIcon icon={faCheck} />
+                </ListItem>
+              </UnorderedList>
+              <Box>
+                <Text>Descripcion: {miStateDetail.description}</Text>
+              </Box>
+            </Box>
+            <FontAwesomeIcon icon={faStar} />
+            <Box>
+              DATOS PROPIETARIO
+              {/* <FontAwesomeIcon icon={faUser} /> */}
+              <FontAwesomeIcon icon={faCircleUser} />
+              <FontAwesomeIcon icon={faPhone} />
+              <FontAwesomeIcon icon={faComment} />
+              {/* <Text>{miUseerState[0].name}</Text>
             
             <Text>{miUseerState.mail}</Text>
             <Text>{miUseerState[0].rating}</Text>
             <Text>{miUseerState[0].description}</Text> */}
-            {/* <Text>service: {miStateDetail.property.service.name}</Text> */}
+              {/* <Text>service: {miStateDetail.property.service.name}</Text> */}
+            </Box>
           </Box>
-        </Box>
-      ) : (
-        <Box bg="red">no hay propiedad</Box>
-      )}
+        ) : (
+          <Loading/>
+        )}
+      </Box>
 
       <Footer />
     </Box>
