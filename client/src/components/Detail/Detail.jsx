@@ -26,7 +26,7 @@ export default function Detail(props) {
 
   return (
     <Box gap={"2rem"}
-    position="relative"
+    position="fixed"
     m={"1rem"}
     p={"1rem"}
     justifyContent={"center"}
