@@ -4,14 +4,24 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { imgUpload } from "../../redux/actions/index";
 import { Flex, Input, Button, Image, Text } from "@chakra-ui/react";
+import { useEffect } from "react";
 
-export default function UploadImg({setInfoFormProp, infoFormProp}) {
+export default function UploadImg({ setInfoFormProp, infoFormProp }) {
 
-  const [fileInput, setFileInput] = useState('')
-  /* const [image, setImage] = useState([]) */
-  const [preview, setPreview] = useState('')
-  const [successMsg, setSuccessMsg] = useState('')
-  const dispatch = useDispatch()
+  const [fileInput, setFileInput] = useState('');
+  const [preview, setPreview] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
+  const dispatch = useDispatch();
+  const [disableButtonUploadImg, setDisableButtonUploadImg] = useState(true);
+
+  useEffect(() => {
+
+    if (infoFormProp.propImg.length >= 7) {
+      setDisableButtonUploadImg(true)
+    } else {
+      setDisableButtonUploadImg(false)
+    }
+  }, [infoFormProp.propImg.length, setDisableButtonUploadImg])
 
   const previewFile = (file) => {
     const reader = new FileReader()
@@ -29,7 +39,7 @@ export default function UploadImg({setInfoFormProp, infoFormProp}) {
     axios.post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
       .then((resp) => {
         dispatch(imgUpload({ url: resp.data.secure_url }))
-        setInfoFormProp({...infoFormProp, propImg: [...infoFormProp.propImg, resp.data.secure_url]})
+        setInfoFormProp({ ...infoFormProp, propImg: [...infoFormProp.propImg, resp.data.secure_url] })
       })
       .catch((err) => console.log(err))
       .finally(
@@ -37,7 +47,7 @@ export default function UploadImg({setInfoFormProp, infoFormProp}) {
         setPreview(''),
         setSuccessMsg('Image uploaded successfully'),
         setTimeout(() => { setSuccessMsg('') }, 2000),
-       
+
       )
   }
   const handleChange = (event) => {
@@ -47,23 +57,23 @@ export default function UploadImg({setInfoFormProp, infoFormProp}) {
   }
 
   return (
-    <Flex border={"2px"} 
-    gap={"2rem"} 
-    borderColor={"gray.200"} 
-    borderRadius={"10px"} display={"flex"} 
-    flexDirection={"column"}
-    position={'relative'}
-    p={"1.4rem"}>
-      
+    <Flex border={"2px"}
+      gap={"2rem"}
+      borderColor={"gray.200"}
+      borderRadius={"10px"} display={"flex"}
+      flexDirection={"column"}
+      position={'relative'}
+      p={"1.4rem"}>
+
       <Flex flexDirection={"column"} border={"2px"} gap={"2rem"} borderColor={"gray.200"} borderRadius={"10px"} p={"1.4rem"} >
         <Flex justifyContent={'center'} w={"100%"} h={"20rem"} p={"0.9rem"}>
-          {(preview)? <Image maxH={"100%"} src={preview} alt="chosen" /> :(successMsg)? <Text>{successMsg}</Text> : <Text>Click aqui para cargar imagen</Text>}
+          {(preview) ? <Image maxH={"100%"} src={preview} alt="chosen" /> : (successMsg) ? <Text>{successMsg}</Text> : <Text>Click aqui para cargar imagen</Text>}
         </Flex>
-                                                                            
+
         <Flex>
           <Input border={"none"} type='file' onChange={(e) => handleChange(e)} />
 
-          <Button 
+          <Button disabled={disableButtonUploadImg}
             alignSelf={"flex-end"}
             colorScheme="blue"
             value={"Cargar"}
@@ -73,7 +83,7 @@ export default function UploadImg({setInfoFormProp, infoFormProp}) {
 
       </Flex>
 
-      <Flex id="seletedImgs" flexWrap={"wrap"} justifyContent={"flex-start"} /* alignItems={"center"}  */gap={"0.8rem"}>
+      <Flex id="seletedImgs" flexWrap={"wrap"} justifyContent={"flex-start"} /* alignItems={"center"}  */ gap={"0.8rem"}>
         {infoFormProp.propImg?.map((img, index) => (<Image src={img}
           alt={index}
           key={index}

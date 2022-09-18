@@ -54,15 +54,17 @@ const CreatePost = () => {
   });
 
   const [disableBUttonSubmit, setDisableButtonSubmit] = useState(true);
+  const [disableButtonUploadImg, setDisableButtonUploadImg] = useState(true);
 
   useEffect(() => {
-    const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age, typProp } =
+    const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age, typProp, propImg } =
       infoFormProp;
 
     if (
       !city || 
       (city === "default") ||
       !address ||
+      (/^[\s]+$/i.test(address)) ||
       !surface ||
       !typProp ||
       (typProp === "default") ||
@@ -73,15 +75,32 @@ const CreatePost = () => {
       !garage ||
       !yard ||
       !age ||
-      !infoFormPub.description
+      !infoFormPub.description ||
+      (/^[\s]+$/i.test(infoFormPub.description)) 
     ) {
       setDisableButtonSubmit(true);
     } else {
       setDisableButtonSubmit(false);
     }
+    
+    if(propImg.length >= 5) {
+      setDisableButtonUploadImg(true)
+    } else {
+      setDisableButtonUploadImg(false)
+    }
+
   }, [setDisableButtonSubmit, infoFormProp, infoFormPub.description]);
 
   const onChangeInputProp = (e) => {
+    e.preventDefault();
+
+    setInfoFormProp({
+      ...infoFormProp,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onChangeInputPropNumber = (e) => {
     e.preventDefault();
 
     setInfoFormProp({
@@ -117,20 +136,7 @@ const CreatePost = () => {
     e.preventDefault();
 
     try {
-      // No carga la imagen
-
-      /* let img = '';
-
-            if (typeof infoFormProp.propImg === 'object') {
-
-                const formData = new FormData();
-                formData.append('file', infoFormProp.propImg);
-                formData.append('upload_preset', 'czwgzdiw');
-
-                img = await axios.post("https://api.cloudinary.com/v1_1/petelegant/image/upload", formData)
-                img = img.data
-            } */
-
+      
       let res = await axios.post("http://localhost:3001/publication/createProperty", {
         ...infoFormProp,
       });
@@ -140,7 +146,6 @@ const CreatePost = () => {
         id: res.data,
       });
 
-      /* window.alert(res) */
       window.alert("Publicacion creada");
       history.push("/");
     } catch (error) {
@@ -177,9 +182,7 @@ const CreatePost = () => {
             borderRadius="14px"
             overflow="hidden"
           >
-            <FormLabel>
-              Provincia
-              {/*  <Input type="text" name={"city"} value={infoFormProp.city} onChange={onChangeInputProp} /> */}
+            <FormLabel>Provincia
               <Select name={"city"} onChange={onChangeInputProp}>
                 <option value="default" >Default</option>
                 {cities.map((type, i) => (
@@ -190,8 +193,7 @@ const CreatePost = () => {
               </Select>
             </FormLabel>
 
-            <FormLabel>
-              Dirección
+            <FormLabel>Dirección
               <Input
                 type="text"
                 name={"address"}
@@ -200,8 +202,7 @@ const CreatePost = () => {
               />
             </FormLabel>
 
-            <FormLabel>
-              Tipo de propiedad
+            <FormLabel>Tipo de propiedad
               <Select name={"typProp"} onChange={onChangeInputProp}>
                 <option value="default" >Default</option>
                 {propertys.map((type, i) => (
@@ -212,12 +213,10 @@ const CreatePost = () => {
               </Select>
             </FormLabel>
 
-            <FormLabel>
-              {" "}
-              Precio
+            <FormLabel>Precio
               <NumberInput
                 value={infoFormProp.price}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, price: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, price:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
@@ -228,11 +227,10 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>
-              Antigüedad
+            <FormLabel>Antigüedad
               <NumberInput
                 value={infoFormProp.age}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, age: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, age:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
@@ -243,11 +241,10 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>
-              Superficie
+            <FormLabel>Superficie
               <NumberInput
                 value={infoFormProp.surface}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, surface: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, surface:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
@@ -258,33 +255,24 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>
-              {" "}
-              Ambientes
+            <FormLabel>Ambientes
               <NumberInput
                 value={infoFormProp.environments}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, environments: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, environments:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
-                <NumberInputStepper
-                  type="number"
-                  name={"environments"}
-                  value={infoFormProp.environments}
-                  onChange={onChangeInputProp}
-                >
+                <NumberInputStepper>
                   <NumberIncrementStepper />
                   <NumberDecrementStepper />
                 </NumberInputStepper>
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>
-              {" "}
-              Baños
+            <FormLabel>Baños
               <NumberInput
                 value={infoFormProp.bathrooms}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, bathrooms: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, bathrooms:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
@@ -295,12 +283,10 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>
-              {" "}
-              Habitaciones
+            <FormLabel>Habitaciones
               <NumberInput
                 value={infoFormProp.rooms}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, rooms: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, rooms:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
@@ -311,12 +297,10 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>
-              {" "}
-              Garage
+            <FormLabel>Garage
               <NumberInput
                 value={infoFormProp.garage}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, garage: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, garage:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
@@ -327,11 +311,10 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>
-              Patios
+            <FormLabel>Patios
               <NumberInput
                 value={infoFormProp.yard}
-                onChange={(value) => setInfoFormProp({ ...infoFormProp, yard: value })}
+                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, yard:value}) : null )}
                 min={0}
               >
                 <NumberInputField />
