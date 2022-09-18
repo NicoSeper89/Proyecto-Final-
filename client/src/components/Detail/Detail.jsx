@@ -44,6 +44,9 @@ export default function Detail(props) {
             {" "}
             DATOS PUBLICACION
             {/* <Image src ={miStateDetail[0].img}/> */}
+            <UnorderedList>
+              {miStateDetail.property.propertyImages?.map((e, i) => <ListItem key={i} ><Image src={e.url} /></ListItem>)}
+            </UnorderedList>
             <Text>{miStateDetail.property.premium}</Text>
           </Box>
 
