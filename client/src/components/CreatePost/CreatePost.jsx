@@ -153,7 +153,7 @@ const CreatePost = () => {
   return (
     <>
       <NavBarForms />
-      <Box display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"flex-start"} color={"gray.700"} p={"1rem 0rem"}>
+      <Box position={"relative"} display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"flex-start"} color={"gray.700"} p={"1rem 0rem"}>
         <Box bg={"facebook.300"} borderRadius={".2rem"} w={"57.7%"} p={"1rem"} >
           <Heading color={"white"} textShadow={"gray .1rem .1rem .2rem"} textAlign={"center"} fontSize="2.5rem">
             Publicar Propiedad
@@ -162,12 +162,14 @@ const CreatePost = () => {
 
         <Flex
           position="relative"
-          justifyContent="space-evenly"
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          bg={"Light"}
+          minWidth={"57.7%"}
         >
-          {(continueForm) ?
+          {(!continueForm) ?
             (<Box display={"flex"} flexDirection={"column"} p={"1rem"} w={"60%"} gap=".5rem" overflow="hidden">
               <Box display={"flex"} flexDirection="column" p=".9rem" border="1px" borderColor="gray.200" >
                 <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Provincia</Text>
@@ -380,9 +382,9 @@ const CreatePost = () => {
 
             </Box>)
             :
-            (<Box display={"flex"} flexDirection={"column"} alignItems={"stretch"} p={"1rem"} w={"60%"} gap=".5rem" overflow="hidden">
+            (<Box display={"flex"} flexDirection={"column"} p={"1rem"} w={"100%"} alignItems={"center"}  gap=".5rem" overflow="hidden">
 
-              <Box display={"flex"} flexDirection="column" p=".9rem" border="1px" borderColor="gray.200" >
+              <Box display={"flex"} flexDirection="column" p=".9rem" w={"100%"} border="1px" borderColor="gray.200" >
                 <FormLabel >
                   <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Descripcion</Text>
                   <Textarea
@@ -394,10 +396,10 @@ const CreatePost = () => {
                   />
                 </FormLabel>
               </Box>
-
-              <FormLabel >
+              
+              <Box w={"100%"}>
                 <UploadImg setInfoFormProp={setInfoFormProp} infoFormProp={infoFormProp} />
-              </FormLabel>
+              </Box>
 
               <Button
                 disabled={disableButtonSubmit}
