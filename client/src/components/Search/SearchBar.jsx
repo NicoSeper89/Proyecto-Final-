@@ -155,7 +155,7 @@ const SearchBar = () => {
             Mascotas
           </MenuButton>
           <MenuList>
-            <MenuItem value={true}>si</MenuItem>
+            <MenuItem value={true}>si </MenuItem>
             <MenuItem value={false}>no</MenuItem>
           </MenuList>
         </Menu>
