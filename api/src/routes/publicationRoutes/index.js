@@ -33,9 +33,9 @@ router.post("/", async (req, res, next) => {
         services:[{name: "luz"},{name: "agua"}]
         } */
     /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
-    let publications = await getAll();  /// me trae todas las casas con sus propiedades
+    let publications = await getAll(); /// me trae todas las casas con sus propiedades
 
-    publications = await getFiltered(publications, filters);  // envia todas las casas y un filtro 
+    publications = await getFiltered(publications, filters); // envia todas las casas y un filtro
 
     if (city) {
       //aca filtra por searchbar(revisar si se quiere hacer independiente)
@@ -125,19 +125,17 @@ router.get("/:id", async (req, res, next) => {
 }) */
 
 router.post("/image", async (req, res, next) => {
-  const { url } = req.body
+  const { url } = req.body;
   try {
-    if (!url) res.status(404).send('no image to upload')
+    if (!url) return res.status(404).send("no image to upload");
     await PropertyImage.create({
-        url
-    })
-    res.send('image upload successful')
+      url,
+    });
+    res.send("image upload successful");
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
-
-
+});
 
 router.post("/createProperty", async (req, res, next) => {
   const {
@@ -190,9 +188,9 @@ router.post("/createProperty", async (req, res, next) => {
     property.setTypeOfProp(type);
 
     let img = await PropertyImage.findAll({
-        where: { url: propImg }
-    })
-    property.addPropertyImage(img)
+      where: { url: propImg },
+    });
+    property.addPropertyImage(img);
 
     res.send(property.id);
   } catch (error) {
@@ -226,15 +224,14 @@ router.post("/postProperty", async (req, res, next) => {
   }
 });
 
-
-router.delete('/image/:id', async (req, res, next)=>{
-  const {id} = req.params
+router.delete("/image/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    await PropertyImage.destroy({ where: { id: id }})
-    res.send(`image id ${id} was deleted`)
+    await PropertyImage.destroy({ where: { id: id } });
+    res.send(`image id ${id} was deleted`);
   } catch (error) {
-    next(err)
+    next(err);
   }
-})
+});
 
 module.exports = router;

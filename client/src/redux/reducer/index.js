@@ -9,7 +9,12 @@ import {
   ULPOAD_IMG,
   FILTER_PROP,
   FILTER_AMB,
+  FILTER_PET,
+  SORT_PRICE,
+  CLEAR_FILTERS,
   LOADING,
+  CURRENT_PAGE,
+  VALUE_FILTER,
 } from "../actions";
 
 const initialState = {
@@ -26,6 +31,8 @@ const initialState = {
   },
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
   loading: false,
+  currentPage: 1,
+  valueFilter: "",
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -47,7 +54,7 @@ export default function rootReducer(state = initialState, action) {
         houses: action.payload,
       };
     case GET_PUBLICATIONS_DETAIL:
-      console.log(action.payload, "action")
+      console.log(action.payload, "action");
       return {
         ...state,
         detail: action.payload,
@@ -69,8 +76,8 @@ export default function rootReducer(state = initialState, action) {
       };
     case ULPOAD_IMG:
       return {
-        ...state
-    }
+        ...state,
+      };
     case FILTER_PROP:
       if (action.payload === "Propiedad") {
         state.filters.typeOfProp = "";
@@ -81,19 +88,65 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case FILTER_AMB:
-      console.log('entre a filter amb')
       if (action.payload === "") {
-        let index = state.filters.property.findIndex(i => i.name === 'environments');
+        //default action entonces limpia el filtro
+        let index = state.filters.property.findIndex((i) => i.name === "environments");
         if (index > -1) {
           state.filters.property.splice(index, 1);
         }
       } else {
-        let index = state.filters.property.findIndex(i => i.name === 'environments');
+        // primero limpia el filtro anterior y despues pushea el actual que queremos usar
+        let index = state.filters.property.findIndex((i) => i.name === "environments");
         if (index > -1) {
           state.filters.property.splice(index, 1);
         }
-        state.filters.property.push({ name: 'environments', value: parseInt(action.payload) });
+        state.filters.property.push({ name: "environments", value: parseInt(action.payload) });
       }
+      return {
+        ...state,
+      };
+    case FILTER_PET:
+      let value = true;
+      if (action.payload === "Mascotas") {
+        let index = state.filters.property.findIndex((i) => i.name === "pets");
+        if (index > -1) {
+          state.filters.property.splice(index, 1);
+        }
+      } else {
+        if (action.payload === "true") {
+          value = true;
+        } else if (action.payload === "false") {
+          value = false;
+        }
+        let index = state.filters.property.findIndex((i) => i.name === "pets");
+        if (index > -1) {
+          state.filters.property.splice(index, 1);
+        }
+        state.filters.property.push({ name: "pets", value: value });
+      }
+      return {
+        ...state,
+      };
+    case SORT_PRICE:
+      if (action.payload === "Precio") {
+        state.sorting = { name: "default", direccion: "minMax" };
+        return {
+          ...state,
+        };
+      } else {
+        state.sorting = { name: "price", direccion: action.payload };
+        return {
+          ...state,
+        };
+      }
+    case CLEAR_FILTERS:
+      state.filters = {
+        publication: [],
+        property: [],
+        typeOfProp: "",
+        services: [],
+      };
+      state.sorting = { name: "default", direccion: "minMax" };
       return {
         ...state,
       };
@@ -102,6 +155,16 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         loading: action.payload,
+      };
+    case CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
+    case VALUE_FILTER:
+      return {
+        ...state,
+        valueFilter: action.payload,
       };
     default:
       return state;

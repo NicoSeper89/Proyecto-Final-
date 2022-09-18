@@ -36,6 +36,10 @@ const getAll = async () => {
               attributes: [],
             },
           },
+          {
+            model: PropertyImage,
+            attributes: ["url"],
+          }
         ],
       },
       {
@@ -66,6 +70,10 @@ const getDetail = async (id) => {
               attributes: [],
             },
           },
+          {
+            model: PropertyImage,
+            attributes: ["url"],
+          }
         ],
       },
       {
