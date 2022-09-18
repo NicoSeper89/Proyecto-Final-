@@ -12,6 +12,19 @@
   /* background: #d9d9d9; */
   border-radius: 0px 0px 15px 15px;
   box-shadow: 3px 3px 20px 3px rgba(0, 0, 0, 0.45);
+  animation: show 2s;
+}
+@keyframes show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+.container:hover {
+  scale: 102%;
 }
 
 .container img {
@@ -20,15 +33,16 @@
   background-repeat: no-repeat;
   overflow: hidden;
   width: 100%;
-  height: 60%;
+  height: 230px;
   /* border: 1px solid rgb(97, 97, 97); */
 }
 
 .container2 {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0px 15px;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 15px 0px 15px;
 }
 .container2 h3 {
   margin-top: 12px;

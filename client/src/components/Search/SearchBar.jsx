@@ -12,7 +12,7 @@ import {
   setCurrentPage,
   valueFilter,
 } from "../../redux/actions";
-import { faFilterCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faFilterCircleXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
 import { useState } from "react";
 import {
@@ -21,11 +21,12 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  Button,
   Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
+  Stack,
+  InputGroup,
+  InputRightElement,
+  Input,
+  Select,
 } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 
@@ -63,7 +64,6 @@ const SearchBar = () => {
     dispatch(updateFilterProp(e.target.value));
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
-    dispatch(valueFilter(e.target.name));
   };
 
   //SELECT AMBIENTES
@@ -78,7 +78,6 @@ const SearchBar = () => {
     dispatch(updateFilterPets(e.target.value));
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
-    dispatch(valueFilter(e.target.name));
   };
 
   //SORT PLATA
@@ -89,7 +88,6 @@ const SearchBar = () => {
     else orden = { name: "price", direccion: e.target.value };
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, orden, city));
-    dispatch(valueFilter(e.target.name));
   };
 
   //RESET FILTROS
@@ -98,107 +96,146 @@ const SearchBar = () => {
     dispatch(clearFilters());
     dispatch(getPublications(filters, sorting, city));
     dispatch(setCurrentPage(1));
-    /* esto del paginado sirve para que vuelva a la pagina 1 cuando se ejecuta el evento. Mel*/
   }
 
   return (
     <Box className={sty.continer}>
-      <NumberInput width="80px" defaultValue={""} min={1} max={20} onChange={selectAmbients}>
-        <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
+      <Box marginRight={"10px"}>
+        <FontAwesomeIcon
+          icon={faFilterCircleXmark}
+          onClick={(e) => handleResetFilter(e)}
+          className={style.img}
+        />
+      </Box>
+      <Box marginRight={"10px"}>
+        <Stack>
+          <InputGroup borderColor={"black"}>
+            <InputRightElement
+              onClick={search_House}
+              children={<FontAwesomeIcon icon={faMagnifyingGlass} color="gray.300" />}
+              cursor={"pointer"}
+            />
+            <Input
+              transition="all 0.2s"
+              borderColor={"black"}
+              _hover={{ bg: "white" }}
+              _expanded={{ bg: "white" }}
+              _focus={{ bg: "white" }}
+              type="text"
+              placeholder="Buscar Ciudad..."
+              color={"black"}
+              onChange={changes}
+              value={city}
+            />
+          </InputGroup>
+          {/* agregué este value. Mel */}
+          {/* <Button colorScheme="teal" variant="link" onClick={search_House}>
+            Buscar
+          </Button> */}
+        </Stack>
+      </Box>
+      <NumberInput
+        marginRight={"10px"}
+        transition="all 0.2s"
+        borderColor={"black"}
+        width="80px"
+        defaultValue={""}
+        min={1}
+        max={20}
+        onChange={selectAmbients}
+      >
+        <NumberInputField
+          _hover={{ bg: "white" }}
+          _expanded={{ bg: "white" }}
+          _focus={{ bg: "white" }}
+        />
+        <NumberInputStepper borderColor={"black"}>
+          <NumberIncrementStepper borderColor={"black"} />
+          <NumberDecrementStepper borderColor={"black"} />
         </NumberInputStepper>
       </NumberInput>
-      <Box>
-        <Menu name="property" value={"property"} className={sty.select} onChange={selectPropType}>
-          {/* volví a agregar el handle selectPropType, se ve que se borró sin querer y no andaba ese filtro. Mel */}
-          <MenuButton
-            px={7}
-            py={2}
-            transition="all 0.2s"
-            borderRadius="md"
-            borderWidth="1px"
-            variant="link"
+      <Box marginRight={"10px"}>
+        <Menu
+          px={"1rem"}
+          py={".5rem"}
+          transition="all 0.2s"
+          borderRadius="md"
+          borderWidth="1px"
+          variant="link"
+          _hover={{ bg: "white" }}
+          _expanded={{ bg: "white" }}
+          _focus={{ boxShadow: "outline" }}
+        >
+          <Select
+            borderColor={"black"}
+            name="property"
+            onChange={selectPropType}
             _hover={{ bg: "white" }}
-            _expanded={{ bg: "white" }}
-            _focus={{ boxShadow: "outline" }}
+            _focus={{ bg: "white" }}
           >
-            Propiedad
-          </MenuButton>
-          <MenuList>
+            <option value={"Propiedad"}>Propiedad</option>
             {propertys.map((e) => {
               return (
-                <MenuItem key={e.id} value={e.name}>
+                <option key={e.id} value={e.name}>
                   {e.name}
-                </MenuItem>
+                </option>
               );
             })}
-          </MenuList>
+          </Select>
         </Menu>
       </Box>
 
-      <Box>
-        <Menu id="4" name={"pets"} value={"pets"} className={sty.select} onChange={selectPets}>
-          <MenuButton
-            px={7}
-            py={2}
-            transition="all 0.2s"
-            borderRadius="md"
-            borderWidth="1px"
-            variant="link"
+      <Box marginRight={"10px"}>
+        <Menu
+          id="4"
+          px={"1rem"}
+          py={".5rem"}
+          transition="all 0.2s"
+          borderRadius="md"
+          borderWidth="1px"
+          variant="link"
+          _hover={{ bg: "white" }}
+          _expanded={{ bg: "white" }}
+          _focus={{ boxShadow: "outline" }}
+        >
+          <Select
+            borderColor={"black"}
+            onChange={selectPets}
+            name={"pets"}
             _hover={{ bg: "white" }}
-            _expanded={{ bg: "white" }}
-            _focus={{ boxShadow: "outline" }}
-            value="Mascotas"
+            _focus={{ bg: "white" }}
           >
-            Mascotas
-          </MenuButton>
-          <MenuList>
-            <MenuItem value={true}>si </MenuItem>
-            <MenuItem value={false}>no</MenuItem>
-          </MenuList>
+            <option value={"Mascotas"}>Mascotas</option>
+            <option value={true}>Si</option>
+            <option value={false}>No</option>
+          </Select>
         </Menu>
       </Box>
-      <Box>
-        <Menu id="3" name={"price"} value={"price"} className={sty.select} onChange={orderByPrice}>
-          <MenuButton
-            px={7}
-            py={2}
-            transition="all 0.2s"
-            borderRadius="md"
-            borderWidth="1px"
-            variant="link"
+      <Box marginRight={"10px"}>
+        <Menu
+          id="3"
+          px={"1rem"}
+          py={".5rem"}
+          transition="all 0.2s"
+          borderRadius="md"
+          borderWidth="1px"
+          variant="link"
+          _hover={{ bg: "white" }}
+          _expanded={{ bg: "white" }}
+          _focus={{ boxShadow: "outline" }}
+        >
+          <Select
+            name={"price"}
+            onChange={orderByPrice}
+            borderColor={"black"}
             _hover={{ bg: "white" }}
-            _expanded={{ bg: "white" }}
-            _focus={{ boxShadow: "outline" }}
-            value="Precio"
+            _focus={{ bg: "white" }}
           >
-            Precio
-          </MenuButton>
-          <MenuList>
-            <MenuItem value="maxMin">Mayor Precio</MenuItem>
-            <MenuItem value="minMax">Menor Precio</MenuItem>
-          </MenuList>
+            <option value="Precio">Precio</option>
+            <option value="maxMin">Mayor Precio</option>
+            <option value="minMax">Menor Precio</option>
+          </Select>
         </Menu>
-      </Box>
-      <FontAwesomeIcon
-        icon={faFilterCircleXmark}
-        onClick={(e) => handleResetFilter(e)}
-        className={style.img}
-      />
-      <Box>
-        <input
-          type="text"
-          className={sty.Serch}
-          placeholder="Buscar Ciudad..."
-          onChange={changes}
-          value={city}
-        />
-        {/* agregué este value. Mel */}
-        <Button colorScheme="teal" variant="link" onClick={search_House}>
-          Buscar
-        </Button>
       </Box>
     </Box>
   );

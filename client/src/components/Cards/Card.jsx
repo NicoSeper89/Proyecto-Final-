@@ -11,7 +11,7 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
 
 export default function Card({
   id,
@@ -25,24 +25,25 @@ export default function Card({
   mascota,
   premium,
 }) {
-  const property = {};
+  // const property = {};
 
   return (
-    <Box className={style.container}>
-      <img src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
-      {/* <img src={img ? img.url : imgNotAvailable} alt="Img not found" /> */}
+    <Box className={style.container} zIndex={"80"}>
       <Link to={"/details/" + id}>
-        {/* <img src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" /> */}
-        <Image src={img ? img.url : imgNotAvailable} alt="Img not found" />
+        <Image src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
         <Box className={style.container2}>
-          <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
-          <h3>{ciudad}</h3>
-          <h3>$ {precio}</h3>
-          {premium === true ? (
+          {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
+          <Text as="b" textTransform={"uppercase"} fontSize="2xl">
+            {ciudad}
+          </Text>
+          <Text as="samp" fontSize="xl">
+            $ {precio}
+          </Text>
+          {/* {premium === true ? (
             <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
           ) : (
             <></>
-          )}
+          )} */}
         </Box>
 
         <Box className={style.containerInfo}>

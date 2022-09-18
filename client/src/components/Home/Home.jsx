@@ -7,6 +7,7 @@ import Header from "../Header/Header.jsx";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublications } from "../../redux/actions/index.js";
+import { Box, Text } from "@chakra-ui/react";
 // import { Box } from "@chakra-ui/react";
 
 const Home = () => {
@@ -23,12 +24,17 @@ const Home = () => {
 
   //
   return (
-    <>
+    <Box backgroundColor={"#EDEDED"}>
       <NavBar />
-      <Header />
-      <Cards />
-      <Footer />
-    </>
+      <Box zIndex={"100px"}>
+        <Header />
+        <Text zIndex={"90"} display="flex" justifyContent={"center"}>
+          ENCONTRA TU PROXIMO HOGAR
+        </Text>
+        <Cards />
+        <Footer />
+      </Box>
+    </Box>
   );
 };
 
