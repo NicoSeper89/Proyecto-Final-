@@ -26,8 +26,8 @@ export default function Card({
 }) {
   return (
     <div className={style.container}>
-      {/* <img src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" /> */}
-      <img src={img ? img.url : imgNotAvailable} alt="Img not found" />
+      <img src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
+      {/* <img src={img ? img.url : imgNotAvailable} alt="Img not found" /> */}
       <Link to={"/details/" + id}>
         <div className={style.container2}>
           <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
