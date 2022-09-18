@@ -1,6 +1,10 @@
 .containerAll {
   display: flex;
   margin-top: 5rem;
+  justify-content: center;
+  min-height: 100%;
+  position: relative;
+  z-index: 100px;
 }
 
 .paginado {
@@ -16,6 +20,7 @@
   flex-wrap: wrap;
   text-transform: uppercase;
   gap: 0.5rem;
+  z-index: 90;
 }
 
 .paginadoBtn li {

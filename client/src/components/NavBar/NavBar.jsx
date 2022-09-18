@@ -6,8 +6,9 @@ import logoImg from "../../Image/Logo LookHouse.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../Search/SearchBar";
+import { Box } from "@chakra-ui/react";
 
-const NavBar = ({ paginado }) => {
+const NavBar = () => {
   const history = useHistory();
   // const [displayMenu, setDisplayMenu] = useState(false);
 
@@ -23,11 +24,11 @@ const NavBar = ({ paginado }) => {
 
   return (
     <>
-      <div className={style.container}>
+      <Box className={style.container}>
         <Link to="/">
           <img src={logoImg} alt="homeLogo" />
         </Link>
-        <div className={style.buttons}>
+        <Box className={style.buttons}>
           <SearchBar />
           <button onClick={buttonCreatePost}>Publicar</button>
           <Link to="/checkin">
@@ -47,8 +48,8 @@ const NavBar = ({ paginado }) => {
               </div>
             ) : null}
           </div> */}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 };

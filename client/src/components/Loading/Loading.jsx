@@ -1,10 +1,12 @@
+import { Box, Image } from "@chakra-ui/react";
 import React from "react";
 import style from "./Loading.module.css";
+import gif from "../../Image/1490.gif";
 
 export default function Loading() {
   return (
-    <div className={style.container}>
-      <h1>CARGANDO ...</h1>
-    </div>
+    <Box className={style.container}>
+      <Image src={gif} alt="CARGANDO..." />
+    </Box>
   );
 }

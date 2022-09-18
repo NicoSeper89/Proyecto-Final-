@@ -21,7 +21,13 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
 } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 
 // import { searcHouse } from "../../redux/actions";
 // import { filter } from "../../redux/actions";
@@ -96,13 +102,92 @@ const SearchBar = () => {
   }
 
   return (
-    <div className={sty.continer}>
+    <Box className={sty.continer}>
+      <NumberInput width="80px" defaultValue={""} min={1} max={20} onChange={selectAmbients}>
+        <NumberInputField />
+        <NumberInputStepper>
+          <NumberIncrementStepper />
+          <NumberDecrementStepper />
+        </NumberInputStepper>
+      </NumberInput>
+      <Box>
+        <Menu name="property" value={"property"} className={sty.select} onChange={selectPropType}>
+          {/* volví a agregar el handle selectPropType, se ve que se borró sin querer y no andaba ese filtro. Mel */}
+          <MenuButton
+            px={7}
+            py={2}
+            transition="all 0.2s"
+            borderRadius="md"
+            borderWidth="1px"
+            variant="link"
+            _hover={{ bg: "white" }}
+            _expanded={{ bg: "white" }}
+            _focus={{ boxShadow: "outline" }}
+          >
+            Propiedad
+          </MenuButton>
+          <MenuList>
+            {propertys.map((e) => {
+              return (
+                <MenuItem key={e.id} value={e.name}>
+                  {e.name}
+                </MenuItem>
+              );
+            })}
+          </MenuList>
+        </Menu>
+      </Box>
+
+      <Box>
+        <Menu id="4" name={"pets"} value={"pets"} className={sty.select} onChange={selectPets}>
+          <MenuButton
+            px={7}
+            py={2}
+            transition="all 0.2s"
+            borderRadius="md"
+            borderWidth="1px"
+            variant="link"
+            _hover={{ bg: "white" }}
+            _expanded={{ bg: "white" }}
+            _focus={{ boxShadow: "outline" }}
+            value="Mascotas"
+          >
+            Mascotas
+          </MenuButton>
+          <MenuList>
+            <MenuItem value={true}>si</MenuItem>
+            <MenuItem value={false}>no</MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
+      <Box>
+        <Menu id="3" name={"price"} value={"price"} className={sty.select} onChange={orderByPrice}>
+          <MenuButton
+            px={7}
+            py={2}
+            transition="all 0.2s"
+            borderRadius="md"
+            borderWidth="1px"
+            variant="link"
+            _hover={{ bg: "white" }}
+            _expanded={{ bg: "white" }}
+            _focus={{ boxShadow: "outline" }}
+            value="Precio"
+          >
+            Precio
+          </MenuButton>
+          <MenuList>
+            <MenuItem value="maxMin">Mayor Precio</MenuItem>
+            <MenuItem value="minMax">Menor Precio</MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
       <FontAwesomeIcon
         icon={faFilterCircleXmark}
         onClick={(e) => handleResetFilter(e)}
         className={style.img}
       />
-      <div>
+      <Box>
         <input
           type="text"
           className={sty.Serch}
@@ -111,51 +196,11 @@ const SearchBar = () => {
           value={city}
         />
         {/* agregué este value. Mel */}
-        <button className={sty.btn} onClick={search_House}>
+        <Button colorScheme="teal" variant="link" onClick={search_House}>
           Buscar
-        </button>
-      </div>
-      <div>
-        <select name="property" value={"property"} className={sty.select} onChange={selectPropType}>
-          {/* volví a agregar el handle selectPropType, se ve que se borró sin querer y no andaba ese filtro. Mel */}
-          <option>Propiedad</option>
-          {propertys.map((e) => {
-            return (
-              <option key={e.id} value={e.name}>
-                {e.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
-      <NumberInput defaultValue={""} min={1} max={20} onChange={selectAmbients}>
-        <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
-      <div>
-        <select id="4" name={"pets"} value={"pets"} className={sty.select} onChange={selectPets}>
-          <option value="Mascotas">Mascotas</option>
-          <option value={true}>si</option>
-          <option value={false}>no</option>
-        </select>
-      </div>
-      <div>
-        <select
-          id="3"
-          name={"price"}
-          value={"price"}
-          className={sty.select}
-          onChange={orderByPrice}
-        >
-          <option value="Precio">Precio</option>
-          <option value="maxMin">Mayor Precio</option>
-          <option value="minMax">Menor Precio</option>
-        </select>
-      </div>
-    </div>
+        </Button>
+      </Box>
+    </Box>
   );
 };
 

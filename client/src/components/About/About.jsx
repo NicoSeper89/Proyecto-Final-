@@ -19,7 +19,7 @@ export default function About() {
         <div>
           <h4>Colaboradores</h4>
           <a href="https://github.com/MelHellrigl">Melissa Hellrigl</a>
-          <a href="https://github.com/thomneuhaus2">Thom Neuhaus</a>
+          <a href="https://github.com/thomneuhaus2">Thomas Neuhaus</a>
           <a href="https://github.com/NicoSeper89">Nicolás Sepertino</a>
           <a href="https://github.com/ELJG">Jose Garcia</a>
           <a href="https://github.com/TomasTinto1234">Tomas Tinto</a>

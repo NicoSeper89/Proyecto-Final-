@@ -57,17 +57,29 @@ const CreatePost = () => {
   const [disableButtonUploadImg, setDisableButtonUploadImg] = useState(true);
 
   useEffect(() => {
-    const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age, typProp, propImg } =
-      infoFormProp;
+    const {
+      city,
+      address,
+      surface,
+      price,
+      environments,
+      bathrooms,
+      rooms,
+      garage,
+      yard,
+      age,
+      typProp,
+      propImg,
+    } = infoFormProp;
 
     if (
-      !city || 
-      (city === "default") ||
+      !city ||
+      city === "default" ||
       !address ||
-      (/^[\s]+$/i.test(address)) ||
+      /^[\s]+$/i.test(address) ||
       !surface ||
       !typProp ||
-      (typProp === "default") ||
+      typProp === "default" ||
       !price ||
       !environments ||
       !bathrooms ||
@@ -76,19 +88,18 @@ const CreatePost = () => {
       !yard ||
       !age ||
       !infoFormPub.description ||
-      (/^[\s]+$/i.test(infoFormPub.description)) 
+      /^[\s]+$/i.test(infoFormPub.description)
     ) {
       setDisableButtonSubmit(true);
     } else {
       setDisableButtonSubmit(false);
     }
-    
-    if(propImg.length >= 5) {
-      setDisableButtonUploadImg(true)
-    } else {
-      setDisableButtonUploadImg(false)
-    }
 
+    if (propImg.length >= 5) {
+      setDisableButtonUploadImg(true);
+    } else {
+      setDisableButtonUploadImg(false);
+    }
   }, [setDisableButtonSubmit, infoFormProp, infoFormPub.description]);
 
   const onChangeInputProp = (e) => {
@@ -136,7 +147,6 @@ const CreatePost = () => {
     e.preventDefault();
 
     try {
-      
       let res = await axios.post("http://localhost:3001/publication/createProperty", {
         ...infoFormProp,
       });
@@ -157,7 +167,7 @@ const CreatePost = () => {
     <>
       <NavBarForms />
       <Box>
-        <Flex 
+        <Flex
           gap={"2rem"}
           position="relative"
           m={"1rem"}
@@ -182,9 +192,10 @@ const CreatePost = () => {
             borderRadius="14px"
             overflow="hidden"
           >
-            <FormLabel>Provincia
+            <FormLabel>
+              Provincia
               <Select name={"city"} onChange={onChangeInputProp}>
-                <option value="default" >Default</option>
+                <option value="default">Default</option>
                 {cities.map((type, i) => (
                   <option key={i} value={type.name}>
                     {type.name}
@@ -193,7 +204,8 @@ const CreatePost = () => {
               </Select>
             </FormLabel>
 
-            <FormLabel>Dirección
+            <FormLabel>
+              Dirección
               <Input
                 type="text"
                 name={"address"}
@@ -202,9 +214,10 @@ const CreatePost = () => {
               />
             </FormLabel>
 
-            <FormLabel>Tipo de propiedad
+            <FormLabel>
+              Tipo de propiedad
               <Select name={"typProp"} onChange={onChangeInputProp}>
-                <option value="default" >Default</option>
+                <option value="default">Default</option>
                 {propertys.map((type, i) => (
                   <option key={i} value={type.name}>
                     {type.name}
@@ -213,10 +226,15 @@ const CreatePost = () => {
               </Select>
             </FormLabel>
 
-            <FormLabel>Precio
+            <FormLabel>
+              Precio
               <NumberInput
                 value={infoFormProp.price}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, price:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, price: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -227,10 +245,15 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>Antigüedad
+            <FormLabel>
+              Antigüedad
               <NumberInput
                 value={infoFormProp.age}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, age:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, age: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -241,10 +264,15 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>Superficie
+            <FormLabel>
+              Superficie
               <NumberInput
                 value={infoFormProp.surface}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, surface:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, surface: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -255,10 +283,15 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>Ambientes
+            <FormLabel>
+              Ambientes
               <NumberInput
                 value={infoFormProp.environments}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, environments:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, environments: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -269,10 +302,15 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>Baños
+            <FormLabel>
+              Baños
               <NumberInput
                 value={infoFormProp.bathrooms}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, bathrooms:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, bathrooms: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -283,10 +321,15 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>Habitaciones
+            <FormLabel>
+              Habitaciones
               <NumberInput
                 value={infoFormProp.rooms}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, rooms:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, rooms: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -297,10 +340,15 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>Garage
+            <FormLabel>
+              Garage
               <NumberInput
                 value={infoFormProp.garage}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, garage:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, garage: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -311,10 +359,15 @@ const CreatePost = () => {
               </NumberInput>
             </FormLabel>
 
-            <FormLabel>Patios
+            <FormLabel>
+              Patios
               <NumberInput
                 value={infoFormProp.yard}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === ""))? setInfoFormProp({ ...infoFormProp, yard:value}) : null )}
+                onChange={(value) =>
+                  /^[0-9]+$/i.test(value) || value === ""
+                    ? setInfoFormProp({ ...infoFormProp, yard: value })
+                    : null
+                }
                 min={0}
               >
                 <NumberInputField />
@@ -397,25 +450,23 @@ const CreatePost = () => {
                 </Checkbox>
               </Stack>
             </CheckboxGroup>
-            
-            <FormLabel  >
+
+            <FormLabel>
               Imagen
               <UploadImg setInfoFormProp={setInfoFormProp} infoFormProp={infoFormProp} />
             </FormLabel>
-            
+
             <Button
-            disabled={disableBUttonSubmit}
-            alignSelf={"flex-end"}
-            colorScheme="blue"
-            type="submit"
-            value={"enviar"}
-            onClick={onSubmitForm}
-          >
-            Enviar
-          </Button>
-
+              disabled={disableBUttonSubmit}
+              alignSelf={"flex-end"}
+              colorScheme="blue"
+              type="submit"
+              value={"enviar"}
+              onClick={onSubmitForm}
+            >
+              Enviar
+            </Button>
           </Box>
-
         </Flex>
       </Box>
     </>

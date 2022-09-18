@@ -17,7 +17,7 @@
 .containerIcons {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 15px;
   padding-right: 20px;
   font-size: 30px;
@@ -27,7 +27,7 @@
 .containerItems {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   margin-left: 20px;
 }
 

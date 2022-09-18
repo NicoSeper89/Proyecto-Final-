@@ -4,6 +4,7 @@ import { setCurrentPage } from "../../redux/actions";
 import Loading from "../Loading/Loading";
 import Card from "./Card";
 import style from "./Cards.module.css";
+import { Box } from "@chakra-ui/react";
 
 export default function Cards() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export default function Cards() {
   const currentPage = useSelector((state) => state.currentPage);
 
   /* **************** PAGINADO **************** */
-  const housePage = 2;
+  const housePage = 6;
   const pages = [];
   for (let i = 1; i <= Math.ceil(houses.length / housePage); i++) {
     pages.push(i);
@@ -49,11 +50,11 @@ export default function Cards() {
 
   /* **************** RENDER CARDS **************** */
   return (
-    <div className={style.containerAll}>
+    <Box className={style.containerAll}>
       {loading ? (
         <Loading />
       ) : (
-        <div className={style.paginado}>
+        <Box className={style.paginado}>
           <ul className={style.paginadoBtn}>
             {currentPage !== 1 ? <li onClick={handlePrev}>Prev</li> : null}
             {renderPaginado}
@@ -61,10 +62,10 @@ export default function Cards() {
               <li onClick={handleNext}>Next</li>
             ) : null}
           </ul>
-          <div className={style.container}>
+          <Box className={style.container}>
             {currentHouse?.map((r) => {
               return (
-                <div key={r.id}>
+                <Box key={r.id}>
                   <Card
                     id={r.id}
                     img={r.img}
@@ -77,12 +78,12 @@ export default function Cards() {
                     mascota={r.property.pets}
                     premium={r.premium}
                   />
-                </div>
+                </Box>
               );
             })}
-          </div>
-        </div>
+          </Box>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
