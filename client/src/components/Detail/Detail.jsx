@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublicationsDetail, clean } from "../../redux/actions";
-import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import imgNotAvailable from "../../Image/Image_not_available.png";
+// import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
-  faHeart,
+  /* faHeart, */
+  faRulerCombined,
+  faWarehouse,
+  faEarthAmericas,
+  faLandmark,
   faToilet,
   faBed,
   faDoorOpen,
@@ -15,7 +18,6 @@ import {
   faCalendar,
   faCheck,
   faX,
-  faStar,
   faPhone,
   faComment,
   faCity,
@@ -23,8 +25,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
-import Loading from "../Loading/Loading"
-import { Box, Image, Text, ListItem, UnorderedList } from "@chakra-ui/react";
+import Loading from "../Loading/Loading";
+
+import {
+  Box,
+  Image,
+  Text,
+  ListItem,
+  UnorderedList,
+  Flex,
+  Heading,
+} from "@chakra-ui/react";
+import ImageSlider from "./ImageSlider";
+
+
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -42,153 +56,211 @@ export default function Detail(props) {
   }, [dispatch, props.match.params.id]);
 
   return (
-    <Box
-      gap={"2rem"}
-      position="relative"
-      m={"1rem"}
-      p={"1rem"}
-      justifyContent={"center"}
-      wrap="wrap"
-      borderWidth="1px"
-      borderRadius="14px"
-      overflow="hidden"
-    >
-      <Box w={"100%"} textAlign={"center"} fontSize="1.2em">
-        <Box w={"100%"} textAlign={"center"} fontSize="1.2em">
-          <NavBarForms w={"100%"} textAlign={"center"} fontSize="1.2em" />
-        </Box>
+    <>
+      <NavBarForms />
 
+      <Flex
+        w={"100%"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        justifyContent={"flex-start"}
+        p={".5rem"}
+        position="relative"
+      >
         {Object.entries(miStateDetail).length > 0 ? (
-          <Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              p={"1rem"}
-              w={"45%"}
-              gap=".5rem"
-              borderWidth="1px"
-              borderRadius="14px"
-              overflow="hidden"
-            >
-              {" "}
-              DATOS PUBLICACION
-              <Image 
-                src={
-                  miStateDetail.property.propertyImages[0] 
-                    ? miStateDetail.property.propertyImages[0].url
-                    : imgNotAvailable
-                }
-                
-              />
-             {miStateDetail.property.propertyImages?.map((e, i)=> ((i !== 0)?<Image w={"15rem"} key={i} src={ e.url}/>: null))}  
-              <Text>{miStateDetail.property.premium}</Text>
-            </Box>
 
-            <Box
-              display={"flex"}
+          <Flex
+            p={"1rem"}
+            w={"100%"}
+            alignItems={"flex-start"}
+            justifyContent={"flex-start"}
+          >
+
+            <Flex
               flexDirection={"column"}
-              p={"1rem"}
-              w={"45%"}
-              gap=".5rem"
-              borderWidth="1px"
-              borderRadius="14px"
-              overflow="hidden"
+              gap={".7rem"}
+              alignItems={"flex-start"}
+              justifyContent={"space-between"}
+              p={"0rem .8rem"}
+              position={"relative"}
             >
-              <FontAwesomeIcon icon={faHeart} />
-              {/* <ListItem>premium: {miStateDetail.premium === true? (
-                <FontAwesomeIcon icon={faCheck} />
-                ) : (
-                  <FontAwesomeIcon icon={faX} />
-        )}</ListItem> */}
-              <Text>Precio: {miStateDetail.property.price} $</Text>
-              <Text>
-                Tipo De Propiedad: {miStateDetail.property.TypeOfProp.name}{" "}
-                <FontAwesomeIcon icon={faHouse} />
-              </Text>
-              <Text>
-                Provincia: {miStateDetail.property.city.name}, Argentina{" "}
-                <FontAwesomeIcon icon={faCity} />
-              </Text>
-              <Text>Superficie: {miStateDetail.property.surface}m²</Text>
-              <Text>
-                Dormitorios: {miStateDetail.property.environments}{" "}
-                <FontAwesomeIcon icon={faDoorOpen} />
-              </Text>
-              <Text>Garage: {miStateDetail.property.garage}</Text>
-            </Box>
-            <Box
-              display={"flex"}
-              flexDirection={"column"}
-              p={"1rem"}
-              w={"45%"}
-              gap=".5rem"
-              borderWidth="1px"
-              borderRadius="14px"
-              overflow="hidden"
-            >
-              <Box>
-                Dirección: {miStateDetail.property.address}{" "}
-                <FontAwesomeIcon icon={faLocationDot} />
+
+              <Box w="100%" p={4} color="white">
+                <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
-              <UnorderedList>
-                <ListItem>
-                  Dormitorios: {miStateDetail.property.environments}{" "}
-                  <FontAwesomeIcon icon={faDoorOpen} />
-                </ListItem>
-                <ListItem>
-                  Baños: {miStateDetail.property.bathrooms}{" "}
-                  <FontAwesomeIcon icon={faToilet} />
-                </ListItem>
-                <ListItem>
-                  Cuartos: {miStateDetail.property.rooms}{" "}
-                  <FontAwesomeIcon icon={faBed} />
-                </ListItem>
-                <ListItem>
-                  Mascotas:{" "}
-                  {miStateDetail.property.pets === true ? (
-                    <FontAwesomeIcon icon={faCheck} />
+
+            </Flex>
+            <Flex
+              w={"100%"}
+              gap={"1rem"}
+              justifyContent="flex-start"
+              flexDirection={"column"}
+              alignItems={"center"}
+            >
+              {/* <Box fontSize={"2rem"}>{(miStateDetail.property.premium) ? <Text color={"yellowgreen"}>{"Usuario Premium"}</Text> : <Text color={"gray.400"}>{"Usuario Free"}</Text>}</Box> */}
+
+              <Flex
+                w={"100%"}
+                justifyContent="flex-start"
+                flexDirection={"column"}
+                alignItems={"center"}
+              >
+                <Box
+                  borderRadius={"0.5rem 0.5rem 0rem 0rem"}
+                  width={"90%"}
+                  p={".3rem 0rem"}
+                  textAlign={"center"}
+                  bg={"facebook.300"}
+                >
+                  <Heading color={"white"}>Descripción</Heading>
+                </Box>
+
+                <Box
+                  borderRadius={"0rem 0rem 0.5rem 0.5rem"}
+                  flexDirection={"column"}
+                  gap={".5rem"}
+                  color={"gray.600"}
+                  width={"90%"}
+                  display={"flex"}
+                  p={"1rem"}
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                >
+                  <Text>{miStateDetail.description}</Text>
+                </Box>
+              </Flex>
+
+              <Flex
+                w={"100%"}
+                justifyContent="flex-start"
+                flexDirection={"column"}
+                alignItems={"center"}
+              >
+                <Box
+                  borderRadius={"0.5rem 0.5rem 0rem 0rem"}
+                  width={"90%"}
+                  p={".3rem 0rem"}
+                  textAlign={"center"}
+                  bg={"facebook.300"}
+                >
+                  <Heading color={"white"}>Detalles</Heading>
+                </Box>
+
+                <Box
+                  borderRadius={"0rem 0rem 0.5rem 0.5rem"}
+                  flexDirection={"column"}
+                  gap={".5rem"}
+                  color={"gray.600"}
+                  width={"90%"}
+                  display={"flex"}
+                  p={"1rem"}
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                >
+                  {/* <FontAwesomeIcon icon={faHeart}  /> */}
+                  {/* <ListItem>premium: {miStateDetail.premium === true? (
+                  <FontAwesomeIcon icon={faCheck} />
                   ) : (
                     <FontAwesomeIcon icon={faX} />
-                  )}
-                  <FontAwesomeIcon icon={faPaw} />
-                </ListItem>
+                  }</ListItem> */}
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faEarthAmericas} />
 
-                <ListItem>Garage: {miStateDetail.property.garage}</ListItem>
-                {/* <FontAwesomeIcon icon={faGarage} /> */}
-                <ListItem>
-                  Antigüedad: {miStateDetail.property.age}{" "}
-                  <FontAwesomeIcon icon={faCalendar} />
-                </ListItem>
-                <ListItem>
-                  Servicios:{" "}
-                  {miStateDetail.property.services.map((e) => e.name + ", ")}{" "}
-                  <FontAwesomeIcon icon={faCheck} />
-                </ListItem>
-              </UnorderedList>
-              <Box>
-                <Text>Descripcion: {miStateDetail.description}</Text>
-              </Box>
-            </Box>
-            <FontAwesomeIcon icon={faStar} />
-            <Box>
-              DATOS PROPIETARIO
-              {/* <FontAwesomeIcon icon={faUser} /> */}
-              <FontAwesomeIcon icon={faCircleUser} />
-              <FontAwesomeIcon icon={faPhone} />
-              <FontAwesomeIcon icon={faComment} />
-              {/* <Text>{miUseerState[0].name}</Text>
-            
-            <Text>{miUseerState.mail}</Text>
-            <Text>{miUseerState[0].rating}</Text>
-            <Text>{miUseerState[0].description}</Text> */}
-              {/* <Text>service: {miStateDetail.property.service.name}</Text> */}
-            </Box>
-          </Box>
+                    <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faLocationDot} />
+                    <Text>Dirección: {miStateDetail.property.address}</Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faLandmark} />
+                    <Text>Precio: ${miStateDetail.property.price}</Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faHouse} />
+                    <Text>
+                      Tipo de propiedad:{" "}
+                      {miStateDetail.property.TypeOfProp.name}
+                    </Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faRulerCombined} />
+                    <Text>Superficie: {miStateDetail.property.surface}m²</Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faCalendar} />
+                    <Text>Antigüedad: {miStateDetail.property.age} Años</Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faPaw} />
+                    Mascotas:
+                    {miStateDetail.property.pets === true ? (
+                      <FontAwesomeIcon icon={faCheck} />
+                    ) : (
+                      <FontAwesomeIcon icon={faX} />
+                    )}
+                  </Flex>
+
+                  <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faDoorOpen} />
+                    <Text>
+                      Ambientes: {miStateDetail.property.environments}
+                    </Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faBed} />
+                    <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faToilet} />
+                    <Text>Baños: {miStateDetail.property.bathrooms}</Text>
+                  </Flex>
+
+                  <Flex alignItems={"center"} gap={".4rem"}>
+                    <FontAwesomeIcon icon={faWarehouse} />
+                    <Text>Garage: {miStateDetail.property.garage}</Text>
+                  </Flex>
+
+                  <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
+
+                  {miStateDetail.property.services.map((e) => (
+                    <Flex alignItems={"center"} gap={".4rem"}>
+                      <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
+                    </Flex>
+                  ))}
+                </Box>
+              </Flex>
+
+              {/* <Box>
+                DATOS PROPIETARIO
+                <FontAwesomeIcon icon={faUser} />
+                <FontAwesomeIcon icon={faCircleUser} />
+                <FontAwesomeIcon icon={faPhone} />
+                <FontAwesomeIcon icon={faComment} />
+                <Text>{miUseerState[0].name}</Text>
+                <Text>{miUseerState.mail}</Text>
+                <Text>{miUseerState[0].rating}</Text>
+                <Text>{miUseerState[0].description}</Text>
+                <Text>service: {miStateDetail.property.service.name}</Text>
+              </Box> */}
+            </Flex>
+          </Flex>
         ) : (
-          <Loading/>
+          <Loading />
         )}
-      </Box>
+      </Flex>
+
       <Footer />
-    </Box>
+    </>
   );
 }

@@ -78,7 +78,7 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
 
       <Flex flexDirection={"column"} w={"92%"} border={"2px"} gap={"2rem"} borderColor={"gray.200"} p={"1.4rem"} >
         <Flex justifyContent={'center'} alignItems={"center"} w={"100%"} h={"25rem"} >
-          {(preview) ? <Image maxH={"98%"} src={preview} alt="chosen" /> : (successMsg) ? <Text>{successMsg}</Text> : <Text color={"gray.500"}>Ningun Archivo Seleccionado...</Text>}
+          {(preview) ? <Image maxH={"98%"} src={preview} alt="chosen" /> : (successMsg) ? <Text>{successMsg}</Text> : <Text color={"gray.500"}>Ningún archivo seleccionado...</Text>}
         </Flex>
       </Flex>
 

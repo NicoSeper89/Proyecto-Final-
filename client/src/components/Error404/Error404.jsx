@@ -1,12 +1,12 @@
 import React from "react";
-import { Box, Heading, Text, Button, Link, Flex } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 
 export default function Error404() {
   const history = useHistory();
 
   const handle = () => {
-    history.push("/recipes");
+    history.push("/");
   };
 
   return (
@@ -37,7 +37,7 @@ export default function Error404() {
         </Text>
 
         <Button
-          onSubmit={(e) => handle(e)}
+          onClick={(e) => handle(e)}
           colorScheme="orange"
           bgGradient="linear(to-r, orange.400, orange.500, orange.600)"
           color="white"
