@@ -9,8 +9,10 @@ import {
   Radio,
   HStack,
   RadioGroup,
-  Alert,
-  AlertIcon
+  FormLabel,
+  FormHelperText,
+  FormErrorMessage,
+  FormControl
 } from "@chakra-ui/react";
 import logoImg from "../../Image/Logo LookHouse.png";
 import { Link } from "react-router-dom";
@@ -24,19 +26,31 @@ const NewUser = () => {
 
   const [datos, setDatos] = useState({ NDU: "", gmail: "", contraseña: "", TDU: "" })
 
+  var isError
+  var isError2
+  var isError3
+
+  datos.gmail.length > 0 && !gmail.test(datos.gmail) ? isError = true : isError = false
+
+  datos.contraseña.length > 0 && datos.contraseña.length < 8 ? isError2 = true : isError2 = false
+
+  datos.NDU.length > 0 && datos.NDU.length < 4 ? isError3 = true : isError3 = false
+
   const changes = (e) => {
     setDatos({ ...datos, [e.target.name]: e.target.value })
   }
   const createUser = () => {
-  console.log(datos)
-  setDatos({ NDU: "", gmail: "", contraseña: "", TDU: "" })
-  
+    console.log(datos)
+    console.log(isError)
+    setDatos({ NDU: "", gmail: "", contraseña: "", TDU: "" })
+    
+
   }
-  
 
   var si_no = true
-  if(gmail.test(datos.gmail) && datos.NDU.length > 5 && datos.contraseña.length > 8 && datos.TDU !== "")  si_no = false
+  if (datos.NDU.length > 3 && gmail.test(datos.gmail) && datos.contraseña.length >7 && datos.TDU !== "") si_no = false
   else si_no = true
+
   return (
     <Box>
       <Box className={style.containerNav}>
@@ -56,24 +70,46 @@ const NewUser = () => {
         </Box>
 
         <Box className={style.input}>
-          <label htmlFor="">Nombre De Usuario</label>
-          <Input placeholder="Nombre..." name="NDU" onChange={changes} value={datos.NDU} />
-        </Box>
-        <Box className={style.input}>
-          <label htmlFor="">E-mail</label>
-          <Input placeholder="E-mail..." name="gmail" onChange={changes} value={datos.gmail} />
+          <FormControl isInvalid={isError3}>
+            <FormLabel>Nombre De Usuario</FormLabel>
+            <Input
+              value={datos.NDU}
+              onChange={changes}
+              name="NDU"
+              placeholder="Nombre..."
+            />
+            {isError3 ? <FormErrorMessage>Tu nombre debe tener minimo 4 Caracteres</FormErrorMessage> : null}
+
+          </FormControl>
         </Box>
 
         <Box className={style.input}>
-          <label htmlFor="">Contraseña</label>
-          <InputGroup size="md">
+          <FormControl isInvalid={isError}>
+            <FormLabel>Gmail</FormLabel>
+            <Input
+              type='email'
+              value={datos.gmail}
+              onChange={changes}
+              name="gmail"
+              placeholder="Gmail..."
+            />
+            {isError ? <FormErrorMessage>Ingrese un Email correcto</FormErrorMessage> : null}
+
+          </FormControl>
+        </Box>
+
+        <Box className={style.input}>
+          <FormLabel>Contraseña</FormLabel>
+          <FormControl size="md" isInvalid={isError2}>
             <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="Contraseña.." name="contraseña" onChange={changes} value={datos.contraseña} />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
+            <InputRightElement width="5rem" top="0.5rem">
+              <Button h="1.5rem" size="sm" onClick={handleClick}>
                 {show ? "Hide" : "Show"}
               </Button>
             </InputRightElement>
-          </InputGroup>
+            {isError2 ? <FormErrorMessage>Su contraseña debe tener minimo 8 Caracteres</FormErrorMessage> : null}
+          </FormControl>
+
         </Box>
 
         <Box className={style.titulo}>
