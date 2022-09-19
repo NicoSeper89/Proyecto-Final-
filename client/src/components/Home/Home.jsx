@@ -26,10 +26,6 @@ const Home = () => {
     dispatch(getPublications(filters, sorting, ""));
   }, [dispatch, filters, sorting, cities]);
 
-  //
-  {
-    /* {Object.entries(houses).length > 0 ? ( */
-  }
   return (
     <Box backgroundColor={"#EDEDED"}>
       <NavBar />
@@ -39,9 +35,6 @@ const Home = () => {
         <Footer />
       </Box>
     </Box>
-    // ) : (
-    //   <Loading />
-    // )}
   );
 };
 

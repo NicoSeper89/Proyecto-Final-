@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect } from "react";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home.jsx";
@@ -23,14 +23,16 @@ function App() {
 
   return (
     <>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/createPost" component={CreatePost} />
-      <Route path="/about" component={About} />
-      <Route path="/help" component={Help} />
-      <Route path="/details/:id" component={Detail} />
-      <Route path="/login" component={Login} />
-      <Route path="/checkin" component={NewUser} />
-      <Route path="/error404" component={Error404} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/createPost" component={CreatePost} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/help" component={Help} />
+        <Route exact path="/details/:id" component={Detail} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/checkin" component={NewUser} />
+        <Route path="*" component={Error404} />
+      </Switch>
     </>
   );
 }

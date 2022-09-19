@@ -26,6 +26,7 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
+
 import {
   Box,
   Image,
@@ -37,6 +38,7 @@ import {
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import imgNotAvailable from "../../Image/Image_not_available.png";
+
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -66,12 +68,14 @@ export default function Detail(props) {
         position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
+
           <Flex
             p={"1rem"}
             w={"100%"}
             alignItems={"flex-start"}
             justifyContent={"flex-start"}
           >
+
             <Flex
               flexDirection={"column"}
               gap={".7rem"}
@@ -80,36 +84,12 @@ export default function Detail(props) {
               p={"0rem .8rem"}
               position={"relative"}
             >
+
               <Box w="100%" p={4} color="white">
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
-
-              {/* <Image
-                borderRadius={"12px"}
-                w={"50rem"}
-                src={
-                  miStateDetail.property.propertyImages[0]
-                    ? miStateDetail.property.propertyImages[0].url
-                    : imgNotAvailable
-                }
-              />
-              <Flex
-                position={"relative"}
-                justifyContent={"flex-start"}
-                gap={"1rem"}
-                alignItems={"center"}
-                w={"50rem"}
-              >
-                {miStateDetail.property.propertyImages?.map((e, i) =>
-                  i !== 0 ? (
-                    <Box w={"10rem"}>
-                      <Image borderRadius={".2rem"} key={i} src={e.url} />
-                    </Box>
-                  ) : null
-                )}
-              </Flex> */}
+              </Flex>
             </Flex>
-
             <Flex
               w={"100%"}
               gap={"1rem"}
@@ -185,9 +165,8 @@ export default function Detail(props) {
                   }</ListItem> */}
                   <Flex alignItems={"center"} gap={".4rem"}>
                     <FontAwesomeIcon icon={faEarthAmericas} />
-                    <Text>
-                      Ubicación: {miStateDetail.property.city.name}, Argentina{" "}
-                    </Text>
+
+                    <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
                   </Flex>
 
                   <Flex alignItems={"center"} gap={".4rem"}>
