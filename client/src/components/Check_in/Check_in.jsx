@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./Check_in.module.css";
+import axios from "axios"
 import {
   Input,
   Box,
@@ -9,34 +10,51 @@ import {
   Radio,
   HStack,
   RadioGroup,
-  Alert,
-  AlertIcon
+  FormLabel,
+  FormHelperText,
+  FormErrorMessage,
+  FormControl
 } from "@chakra-ui/react";
 import logoImg from "../../Image/Logo LookHouse.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-var gmail = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{3})$/ //ragex para validar gmail
+var mail = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{3})$/ //ragex para validar mail
 
 const NewUser = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
-  const [datos, setDatos] = useState({ NDU: "", gmail: "", contraseña: "", TDU: "" })
+  const [datos, setDatos] = useState({ name: "", mail: "", password: "", typUser: "" })
+
+  var isError
+  var isError2
+  var isError3
+
+  datos.mail.length > 0 &&  mail.test(datos.mail) ? isError = true : isError = false
+
+  datos.password.length > 0 && datos.password.length < 8 ? isError2 = true : isError2 = false
+
+  datos.name.length > 0 && datos.name.length < 4 ? isError3 = true : isError3 = false
 
   const changes = (e) => {
     setDatos({ ...datos, [e.target.name]: e.target.value })
   }
-  const createUser = () => {
-  console.log(datos)
-  setDatos({ NDU: "", gmail: "", contraseña: "", TDU: "" })
+  const createUser = async() => {
+   await axios.post("http://localhost:3001/user/users", {name: datos.name, typUser: datos.typUser})
+  //  .then(
+  //   // await axios.post("http://localhost:3001/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
+  //   // )
   
-  }
-  
+   
 
+    setDatos({ name: "", mail: "", password: "", typUser: "" })
+  }
+ 
   var si_no = true
-  if(gmail.test(datos.gmail) && datos.NDU.length > 5 && datos.contraseña.length > 8 && datos.TDU !== "")  si_no = false
+  if (datos.name.length > 3 && mail.test(datos-mail) && datos.password.length >7 && datos.typUser !== "") si_no = false
   else si_no = true
+ 
   return (
     <Box>
       <Box className={style.containerNav}>
@@ -56,24 +74,46 @@ const NewUser = () => {
         </Box>
 
         <Box className={style.input}>
-          <label htmlFor="">Nombre De Usuario</label>
-          <Input placeholder="Nombre..." name="NDU" onChange={changes} value={datos.NDU} />
-        </Box>
-        <Box className={style.input}>
-          <label htmlFor="">E-mail</label>
-          <Input placeholder="E-mail..." name="gmail" onChange={changes} value={datos.gmail} />
+          <FormControl isInvalid={isError3}>
+            <FormLabel>Nombre De Usuario</FormLabel>
+            <Input
+              value={datos.name}
+              onChange={changes}
+              name= "name"
+              placeholder="Nombre..."
+            />
+            {isError3 ? <FormErrorMessage>Tu nombre debe tener minimo 4 Caracteres</FormErrorMessage> : null}
+
+          </FormControl>
         </Box>
 
         <Box className={style.input}>
-          <label htmlFor="">Contraseña</label>
-          <InputGroup size="md">
-            <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="Contraseña.." name="contraseña" onChange={changes} value={datos.contraseña} />
-            <InputRightElement width="4.5rem">
-              <Button h="1.75rem" size="sm" onClick={handleClick}>
+          <FormControl isInvalid={isError}>
+            <FormLabel>Gmail</FormLabel>
+            <Input
+              type='email'
+              value={datos.mail}
+              onChange={changes}
+              name= "mail"
+              placeholder="Gmail..."
+            />
+            {isError ? <FormErrorMessage>Ingrese un Email correcto</FormErrorMessage> : null}
+
+          </FormControl>
+        </Box>
+
+        <Box className={style.input}>
+          <FormLabel>password</FormLabel>
+          <FormControl size="md" isInvalid={isError2}>
+            <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="password.." name="password" onChange={changes} value={datos.password} />
+            <InputRightElement width="5rem" top="0.5rem">
+              <Button h="1.5rem" size="sm" onClick={handleClick}>
                 {show ? "Hide" : "Show"}
               </Button>
             </InputRightElement>
-          </InputGroup>
+            {isError2 ? <FormErrorMessage>Su password debe tener minimo 8 Caracteres</FormErrorMessage> : null}
+          </FormControl>
+
         </Box>
 
         <Box className={style.titulo}>
@@ -83,13 +123,13 @@ const NewUser = () => {
         <Box className={style.input}>
           <RadioGroup defaultValue='Itachi'>
             <HStack spacing='24px' onChange={changes}>
-              <Radio value='Inquilino' name="TDU">Inquilino</Radio>
-              <Radio value='Propietario' name="TDU">Propietario</Radio>
+              <Radio value='Inquilino' name="typUser">Inquilino</Radio>
+              <Radio value='Propietario' name="typUser">Propietario</Radio>
             </HStack>
           </RadioGroup>
         </Box>
         <Box className={style.btn}>
-          <Button colorScheme='blue' onClick={createUser} disabled={si_no}>Crear</Button>
+          <Button colorScheme='blue' onClick={createUser} disabled={false}>Crear</Button>
         </Box>
       </form>
     </Box>
