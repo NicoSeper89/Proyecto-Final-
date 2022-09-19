@@ -90,17 +90,7 @@ router.get("/propertyTypes", async (req, res, next) => {
   }
 });
 
-router.post("/postReport", async (req, res, next) => {
-  try {
-    if (!req.body.name) res.status(404).send("no reports");
-    await Report.create({
-      name: req.body.name,
-    });
-    res.send("created report");
-  } catch (error) {
-    next(error);
-  }
-});
+
 //para el detail
 router.get("/:id", async (req, res, next) => {
   try {
@@ -123,6 +113,19 @@ router.get("/:id", async (req, res, next) => {
         next(error)
     }
 }) */
+
+router.post("/postReport", async (req, res, next) => {
+  try {
+    if (!req.body.name) res.status(404).send("no reports");
+    await Report.create({
+      name: req.body.name,
+    });
+    res.send("created report");
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 router.post("/image", async (req, res, next) => {
   const { url } = req.body;
@@ -160,6 +163,7 @@ router.post("/createProperty", async (req, res, next) => {
     ) {
       return res.status(404).send("fill out data");
     }
+    if(!propImg) propImg = "https://res.cloudinary.com/lookhouse/image/upload/v1663619810/hiq8jpgr6wzmzgf5yjaq.png"
     let property = await Property.create({
       address,
       surface,
@@ -242,12 +246,19 @@ router.put("/editProperty/:id", async (req, res, next) => {
     city,
     service,
     typProp,
-    propImg,
+    propImg
   } = req.body;
+  const { description, status, premium, propertyId } = req.body;
   try {
-    let updatedProperty = Property.findByPk(id)
-    let property = await Property.upsert({
+    await Publication.upsert({
       id: id,
+      description,
+      status,
+      premium,
+    });
+    let updatedProp = await Property.findByPk(propertyId)
+    await Property.upsert({
+      id: propertyId,
       address,
       surface,
       price,
@@ -263,23 +274,25 @@ router.put("/editProperty/:id", async (req, res, next) => {
       let ser = await Service.findAll({
         where: { name: service },
       });
-      property.addService(ser);
+      updatedProp.addService(ser);
     }
     let location = await City.findOne({
       where: { name: city },
     });
-    property.setCity(location);
+    updatedProp.setCity(location);
     let type = await TypeOfProp.findOne({
       where: { name: typProp },
     });
-    property.setTypeOfProp(type);
-
+    await PropertyImage.create({
+      url: propImg
+    });
+    updatedProp.setTypeOfProp(type);
     let img = await PropertyImage.findAll({
       where: { url: propImg },
     });
-    property.addPropertyImage(img);
+    updatedProp.addPropertyImage(img);
 
-    res.send(property.id);
+    res.send('post updated')
   } catch (error) {
     next(error);
   }
@@ -287,14 +300,30 @@ router.put("/editProperty/:id", async (req, res, next) => {
 
 
 
-router.delete("/image/:id", async (req, res, next) => {
-  const { id } = req.params;
+router.delete("/image/delete/:url", async (req, res, next) => {
+  const { url } = req.params;
   try {
-    await PropertyImage.destroy({ where: { id: id } });
-    res.send(`image id ${id} was deleted`);
+    await PropertyImage.destroy({ where: { url: url } });
+    res.send(`image url ${url} was deleted`);
   } catch (error) {
     next(err);
   }
 });
+
+
+
+router.delete("/delete/:id", async (req, res, next) => {
+  const { id } = req.params
+  try {
+    const post = await Publication.findByPk(id)
+    const deleteImg = await PropertyImage.findAll({where: {propertyId: post.propertyId}})
+    await deleteImg.map(img => img.destroy())
+    await Property.destroy({where: {id: post.propertyId}})
+    await Publication.destroy({where: {id: id}})
+    res.send(`id ${id} was deleted`)
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router;
