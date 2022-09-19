@@ -57,7 +57,6 @@ const SearchBar = () => {
     dispatch(updateFilterProp(e.target.value));
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
-    dispatch(valueFilter(e.target.name));
   }; 
  
   //SELECT AMBIENTES
