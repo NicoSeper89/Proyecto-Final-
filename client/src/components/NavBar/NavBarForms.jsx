@@ -2,10 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import style from "./NavBarForms.module.css";
 import logoImg from "../../Image/Logo LookHouse.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { Box, Button, Image, useColorModeValue } from "@chakra-ui/react";
-import { Button, Image, Flex, Box } from "@chakra-ui/react";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { Box, Button, Flex, Image, useColorModeValue } from "@chakra-ui/react";
 
 export default function NavBarForms() {
   return (
@@ -15,33 +14,34 @@ export default function NavBarForms() {
         bg={useColorModeValue("gray.50", "gray.900")}
         color={useColorModeValue("gray.700", "gray.200")}
       >
-        <Link to="/">
-          <Image src={logoImg} alt="homeLogo" />
-        </Link>
-        <div className={style.buttons}>
-      <Flex borderBottom={".1rem solid"} borderColor={"gray.300"} justifyContent={"space-between"} p={"0rem 1rem"} alignItems={"center"} >
-        <Flex >
+        <Flex
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          p={"0rem 0.2rem"}
+          w={"100%"}
+          h={"60px"}
+        >
           <Link to="/">
-            <Button>Atras</Button>
-            <Image h={"6rem"} src={logoImg} alt="homeLogo" />
+            <Image src={logoImg} alt="homeLogo" h={"140px"} marginTop={"20px"} />
           </Link>
-          {/* <Link to="/login">
-            <FontAwesomeIcon icon={faCircleUser} className={style.img} />
-          </Link> */}
-        </div>
+          <Box>
+            <Link to="/">
+              <Button
+                transition="all 0.2s"
+                borderColor={"#BEBCBC"}
+                borderRadius="md"
+                borderWidth="1px"
+                _hover={{ bg: "#D9D9D9" }}
+                _expanded={{ bg: "white" }}
+                _focus={{ bg: "#D9D9D9" }}
+                color={"black"}
+              >
+                Atras
+              </Button>
+            </Link>
+          </Box>
+        </Flex>
       </Box>
-        </Flex>
-        <Flex justifyContent={"center"} alignItems={"center"} pr={"2rem"} gap={"1rem"}>
-          <Link to="/">
-            <Button className={style.buttonAnimation}>Atras</Button>
-          </Link>
-          <Link to="/login">
-            <Box className={style.buttonAnimation2}>
-              <FontAwesomeIcon color="#3b5998" style={{ height: "2rem" }} icon={faCircleUser} />
-            </Box>
-          </Link>
-        </Flex>
-      </Flex>
     </>
   );
 }

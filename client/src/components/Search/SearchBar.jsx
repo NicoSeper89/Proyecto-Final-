@@ -118,9 +118,9 @@ const SearchBar = () => {
             <Input
               transition="all 0.2s"
               borderColor={"black"}
-              _hover={{ bg: "white" }}
+              _hover={{ bg: "#D9D9D9" }}
               _expanded={{ bg: "white" }}
-              _focus={{ bg: "white" }}
+              _focus={{ bg: "#D9D9D9" }}
               type="text"
               placeholder="Buscar Ciudad..."
               color={"black"}
@@ -145,9 +145,9 @@ const SearchBar = () => {
         onChange={selectAmbients}
       >
         <NumberInputField
-          _hover={{ bg: "white" }}
+          _hover={{ bg: "#D9D9D9" }}
           _expanded={{ bg: "white" }}
-          _focus={{ bg: "white" }}
+          _focus={{ bg: "#D9D9D9" }}
         />
         <NumberInputStepper borderColor={"black"}>
           <NumberIncrementStepper borderColor={"black"} />
@@ -170,8 +170,8 @@ const SearchBar = () => {
             borderColor={"black"}
             name="property"
             onChange={selectPropType}
-            _hover={{ bg: "white" }}
-            _focus={{ bg: "white" }}
+            _hover={{ bg: "#D9D9D9" }}
+            _focus={{ bg: "#D9D9D9" }}
           >
             <option value={"Propiedad"}>Propiedad</option>
             {propertys.map((e) => {
@@ -202,8 +202,8 @@ const SearchBar = () => {
             borderColor={"black"}
             onChange={selectPets}
             name={"pets"}
-            _hover={{ bg: "white" }}
-            _focus={{ bg: "white" }}
+            _hover={{ bg: "#D9D9D9" }}
+            _focus={{ bg: "#D9D9D9" }}
           >
             <option value={"Mascotas"}>Mascotas</option>
             <option value={true}>Si</option>
@@ -228,8 +228,8 @@ const SearchBar = () => {
             name={"price"}
             onChange={orderByPrice}
             borderColor={"black"}
-            _hover={{ bg: "white" }}
-            _focus={{ bg: "white" }}
+            _hover={{ bg: "#D9D9D9" }}
+            _focus={{ bg: "#D9D9D9" }}
           >
             <option value="Precio">Precio</option>
             <option value="maxMin">Mayor Precio</option>
