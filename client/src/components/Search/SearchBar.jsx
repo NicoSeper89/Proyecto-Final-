@@ -30,6 +30,7 @@ import {
 } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 
+
 // import { searcHouse } from "../../redux/actions";
 // import { filter } from "../../redux/actions";
 // import { precio } from "../../redux/actions";
@@ -42,12 +43,11 @@ import { Box } from "@chakra-ui/react";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
-
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
-
+  const [alertSubmit, setAlertSubmit] = useState([false, false])
   //BUSCADOR
   const changes = (e) => {
     setCity(e.target.value);
@@ -99,6 +99,7 @@ const SearchBar = () => {
   }
 
   return (
+    
     <Box className={sty.continer}>
       <Box marginRight={"10px"}>
         <FontAwesomeIcon

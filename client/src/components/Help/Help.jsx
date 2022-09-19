@@ -32,7 +32,13 @@ export default function Help() {
           ¿Cómo puedo realizar una publicación?
         </Text>
         <Text w={"400px"} h={"100%"}>
-          Proximamente te explicamos...
+          Si sos propietario, podes acceder al formulario de creación desde el menu de opciones
+          desplegable. En el mismo deberás rellenar los datos de tu propiedad, podrás agregar
+          una descripción con tus palabras y adjuntar las imagenes de la misma.
+        </Text>
+        <Text w={"400px"} h={"100%"}>
+         Recorda de que los datos e imagenes que ingresaste se correspondan con la propiedad, ya que de lo contrario
+         tu publicación podra ser reportada y eso bajara tu clasificación general como propietario.
         </Text>
         <br />
         <Text as="samp" fontSize="xl">

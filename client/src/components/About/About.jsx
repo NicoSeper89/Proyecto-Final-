@@ -25,9 +25,17 @@ export default function About() {
           </Text>
           <br />
           <Text w={"400px"} h={"100%"}>
-            LookHouse es una App Web creada por un pequeño grupo de alumnos de SoyHenry en el año
-            2022. La visión de este proyecto es la de, como intermediario, conectar a usuarios
-            interesados en ofrecer o adquirir temporalmente un inmueble.
+              LookHouse es una App Web creada por un pequeño grupo de alumnos de SoyHenry en el año
+            2022. 
+          </Text>
+          <Text w={"400px"} h={"100%"}>
+              Fue creada con la intención de brindar una plataforma intuitiva y de facil acceso para
+            el alquiler de inmuebles a dueño directo.
+          </Text>
+          <Text w={"400px"} h={"100%"}>
+              Desde LookHouse buscamos brindar un puente entre inquilinos y propietarios al igual que
+            los modelos tradicionales de alquiler pero sin las tarifas y cargos intermedios, asi 
+            pudiendo ser accesible a un mercado más amplio.
           </Text>
         </Flex>
         <Flex
