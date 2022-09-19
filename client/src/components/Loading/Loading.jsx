@@ -13,8 +13,7 @@ export default function Loading() {
       justifyContent="center"
       alignItems="center"
     >
-      <Text>AAAAAAAA</Text>
-      {/* <Image src={gif} alt="CARGANDO..." /> */}
+      <Image src={gif} alt="CARGANDO..." />
     </Box>
   );
 }

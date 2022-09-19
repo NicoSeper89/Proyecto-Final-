@@ -18,6 +18,7 @@ const Home = () => {
   const sorting = useSelector((state) => state.sorting);
   const cities = useSelector((state) => state.cities);
   const loading = useSelector((state) => state.loading);
+  const houses = useSelector((state) => state.houses);
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
 
@@ -26,6 +27,9 @@ const Home = () => {
   }, [dispatch, filters, sorting, cities]);
 
   //
+  {
+    /* {Object.entries(houses).length > 0 ? ( */
+  }
   return (
     <Box backgroundColor={"#EDEDED"}>
       <NavBar />
@@ -35,6 +39,9 @@ const Home = () => {
         <Footer />
       </Box>
     </Box>
+    // ) : (
+    //   <Loading />
+    // )}
   );
 };
 

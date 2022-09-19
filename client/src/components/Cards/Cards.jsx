@@ -13,7 +13,7 @@ export default function Cards() {
   const currentPage = useSelector((state) => state.currentPage);
 
   /* **************** PAGINADO **************** */
-  const housePage = 2;
+  const housePage = 6;
   const pages = [];
   for (let i = 1; i <= Math.ceil(houses.length / housePage); i++) {
     pages.push(i);
@@ -51,9 +51,9 @@ export default function Cards() {
   /* **************** RENDER CARDS **************** */
   return (
     <Box display={"flex"} justifyContent="center" marginTop="5rem" minHeight="100%" zIndex={"90"}>
-      {loading ? (
-        <Loading />
-      ) : (
+      {/* {loading ? (
+        <Loading /> */}
+      {Object.entries(houses).length > 0 ? (
         <Box>
           <List className={style.paginadoBtn}>
             {currentPage !== 1 ? <ListItem onClick={handlePrev}>Prev</ListItem> : null}
@@ -83,6 +83,8 @@ export default function Cards() {
             })}
           </Box>
         </Box>
+      ) : (
+        <Loading />
       )}
     </Box>
   );

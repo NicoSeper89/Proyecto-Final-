@@ -30,10 +30,14 @@ export default function Card({
   return (
     <Box className={style.container} zIndex={"80"}>
       <Link to={"/details/" + id}>
-        <Image src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
+        <Image
+          src={img[0] ? img[0].url : imgNotAvailable}
+          alt="Img not found"
+          className={style.img}
+        />
         <Box className={style.container2}>
           {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
-          <Text as="b" textTransform={"uppercase"} fontSize="2xl">
+          <Text as="b" textTransform={"uppercase"} fontSize="xl" textAlign={"center"}>
             {ciudad}
           </Text>
           <Text as="samp" fontSize="xl">
