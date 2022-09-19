@@ -68,7 +68,7 @@ const CreatePost = () => {
       !city ||
       // (city === "default") ||
       !address ||
-      (/^[\s]+$/i.test(address)) ||
+      /^[\s]+$/i.test(address) ||
       !surface ||
       !typProp ||
       // (typProp === "default") ||
