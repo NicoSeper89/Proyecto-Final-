@@ -40,11 +40,7 @@ const NewUser = () => {
     setDatos({ ...datos, [e.target.name]: e.target.value })
   }
   const createUser = () => {
-    console.log(datos)
-    console.log(isError)
     setDatos({ NDU: "", gmail: "", contraseña: "", TDU: "" })
-    
-
   }
 
   var si_no = true
