@@ -26,6 +26,7 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
+
 import {
   Box,
   Text,
@@ -35,6 +36,7 @@ import {
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import {  useHistory } from "react-router-dom";
+
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -76,12 +78,14 @@ export default function Detail(props) {
         position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
+
           <Flex
             p={"1rem"}
             w={"100%"}
             alignItems={"flex-start"}
             justifyContent={"flex-start"}
           >
+
             <Flex
               flexDirection={"column"}
               gap={".7rem"}
@@ -101,7 +105,6 @@ export default function Detail(props) {
               </Box>
 
             </Flex>
-
             <Flex
               w={"100%"}
               gap={"1rem"}
@@ -177,9 +180,8 @@ export default function Detail(props) {
                   }</ListItem> */}
                   <Flex alignItems={"center"} gap={".4rem"}>
                     <FontAwesomeIcon icon={faEarthAmericas} />
-                    <Text>
-                      Ubicación: {miStateDetail.property.city.name}, Argentina{" "}
-                    </Text>
+
+                    <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
                   </Flex>
 
                   <Flex alignItems={"center"} gap={".4rem"}>
