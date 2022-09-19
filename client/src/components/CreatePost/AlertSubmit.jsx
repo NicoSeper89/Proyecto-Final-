@@ -32,7 +32,7 @@ const AlertSubmit = ({alertSubmit}) => {
             >
                 <AlertIcon boxSize='40px' mr={0} />
                 <AlertTitle mt={4} mb={1} fontSize='lg'>
-                {(!alertSubmit[1])? "La publicacion no se pudo crear, lo sentimos!":"La publicacion se creo correctamente"}
+                {(!alertSubmit[1])? "La publicación no se pudo crear, lo sentimos mucho!":"La publicación se creó correctamente"}
                 </AlertTitle>
                 <AlertDescription maxWidth='sm'>
                     Muchas gracias por utilizar nuestra web!
