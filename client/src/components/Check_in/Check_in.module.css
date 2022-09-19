@@ -4,7 +4,7 @@
   display: inline-block;
 
   border: 1px solid black;
-  padding: 50px;
+  padding: 30px;
 }
 
 .input {
@@ -55,4 +55,9 @@
 
 .img {
   height: 30px;
+}
+
+.btn {
+  margin: 20px;
+  text-align: center;
 }
