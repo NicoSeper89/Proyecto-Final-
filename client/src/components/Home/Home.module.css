@@ -7,12 +7,14 @@
   box-shadow: 3px 3px 20px 3px rgba(0, 0, 0, 0.45);
   z-index: 100;
   overflow: hidden;
-} */
+}
 
-/* .container {
+.container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  min-height: 100%;
+  height: 520px;
+  width: 100%;
   position: relative;
   z-index: 100px;
 } */

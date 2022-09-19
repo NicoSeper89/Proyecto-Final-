@@ -24,6 +24,11 @@
   border-right: 1px solid rgb(97, 97, 97);
 }
 
+.containerIcons2 {
+  font-size: 30px;
+  padding: 0%;
+}
+
 .containerItems {
   display: flex;
   flex-direction: column;

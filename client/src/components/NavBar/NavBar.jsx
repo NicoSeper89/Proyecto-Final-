@@ -6,7 +6,17 @@ import logoImg from "../../Image/Logo LookHouse.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../Search/SearchBar";
-import { Box, Button, Image, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
 const NavBar = () => {
   const history = useHistory();
@@ -24,8 +34,9 @@ const NavBar = () => {
 
   return (
     <Box>
-      <Box
-        display={"flex"}
+      <Flex
+        // bg={useColorModeValue("gray.50", "gray.900")}
+        // color={useColorModeValue("gray.700", "gray.200")}
         alignItems={"center"}
         justifyContent={"space-between"}
         p={"0rem 0.2rem"}
@@ -68,7 +79,7 @@ const NavBar = () => {
             ) : null}
           </div> */}
         </Box>
-      </Box>
+      </Flex>
     </Box>
   );
 };

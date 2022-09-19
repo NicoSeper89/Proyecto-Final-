@@ -7,7 +7,7 @@ import Header from "../Header/Header.jsx";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublications } from "../../redux/actions/index.js";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
 // import { Box } from "@chakra-ui/react";
 
 const Home = () => {
