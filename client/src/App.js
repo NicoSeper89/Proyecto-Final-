@@ -11,6 +11,7 @@ import Detail from "./components/Detail/Detail";
 import NewUser from "./components/Check_in/Check_in";
 import Error404 from "./components/Error404/Error404.jsx";
 import { getCities, getServices, getTypesOfProperties } from "./redux/actions/index.js";
+import UpdatePost from "./components/UpdatePost/UpdatePost"
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/checkin" component={NewUser} />
       <Route path="/error404" component={Error404} />
+      <Route path="/updatePublicaction" component={UpdatePost}/>
     </>
   );
 }
