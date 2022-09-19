@@ -83,6 +83,7 @@ export default function Detail(props) {
               <Box w="100%" p={4} color="white">
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
+
             </Flex>
 
             <Flex
