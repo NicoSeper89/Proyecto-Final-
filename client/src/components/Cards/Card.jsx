@@ -47,13 +47,21 @@ export default function Card({
         </Box>
 
         <Box className={style.containerInfo}>
-          <h4>{metros} m²</h4>
+          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+            {metros} m²
+          </Text>
           <FontAwesomeIcon className={style.containerIcon} icon={faToilet} />
-          <h4>{baño}</h4>
+          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+            {baño}
+          </Text>
           <FontAwesomeIcon className={style.containerIcon} icon={faBed} />
-          <h4>{dormitorio}</h4>
+          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+            {dormitorio}
+          </Text>
           <FontAwesomeIcon className={style.containerIcon} icon={faDoorOpen} />
-          <h4>{ambientes}</h4>
+          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+            {ambientes}
+          </Text>
           {mascota === true ? (
             <FontAwesomeIcon className={style.containerIcon} icon={faPaw} />
           ) : (

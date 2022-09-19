@@ -20,18 +20,19 @@
   border-color: black;
   border-radius: 10px;
   cursor: pointer;
+  background-color: #bebcbc;
 }
 
 .paginadoBtn li:hover {
-  background-color: rgb(71, 89, 141);
+  background-color: #bebcbc;
   color: white;
 }
 
 .paginadoBtn li.active {
   padding: 0.5rem;
   border: 2px solid;
-  border-color: royalblue;
+  border-color: rgb(66, 66, 66);
   cursor: pointer;
-  background-color: rgb(71, 89, 141);
+  background-color: #5e5d5d;
   color: white;
 }
