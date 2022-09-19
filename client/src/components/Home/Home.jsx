@@ -28,9 +28,9 @@ const Home = () => {
       <NavBar />
       <Box zIndex={"100px"}>
         <Header />
-        <Text zIndex={"90"} display="flex" justifyContent={"center"}>
+        {/* <Text zIndex={"90"} display="flex" justifyContent={"center"}>
           ENCONTRA TU PROXIMO HOGAR
-        </Text>
+        </Text> */}
         <Cards />
         <Footer />
       </Box>

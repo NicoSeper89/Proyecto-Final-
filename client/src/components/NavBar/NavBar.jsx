@@ -43,7 +43,7 @@ const NavBar = () => {
         w={"100%"}
         h={"60px"}
         position={"fixed"}
-        zIndex={"10px"}
+        zIndex={"10"}
         // backgroundColor={"gray.100"}
       >
         <Link to="/">
