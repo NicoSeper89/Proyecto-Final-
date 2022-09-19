@@ -7,7 +7,7 @@
   height: 60px;
   width: 100%;
   position: fixed;
-  z-index: 10;
+  z-index: 10px;
 }
 
 .container > img {
@@ -21,11 +21,11 @@
 }
 
 .buttons button {
-  color: rgb(87, 87, 87);
-  border: none;
+  color: rgb(24, 24, 24);
+
   width: 5.5rem;
   height: 2.5rem;
-  padding: 0.6rem;
+  padding: 0.4rem;
   border-radius: 4px;
 }
 

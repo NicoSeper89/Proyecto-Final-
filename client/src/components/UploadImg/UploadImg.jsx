@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { imgUpload } from "../../redux/actions/index";
-import { Flex, Input, Button, Image, Text, FormLabel, Box } from "@chakra-ui/react";
+import { Flex, Input, Button, Image, Text, FormLabel} from "@chakra-ui/react";
 import { useEffect } from "react";
 
 export default function UploadImg({ setInfoFormProp, infoFormProp }) {
@@ -69,37 +69,34 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
       borderColor={"gray.200"}
       display={"flex"}
       flexDirection={"column"}
+      justifyContent={"flex-start"}
+      alignItems={"center"}
       position={'relative'}
       p=".9rem">
 
-      <Text fontWeight={"semiBold"} fontSize="1.2rem" color="yellowgreen">Imágenes</Text>
+      <Text alignSelf={"flex-start"} ml="4%" fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Imágenes</Text>
 
-      <Flex flexDirection={"column"} border={"2px"} gap={"2rem"} borderColor={"gray.200"} p={"1.4rem"} >
-        <Flex justifyContent={'center'} alignItems={"center"} w={"100%"} h={"20rem"} p={"0.9rem"}>
-          {(preview) ? <Image maxH={"100%"} src={preview} alt="chosen" /> : (successMsg) ? <Text>{successMsg}</Text> : <Text>Click aqui para cargar imagen</Text>}
+      <Flex flexDirection={"column"} w={"92%"} border={"2px"} gap={"2rem"} borderColor={"gray.200"} p={"1.4rem"} >
+        <Flex justifyContent={'center'} alignItems={"center"} w={"100%"} h={"25rem"} >
+          {(preview) ? <Image maxH={"98%"} src={preview} alt="chosen" /> : (successMsg) ? <Text>{successMsg}</Text> : <Text color={"gray.500"}>Ningun Archivo Seleccionado...</Text>}
         </Flex>
       </Flex>
 
-      <FormLabel display="none" justifyContent={"center"} alignItems={"center"}>
-        <Input id={"inputFile"} display="flex" justifyContent={"center"} alignItems={"center"} accept=".jpg, .jpeg, .png, .webp" border={"none"} type='file' onChange={(e) => handleChange(e)} />
-      </FormLabel>
-
-      <Box ml={"4%"} justifyContent={"space-between"} alignItems={"center"} p={".5rem"} display={"flex"}>
-        {(!preview)? <Box></Box> :  <Text color={"gray.300"}>Para cargar la imagen presione el siguiente boton</Text> }  
+      <FormLabel display={"flex"} alignItems={"center"} alignSelf={"center"} w={"95%"} border={"2px"} borderColor={"gray.200"} p={".7rem"} justifyContent={"center"}>
+        <Input mt={".6rem"} color={"gray.600"} id={"inputFile"} display="flex" justifyContent={"center"} alignItems={"center"} accept=".jpg, .jpeg, .png, .webp" border={"none"} type='file' onChange={(e) => handleChange(e)} />
         <Button disabled={disableButtonUploadImg}
-          alignSelf={"flex-end"}
           colorScheme="blue"
           value={"Cargar"}
-          onClick={upload}>Cargar
+          onClick={upload}>Agregar
         </Button>
-      </Box>
 
+      </FormLabel>
 
-      <Flex id="seletedImgs" flexWrap={"wrap"} justifyContent={"flex-start"} gap={"0.8rem"}>
+      <Flex id="seletedImgs" minH={"7rem"} flexWrap={"wrap"} w={"95%"} justifyContent={"flex-start"} alignItems={"center"} border={"2px"} borderColor={"gray.200"} p="1rem" gap={"0.8rem"}>
         {infoFormProp.propImg?.map((img, index) => (<Image src={img}
           alt={index}
           key={index}
-          w={"6rem"}
+          h={"4rem"}
         />))}
       </Flex>
 
