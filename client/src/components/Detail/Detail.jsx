@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicationsDetail, clean } from "../../redux/actions";
+import { getPublicationsDetail, clean, deletePublicaction, deletePublicactionImage } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
@@ -28,21 +28,19 @@ import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
 import {
   Box,
-  Image,
   Text,
-  ListItem,
-  UnorderedList,
   Flex,
+  Button,
   Heading,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
-
+import {  useHistory } from "react-router-dom";
 
 export default function Detail(props) {
   const dispatch = useDispatch();
   const miStateDetail = useSelector((state) => state.detail);
+  const history = useHistory();
   // const miUseerState = useSelector((state) => state.user)
-  // const miPublicationState = useSelector((state) => state.publication)
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
@@ -52,6 +50,18 @@ export default function Detail(props) {
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
   }, [dispatch, props.match.params.id]);
+
+  function handleDelete(){
+    dispatch(deletePublicaction(props.match.params.id))
+    alert("LA PUBLICACION SE ELIMINO CORRECTAMENTE")
+    history.push("/");
+  }
+
+  function handleDeleteImage() {
+    dispatch(deletePublicactionImage(props.match.params.id))
+    alert("SE BORRO LA IMAGEN")
+    
+  }
 
   return (
     <>
@@ -80,7 +90,13 @@ export default function Detail(props) {
               p={"0rem .8rem"}
               position={"relative"}
             >
+              <Button onClick={(e)=> {
+                handleDelete(e)
+              }}>BORRAR PUBLICACION</Button>
               <Box w="100%" p={4} color="white">
+              <Button onClick={(e)=> {
+                handleDeleteImage(e)
+              }}>BORRAR IMAGEN</Button>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
 

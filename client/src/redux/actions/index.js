@@ -17,6 +17,8 @@ export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 export const CURRENT_PAGE = "CURRENT_PAGE";
 export const VALUE_FILTER = "VALUE_FILTER";
+export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
+export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -182,3 +184,33 @@ export function valueFilter(payload) {
     payload,
   };
 }
+
+//ELIMINAR UNA PUBLICACION
+export function deletePublicaction(id) {
+return async function (dispatch) {
+  try {
+    await axios.delete(`/publicaction/${id}`)
+    return dispatch({
+      type:"DELETE_PUBLICACTION"
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+}
+
+// ELIMINAR UNA IMAGEN DE UNA PUBLICACION
+export function deletePublicactionImage(id) {
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/image/${id}`)
+      return dispatch({
+        type:"DELETE_PUBLICACTION_IMAGE"
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  }
+
+
