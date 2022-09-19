@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublicationsDetail, clean } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import imgNotAvailable from "../../Image/Image_not_available.png";
+// import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
   /* faHeart, */
   faRulerCombined,
@@ -26,7 +26,19 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
-import { Box, Image, Text, ListItem, UnorderedList, Flex, Heading } from "@chakra-ui/react";
+
+import {
+  Box,
+  Image,
+  Text,
+  ListItem,
+  UnorderedList,
+  Flex,
+  Heading,
+} from "@chakra-ui/react";
+import ImageSlider from "./ImageSlider";
+
+
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -56,7 +68,14 @@ export default function Detail(props) {
         position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
-          <Flex p={"1rem"} w={"100%"} alignItems={"flex-start"} justifyContent={"flex-start"}>
+
+          <Flex
+            p={"1rem"}
+            w={"100%"}
+            alignItems={"flex-start"}
+            justifyContent={"flex-start"}
+          >
+
             <Flex
               flexDirection={"column"}
               gap={".7rem"}
@@ -65,32 +84,12 @@ export default function Detail(props) {
               p={"0rem .8rem"}
               position={"relative"}
             >
-              <Image
-                borderRadius={"12px"}
-                w={"50rem"}
-                src={
-                  miStateDetail.property.propertyImages[0]
-                    ? miStateDetail.property.propertyImages[0].url
-                    : imgNotAvailable
-                }
-              />
-              <Flex
-                position={"relative"}
-                justifyContent={"flex-start"}
-                gap={"1rem"}
-                alignItems={"center"}
-                w={"50rem"}
-              >
-                {miStateDetail.property.propertyImages?.map((e, i) =>
-                  i !== 0 ? (
-                    <Box w={"10rem"}>
-                      <Image borderRadius={".2rem"} key={i} src={e.url} />
-                    </Box>
-                  ) : null
-                )}
-              </Flex>
-            </Flex>
 
+              <Box w="100%" p={4} color="white">
+                <ImageSlider slides={miStateDetail.property.propertyImages} />
+              </Box>
+
+            </Flex>
             <Flex
               w={"100%"}
               gap={"1rem"}
@@ -166,6 +165,7 @@ export default function Detail(props) {
                   }</ListItem> */}
                   <Flex alignItems={"center"} gap={".4rem"}>
                     <FontAwesomeIcon icon={faEarthAmericas} />
+
                     <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
                   </Flex>
 
@@ -181,7 +181,10 @@ export default function Detail(props) {
 
                   <Flex alignItems={"center"} gap={".4rem"}>
                     <FontAwesomeIcon icon={faHouse} />
-                    <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
+                    <Text>
+                      Tipo de propiedad:{" "}
+                      {miStateDetail.property.TypeOfProp.name}
+                    </Text>
                   </Flex>
 
                   <Flex alignItems={"center"} gap={".4rem"}>
@@ -208,7 +211,9 @@ export default function Detail(props) {
 
                   <Flex alignItems={"center"} gap={".4rem"}>
                     <FontAwesomeIcon icon={faDoorOpen} />
-                    <Text>Ambientes: {miStateDetail.property.environments}</Text>
+                    <Text>
+                      Ambientes: {miStateDetail.property.environments}
+                    </Text>
                   </Flex>
 
                   <Flex alignItems={"center"} gap={".4rem"}>
