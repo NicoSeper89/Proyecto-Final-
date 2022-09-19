@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
+
 import { setCurrentPage } from "../../redux/actions";
 import Loading from "../Loading/Loading";
 import Card from "./Card";
@@ -11,6 +12,7 @@ export default function Cards() {
   const houses = useSelector((state) => state.houses);
   const loading = useSelector((state) => state.loading);
   const currentPage = useSelector((state) => state.currentPage);
+  const [canShow, setCanShow] = useState(false);
 
   /* **************** PAGINADO **************** */
   const housePage = 6;
@@ -34,6 +36,12 @@ export default function Cards() {
   const handlePrev = (e) => {
     dispatch(setCurrentPage(currentPage - 1));
   };
+  // Set Time out
+  useEffect(() => {
+    /* setCanShow(false) */
+    const timer = setTimeout(() => { setCanShow(true); console.log('timeout') }, 5000)
+    return () => clearTimeout(timer);
+  })
 
   const renderPaginado = pages.map((number) => {
     return (
@@ -83,9 +91,10 @@ export default function Cards() {
             })}
           </Box>
         </Box>
-      ) : (
-        <Loading />
-      )}
+      ) : canShow ?
+
+        <h1> No hay nada</h1>
+        : <Loading />}
     </Box>
   );
 }
