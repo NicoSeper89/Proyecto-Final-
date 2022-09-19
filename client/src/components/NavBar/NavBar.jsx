@@ -6,8 +6,19 @@ import logoImg from "../../Image/Logo LookHouse.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../Search/SearchBar";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
-const NavBar = ({ paginado }) => {
+const NavBar = () => {
   const history = useHistory();
   // const [displayMenu, setDisplayMenu] = useState(false);
 
@@ -22,20 +33,40 @@ const NavBar = ({ paginado }) => {
   };
 
   return (
-    <>
-      <div className={style.container}>
+    <Box>
+      <Flex
+        // bg={useColorModeValue("gray.50", "gray.900")}
+        // color={useColorModeValue("gray.700", "gray.200")}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        p={"0rem 0.2rem"}
+        w={"100%"}
+        h={"60px"}
+        position={"fixed"}
+        zIndex={"10"}
+        // backgroundColor={"gray.100"}
+      >
         <Link to="/">
-          <img src={logoImg} alt="homeLogo" />
+          <Image h={"140px"} marginTop={"20px"} src={logoImg} alt="homeLogo" />
         </Link>
-        <div className={style.buttons}>
+        <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
           <SearchBar />
-          <button onClick={buttonCreatePost}>Publicar</button>
-          <Link to="/checkin">
-            <button>Registro</button>
-          </Link>
-          <Link to="/login">
-            <FontAwesomeIcon icon={faCircleUser} className={style.img} />
-          </Link>
+          <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
+            Publicar
+          </Button>
+          <Menu>
+            <MenuButton aria-label="Options" variant="outline" px={"1rem"} py={".5rem"}>
+              <FontAwesomeIcon icon={faCircleUser} className={style.img} />
+            </MenuButton>
+            <MenuList>
+              <Link to="/login">
+                <MenuItem>Iniciar Sesión</MenuItem>
+              </Link>
+              <Link to="/checkin">
+                <MenuItem>Registrarte</MenuItem>
+              </Link>
+            </MenuList>
+          </Menu>
           {/* <div>
             <button onClick={onClickMenu}>Menu</button>
             {displayMenu ? (
@@ -47,9 +78,9 @@ const NavBar = ({ paginado }) => {
               </div>
             ) : null}
           </div> */}
-        </div>
-      </div>
-    </>
+        </Box>
+      </Flex>
+    </Box>
   );
 };
 

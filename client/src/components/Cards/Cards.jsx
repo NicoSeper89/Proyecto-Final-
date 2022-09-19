@@ -4,6 +4,7 @@ import { setCurrentPage } from "../../redux/actions";
 import Loading from "../Loading/Loading";
 import Card from "./Card";
 import style from "./Cards.module.css";
+import { Box, List, ListItem } from "@chakra-ui/react";
 
 export default function Cards() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ export default function Cards() {
   const currentPage = useSelector((state) => state.currentPage);
 
   /* **************** PAGINADO **************** */
-  const housePage = 2;
+  const housePage = 6;
   const pages = [];
   for (let i = 1; i <= Math.ceil(houses.length / housePage); i++) {
     pages.push(i);
@@ -49,22 +50,22 @@ export default function Cards() {
 
   /* **************** RENDER CARDS **************** */
   return (
-    <div className={style.containerAll}>
-      {loading ? (
-        <Loading />
-      ) : (
-        <div className={style.paginado}>
-          <ul className={style.paginadoBtn}>
-            {currentPage !== 1 ? <li onClick={handlePrev}>Prev</li> : null}
+    <Box display={"flex"} justifyContent="center" marginTop="5rem" minHeight="100%" zIndex={"90"}>
+      {/* {loading ? (
+        <Loading /> */}
+      {Object.entries(houses).length > 0 ? (
+        <Box>
+          <List className={style.paginadoBtn}>
+            {currentPage !== 1 ? <ListItem onClick={handlePrev}>Prev</ListItem> : null}
             {renderPaginado}
             {currentPage !== pages.length && renderPaginado ? (
-              <li onClick={handleNext}>Next</li>
+              <ListItem onClick={handleNext}>Next</ListItem>
             ) : null}
-          </ul>
-          <div className={style.container}>
+          </List>
+          <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
             {currentHouse?.map((r) => {
               return (
-                <div key={r.id}>
+                <Box key={r.id}>
                   <Card
                     id={r.id}
                     img={r.property.propertyImages}
@@ -77,12 +78,14 @@ export default function Cards() {
                     mascota={r.property.pets}
                     premium={r.premium}
                   />
-                </div>
+                </Box>
               );
             })}
-          </div>
-        </div>
+          </Box>
+        </Box>
+      ) : (
+        <Loading />
       )}
-    </div>
+    </Box>
   );
 }

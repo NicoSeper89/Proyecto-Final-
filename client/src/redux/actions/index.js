@@ -23,7 +23,6 @@ export const VALUE_FILTER = "VALUE_FILTER";
 export function getPublications(filters, sorting, city) {
   return async function (dispatch) {
     try {
-      dispatch(loading());
       let info = {
         filters,
         sorting,
