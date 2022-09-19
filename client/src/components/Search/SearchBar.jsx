@@ -30,7 +30,6 @@ import {
 } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 
-
 // import { searcHouse } from "../../redux/actions";
 // import { filter } from "../../redux/actions";
 // import { precio } from "../../redux/actions";
@@ -47,7 +46,7 @@ const SearchBar = () => {
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
-  const [alertSubmit, setAlertSubmit] = useState([false, false])
+  const [alertSubmit, setAlertSubmit] = useState([false, false]);
   //BUSCADOR
   const changes = (e) => {
     setCity(e.target.value);
@@ -99,7 +98,6 @@ const SearchBar = () => {
   }
 
   return (
-    
     <Box className={sty.continer}>
       <Box marginRight={"10px"}>
         <FontAwesomeIcon
@@ -149,6 +147,7 @@ const SearchBar = () => {
           _hover={{ bg: "#D9D9D9" }}
           _expanded={{ bg: "white" }}
           _focus={{ bg: "#D9D9D9" }}
+          placeholder="Amb"
         />
         <NumberInputStepper borderColor={"black"}>
           <NumberIncrementStepper borderColor={"black"} />

@@ -1,10 +1,25 @@
 import React from "react";
 import { Box, Heading, Text, Button, Link, Flex } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
 
 export default function Error404() {
+  const history = useHistory();
+
+  const handle = () => {
+    history.push("/recipes");
+  };
+
   return (
-    <Flex justifyContent={"center"} alignContent={"center"}>
-      <Box textAlign="center" py={20} px={6}>
+    <Flex alignItems="center" justifyContent="center">
+      <Box
+        py={20}
+        px={6}
+        position={"absolute"}
+        flexDirection="column"
+        textAlign="center"
+        height="15rem"
+        top={"10rem"}
+      >
         <Heading
           display="inline-block"
           as="h2"
@@ -12,7 +27,7 @@ export default function Error404() {
           bgGradient="linear(to-r, orange.400, orange.600)"
           backgroundClip="text"
         >
-          404
+          Oop! 404
         </Heading>
         <Text fontSize="18px" mt={3} mb={2}>
           Page Not Found
@@ -21,16 +36,15 @@ export default function Error404() {
           La página que busca no parece existir.
         </Text>
 
-        <Link to="/">
-          <Button
-            colorScheme="orange"
-            bgGradient="linear(to-r, orange.400, orange.500, orange.600)"
-            color="white"
-            variant="solid"
-          >
-            Volver a Inicio
-          </Button>
-        </Link>
+        <Button
+          onSubmit={(e) => handle(e)}
+          colorScheme="orange"
+          bgGradient="linear(to-r, orange.400, orange.500, orange.600)"
+          color="white"
+          variant="solid"
+        >
+          Volver a Inicio
+        </Button>
       </Box>
     </Flex>
   );
