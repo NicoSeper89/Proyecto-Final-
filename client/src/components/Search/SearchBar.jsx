@@ -143,6 +143,7 @@ const SearchBar = () => {
         min={1}
         max={20}
         onChange={selectAmbients}
+        placeholder="Amb"
       >
         <NumberInputField
           _hover={{ bg: "#D9D9D9" }}

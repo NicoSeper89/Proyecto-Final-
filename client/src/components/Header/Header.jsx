@@ -5,7 +5,7 @@ import { Box, Image, Text } from "@chakra-ui/react";
 
 export default function Header() {
   return (
-    <Box position="relative" className={style.container} zIndex={"1"}>
+    <Box position="relative" className={style.container} zIndex={"2"}>
       <Text
         justifyContent={"center"}
         textAlign={"center"}
