@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { imgUpload } from "../../redux/actions/index";
-import { Flex, Input, Button, Image, Text, FormLabel, Box } from "@chakra-ui/react";
+import { Flex, Input, Button, Image, Text, FormLabel} from "@chakra-ui/react";
 import { useEffect } from "react";
 
 export default function UploadImg({ setInfoFormProp, infoFormProp }) {
