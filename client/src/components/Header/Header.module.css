@@ -1,4 +1,7 @@
 .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-size: cover;
   background-repeat: repeat;
   overflow: hidden;
