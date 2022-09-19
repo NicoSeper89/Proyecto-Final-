@@ -36,7 +36,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
-import imgNotAvailable from "../../Image/Image_not_available.png";
+
 
 export default function Detail(props) {
   const dispatch = useDispatch();
@@ -83,31 +83,6 @@ export default function Detail(props) {
               <Box w="100%" p={4} color="white">
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
-
-              {/* <Image
-                borderRadius={"12px"}
-                w={"50rem"}
-                src={
-                  miStateDetail.property.propertyImages[0]
-                    ? miStateDetail.property.propertyImages[0].url
-                    : imgNotAvailable
-                }
-              />
-              <Flex
-                position={"relative"}
-                justifyContent={"flex-start"}
-                gap={"1rem"}
-                alignItems={"center"}
-                w={"50rem"}
-              >
-                {miStateDetail.property.propertyImages?.map((e, i) =>
-                  i !== 0 ? (
-                    <Box w={"10rem"}>
-                      <Image borderRadius={".2rem"} key={i} src={e.url} />
-                    </Box>
-                  ) : null
-                )}
-              </Flex> */}
             </Flex>
 
             <Flex
