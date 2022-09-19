@@ -37,7 +37,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
-import imgNotAvailable from "../../Image/Image_not_available.png";
+
 
 
 export default function Detail(props) {
@@ -88,7 +88,7 @@ export default function Detail(props) {
               <Box w="100%" p={4} color="white">
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
-              </Flex>
+
             </Flex>
             <Flex
               w={"100%"}
