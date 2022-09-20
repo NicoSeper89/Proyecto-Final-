@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const cloudinary = require("../../utils/cloudinary")
 const {
   Publication,
   Property,
@@ -128,11 +129,12 @@ router.post("/postReport", async (req, res, next) => {
 
 
 router.post("/image", async (req, res, next) => {
-  const { url } = req.body;
+  const { url, cloudId } = req.body;
   try {
     if (!url) return res.status(404).send("no image to upload");
     await PropertyImage.create({
       url,
+      cloudId
     });
     res.send("image upload successful");
   } catch (error) {
@@ -300,11 +302,12 @@ router.put("/editProperty/:id", async (req, res, next) => {
 
 
 
-router.delete("/image/delete/:url", async (req, res, next) => {
-  const { url } = req.params;
+router.delete("/image/delete/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    await PropertyImage.destroy({ where: { url: url } });
-    res.send(`image url ${url} was deleted`);
+    await cloudinary.uploader.destroy(id);
+    await PropertyImage.destroy({ where: { cloudId: id } });
+    res.send(`image cloudId ${id} was deleted from db and cloudinary`);
   } catch (error) {
     next(err);
   }
@@ -325,5 +328,15 @@ router.delete("/delete/:id", async (req, res, next) => {
     next(error)
   }
 })
+
+router.delete("/:id", async (req, res, next) => {
+  try {    
+    const id = req.params.id
+    await cloudinary.uploader.destroy(id);
+    res.send('deleted from cloudinary')    
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
