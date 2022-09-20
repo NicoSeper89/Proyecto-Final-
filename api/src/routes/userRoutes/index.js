@@ -130,8 +130,8 @@ router.post('/typeofusers', async(req,res)=>{
        
     })
 
-    ///// rutas agregadas por jose 
-
+           ////////// rutas agregadas \\\\\\\\\\
+     //me verifica si mi usuario existe y si la contraseña es la de ese usuario
 
     router.post('/logueado', async(req,res)=>{
         const {name,password} = req.body
@@ -150,19 +150,7 @@ router.post('/typeofusers', async(req,res)=>{
         res.send({mensaje:"Contraseña Incorrecto"}):
         (res.status(200).send({mensaje: "Logueado Exitosamente",user, user2}))
 
-       
-        //  if (name){
-        //         let userName = await usersTotal.filter(elem => elem.name.toLowerCase().includes(name.toLowerCase())) 
-        //         userName.length ?
-        //          res.status(200).send(userName) :
-        //          res.status(404).send('User not found'); 
-        //  }else{
-        //     res.status(200).send(usersTotal)
-        // }
     })
-
-
-
 
 
 module.exports = router;
