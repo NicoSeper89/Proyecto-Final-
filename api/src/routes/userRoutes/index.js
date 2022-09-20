@@ -14,13 +14,10 @@ router.get('/users',async(req,res)=>{
     //const {name}=req.params
     const usersTotal = await getAllUsers();
      if (name){
-       
             let userName = await usersTotal.filter(elem => elem.name.toLowerCase().includes(name.toLowerCase())) 
             userName.length ?
              res.status(200).send(userName) :
-             res.status(404).send('User not found');
-        
-            
+             res.status(404).send('User not found'); 
      }else{
         res.status(200).send(usersTotal)
     }
@@ -96,6 +93,7 @@ router.post('/typeofusers', async(req,res)=>{
      })
      //console.log(userCrea)
      userCrea.setTypeOfUser(type)
+
      res.status(200).send('Usuario adicionado correctamente')
     }catch(error){
         res.status(400).send("error al crear usuario ")
@@ -107,30 +105,61 @@ router.post('/typeofusers', async(req,res)=>{
         const {
             mail, 
             password, 
-            namUser
+            name
            // typeOfUserId,
             
     }=req.body
+    
     try{
 
     let loginCrea = await LoginInfo.create({
         mail, 
         password, 
         
-       
     }) 
       let  nUser = await User.findOne({
-          where: {name: namUser }
+          where: {name: name }
      })
-     //console.log(userCrea)
+     console.log()
      loginCrea.setUser(nUser)
+
      res.status(200).send('Login de usuario adicionado correctamente')
     }catch(error){
         res.status(400).send("error al crear login de usuario ")
     }
        
     })
-   
+
+    ///// rutas agregadas por jose 
+
+
+    router.post('/logueado', async(req,res)=>{
+        const {name,password} = req.body
+
+        var user = await User.findOne({
+            where: {name: name }
+       })
+
+       !user && res.send({mensaje:"Este Usuario No Existe"}) 
+       
+       if(user) var user2 = await LoginInfo.findOne({
+        where: {id: user.id }
+      })
+
+        if(user2) user2.password !== password ? 
+        res.send({mensaje:"Contraseña Incorrecto"}):
+        (res.status(200).send({mensaje: "Logueado Exitosamente",user, user2}))
+
+       
+        //  if (name){
+        //         let userName = await usersTotal.filter(elem => elem.name.toLowerCase().includes(name.toLowerCase())) 
+        //         userName.length ?
+        //          res.status(200).send(userName) :
+        //          res.status(404).send('User not found'); 
+        //  }else{
+        //     res.status(200).send(usersTotal)
+        // }
+    })
 
 
 

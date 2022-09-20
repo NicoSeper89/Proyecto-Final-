@@ -31,7 +31,7 @@ const NewUser = () => {
   var isError2
   var isError3
 
-  datos.mail.length > 0 &&  mail.test(datos.mail) ? isError = true : isError = false
+  datos.mail.length > 0 &&  !mail.test(datos.mail) ? isError = true : isError = false
 
   datos.password.length > 0 && datos.password.length < 8 ? isError2 = true : isError2 = false
 
@@ -42,9 +42,9 @@ const NewUser = () => {
   }
   const createUser = async() => {
    await axios.post("http://localhost:3001/user/users", {name: datos.name, typUser: datos.typUser})
-  //  .then(
-  //   // await axios.post("http://localhost:3001/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
-  //   // )
+   .then(
+    await axios.post("http://localhost:3001/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
+    )
   
    
 
@@ -52,7 +52,7 @@ const NewUser = () => {
   }
  
   var si_no = true
-  if (datos.name.length > 3 && mail.test(datos-mail) && datos.password.length >7 && datos.typUser !== "") si_no = false
+  if (datos.name.length > 3 && mail.test(datos.mail) && datos.password.length >7 && datos.typUser !== "") si_no = false
   else si_no = true
  
   return (
@@ -129,7 +129,7 @@ const NewUser = () => {
           </RadioGroup>
         </Box>
         <Box className={style.btn}>
-          <Button colorScheme='blue' onClick={createUser} disabled={false}>Crear</Button>
+          <Button colorScheme='blue' onClick={createUser} disabled={si_no}>Crear</Button>
         </Box>
       </form>
     </Box>
