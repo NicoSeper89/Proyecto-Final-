@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicationsDetail, clean } from "../../redux/actions";
+import { getPublicationsDetail, clean, deletePublicaction, deletePublicactionImage } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
@@ -29,22 +29,20 @@ import Loading from "../Loading/Loading";
 
 import {
   Box,
-  Image,
   Text,
-  ListItem,
-  UnorderedList,
   Flex,
+  Button,
   Heading,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
-
+import {  useHistory } from "react-router-dom";
 
 
 export default function Detail(props) {
   const dispatch = useDispatch();
   const miStateDetail = useSelector((state) => state.detail);
+  const history = useHistory();
   // const miUseerState = useSelector((state) => state.user)
-  // const miPublicationState = useSelector((state) => state.publication)
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
@@ -54,6 +52,14 @@ export default function Detail(props) {
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
   }, [dispatch, props.match.params.id]);
+
+  function handleDelete(){
+    dispatch(deletePublicaction(props.match.params.id))
+    console.log(props.match.params.id)
+    alert("LA PUBLICACION SE ELIMINO CORRECTAMENTE")
+    history.push("/");
+  }
+
 
   return (
     <>
@@ -88,7 +94,9 @@ export default function Detail(props) {
               <Box position={"relative"} width={"50rem"}>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
-
+              <Button onClick={(e)=> {
+                handleDelete(e)
+              }}>BORRAR PUBLICACION</Button>
             </Flex>
             <Flex
               w={"100%"}
@@ -233,8 +241,8 @@ export default function Detail(props) {
 
                   <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
 
-                  {miStateDetail.property.services.map((e, i) => (
-                    <Flex key={i} alignItems={"center"} gap={".4rem"}>
+                  {miStateDetail.property.services.map((e) => (
+                    <Flex alignItems={"center"} gap={".4rem"}>
                       <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
                     </Flex>
                   ))}
