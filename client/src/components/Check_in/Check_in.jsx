@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./Check_in.module.css";
 import axios from "axios"
+import {useAuth0} from "@auth0/auth0-react"
 import {
   Input,
   Box,
@@ -18,10 +19,13 @@ import {
 import logoImg from "../../Image/Logo LookHouse.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useEffect } from "react";
 
 var mail = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{3})$/ //ragex para validar mail
 
 const NewUser = () => {
+  const {loginWithRedirect, user, isAuthenticated, logout} = useAuth0()
+
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -46,15 +50,21 @@ const NewUser = () => {
     await axios.post("http://localhost:3001/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
     )
   
-   
-
     setDatos({ name: "", mail: "", password: "", typUser: "" })
   }
  
   var si_no = true
   if (datos.name.length > 3 && mail.test(datos.mail) && datos.password.length >7 && datos.typUser !== "") si_no = false
   else si_no = true
- 
+
+  const loginGoogle = () => {
+
+    setDatos({ name: user.nickname, mail: user.email, password: "", typUser: "" })
+  }
+     
+    
+    //  {[user].length && setTimeout(() => loginGoogle(),3000)}
+
   return (
     <Box>
       <Box className={style.containerNav}>
@@ -132,7 +142,12 @@ const NewUser = () => {
           <Button colorScheme='blue' onClick={createUser} disabled={si_no}>Crear</Button>
         </Box>
       </form>
+      {!isAuthenticated&& < button onClick={() => loginWithRedirect()}> login</button>}
+      {isAuthenticated && console.log(user)}
+      <br />
+      { isAuthenticated && <button onClick={() => logout()}> logout</button>}
     </Box>
+    
   );
 };
 

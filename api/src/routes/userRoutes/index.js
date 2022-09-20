@@ -72,9 +72,7 @@ router.post('/typeofusers', async(req,res)=>{
     router.post('/users', async(req,res)=>{
         const {
             name, 
-            description, 
-            rating,
-            typUser,
+            typUser
            // typeOfUserId,
             
     }=req.body
@@ -83,8 +81,6 @@ router.post('/typeofusers', async(req,res)=>{
 
     let userCrea = await User.create({
         name, 
-        description, 
-        rating
         //typeOfUserId,
        
     }) 
@@ -149,7 +145,7 @@ router.post('/typeofusers', async(req,res)=>{
         if(user2) user2.password !== password ? 
         res.send({mensaje:"Contraseña Incorrecto"}):
         (res.status(200).send({mensaje: "Logueado Exitosamente",user, user2}))
-
+   
     })
 
 
