@@ -38,7 +38,7 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
 
     axios.post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
       .then((resp) => {
-        dispatch(imgUpload({ url: resp.data.secure_url }))
+        dispatch(imgUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id }))
         setInfoFormProp({ ...infoFormProp, propImg: [...infoFormProp.propImg, resp.data.secure_url] })
       })
       .catch((err) => console.log(err))
@@ -56,11 +56,6 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
     previewFile(file)
     setFileInput(event.target.files[0])
     }
-  }
-  const handleDelete = (id) => {
-    // dispatch(deletePropImg(id))
-    axios.post("https://api.cloudinary.com/v1_1/lookhouse/image/destroy", id)
-    .catch((err) => console.log(err))
   }
 
   return (
