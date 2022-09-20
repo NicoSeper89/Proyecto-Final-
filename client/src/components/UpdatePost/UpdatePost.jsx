@@ -83,6 +83,7 @@ function HandleChange(e) {
             Actualizar Propiedad
           </Heading>
         </Box>
+        
   </Box>
     </>
   )

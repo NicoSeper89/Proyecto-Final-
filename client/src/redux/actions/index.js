@@ -45,10 +45,7 @@ export function getPublications(filters, sorting, city) {
 //Esto es para ver el detalle de la publicación
 export function getPublicationsDetail(id) {
   return async function (dispatch) {
-    console.log(id, "id");
-
     let infoBack = await axios.get("/publication/" + id); //, info
-    console.log(infoBack, "infoback");
     return dispatch({
       type: GET_PUBLICATIONS_DETAIL,
       payload: infoBack.data,
@@ -187,11 +184,12 @@ export function valueFilter(payload) {
 
 //ELIMINAR UNA PUBLICACION
 export function deletePublicaction(id) {
+  console.log(id,"id")
 return async function (dispatch) {
   try {
-    await axios.delete(`/publicaction/${id}`)
+    await axios.delete(`/delete/${id}`)
     return dispatch({
-      type:"DELETE_PUBLICACTION"
+      type: DELETE_PUBLICACTION
     })
   } catch (error) {
     console.log(error)
@@ -200,12 +198,13 @@ return async function (dispatch) {
 }
 
 // ELIMINAR UNA IMAGEN DE UNA PUBLICACION
-export function deletePublicactionImage(id) {
+export function deletePublicactionImage(url) {
+  console.log(url,"URL")
   return async function (dispatch) {
     try {
-      await axios.delete(`/image/${id}`)
+      await axios.delete(`/image/delete/${url}`)
       return dispatch({
-        type:"DELETE_PUBLICACTION_IMAGE"
+        type: DELETE_PUBLICACTION_IMAGE
       })
     } catch (error) {
       console.log(error)

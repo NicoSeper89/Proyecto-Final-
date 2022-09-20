@@ -60,7 +60,7 @@ export default function Detail(props) {
   }
 
   function handleDeleteImage() {
-    dispatch(deletePublicactionImage(props.match.params.id))
+    dispatch(deletePublicactionImage(props.match.params.propertyImages.url))
     alert("SE BORRO LA IMAGEN")
     
   }

@@ -9,7 +9,7 @@ const ImageSlider = ({ slides }) => {
     const image = useSelector((state) => state.detail)
 
     return (
-      <Carousel  infiniteLoop>
+      <Carousel  infiniteLoop showThumbs={false}>
         {slides.map((slide) => {
           return <Image src={slide.url} key={slide.id} height="auto" width="800px" />;
         })}
