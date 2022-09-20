@@ -94,13 +94,8 @@ export default function Detail(props) {
               p={"0rem .8rem"}
               position={"relative"}
             >
-              <Button onClick={(e)=> {
-                handleDelete(e)
-              }}>BORRAR PUBLICACION</Button>
-              <Box w="100%" p={4} color="white">
-              <Button onClick={(e)=> {
-                handleDeleteImage(e)
-              }}>BORRAR IMAGEN</Button>
+
+              <Box position={"relative"} width={"50rem"}>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
 
@@ -248,8 +243,8 @@ export default function Detail(props) {
 
                   <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
 
-                  {miStateDetail.property.services.map((e) => (
-                    <Flex alignItems={"center"} gap={".4rem"}>
+                  {miStateDetail.property.services.map((e, i) => (
+                    <Flex key={i} alignItems={"center"} gap={".4rem"}>
                       <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
                     </Flex>
                   ))}

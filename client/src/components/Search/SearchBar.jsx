@@ -58,7 +58,7 @@ const SearchBar = () => {
     setCity(""); /* esto es para que se setee el estado del input */
   };
 
-  //SELECT PROPIEDADES
+  //SELECT PROPIEDADES 
   const selectPropType = (e) => {
     dispatch(updateFilterProp(e.target.value));
     dispatch(setCurrentPage(1));

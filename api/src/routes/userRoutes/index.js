@@ -77,10 +77,11 @@ router.post('/typeofusers', async(req,res)=>{
             name, 
             description, 
             rating,
-            typUser
+            typUser,
            // typeOfUserId,
             
     }=req.body
+   
     try{
 
     let userCrea = await User.create({
