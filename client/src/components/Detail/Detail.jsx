@@ -55,15 +55,11 @@ export default function Detail(props) {
 
   function handleDelete(){
     dispatch(deletePublicaction(props.match.params.id))
+    console.log(props.match.params.id)
     alert("LA PUBLICACION SE ELIMINO CORRECTAMENTE")
     history.push("/");
   }
 
-  function handleDeleteImage() {
-    dispatch(deletePublicactionImage(props.match.params.propertyImages.url))
-    alert("SE BORRO LA IMAGEN")
-    
-  }
 
   return (
     <>
@@ -98,7 +94,9 @@ export default function Detail(props) {
               <Box position={"relative"} width={"50rem"}>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
-
+              <Button onClick={(e)=> {
+                handleDelete(e)
+              }}>BORRAR PUBLICACION</Button>
             </Flex>
             <Flex
               w={"100%"}
@@ -243,8 +241,8 @@ export default function Detail(props) {
 
                   <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
 
-                  {miStateDetail.property.services.map((e, i) => (
-                    <Flex key={i} alignItems={"center"} gap={".4rem"}>
+                  {miStateDetail.property.services.map((e) => (
+                    <Flex alignItems={"center"} gap={".4rem"}>
                       <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
                     </Flex>
                   ))}

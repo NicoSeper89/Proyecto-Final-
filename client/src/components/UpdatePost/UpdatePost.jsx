@@ -25,7 +25,7 @@ import {
 
 
 
-const UpdatePost = () => {
+const UpdatePost = (props) => {
   const dispatch = useDispatch();
   const publication = useSelector((state) => state.detail)
   const propertys = useSelector((state) => state.typeOfProperties);
@@ -35,19 +35,19 @@ const UpdatePost = () => {
 
 
   const [inputPropiedad, setInputPropiedad] = useState({
-    city: "",
-    address: "",
+    city: cities.city,
+    address: publication.address,
     propImg: [],
-    typProp: "",
-    price: "",
-    age: "",
-    surface: "",
-    environments: "",
-    bathrooms: "",
-    rooms: "",
-    garage: "",
-    yard: "",
-    pets: false,
+    typeProp: propertys.typeProp,
+    price: publication.price,
+    age: publication.age,
+    surface: publication.surface,
+    environments: publication.environments,
+    bathrooms: publication.bathrooms,
+    rooms: publication.rooms,
+    garage: publication.garage,
+    yard: publication.yard,
+    pets: publication.pets,
     service: [],
   });
 
@@ -66,6 +66,9 @@ useEffect(() => {
     dispatch(getTypesOfProperties())
     },[dispatch] )
 
+    function handleSubmit() {
+   dispatch()
+    }
 function HandleChange(e) {
     setInputPropiedad({
         ...inputPropiedad,

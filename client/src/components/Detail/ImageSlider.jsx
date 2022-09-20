@@ -2,10 +2,14 @@ import { Image } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { useSelector } from "react-redux"
+import { deletePublicactionImage} from "../../redux/actions"
+import { Button, Box } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
 
 
 const ImageSlider = ({ slides }) => {
 
+  const dispatch = useDispatch();
   const image = useSelector((state) => state.detail)
 
   const renderMin = (mins) => {
@@ -16,10 +20,22 @@ const ImageSlider = ({ slides }) => {
 
 }
 
+function handleDeleteImage(img) {
+  dispatch(deletePublicactionImage(img))
+  console.log(img)
+  alert("SE BORRO LA IMAGEN")
+  
+}
+
   return (
     <Carousel renderThumbs={renderMin} thumbWidth={"13%"} infiniteLoop>
       {slides.map((slide) => {
-        return <Image src={slide.url} key={slide.id} minH={"100%"} minW={"100%"} />;
+        return <Box>
+        <Image src={slide.url} key={slide.id} minH={"100%"} minW={"100%"} />;
+           <Button onClick={()=> {
+        handleDeleteImage(slide.cloudId)
+      }}>BORRAR IMAGEN</Button>
+        </Box>
       })}
       {/*  <Carousel   infiniteLoop renderThumbs={e => e}>
 

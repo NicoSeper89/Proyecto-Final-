@@ -187,7 +187,7 @@ export function deletePublicaction(id) {
   console.log(id,"id")
 return async function (dispatch) {
   try {
-    await axios.delete(`/delete/${id}`)
+    await axios.delete(`http://localhost:3001/publication/delete/${id}`)
     return dispatch({
       type: DELETE_PUBLICACTION
     })
@@ -202,7 +202,7 @@ export function deletePublicactionImage(url) {
   console.log(url,"URL")
   return async function (dispatch) {
     try {
-      await axios.delete(`/image/delete/${url}`)
+      await axios.post(`http://localhost:3001/publication/image/delete`, url)
       return dispatch({
         type: DELETE_PUBLICACTION_IMAGE
       })
