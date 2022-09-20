@@ -5,8 +5,9 @@ module.exports = (sequelize) => {
     url: {
       type: DataTypes.STRING,
       unique: true
- //     defaultValue: pegar url de default
     },
+    cloudId: {
+      type: DataTypes.STRING,
+    }
   });
 };
-// O descontruir el json que devuelve clodinary
