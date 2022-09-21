@@ -182,3 +182,10 @@ export function valueFilter(payload) {
     payload,
   };
 }
+
+export function setInfoUser (user) {
+  return {
+    type: "INFO_USER"
+    , payload: user
+  };
+}

@@ -136,15 +136,15 @@ router.post('/typeofusers', async(req,res)=>{
             where: {name: name }
        })
 
-       !user && res.send({mensaje:"Este Usuario No Existe"}) 
+       !user && res.send({mensaje:"Este Usuario No Existe", loguear: false}) 
        
        if(user) var user2 = await LoginInfo.findOne({
         where: {id: user.id }
       })
 
         if(user2) user2.password !== password ? 
-        res.send({mensaje:"Contraseña Incorrecto"}):
-        (res.status(200).send({mensaje: "Logueado Exitosamente",user, user2}))
+        res.send({mensaje:"Contraseña Incorrecto", loguear: false}):
+        (res.status(200).send({mensaje: "Logueado Exitosamente",userInfo:[user,user2],loguear: true}))
    
     })
 

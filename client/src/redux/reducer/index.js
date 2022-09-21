@@ -18,6 +18,7 @@ import {
 } from "../actions";
 
 const initialState = {
+  infoUser:[],
   houses: [],
   services: [],
   typeOfProperties: [],
@@ -166,6 +167,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         valueFilter: action.payload,
       };
+    case "INFO_USER":
+      return {
+        ...state,
+        infoUser: action.payload
+      }
     default:
       return state;
   }
