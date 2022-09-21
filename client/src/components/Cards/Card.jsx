@@ -31,7 +31,7 @@ export default function Card({
 
   return (
     <Box className={style.container} zIndex={"80"}>
-      <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}>
+      {/* <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}>
         <Carousel thumbWidth={"13%"} infiniteLoop>
           {img.map((s) => {
             return (
@@ -41,12 +41,12 @@ export default function Card({
             );
           })}
         </Carousel>
-      </Box>
-      {/* <Image
+      </Box> */}
+      <Image
         src={img[0] ? img[0].url : imgNotAvailable}
         alt="Img not found"
         className={style.img}
-      /> */}
+      />
       <Link to={"/details/" + id}>
         <Box className={style.container2}>
           {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
