@@ -12,7 +12,8 @@ import NewUser from "./components/Check_in/Check_in";
 import Error404 from "./components/Error404/Error404.jsx";
 import { getCities, getServices, getTypesOfProperties } from "./redux/actions/index.js";
 import UpdatePost from "./components/UpdatePost/UpdatePost";
-import PerfilUsuario from "./components/PerfilUsuario/PerfilUsuario";
+import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
+import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +35,8 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/checkin" component={NewUser} />
         <Route exact path="/updatePublicaction" component={UpdatePost} />
-        <Route exact path="/perfil" component={PerfilUsuario} />
+        <Route exact path="/perfilPropietario" component={PerfilPropietario} />
+        <Route exact path="/perfilInquilino" component={PerfilInquilino} />
         <Route path="*" component={Error404} />
       </Switch>
     </>

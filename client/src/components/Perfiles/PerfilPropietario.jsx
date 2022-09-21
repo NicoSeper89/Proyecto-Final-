@@ -19,8 +19,9 @@ import { faFacebookMessenger, faTelegram, faWhatsapp } from "@fortawesome/free-b
 import { faAt } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
 import Publicaciones from "./Publicaciones";
+import { imgUserUpload } from "../../redux/actions";
 
-export default function PerfilUsuario() {
+export default function PerfilPropietario() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -116,7 +117,7 @@ export default function PerfilUsuario() {
                   bg: "gray.600",
                 }}
               >
-                Mis Publicaciones o Mis Favoritos
+                Mis Publicaciones
               </Button>
               <Collapse in={isOpen} animateOpacity>
                 <Box

@@ -65,8 +65,11 @@ const NavBar = () => {
               <Link to="/checkin">
                 <MenuItem>Registrarte</MenuItem>
               </Link>
-              <Link to="/perfil">
-                <MenuItem>Perfil</MenuItem>
+              <Link to="/perfilPropietario">
+                <MenuItem>Perfil Propietario</MenuItem>
+              </Link>
+              <Link to="/perfilInquilino">
+                <MenuItem>Perfil Inquilino</MenuItem>
               </Link>
             </MenuList>
           </Menu>
