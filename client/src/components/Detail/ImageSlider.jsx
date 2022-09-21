@@ -28,8 +28,8 @@ function handleDeleteImage(img) {
 
   return (
     <Carousel renderThumbs={renderMin} thumbWidth={"13%"} infiniteLoop>
-      {slides.map((slide) => {
-        return <Image src={slide.url} key={slide.id} minH={"100%"} minW={"100%"} />;
+      {slides.map((slide, i) => {
+        return <Image src={slide.url} key={i} minH={"100%"} minW={"100%"} />;
       })}
        {/* <Carousel   infiniteLoop renderThumbs={e => e}>
 
