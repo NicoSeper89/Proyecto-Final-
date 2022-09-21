@@ -2,8 +2,8 @@ import React from "react";
 import axios from 'axios';
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { imgUpload } from "../../redux/actions/index";
-import { Flex, Input, Button, Image, Text, FormLabel} from "@chakra-ui/react";
+import { imgUpload, deletePublicactionImage } from "../../redux/actions/index";
+import { Flex, Input, Button, Image, Text, FormLabel, Box} from "@chakra-ui/react";
 import { useEffect } from "react";
 
 export default function UploadImg({ setInfoFormProp, infoFormProp }) {
@@ -13,6 +13,7 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
   const [successMsg, setSuccessMsg] = useState('');
   const dispatch = useDispatch();
   const [disableButtonUploadImg, setDisableButtonUploadImg] = useState(true);
+  const [cloudIds, setCloudIds] = useState([])
 
   useEffect(() => {
 
@@ -40,6 +41,7 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
       .then((resp) => {
         dispatch(imgUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id }))
         setInfoFormProp({ ...infoFormProp, propImg: [...infoFormProp.propImg, resp.data.secure_url] })
+        setCloudIds([...cloudIds, resp.data.public_id])
       })
       .catch((err) => console.log(err))
       .finally(
@@ -47,7 +49,6 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
         setPreview(''),
         setSuccessMsg('Image uploaded successfully'),
         setTimeout(() => { setSuccessMsg('') }, 2000),
-
       )
   }
   const handleChange = (event) => {
@@ -56,6 +57,14 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
     previewFile(file)
     setFileInput(event.target.files[0])
     }
+  }
+  const deleteImg = (i) => {
+    let id = cloudIds[i]
+    dispatch(deletePublicactionImage({id}))
+    cloudIds.splice(i, 1)
+    setCloudIds([...cloudIds])
+    infoFormProp.propImg.splice(i, 1)
+    setInfoFormProp({ ...infoFormProp, propImg: [...infoFormProp.propImg]})
   }
 
   return (
@@ -88,11 +97,13 @@ export default function UploadImg({ setInfoFormProp, infoFormProp }) {
       </FormLabel>
 
       <Flex id="seletedImgs" minH={"7rem"} flexWrap={"wrap"} w={"95%"} justifyContent={"flex-start"} alignItems={"center"} border={"2px"} borderColor={"gray.200"} p="1rem" gap={"0.8rem"}>
-        {infoFormProp.propImg?.map((img, index) => (<Image src={img}
+        {infoFormProp.propImg?.map((img, index) => (<Box key={index}><Image src={img}
           alt={index}
           key={index}
-          h={"4rem"}
-        />))}
+          h={"4rem"}/>
+          <Button onClick={()=>deleteImg(index)}>X</Button>
+          </Box>
+        ))}
       </Flex>
 
     </Flex>
