@@ -226,6 +226,7 @@ export function deletePublicactionImage(url) {
       console.log(error)
     }
   }
+}
 
   
 
