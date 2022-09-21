@@ -15,6 +15,8 @@ import {
   LOADING,
   CURRENT_PAGE,
   VALUE_FILTER,
+  SAVEFILTER,
+  SAVESORT,
   DELETE_PUBLICACTION,
   DELETE_PUBLICACTION_IMAGE
 } from "../actions";
@@ -168,12 +170,20 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         valueFilter: action.payload,
       };
-
+    case SAVEFILTER:
+      return {
+        ...state,
+        filters: action.payload
+      }
+    case SAVESORT:
+      return {
+        ...state,
+        sorting: action.payload
+      }
      case DELETE_PUBLICACTION:
       return {
         ...state,
       } 
-     
      case DELETE_PUBLICACTION_IMAGE:
       return {
         ...state,

@@ -13,11 +13,12 @@ export const FILTER_AMB = "FILTER_AMB";
 export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
-
+export const SAVEFILTER = "SAVEFILTER"
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 export const CURRENT_PAGE = "CURRENT_PAGE";
 export const VALUE_FILTER = "VALUE_FILTER";
+export const SAVESORT = "SAVESORT"
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
 
@@ -182,6 +183,20 @@ export function valueFilter(payload) {
     payload,
   };
 }
+//Filters en Local Storage
+export function saveFilter(payload) {
+  return {
+    type: SAVEFILTER,
+    payload,
+  };
+}
+
+export function saveSort(payload) {
+  return {
+    type: SAVESORT,
+    payload,
+  };
+}
 
 //ELIMINAR UNA PUBLICACION
 export function deletePublicaction(id) {
@@ -220,7 +235,3 @@ export function deletePublicactionImage(url) {
       payload: user
      }
   }
-
- 
-
-
