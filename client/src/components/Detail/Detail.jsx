@@ -245,8 +245,8 @@ export default function Detail(props, id) {
 
                   <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
 
-                  {miStateDetail.property.services.map((e) => (
-                    <Flex alignItems={"center"} gap={".4rem"}>
+                  {miStateDetail.property.services.map((e, i) => (
+                    <Flex key={i} alignItems={"center"} gap={".4rem"}>
                       <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
                     </Flex>
                   ))}
