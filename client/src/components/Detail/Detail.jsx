@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicationsDetail, clean, deletePublicaction, deletePublicactionImage } from "../../redux/actions";
+import { getPublicationsDetail, clean, deletePublicaction, } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
@@ -14,31 +14,32 @@ import {
   faDoorOpen,
   faPaw,
   faHouse,
-  faCircleUser,
   faCalendar,
   faCheck,
   faX,
-  faPhone,
-  faComment,
-  faCity,
+  // faCircleUser,
+  // faPhone,
+  // faComment,
+  // faCity,
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
-
+import { Link } from "react-router-dom";
 import {
   Box,
   Text,
   Flex,
   Button,
   Heading,
+  IdProvider,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import {  useHistory } from "react-router-dom";
 
 
-export default function Detail(props) {
+export default function Detail(props, id) {
   const dispatch = useDispatch();
   const miStateDetail = useSelector((state) => state.detail);
   const history = useHistory();
@@ -46,12 +47,11 @@ export default function Detail(props) {
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
-    dispatch(clean());
   }, [dispatch, props.match.params.id]);
 
-  useEffect(() => {
-    dispatch(getPublicationsDetail(props.match.params.id));
-  }, [dispatch, props.match.params.id]);
+  // useEffect(() => {
+  //   dispatch(getPublicationsDetail(props.match.params.id));
+  // }, [dispatch, props.match.params.id]);
 
   function handleDelete(){
     dispatch(deletePublicaction(props.match.params.id))
@@ -90,6 +90,10 @@ export default function Detail(props) {
               p={"0rem .8rem"}
               position={"relative"}
             >
+              <Box>
+                <Button  onClick={()=> history.push("/updatePublicaction/" + props.match.params.id)}>update
+                </Button>
+              </Box>
 
               <Box position={"relative"} width={"50rem"}>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />

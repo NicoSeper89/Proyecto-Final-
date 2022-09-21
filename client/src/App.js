@@ -32,7 +32,7 @@ function App() {
       <Route path="/login" component={Login} />
       <Route path="/checkin" component={NewUser} />
       <Route path="/error404" component={Error404} />
-      <Route path="/updatePublicaction" component={UpdatePost}/>
+      <Route path="/updatePublicaction/:id" component={UpdatePost}/>
     </>
   );
 }

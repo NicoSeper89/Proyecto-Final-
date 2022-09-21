@@ -14,7 +14,7 @@ const ImageSlider = ({ slides }) => {
 
   const renderMin = (mins) => {
 
-    console.log(mins[0])
+    // console.log(mins[0])
 
     return (mins.map((min, i)=> <Image w={"2rem"} h={"4rem"} borderRadius={"5px"} key={i} src={min.props.src}/>))
 
@@ -22,7 +22,6 @@ const ImageSlider = ({ slides }) => {
 
 function handleDeleteImage(img) {
   dispatch(deletePublicactionImage(img))
-  console.log(img)
   alert("SE BORRO LA IMAGEN")
   
 }
@@ -30,14 +29,9 @@ function handleDeleteImage(img) {
   return (
     <Carousel renderThumbs={renderMin} thumbWidth={"13%"} infiniteLoop>
       {slides.map((slide) => {
-        return <Box>
-        <Image src={slide.url} key={slide.id} minH={"100%"} minW={"100%"} />;
-           <Button onClick={()=> {
-        handleDeleteImage(slide.cloudId)
-      }}>BORRAR IMAGEN</Button>
-        </Box>
+        return <Image src={slide.url} key={slide.id} minH={"100%"} minW={"100%"} />;
       })}
-      {/*  <Carousel   infiniteLoop renderThumbs={e => e}>
+       {/* <Carousel   infiniteLoop renderThumbs={e => e}>
 
         {slides.map((slide, i) => <Image  id={i} src={slide.url} key={i} />)}
 

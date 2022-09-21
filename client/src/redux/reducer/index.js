@@ -16,7 +16,8 @@ import {
   CURRENT_PAGE,
   VALUE_FILTER,
   DELETE_PUBLICACTION,
-  DELETE_PUBLICACTION_IMAGE
+  DELETE_PUBLICACTION_IMAGE,
+  UPDATE_PROP
 } from "../actions";
 
 const initialState = {
@@ -174,6 +175,11 @@ export default function rootReducer(state = initialState, action) {
       } 
      
      case DELETE_PUBLICACTION_IMAGE:
+      return {
+        ...state,
+      } 
+
+     case UPDATE_PROP:
       return {
         ...state,
       } 
