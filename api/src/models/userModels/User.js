@@ -12,10 +12,12 @@ module.exports = (sequelize) => {
     description:{
       type:DataTypes.STRING,
       allowNull: true,
+      defaultValue: ""
     },
     rating:{
       type:DataTypes.INTEGER,
       allowNull: true,
+      defaultValue: 0
     }
   });
 };

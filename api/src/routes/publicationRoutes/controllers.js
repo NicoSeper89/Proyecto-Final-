@@ -38,7 +38,7 @@ const getAll = async () => {
           },
           {
             model: PropertyImage,
-            attributes: ["url"],
+            attributes: ["url", "cloudId"],
           },
         ],
       },

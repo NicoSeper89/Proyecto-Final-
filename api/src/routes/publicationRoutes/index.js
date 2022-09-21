@@ -320,7 +320,10 @@ router.delete("/delete/:id", async (req, res, next) => {
   try {
     const post = await Publication.findByPk(id)
     const deleteImg = await PropertyImage.findAll({where: {propertyId: post.propertyId}})
-    await deleteImg.map(img => img.destroy())
+    await deleteImg.map(img => {
+      cloudinary.uploader.destroy(img.cloudId)
+      img.destroy()
+    })
     await Property.destroy({where: {id: post.propertyId}})
     await Publication.destroy({where: {id: id}})
     res.send(`id ${id} was deleted`)
@@ -329,14 +332,5 @@ router.delete("/delete/:id", async (req, res, next) => {
   }
 })
 
-router.delete("/:id", async (req, res, next) => {
-  try {    
-    const id = req.params.id
-    await cloudinary.uploader.destroy(id);
-    res.send('deleted from cloudinary')    
-  } catch (err) {
-    next(err);
-  }
-});
 
 module.exports = router;
