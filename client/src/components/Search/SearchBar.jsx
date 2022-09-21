@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import sty from "./SearchBar.module.css";
+import SavedFilters from "../SavedFilters/SavedFilters";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -236,6 +237,9 @@ const SearchBar = () => {
             <option value="minMax">Menor Precio</option>
           </Select>
         </Menu>
+      </Box>
+      <Box marginTop={"80px"}>
+      <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={city}/>
       </Box>
     </Box>
   );

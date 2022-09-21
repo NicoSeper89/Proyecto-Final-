@@ -15,6 +15,8 @@ import {
   LOADING,
   CURRENT_PAGE,
   VALUE_FILTER,
+  SAVEFILTER,
+  SAVESORT
 } from "../actions";
 
 const initialState = {
@@ -166,6 +168,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         valueFilter: action.payload,
       };
+    case SAVEFILTER:
+      return {
+        ...state,
+        filters: action.payload
+      }
+    case SAVESORT:
+      return {
+        ...state,
+        sorting: action.payload
+      }
     default:
       return state;
   }

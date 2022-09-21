@@ -12,11 +12,12 @@ export const FILTER_AMB = "FILTER_AMB";
 export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
-
+export const SAVEFILTER = "SAVEFILTER"
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 export const CURRENT_PAGE = "CURRENT_PAGE";
 export const VALUE_FILTER = "VALUE_FILTER";
+export const SAVESORT = "SAVESORT"
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -179,6 +180,20 @@ export function setCurrentPage(page) {
 export function valueFilter(payload) {
   return {
     type: VALUE_FILTER,
+    payload,
+  };
+}
+
+export function saveFilter(payload) {
+  return {
+    type: SAVEFILTER,
+    payload,
+  };
+}
+
+export function saveSort(payload) {
+  return {
+    type: SAVESORT,
     payload,
   };
 }
