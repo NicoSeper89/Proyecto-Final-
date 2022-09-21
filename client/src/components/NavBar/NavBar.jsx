@@ -65,6 +65,9 @@ const NavBar = () => {
               <Link to="/checkin">
                 <MenuItem>Registrarte</MenuItem>
               </Link>
+              <Link to="/perfil">
+                <MenuItem>Perfil</MenuItem>
+              </Link>
             </MenuList>
           </Menu>
           {/* <div>
