@@ -29,7 +29,7 @@ const Login = () => {
    
   const changes = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
-  };
+  }; 
   const log_in = async (e) => {
     // ruta para loguearme **********************************
     console.log("enviando datos", login)

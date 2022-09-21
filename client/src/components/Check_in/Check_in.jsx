@@ -57,6 +57,7 @@ const NewUser = () => {
   if (datos.name.length > 3 && mail.test(datos.mail) && datos.password.length >7 && datos.typUser !== "") si_no = false
   else si_no = true
       var usuario = user
+      console.log(usuario)
   // const loginGoogle = async () => {
   //     const redirec = await loginWithRedirect()
   //     console.log(user)
@@ -143,10 +144,12 @@ const NewUser = () => {
           <Button colorScheme='blue' onClick={createUser} disabled={si_no}>Crear</Button>
         </Box>
       </form>
-      {!isAuthenticated&& < button onClick={() => "jose"}> login</button>}
+      {!isAuthenticated&& < button onClick={() => loginWithRedirect()}> login</button>}
       
       <br />
       { isAuthenticated && <button onClick={() => logout()}> logout</button>}
+      <br />
+      { isAuthenticated && <button onClick={() => setDatos({ name: usuario.nickname, mail: usuario.email, password: "", typUser: "" })}>setear datos</button>}
     </Box>
     
   );

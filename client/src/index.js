@@ -17,7 +17,7 @@ const domain = process.env.REACT_APP_AUTH0_DOMAIN
 const clienId = process.env.REACT_APP_AUTH0_CLIENT_ID
 
 ReactDOM.render(
-  <Auth0Provider domain={domain} clientId={clienId} redirectUri="http://localhost:3000/checkin">
+  <Auth0Provider domain={domain} clientId={clienId} redirectUri={window.location.origin}>
   <ChakraProvider>
     <Provider store={store}>
       <BrowserRouter>
