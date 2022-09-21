@@ -20,6 +20,7 @@ export const VALUE_FILTER = "VALUE_FILTER";
 export const SAVESORT = "SAVESORT"
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
+export const UPDATE_PROP = "UPDATE_PROP";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -225,4 +226,25 @@ export function deletePublicactionImage(url) {
       console.log(error)
     }
   }
- }
+}
+
+  
+
+
+  // ACTUALIZAR DATOS DE PROPIEDAD
+
+  export function updatedProp(id, inputPropiedad) {
+    console.log(inputPropiedad,"id de actualizacion", id)
+    try {
+      return async function (dispatch) {
+        await axios.put(`http://localhost:3001/publication/editProperty/${id}`, inputPropiedad)
+        return dispatch({
+          type: UPDATE_PROP
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+

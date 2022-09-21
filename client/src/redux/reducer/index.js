@@ -18,7 +18,8 @@ import {
   SAVEFILTER,
   SAVESORT,
   DELETE_PUBLICACTION,
-  DELETE_PUBLICACTION_IMAGE
+  DELETE_PUBLICACTION_IMAGE,
+  UPDATE_PROP
 } from "../actions";
 
 const initialState = {
@@ -184,6 +185,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       } 
      case DELETE_PUBLICACTION_IMAGE:
+      return {
+        ...state,
+      } 
+
+     case UPDATE_PROP:
       return {
         ...state,
       } 

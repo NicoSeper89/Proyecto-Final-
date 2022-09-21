@@ -302,14 +302,14 @@ router.put("/editProperty/:id", async (req, res, next) => {
 
 
 
-router.delete("/image/delete/:id", async (req, res, next) => {
-  const { id } = req.params;
+router.post("/image/delete", async (req, res, next) => {
+  const { id } = req.body;
   try {
     await cloudinary.uploader.destroy(id);
     await PropertyImage.destroy({ where: { cloudId: id } });
     res.send(`image cloudId ${id} was deleted from db and cloudinary`);
   } catch (error) {
-    next(err);
+    next(error);
   }
 });
 

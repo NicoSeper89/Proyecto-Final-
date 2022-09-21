@@ -72,7 +72,7 @@ const getDetail = async (id) => {
           },
           {
             model: PropertyImage,
-            attributes: ["url"],
+            attributes: ["url", "cloudId"],
           },
         ],
       },
