@@ -15,6 +15,8 @@ import {
   LOADING,
   CURRENT_PAGE,
   VALUE_FILTER,
+  DELETE_PUBLICACTION,
+  DELETE_PUBLICACTION_IMAGE
 } from "../actions";
 
 const initialState = {
@@ -55,7 +57,6 @@ export default function rootReducer(state = initialState, action) {
         houses: action.payload,
       };
     case GET_PUBLICATIONS_DETAIL:
-      console.log(action.payload, "action");
       return {
         ...state,
         detail: action.payload,
@@ -167,6 +168,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         valueFilter: action.payload,
       };
+
+     case DELETE_PUBLICACTION:
+      return {
+        ...state,
+      } 
+     
+     case DELETE_PUBLICACTION_IMAGE:
+      return {
+        ...state,
+      } 
     case "INFO_USER":
       return {
         ...state,
