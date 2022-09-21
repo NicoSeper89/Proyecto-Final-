@@ -50,17 +50,17 @@ export default function Card({
       <Link to={"/details/" + id}>
         <Box className={style.container2}>
           {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
-          <Text as="b" textTransform={"uppercase"} fontSize="xl" textAlign={"center"}>
+          <Text as="b" textTransform={"uppercase"} fontSize="l" textAlign={"center"}>
             {ciudad}
           </Text>
           <Text as="samp" fontSize="xl">
             $ {precio}
           </Text>
-          {premium === true ? (
+          {/* {premium === true ? (
             <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
           ) : (
             <></>
-          )}
+          )} */}
         </Box>
 
         <Box className={style.containerInfo}>
