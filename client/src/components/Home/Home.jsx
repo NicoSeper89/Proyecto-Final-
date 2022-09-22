@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPublications } from "../../redux/actions/index.js";
 import { Box, Image, Text } from "@chakra-ui/react";
 import Loading from "../Loading/Loading.jsx";
-// import { Box } from "@chakra-ui/react";
 import gif from "../../Image/1490.gif";
 import Maps from "../Maps/Maps.jsx";
+import PremiumCards from "../Cards/PremiumCards.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -32,6 +32,7 @@ const Home = () => {
       <NavBar />
       <Box zIndex={"100px"}>
         <Header />
+        <PremiumCards />
         <Cards />
         <Footer />
       </Box>

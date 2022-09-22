@@ -7,11 +7,13 @@ export const GET_CITIES = "GET_CITIES";
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
+export const ULPOAD_IMG_USER = "ULPOAD_IMG_USER";
 export const FILTER_PROP = "FILTER_PROP";
 export const FILTER_AMB = "FILTER_AMB";
 export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
+export const SET_PUBLICATION = "SET_PUBLICATION";
 export const SAVEFILTER = "SAVEFILTER"
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
@@ -163,6 +165,22 @@ export function imgUpload(value) {
   };
 }
 
+//Esto sube la imagen a la tabla UserImages
+export function imgUserUpload(value) {
+  return async function (dispatch) {
+    try {
+      await axios.post("/publication/imageUser", value);
+      return dispatch({
+        type: ULPOAD_IMG_USER,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+
 export function loading(payload) {
   return {
     type: LOADING,
@@ -198,32 +216,39 @@ export function saveSort(payload) {
   };
 }
 
+export function setPublication(payload) {
+  return {
+    type: SET_PUBLICATION,
+    payload,
+  };
+}
+
 //ELIMINAR UNA PUBLICACION
 export function deletePublicaction(id) {
-  console.log(id,"id")
-return async function (dispatch) {
-  try {
-    await axios.delete(`http://localhost:3001/publication/delete/${id}`)
-    return dispatch({
-      type: DELETE_PUBLICACTION
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
+  console.log(id, "id");
+  return async function (dispatch) {
+    try {
+      await axios.delete(`http://localhost:3001/publication/delete/${id}`);
+      return dispatch({
+        type: DELETE_PUBLICACTION,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 // ELIMINAR UNA IMAGEN DE UNA PUBLICACION
 export function deletePublicactionImage(url) {
-  console.log(url,"URL")
+  console.log(url, "URL");
   return async function (dispatch) {
     try {
-      await axios.post(`http://localhost:3001/publication/image/delete`, url)
+      await axios.post(`http://localhost:3001/publication/image/delete`, url);
       return dispatch({
-        type: DELETE_PUBLICACTION_IMAGE
-      })
+        type: DELETE_PUBLICACTION_IMAGE,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 }
@@ -246,5 +271,3 @@ export function deletePublicactionImage(url) {
       console.log(error)
     }
   }
-
-
