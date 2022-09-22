@@ -50,6 +50,7 @@ export default function PaymentOk() {
     // <Box>
     //   <Text>Felicidades, destacaste tu publicacion</Text>
     // </Box>
+
     <Alert
       position={"absolute"}
       // display={!alertSubmit[0] ? "none" : "flex"}

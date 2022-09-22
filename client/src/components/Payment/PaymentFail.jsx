@@ -7,6 +7,9 @@ export default function PaymentFail() {
   const onDown = () => {
     history.push("/");
   };
+  const onPerfil = () => {
+    history.push("/perfilPropietario");
+  };
   return (
     <Alert
       position={"absolute"}
@@ -22,9 +25,12 @@ export default function PaymentFail() {
     >
       <AlertIcon boxSize="40px" mr={0}>
         <AlertTitle mt={4} mb={1} fontSize="lg">
-          Error, no se pudo destacar tu publicación
+          Falló, no se pudo destacar tu publicación
         </AlertTitle>
-        <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
+        <AlertDescription maxWidth="sm">
+          Recordá que podes destacar tu publicación ingresando a tu perfil
+        </AlertDescription>
+        <Button onClick={onPerfil}>Ir al Perfil</Button>
         <Button onClick={onDown}>Volver al inicio</Button>
       </AlertIcon>
     </Alert>
