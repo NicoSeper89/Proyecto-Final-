@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import style from "./NavBar.module.css";
 import { Link } from "react-router-dom";
@@ -17,9 +17,25 @@ import {
   MenuList,
   useColorModeValue,
 } from "@chakra-ui/react";
+import "./NavBar.module.css";
 
 const NavBar = () => {
   const history = useHistory();
+
+  const [navbar, setNavbar] = useState(false);
+
+  const cambioColor = () => {
+    console.log(window.scrollY);
+    if (window.scrollY > 100) {
+      setNavbar(true);
+    } else {
+      setNavbar(false);
+    }
+    // var header = document.querySelector("container");
+    // header.classList.toggle("bg", window.scrollY > 0);
+  };
+
+  window.addEventListener("scroll", cambioColor);
 
   const buttonCreatePost = (e) => {
     e.preventDefault();
@@ -27,18 +43,19 @@ const NavBar = () => {
   };
 
   return (
-    <Box>
+    <Box className={navbar ? "container bg" : "container"}>
       <Flex
         // bg={useColorModeValue("gray.50", "gray.900")}
         // color={useColorModeValue("gray.700", "gray.200")}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        p={"0rem 0.2rem"}
-        w={"100%"}
-        h={"60px"}
-        position={"fixed"}
-        zIndex={"10"}
+        // alignItems={"center"}
+        // justifyContent={"space-between"}
+        // p={"0rem 0.2rem"}
+        // w={"100%"}
+        // h={"60px"}
+        // position={"fixed"}
+        // zIndex={"10"}
         // backgroundColor={"gray.100"}
+        className={style.container}
       >
         <Link to="/">
           <Image h={"140px"} marginTop={"20px"} src={logoImg} alt="homeLogo" />

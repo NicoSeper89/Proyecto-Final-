@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Box, Button, Input, InputGroup, InputRightElement, Menu, Select } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Menu,
+  Select,
+} from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import {
   saveFilter,
@@ -46,37 +55,15 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
   };
 
   return (
-    <Box>
-      <Menu>
-        <InputGroup borderColor={"black"}>
-          <InputRightElement
-            onClick={() => handleLocalStorage(value)}
-            children={<FontAwesomeIcon icon={faMagnifyingGlass} color="gray.300" />}
-            cursor={"pointer"}
-          />
-          <Input
-            transition="all 0.2s"
-            borderColor={"black"}
-            _hover={{ bg: "#D9D9D9" }}
-            _expanded={{ bg: "white" }}
-            _focus={{ bg: "#D9D9D9" }}
-            type="text"
-            placeholder="Buscar Ciudad..."
-            color={"black"}
-            onChange={handleChange}
-            value={value}
-          />
-        </InputGroup>
-      </Menu>
-
-      {/* <Input type="text" value={value} onChange={handleChange} /> */}
-      {/* <Button onClick={() => handleLocalStorage(value)}>Guardar Filtros</Button> */}
+    <Flex direction={"row"}>
+      <Input type="text" value={value} onChange={handleChange} />
+      <Button onClick={() => handleLocalStorage(value)}>Guardar Filtros</Button>
       <Select onChange={handleValue} placeholder="Mis Filtros">
         {storedValues?.map((v, i) => (
           <option key={i}>{v}</option>
         ))}
       </Select>
-    </Box>
+    </Flex>
   );
 }
 export default SavedFilters;
