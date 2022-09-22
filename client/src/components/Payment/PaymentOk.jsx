@@ -43,6 +43,7 @@ export default function PaymentOk() {
  
     createSuscription(userInfo);
   } */
+    console.log('en payment',publicationInfo)
     asignPremium(publicationInfo);
   }, []);
 
@@ -63,13 +64,13 @@ export default function PaymentOk() {
       height="15rem"
       top={"10rem"}
     >
-      <AlertIcon boxSize="40px" mr={0}>
+      <AlertIcon boxSize="40px" mr={0}></AlertIcon>
         <AlertTitle mt={4} mb={1} fontSize="lg">
           Felicidades, destacaste tu publicación
         </AlertTitle>
         <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
         <Button onClick={onDown}>Volver al inicio</Button>
-      </AlertIcon>
+      
     </Alert>
   );
 }

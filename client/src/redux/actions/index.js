@@ -217,6 +217,7 @@ export function saveSort(payload) {
 }
 
 export function setPublication(payload) {
+  console.log('en setpub',payload)
   return {
     type: SET_PUBLICATION,
     payload,
