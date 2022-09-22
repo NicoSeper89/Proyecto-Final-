@@ -18,6 +18,7 @@ export const SAVEFILTER = "SAVEFILTER";
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 export const CURRENT_PAGE = "CURRENT_PAGE";
+export const CURRENT_CARRUSEL = "CURRENT_CARRUSEL";
 export const VALUE_FILTER = "VALUE_FILTER";
 export const SAVESORT = "SAVESORT";
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
@@ -195,6 +196,13 @@ export function setCurrentPage(page) {
   };
 }
 
+export function setCurrentCarrusel(page) {
+  return {
+    type: CURRENT_CARRUSEL,
+    payload: page,
+  };
+}
+
 export function valueFilter(payload) {
   return {
     type: VALUE_FILTER,
@@ -225,19 +233,17 @@ export function setPublication(payload) {
 
 //ELIMINAR UNA PUBLICACION
 export function deletePublicaction(id) {
-
-  console.log(id,"id")
-return async function (dispatch) {
-  try {
-    await axios.delete(`/publication/delete/${id}`)
-    return dispatch({
-      type: DELETE_PUBLICACTION
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
+  console.log(id, "id");
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/publication/delete/${id}`);
+      return dispatch({
+        type: DELETE_PUBLICACTION,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 // ELIMINAR UNA IMAGEN DE UNA PUBLICACION
@@ -245,7 +251,7 @@ export function deletePublicactionImage(url) {
   console.log(url, "URL");
   return async function (dispatch) {
     try {
-      await axios.post(`/publication/image/delete`, url)
+      await axios.post(`/publication/image/delete`, url);
       return dispatch({
         type: DELETE_PUBLICACTION_IMAGE,
       });

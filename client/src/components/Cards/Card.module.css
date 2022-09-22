@@ -73,3 +73,25 @@
   margin: 22px 0px;
   color: rgb(48, 48, 48);
 }
+
+.carousel {
+  /* font-family: sans-serif; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+}
+
+.carouselCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 480px;
+  width: 100%;
+  background-color: #00008b;
+  color: #fff;
+  margin: 0 15px;
+  /* font-size: 4em; */
+}

@@ -25,7 +25,7 @@ const NavBar = () => {
   const [navbar, setNavbar] = useState(false);
 
   const cambioColor = () => {
-    console.log(window.scrollY);
+    // console.log(window.scrollY);
     if (window.scrollY > 100) {
       setNavbar(true);
     } else {

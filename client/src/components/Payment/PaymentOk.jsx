@@ -18,6 +18,7 @@ export default function PaymentOk() {
   const history = useHistory();
   const publicationInfo = useSelector((state) => state.publicationP);
   const busqueda = useLocation().search;
+
   const asignPremium = async (publicationInfo) => {
     const respuesta = {
       status: new URLSearchParams(busqueda).get("status"),
@@ -63,13 +64,12 @@ export default function PaymentOk() {
       height="15rem"
       top={"10rem"}
     >
-      <AlertIcon boxSize="40px" mr={0}>
-        <AlertTitle mt={4} mb={1} fontSize="lg">
-          Felicidades, destacaste tu publicación
-        </AlertTitle>
-        <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
-        <Button onClick={onDown}>Volver al inicio</Button>
-      </AlertIcon>
+      <AlertIcon boxSize="40px" mr={0}></AlertIcon>
+      <AlertTitle mt={4} mb={1} fontSize="lg">
+        Felicidades, destacaste tu publicación
+      </AlertTitle>
+      <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
+      <Button onClick={onDown}>Volver al inicio</Button>
     </Alert>
   );
 }

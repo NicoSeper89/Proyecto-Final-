@@ -30,11 +30,11 @@ const Home = () => {
       <NavBar />
       <Box zIndex={"100px"}>
         <Header />
-        <PremiumCards />
+        {/* <PremiumCards /> */}
         <Cards />
         <Footer />
       </Box>
-      <Maps/>
+      <Maps />
     </Box>
   );
 };

@@ -14,6 +14,7 @@ import {
   CLEAR_FILTERS,
   LOADING,
   CURRENT_PAGE,
+  CURRENT_CARRUSEL,
   VALUE_FILTER,
   SAVEFILTER,
   SAVESORT,
@@ -25,6 +26,7 @@ import {
 
 const initialState = {
   houses: [],
+  housePrem: [],
   services: [],
   typeOfProperties: [],
   cities: [],
@@ -38,6 +40,7 @@ const initialState = {
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
   loading: false,
   currentPage: 1,
+  currentCarrusel: 1,
   valueFilter: "",
   publicationP: "",
 };
@@ -59,6 +62,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         houses: action.payload,
+        housePrem: action.payload,
       };
     case GET_PUBLICATIONS_DETAIL:
       return {
@@ -166,6 +170,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         currentPage: action.payload,
+      };
+    case CURRENT_CARRUSEL:
+      return {
+        ...state,
+        currentCarrusel: action.payload,
       };
     case VALUE_FILTER:
       return {
