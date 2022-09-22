@@ -34,7 +34,7 @@ function App() {
         <Route exact path="/details/:id" component={Detail} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/checkin" component={NewUser} />
-      <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
+        <Route exact path="/updatePublicaction/:id" component={UpdatePost} />
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/perfilInquilino" component={PerfilInquilino} />
         <Route path="*" component={Error404} />

@@ -20,6 +20,7 @@ import Rating from "./Rating";
 import { useSelector } from "react-redux";
 
 import CardPerfil from "../Cards/CardPerfil";
+import Cards from "../Cards/Cards";
 
 export default function PerfilPropietario() {
   const houses = useSelector((state) => state.houses);
@@ -92,7 +93,7 @@ export default function PerfilPropietario() {
           </Box>
         </Center>
         <Box
-          maxW={"400px"}
+          maxW={"600px"}
           w={"600px"}
           bg={useColorModeValue("white", "gray.900")}
           boxShadow={"2xl"}
@@ -106,8 +107,8 @@ export default function PerfilPropietario() {
           <Stack direction={"row"} justify={"center"} spacing={4}>
             <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
               <Button onClick={handleDestacar}>Destacar publicación</Button>
-
-              {houses?.map((r) => {
+              <Cards />
+              {/* {houses?.map((r) => {
                 console.log("AAAAA: ", houses);
                 return (
                   <Box key={r.id}>
@@ -116,16 +117,11 @@ export default function PerfilPropietario() {
                       img={r.property.propertyImages}
                       precio={r.property.price}
                       ciudad={r.property.city.name}
-                      metros={r.property.surface}
-                      baño={r.property.bathrooms}
-                      dormitorio={r.property.rooms}
-                      ambientes={r.property.environments}
-                      mascota={r.property.pets}
                       premium={r.premium}
                     />
                   </Box>
                 );
-              })}
+              })} */}
             </Box>
           </Stack>
         </Box>
