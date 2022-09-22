@@ -49,7 +49,7 @@ const NewUser = () => {
    .then(
     await axios.post("http://localhost:3001/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
     )
-  
+      
     setDatos({ name: "", mail: "", password: "", typUser: "" })
   }
  
@@ -58,6 +58,8 @@ const NewUser = () => {
   else si_no = true
       var usuario = user
       console.log(usuario)
+
+      
   // const loginGoogle = async () => {
   //     const redirec = await loginWithRedirect()
   //     console.log(user)
@@ -149,7 +151,7 @@ const NewUser = () => {
       <br />
       { isAuthenticated && <button onClick={() => logout()}> logout</button>}
       <br />
-      { isAuthenticated && <button onClick={() => setDatos({ name: usuario.nickname, mail: usuario.email, password: "", typUser: "" })}>setear datos</button>}
+      { isAuthenticated && <button onClick={() => setDatos({ name: usuario.nickname, mail: usuario.email, password: usuario.sub, typUser: "Inquilino" })}>setear datos</button>}
     </Box>
     
   );

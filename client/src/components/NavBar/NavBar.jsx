@@ -6,6 +6,7 @@ import logoImg from "../../Image/Logo LookHouse.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../Search/SearchBar";
+import {useAuth0} from "@auth0/auth0-react"
 import {
   Box,
   Button,
@@ -17,15 +18,26 @@ import {
   MenuList,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setInfoUser } from "../../redux/actions";
+
 
 const NavBar = () => {
+  const {loginWithRedirect, user, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
+  const dispatch = useDispatch()
   const history = useHistory();
+  const user2 = useSelector(state => state.infoUser)
   // const [displayMenu, setDisplayMenu] = useState(false);
 
   // const onClickMenu = (e) => {
   //   e.preventDefault();
   //   setDisplayMenu(!displayMenu);
   // };
+  const closeUser = () => {
+      window.localStorage.removeItem("User")      // me elimina el user de localStorage y cierra sesion
+      dispatch(setInfoUser(null)) 
+      logout()
+  }
 
   const buttonCreatePost = (e) => {
     e.preventDefault();
@@ -49,22 +61,31 @@ const NavBar = () => {
         <Link to="/">
           <Image h={"140px"} marginTop={"20px"} src={logoImg} alt="homeLogo" />
         </Link>
+
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
           <SearchBar />
-          <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
+          {/* me oculta el boton si no esta logueado o es propietario */}
+          { user2 && user2[0].typeOfUserId === 1
+           &&    
+           <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
             Publicar
-          </Button>
+          </Button>}
+
           <Menu>
             <MenuButton aria-label="Options" variant="outline" px={"1rem"} py={".5rem"}>
               <FontAwesomeIcon icon={faCircleUser} className={style.img} />
             </MenuButton>
             <MenuList>
-              <Link to="/login">
-                <MenuItem>Iniciar Sesión</MenuItem>
-              </Link>
-              <Link to="/checkin">
-                <MenuItem>Registrarte</MenuItem>
-              </Link>
+              { !user2 && 
+                <MenuItem onClick={() => null}>Iniciar Sesión</MenuItem>
+                }
+              { !isAuthenticated && 
+                <MenuItem onClick={() => loginWithRedirect()}>Registrarte</MenuItem> 
+              }
+              { isAuthenticated && 
+              <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>
+             }
+             <MenuItem onClick={() => console.log(user)}>Info de User</MenuItem>
             </MenuList>
           </Menu>
           {/* <div>

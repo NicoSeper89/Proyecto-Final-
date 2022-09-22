@@ -22,7 +22,7 @@ import {
 } from "../actions";
 
 const initialState = {
-  infoUser:[],
+  infoUser:null,
   houses: [],
   services: [],
   typeOfProperties: [],

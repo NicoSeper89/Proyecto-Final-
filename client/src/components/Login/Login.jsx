@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import style from "./Login.module.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios"
 import {useDispatch, useSelector} from "react-redux"
 import {
@@ -37,7 +37,9 @@ const Login = () => {
 
    if(respuesta.data.loguear) {
    dispatch(setInfoUser(respuesta.data.userInfo))
+   window.localStorage.setItem("User",JSON.stringify(respuesta.data.userInfo))
     alert(respuesta.data.mensaje)
+    
   } else {
    alert(respuesta.data.mensaje)}
   };
