@@ -4,9 +4,16 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import imgNotAvailable from "../../Image/Image_not_available.png";
+import { useHistory } from "react-router-dom";
 
 export default function CardPerfil(id, img, precio, ciudad, premium) {
+  const history = useHistory();
   const handleDestacar = () => {};
+
+  const handleDetalle = (e) => {
+    e.preventDefault();
+    history.push("/details/" + id);
+  };
   return (
     <Box
       display="flex"
@@ -14,13 +21,12 @@ export default function CardPerfil(id, img, precio, ciudad, premium) {
       flexWrap="wrap"
       justifyContent="space-between"
       alignContent="stretch"
-      w="400px"
+      w="580px"
       h="200px"
       className={style.container}
       zIndex={"80"}
     >
-      <Image h="100px" w="150 " src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
-      {/* <Link to={"/details/" + id}> */}
+      <Image h="180px" w="150 " src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
       <Box className={style.container2}>
         <Text as="b" textTransform={"uppercase"} fontSize="l" textAlign={"center"}>
           {ciudad}
@@ -34,8 +40,8 @@ export default function CardPerfil(id, img, precio, ciudad, premium) {
           <></>
         )}
       </Box>
+      <Button onClick={handleDetalle}>Detalle</Button>
       <Button onClick={handleDestacar}>Destacar publicación</Button>
-      {/* </Link> */}
     </Box>
   );
 }

@@ -11,7 +11,10 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
   const onDown = () => {
     history.push("/");
   };
- /*  const handleDestacar = () => {
+  /* const onTest = () => {
+    history.push("/PaymentOk");
+  }; */
+  /*  const handleDestacar = () => {
     
     let res = axios.post("http://localhost:3001/sell/premium", {});
     console.log('soy',res)
@@ -44,6 +47,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
           Destacr Publicación
         </button>
       </form>
+      {/* <Button onClick={onTest}>paymentTest</Button> */}
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>
   );

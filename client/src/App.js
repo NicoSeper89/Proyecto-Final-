@@ -15,6 +15,8 @@ import UpdatePost from "./components/UpdatePost/UpdatePost";
 import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
 import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
 import PaymentOk from "./components/Payment/PaymentOk";
+import PaymentFail from "./components/Payment/PaymentFail.jsx";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -34,10 +36,11 @@ function App() {
         <Route exact path="/details/:id" component={Detail} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/checkin" component={NewUser} />
-      <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
+        <Route exact path="/updatePublicaction/:id" component={UpdatePost} />
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/perfilInquilino" component={PerfilInquilino} />
         <Route exact path="/PaymentOk" component={PaymentOk} />
+        <Route exact path="/PaymentFail" component={PaymentFail} />
         <Route path="*" component={Error404} />
       </Switch>
     </>

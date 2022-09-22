@@ -19,9 +19,9 @@ const premiumController = async (req, res) => {
 				},
 			],
 			back_urls: {
-				failure: "https://proyecto-final-client-ool4-dxo4j08y4-nicoseper89.vercel.app/",
-				pending: "https://proyecto-final-client-ool4-dxo4j08y4-nicoseper89.vercel.app/",
-				success: "https://proyecto-final-client-ool4-dxo4j08y4-nicoseper89.vercel.app/PaymentOk",
+				failure: "https://proyecto-final-client-ool4.vercel.app/PaymentFail",
+				pending: "https://proyecto-final-client-ool4.vercel.app/PaymentFail",
+				success: "https://proyecto-final-client-ool4.vercel.app/PaymentOk",
 			},
 			auto_return: "approved",
 		};

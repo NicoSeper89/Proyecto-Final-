@@ -224,7 +224,7 @@ router.post("/postProperty", async (req, res, next) => {
     let property = await Property.findByPk(id);
     post.setProperty(property);
 
-    res.send("post created");
+    res.send(post.id);
   } catch (error) {
     next(error);
   }
