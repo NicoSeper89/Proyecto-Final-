@@ -82,7 +82,7 @@ const SearchBar = () => {
 
   //SORT PLATA
   const orderByPrice = (e) => {
-    var orden;
+    let orden;
 
     if (e.target.value === "Precio") orden = { name: "default", direccion: "minMax" };
     else orden = { name: "price", direccion: e.target.value };
