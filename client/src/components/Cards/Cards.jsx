@@ -9,7 +9,7 @@ import { Box, List, ListItem } from "@chakra-ui/react";
 export default function Cards() {
   const dispatch = useDispatch();
   const houses = useSelector((state) => state.houses);
-  const loading = useSelector((state) => state.loading);
+  // const loading = useSelector((state) => state.loading);
   const currentPage = useSelector((state) => state.currentPage);
 
   /* **************** PAGINADO **************** */
@@ -64,6 +64,7 @@ export default function Cards() {
           </List>
           <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
             {currentHouse?.map((r) => {
+              
               return (
                 <Box key={r.id}>
                   <Card

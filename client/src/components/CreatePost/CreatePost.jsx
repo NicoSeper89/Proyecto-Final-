@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import UploadImg from "../UploadImg/UploadImg";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import {
+  setPublication,
+} from "../../redux/actions";
 import {
   Stack,
   Input,
@@ -26,6 +29,7 @@ import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
 
 const CreatePost = () => {
+  const dispatch = useDispatch();
   const propertys = useSelector((state) => state.typeOfProperties);
   const cities = useSelector((state) => state.cities);
   const services = useSelector((state) => state.services);
@@ -59,7 +63,7 @@ const CreatePost = () => {
   const [disableButtonContinue, setDisableButtonContinue] = useState(true);
   const [continueForm, setContinueForm] = useState(true);
   const [alertSubmit, setAlertSubmit] = useState([false, false])
-
+  const [propertyId, setPropertyId] = useState('');
   useEffect(() => {
     const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age, typProp } =
       infoFormProp;
@@ -144,6 +148,7 @@ const CreatePost = () => {
         ...infoFormPub,
         id: res.data,
       });
+      dispatch(setPublication(res.data));
       setAlertSubmit([true, true]);
       window.scroll({
         top: 0, 
@@ -428,7 +433,7 @@ const CreatePost = () => {
           }
         </Flex>
 
-        <AlertSubmit alertSubmit={alertSubmit}/>
+        <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId}/>
 
       </Box>
     </>

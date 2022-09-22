@@ -12,6 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Box, Image, Text } from "@chakra-ui/react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function Card({
   id,
@@ -29,15 +31,26 @@ export default function Card({
 
   return (
     <Box className={style.container} zIndex={"80"}>
+      {/* <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}>
+        <Carousel thumbWidth={"13%"} infiniteLoop>
+          {img.map((s) => {
+            return (
+              <Box>
+                <Image src={s.url ? s.url : imgNotAvailable} key={s.id} alt="Img not found" />
+              </Box>
+            );
+          })}
+        </Carousel>
+      </Box> */}
+      <Image
+        src={img[0] ? img[0].url : imgNotAvailable}
+        alt="Img not found"
+        className={style.img}
+      />
       <Link to={"/details/" + id}>
-        <Image
-          src={img[0] ? img[0].url : imgNotAvailable}
-          alt="Img not found"
-          className={style.img}
-        />
         <Box className={style.container2}>
           {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
-          <Text as="b" textTransform={"uppercase"} fontSize="xl" textAlign={"center"}>
+          <Text as="b" textTransform={"uppercase"} fontSize="l" textAlign={"center"}>
             {ciudad}
           </Text>
           <Text as="samp" fontSize="xl">
