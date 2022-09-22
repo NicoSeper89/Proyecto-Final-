@@ -1,14 +1,21 @@
 import React from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
 
-const AlertSubmit = ({ alertSubmit }) => {
+const AlertSubmit = ({ alertSubmit, propertyId }) => {
   const history = useHistory();
 
   const onDown = () => {
     history.push("/");
   };
-  const handleDestacar = () => {};
+ /*  const handleDestacar = () => {
+    
+    let res = axios.post("http://localhost:3001/sell/premium", {});
+    console.log('soy',res)
+  }; */
 
   return (
     <Alert
@@ -32,7 +39,12 @@ const AlertSubmit = ({ alertSubmit }) => {
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
       <Text>o</Text>
-      <Button onClick={handleDestacar}>Destacar Publicación</Button>
+      <form action="http://localhost:3001/sell/premium" method="POST">
+        <button type="submit">
+          Destacr Publicación
+        </button>
+      </form>
+      {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>
   );
 };

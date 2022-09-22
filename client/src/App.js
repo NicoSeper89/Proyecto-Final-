@@ -14,7 +14,7 @@ import { getCities, getServices, getTypesOfProperties } from "./redux/actions/in
 import UpdatePost from "./components/UpdatePost/UpdatePost";
 import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
 import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
-
+import PaymentOk from "./components/Payment/PaymentOk";
 function App() {
   const dispatch = useDispatch();
 
@@ -37,6 +37,7 @@ function App() {
       <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/perfilInquilino" component={PerfilInquilino} />
+        <Route exact path="/PaymentOk" component={PaymentOk} />
         <Route path="*" component={Error404} />
       </Switch>
     </>

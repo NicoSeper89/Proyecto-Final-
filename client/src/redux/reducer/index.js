@@ -42,7 +42,7 @@ const initialState = {
   loading: false,
   currentPage: 1,
   valueFilter: "",
-  publicationP:{},
+  publicationP:'',
 };
 
 export default function rootReducer(state = initialState, action) {
