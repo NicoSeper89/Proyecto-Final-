@@ -19,7 +19,11 @@ import {
   SAVESORT,
   DELETE_PUBLICACTION,
   DELETE_PUBLICACTION_IMAGE,
+
+  SET_PUBLICATION,
+
   UPDATE_PROP
+
 } from "../actions";
 
 const initialState = {
@@ -38,6 +42,7 @@ const initialState = {
   loading: false,
   currentPage: 1,
   valueFilter: "",
+  publicationP:{},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -189,10 +194,17 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       } 
 
+      case SET_PUBLICATION:
+      return {
+        ...state,
+        publicationP: action.payload,
+      };
+
      case UPDATE_PROP:
       return {
         ...state,
       } 
+
     default:
       return state;
   }
