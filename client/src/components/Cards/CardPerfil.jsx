@@ -19,7 +19,7 @@ export default function CardPerfil(id, img, precio, ciudad, premium) {
       className={style.container}
       zIndex={"80"}
     >
-      <Image h="100px" w="150" src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
+      <Image h="100px" w="150 " src={img[0] ? img[0].url : imgNotAvailable} alt="Img not found" />
       {/* <Link to={"/details/" + id}> */}
       <Box className={style.container2}>
         <Text as="b" textTransform={"uppercase"} fontSize="l" textAlign={"center"}>
