@@ -37,7 +37,7 @@ function App() {
       <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/perfilInquilino" component={PerfilInquilino} />
-        <Route exact path="/PaymentOk" component={PaymentOk} />
+        <Route exact path="/paymentOk" component={PaymentOk} />
         <Route path="*" component={Error404} />
       </Switch>
     </>
