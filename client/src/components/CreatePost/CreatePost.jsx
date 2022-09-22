@@ -140,11 +140,11 @@ const CreatePost = () => {
     console.log("lppepepapaep")
     try {
 
-      let res = await axios.post("http://localhost:3001/publication/createProperty", {
+      let res = await axios.post("/publication/createProperty", {
         ...infoFormProp,
       });
 
-      await axios.post("http://localhost:3001/publication/postProperty", {
+      await axios.post("/publication/postProperty", {
         ...infoFormPub,
         id: res.data,
       });
