@@ -237,7 +237,7 @@ const SearchBar = () => {
           </Select>
         </Menu>
       </Box>
-      <Box marginTop={"80px"}>
+      <Box>
         <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={city} />
       </Box>
     </Box>

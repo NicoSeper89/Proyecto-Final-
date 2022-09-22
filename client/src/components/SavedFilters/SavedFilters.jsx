@@ -8,6 +8,7 @@ import {
   InputRightElement,
   Menu,
   Select,
+  Stack,
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import {
@@ -56,13 +57,56 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
 
   return (
     <Flex direction={"row"}>
-      <Input type="text" value={value} onChange={handleChange} />
-      <Button onClick={() => handleLocalStorage(value)}>Guardar Filtros</Button>
-      <Select onChange={handleValue} placeholder="Mis Filtros">
-        {storedValues?.map((v, i) => (
-          <option key={i}>{v}</option>
-        ))}
-      </Select>
+      <Stack cursor={"pointer"} width={"8rem"} marginRight={"10px"}>
+        <InputGroup borderColor={"black"}>
+          <Input
+            transition="all 0.2s"
+            borderColor={"black"}
+            _hover={{ bg: "#D9D9D9" }}
+            _expanded={{ bg: "white" }}
+            _focus={{ bg: "#D9D9D9" }}
+            placeholder="Filtro"
+            color={"black"}
+            type="text"
+            value={value}
+            onChange={handleChange}
+          />
+          <InputRightElement
+            onClick={() => handleLocalStorage(value)}
+            children={<FontAwesomeIcon icon={faMagnifyingGlass} color="gray.300" />}
+            cursor={"pointer"}
+          />
+        </InputGroup>
+        {/* <Button marginRight={"10px"} onClick={() => handleLocalStorage(value)}>
+          Guardar Filtros
+        </Button> */}
+      </Stack>
+      <Box width={"8rem"}>
+        <Menu
+          cursor={"pointer"}
+          px={"1rem"}
+          py={".5rem"}
+          transition="all 0.2s"
+          borderRadius="md"
+          borderWidth="1px"
+          variant="link"
+          _hover={{ bg: "white" }}
+          _expanded={{ bg: "white" }}
+          _focus={{ boxShadow: "outline" }}
+        >
+          <Select
+            borderColor={"black"}
+            _hover={{ bg: "#D9D9D9" }}
+            _focus={{ bg: "#D9D9D9" }}
+            onChange={handleValue}
+            placeholder="Mis Filtros"
+          >
+            {storedValues?.map((v, i) => (
+              <option key={i}>{v}</option>
+            ))}
+          </Select>
+        </Menu>
+      </Box>
     </Flex>
   );
 }
