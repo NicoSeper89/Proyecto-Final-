@@ -301,13 +301,14 @@ router.put("/editProperty/:id", async (req, res, next) => {
 });
 router.put("/makePremium/:id", async (req, res, next) => {
   const { id } = req.params
-  const { description, status, premium } = req.body;
+  /* const { description, status, premium } = req.body; */
   try {
+    let updatedPub = await Publication.findByPk(id)
     await Publication.upsert({
       id: id,
-      description,
-      status,
-      premium,
+      description:updatedPub.description,
+      status:updatedPub.status,
+      premium:true,
     });
     res.send('premium')
   } catch (error) {
