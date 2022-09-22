@@ -1,22 +1,26 @@
  import React, {isValidElement} from "react";
- import {HStack,Radio,FormHelperText,FormControl,FormLabel,RadioGroup} from "@chakra-ui/react"
+ import {HStack,Radio,FormHelperText,FormControl,FormLabel,RadioGroup, Alert} from "@chakra-ui/react"
  import {useAuth0, User} from "@auth0/auth0-react"
- import {Link} from "react-router-dom"
+ import {Link, useHistory} from "react-router-dom"
  import axios from "axios"
  const Select = () => {
 
-const{isAuthenticated , user} = useAuth0()
+const{isAuthenticated , user, loginWithRedirect,logout} = useAuth0()
+  const history =  useHistory()
     const crearUsuario = async(e) => { 
       const user2 = await axios.post("http://localhost:3001/user/LoginOrCreate", {name: user.nickname, password: user.sub, mail: user.email, typUser:"Inquilino"})
 
       if(user2.data.loguear){
         console.log(user2.data.loguear)
        window.localStorage.setItem("User",JSON.stringify(user2.data.userInfo))
-
+       history.push("/")
 
       } else{
         console.log(user2.data.loguear)
         console.log(user2.data.mensage)
+        alert(user2.data.mensage)
+        logout()
+        loginWithRedirect()
       }
         
     }

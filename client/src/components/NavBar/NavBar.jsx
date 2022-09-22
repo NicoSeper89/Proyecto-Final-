@@ -34,9 +34,9 @@ const NavBar = () => {
   //   setDisplayMenu(!displayMenu);
   // };
   const closeUser = () => {
-      window.localStorage.removeItem("User")      // me elimina el user de localStorage y cierra sesion
-      dispatch(setInfoUser(null)) 
+      window.localStorage.removeItem("User")      // me elimina el user de localStorage, cierra sesion
       logout()
+      
   }
 
   const buttonCreatePost = (e) => {
@@ -76,11 +76,9 @@ const NavBar = () => {
               <FontAwesomeIcon icon={faCircleUser} className={style.img} />
             </MenuButton>
             <MenuList>
-              { !user2 && 
-                <MenuItem onClick={() => null}>Iniciar Sesión</MenuItem>
-                }
+          
               { !isAuthenticated && 
-                <MenuItem onClick={() => loginWithRedirect()}>Registrarte</MenuItem> 
+                <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem> 
               }
               { isAuthenticated && 
               <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>
