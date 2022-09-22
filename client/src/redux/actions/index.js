@@ -203,7 +203,7 @@ export function deletePublicaction(id) {
   console.log(id,"id")
 return async function (dispatch) {
   try {
-    await axios.delete(`http://localhost:3001/publication/delete/${id}`)
+    await axios.delete(`/publication/delete/${id}`)
     return dispatch({
       type: DELETE_PUBLICACTION
     })
@@ -218,7 +218,7 @@ export function deletePublicactionImage(url) {
   console.log(url,"URL")
   return async function (dispatch) {
     try {
-      await axios.post(`http://localhost:3001/publication/image/delete`, url)
+      await axios.post(`/publication/image/delete`, url)
       return dispatch({
         type: DELETE_PUBLICACTION_IMAGE
       })
@@ -237,7 +237,7 @@ export function deletePublicactionImage(url) {
     console.log(inputPropiedad,"id de actualizacion", id)
     try {
       return async function (dispatch) {
-        await axios.put(`http://localhost:3001/publication/editProperty/${id}`, inputPropiedad)
+        await axios.put(`/publication/editProperty/${id}`, inputPropiedad)
         return dispatch({
           type: UPDATE_PROP
         })

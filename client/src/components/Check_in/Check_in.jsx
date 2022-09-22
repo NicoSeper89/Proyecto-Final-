@@ -45,9 +45,9 @@ const NewUser = () => {
     setDatos({ ...datos, [e.target.name]: e.target.value })
   }
   const createUser = async() => {
-   await axios.post("http://localhost:3001/user/users", {name: datos.name, typUser: datos.typUser})
+   await axios.post("/user/users", {name: datos.name, typUser: datos.typUser})
    .then(
-    await axios.post("http://localhost:3001/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
+    await axios.post("/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
     )
   
     setDatos({ name: "", mail: "", password: "", typUser: "" })
