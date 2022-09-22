@@ -2,8 +2,6 @@ import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import dotenv from "dotenv";
-dotenv.config();
 
 import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
 
@@ -41,7 +39,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
       <Text>o</Text>
-      <form action={`${process.env.REACT_APP_API}/sell/premium`} method="POST">
+      <form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
         <button type="submit">
           Destacr Publicación
         </button>
