@@ -12,6 +12,7 @@ export const FILTER_AMB = "FILTER_AMB";
 export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
+export const SET_PUBLICATION = "SET_PUBLICATION";
 export const SAVEFILTER = "SAVEFILTER"
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
@@ -194,6 +195,13 @@ export function saveFilter(payload) {
 export function saveSort(payload) {
   return {
     type: SAVESORT,
+    payload,
+  };
+}
+
+export function setPublication(payload) {
+  return {
+    type: SET_PUBLICATION,
     payload,
   };
 }
