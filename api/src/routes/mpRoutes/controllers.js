@@ -19,8 +19,8 @@ const premiumController = async (req, res) => {
 				},
 			],
 			back_urls: {
-				failure: "https://localhost:3000/",
-				pending: "https://localhost:3000/",
+				failure: "https://localhost:3000/PaymentFail",
+				pending: "https://localhost:3000/PaymentFail",
 				success: "https://localhost:3000/PaymentOk",
 			},
 			auto_return: "approved",

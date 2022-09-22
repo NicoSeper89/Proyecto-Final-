@@ -137,18 +137,18 @@ const CreatePost = () => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    console.log("lppepepapaep")
     try {
 
       let res = await axios.post("/publication/createProperty", {
         ...infoFormProp,
       });
 
-      await axios.post("/publication/postProperty", {
+      let idPub= await axios.post("/publication/postProperty", {
         ...infoFormPub,
         id: res.data,
       });
-      dispatch(setPublication(res.data));
+      console.log('en create',idPub.data)
+      dispatch(setPublication(idPub.data));
       setAlertSubmit([true, true]);
       window.scroll({
         top: 0, 

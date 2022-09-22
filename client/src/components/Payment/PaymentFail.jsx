@@ -23,7 +23,7 @@ export default function PaymentFail() {
       height="15rem"
       top={"10rem"}
     >
-      <AlertIcon boxSize="40px" mr={0}>
+      <AlertIcon boxSize="40px" mr={0}>      </AlertIcon>
         <AlertTitle mt={4} mb={1} fontSize="lg">
           Falló, no se pudo destacar tu publicación
         </AlertTitle>
@@ -32,7 +32,6 @@ export default function PaymentFail() {
         </AlertDescription>
         <Button onClick={onPerfil}>Ir al Perfil</Button>
         <Button onClick={onDown}>Volver al inicio</Button>
-      </AlertIcon>
     </Alert>
   );
 }
