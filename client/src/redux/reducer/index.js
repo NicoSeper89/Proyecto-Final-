@@ -15,9 +15,15 @@ import {
   LOADING,
   CURRENT_PAGE,
   VALUE_FILTER,
+  SAVEFILTER,
+  SAVESORT,
   DELETE_PUBLICACTION,
   DELETE_PUBLICACTION_IMAGE,
-  SET_PUBLICATION
+
+  SET_PUBLICATION,
+
+  UPDATE_PROP
+
 } from "../actions";
 
 const initialState = {
@@ -169,21 +175,36 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         valueFilter: action.payload,
       };
-
+    case SAVEFILTER:
+      return {
+        ...state,
+        filters: action.payload
+      }
+    case SAVESORT:
+      return {
+        ...state,
+        sorting: action.payload
+      }
      case DELETE_PUBLICACTION:
       return {
         ...state,
       } 
-     
      case DELETE_PUBLICACTION_IMAGE:
       return {
         ...state,
       } 
+
       case SET_PUBLICATION:
       return {
         ...state,
         publicationP: action.payload,
       };
+
+     case UPDATE_PROP:
+      return {
+        ...state,
+      } 
+
     default:
       return state;
   }

@@ -24,15 +24,17 @@ function App() {
 
   return (
     <>
+    <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/createPost" component={CreatePost} />
-      <Route path="/about" component={About} />
-      <Route path="/help" component={Help} />
-      <Route path="/details/:id" component={Detail} />
-      <Route path="/login" component={Login} />
-      <Route path="/checkin" component={NewUser} />
-      <Route path="/error404" component={Error404} />
-      <Route path="/updatePublicaction" component={UpdatePost}/>
+      <Route exact path="/about" component={About} />
+      <Route exact path="/help" component={Help} />
+      <Route exact path="/details/:id" component={Detail} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/checkin" component={NewUser} />
+      <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
+      <Route exact path="*" component={Error404} />
+     </Switch>
     </>
   );
 }
