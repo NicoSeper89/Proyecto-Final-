@@ -11,6 +11,7 @@ import { Box, Image, Text } from "@chakra-ui/react";
 import Loading from "../Loading/Loading.jsx";
 // import { Box } from "@chakra-ui/react";
 import gif from "../../Image/1490.gif";
+import Maps from "../Maps/Maps.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const Home = () => {
         <Cards />
         <Footer />
       </Box>
+      <Maps/>
     </Box>
   );
 };
