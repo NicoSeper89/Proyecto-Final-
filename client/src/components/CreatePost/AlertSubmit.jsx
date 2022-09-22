@@ -11,7 +11,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
   const onDown = () => {
     history.push("/");
   };
- /*  const handleDestacar = () => {
+  /*  const handleDestacar = () => {
     
     let res = axios.post("http://localhost:3001/sell/premium", {});
     console.log('soy',res)
@@ -20,8 +20,8 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
   return (
     <Alert
       position={"absolute"}
-      display={!alertSubmit[0] ? "none" : "flex"}
-      status={!alertSubmit[1] ? "error" : "success"}
+      // display={!alertSubmit[0] ? "none" : "flex"}
+      // status={!alertSubmit[1] ? "error" : "success"}
       variant="subtle"
       flexDirection="column"
       alignItems="center"
@@ -40,9 +40,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
       <Button onClick={onDown}>Volver al inicio</Button>
       <Text>o</Text>
       <form action="http://localhost:3001/sell/premium" method="POST">
-        <button type="submit">
-          Destacr Publicación
-        </button>
+        <Button type="submit">Destacar Publicación</Button>
       </form>
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>

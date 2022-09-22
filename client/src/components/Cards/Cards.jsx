@@ -64,7 +64,6 @@ export default function Cards() {
           </List>
           <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
             {currentHouse?.map((r) => {
-              
               return (
                 <Box key={r.id}>
                   <Card
