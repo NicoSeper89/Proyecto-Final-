@@ -45,7 +45,6 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
       <form action="http://localhost:3001/sell/premium" method="POST">
         <Button type="submit">Destacar Publicación</Button>
       </form>
-      {/* <Button onClick={onTest}>paymentTest</Button> */}
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>
   );
