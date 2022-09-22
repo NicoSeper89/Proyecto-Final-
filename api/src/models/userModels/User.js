@@ -4,10 +4,8 @@ module.exports = (sequelize) => {
   sequelize.define('user', {
     
     name: {
-      type: DataTypes.STRING,
-
+      type: DataTypes.STRING, 
       allowNull: true, 
-      unique: true
     },
     description:{
       type:DataTypes.STRING,

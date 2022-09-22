@@ -49,21 +49,25 @@ const NewUser = () => {
    .then(
     await axios.post("/user/login", {name: datos.name, password:datos.password, mail: datos.mail})
     )
-  
+      
     setDatos({ name: "", mail: "", password: "", typUser: "" })
   }
  
   var si_no = true
   if (datos.name.length > 3 && mail.test(datos.mail) && datos.password.length >7 && datos.typUser !== "") si_no = false
   else si_no = true
+      var usuario = user
+      console.log(usuario)
 
-  const loginGoogle = () => {
-
-    setDatos({ name: user.nickname, mail: user.email, password: "", typUser: "" })
-  }
-     
-    
-    //  {[user].length && setTimeout(() => loginGoogle(),3000)}
+      
+  // const loginGoogle = async () => {
+  //     const redirec = await loginWithRedirect()
+  //     console.log(user)
+       
+  //     //  setDatos({ name: usuario.nickname, mail: usuario.email, password: "", typUser: "" })
+  // }
+   
+  
 
   return (
     <Box>
@@ -143,9 +147,11 @@ const NewUser = () => {
         </Box>
       </form>
       {!isAuthenticated&& < button onClick={() => loginWithRedirect()}> login</button>}
-      {isAuthenticated && console.log(user)}
+      
       <br />
       { isAuthenticated && <button onClick={() => logout()}> logout</button>}
+      <br />
+      { isAuthenticated && <button onClick={() => setDatos({ name: usuario.nickname, mail: usuario.email, password: usuario.sub, typUser: "Inquilino" })}>setear datos</button>}
     </Box>
     
   );

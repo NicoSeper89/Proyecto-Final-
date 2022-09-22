@@ -1,4 +1,5 @@
 import axios from "axios";
+import { bindActionCreators } from "redux";
 // import Cities from "../../components/Cities/Cities";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_DETAIL = "GET_PUBLICATIONS_DETAIL";
@@ -272,4 +273,13 @@ export function deletePublicactionImage(url) {
     } catch (error) {
       console.log(error)
     }
+  }
+  }
+
+  export function setInfoUser(user) {
+    
+     return {
+      type: "INFO_USER",
+      payload: user
+     }
   }

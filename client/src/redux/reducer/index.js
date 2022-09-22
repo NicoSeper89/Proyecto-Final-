@@ -27,6 +27,7 @@ import {
 } from "../actions";
 
 const initialState = {
+  infoUser:null,
   houses: [],
   services: [],
   typeOfProperties: [],
@@ -193,18 +194,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       } 
-
-      case SET_PUBLICATION:
+    case "INFO_USER":
       return {
         ...state,
-        publicationP: action.payload,
-      };
-
-     case UPDATE_PROP:
-      return {
-        ...state,
-      } 
-
+        infoUser: action.payload
+      }
     default:
       return state;
   }

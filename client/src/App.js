@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home.jsx";
@@ -17,6 +17,7 @@ import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
 import PaymentOk from "./components/Payment/PaymentOk";
 function App() {
   const dispatch = useDispatch();
+ const user = window.localStorage.getItem("User")
 
   useEffect(() => {
     dispatch(getCities());
