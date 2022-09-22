@@ -19,9 +19,9 @@ const premiumController = async (req, res) => {
 				},
 			],
 			back_urls: {
-				failure: "https://localhost:3000/PaymentFail",
-				pending: "https://localhost:3000/PaymentFail",
-				success: "https://localhost:3000/PaymentOk",
+				failure: "https://proyecto-final-client-ool4.vercel.app/PaymentFail",
+				pending: "https://proyecto-final-client-ool4.vercel.app/PaymentFail",
+				success: "https://proyecto-final-client-ool4.vercel.app/PaymentOk",
 			},
 			auto_return: "approved",
 		};

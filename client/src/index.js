@@ -15,9 +15,9 @@ dotenv.config();
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clienId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-
+//redirectUri="*/checkin"
 ReactDOM.render(
-  <Auth0Provider domain={domain} clientId={clienId} redirectUri="http://localhost:3000/checkin">
+  <Auth0Provider domain={domain} clientId={clienId} >
     <ChakraProvider>
       <Provider store={store}>
         <BrowserRouter>

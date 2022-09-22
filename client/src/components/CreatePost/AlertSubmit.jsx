@@ -42,8 +42,10 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
       <Text>o</Text>
-      <form action="http://localhost:3001/sell/premium" method="POST">
-        <Button type="submit">Destacar Publicación</Button>
+      <form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
+        <button type="submit">
+          Destacr Publicación
+        </button>
       </form>
       {/* <Button onClick={onTest}>paymentTest</Button> */}
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
