@@ -15,7 +15,6 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 import Rating from "./Rating";
-import Publicaciones from "./Publicaciones";
 import { imgUserUpload } from "../../redux/actions";
 
 export default function PerfilInquilino() {
@@ -106,16 +105,14 @@ export default function PerfilInquilino() {
                   bg={"rgba(216, 158, 26, 0.35)"}
                   rounded="md"
                   shadow="md"
-                >
-                  <Publicaciones />
-                </Box>
+                ></Box>
               </Collapse>
             </Stack>
           </Box>
         </Center>
-        {/* <Box
-          maxW={"320px"}
-          w={"full"}
+        <Box
+          maxW={"400px"}
+          w={"600px"}
           bg={useColorModeValue("white", "gray.900")}
           boxShadow={"2xl"}
           rounded={"lg"}
@@ -123,23 +120,12 @@ export default function PerfilInquilino() {
           textAlign={"center"}
         >
           <Text fontWeight={600} color={"gray.500"} mb={4}>
-            Medios de Contacto:
+            Favoritos:
           </Text>
           <Stack direction={"row"} justify={"center"} spacing={4}>
-            <Button label={"Gmail"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faAt} fontSize="30px" />
-            </Button>
-            <Button label={"WhatsApp"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faWhatsapp} fontSize="30px" />
-            </Button>
-            <Button label={"Telegram"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faTelegram} fontSize="30px" />
-            </Button>
-            <Button label={"FacebookMessenger"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faFacebookMessenger} fontSize="30px" />
-            </Button>
+            <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}></Box>
           </Stack>
-        </Box> */}
+        </Box>
       </Stack>
       <Footer />
     </Box>

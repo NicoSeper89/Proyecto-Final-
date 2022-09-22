@@ -151,4 +151,30 @@ router.post("/imageUser", async (req, res, next) => {
   }
 });
 
+//Esta ruta sirve para editar el perfil de cualquier usuario
+router.put("/editUser/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    typUser,
+    // typeOfUserId,
+  } = req.body;
+
+  try {
+    let userCrea = await User.create({
+      name,
+      //typeOfUserId,
+    });
+    let type = await TypeOfUser.findOne({
+      where: { name: typUser },
+    });
+    //console.log(userCrea)
+    userCrea.setTypeOfUser(type);
+
+    res.status(200).send("Usuario adicionado correctamente");
+  } catch (error) {
+    res.status(400).send("error al crear usuario ");
+  }
+});
+
 module.exports = router;

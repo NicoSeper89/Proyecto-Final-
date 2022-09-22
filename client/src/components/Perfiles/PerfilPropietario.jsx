@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
   Button,
   Center,
-  Collapse,
   Flex,
   Heading,
   Stack,
@@ -18,11 +17,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookMessenger, faTelegram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
-import Publicaciones from "./Publicaciones";
-import { imgUserUpload } from "../../redux/actions";
+import { useSelector } from "react-redux";
+
+import CardPerfil from "../Cards/CardPerfil";
 
 export default function PerfilPropietario() {
-  const { isOpen, onToggle } = useDisclosure();
+  const houses = useSelector((state) => state.houses);
+
+  const handleDestacar = () => {};
 
   return (
     <Box>
@@ -87,56 +89,11 @@ export default function PerfilPropietario() {
                 <FontAwesomeIcon icon={faFacebookMessenger} fontSize="30px" />
               </Button>
             </Stack>
-
-            <Stack mt={8} direction={"column"} spacing={4}>
-              {/* <Button
-                flex={1}
-                fontSize={"sm"}
-                rounded={"full"}
-                _focus={{
-                  bg: "gray.200",
-                }}
-              >
-                Message
-              </Button> */}
-              <Button
-                p="10px"
-                onClick={onToggle}
-                flex={1}
-                fontSize={"sm"}
-                rounded={"full"}
-                bg={"gray.500"}
-                color={"white"}
-                boxShadow={
-                  "0px 1px 25px -5px rgb(216, 158, 26, 0.43), 0 10px 10px -5px rgb(216, 158, 26, 0.43)"
-                }
-                _hover={{
-                  bg: "gray.600",
-                }}
-                _focus={{
-                  bg: "gray.600",
-                }}
-              >
-                Mis Publicaciones
-              </Button>
-              <Collapse in={isOpen} animateOpacity>
-                <Box
-                  p="40px"
-                  color="black"
-                  mt="4"
-                  bg={"rgba(216, 158, 26, 0.35)"}
-                  rounded="md"
-                  shadow="md"
-                >
-                  <Publicaciones />
-                </Box>
-              </Collapse>
-            </Stack>
           </Box>
         </Center>
-        {/* <Box
-          maxW={"320px"}
-          w={"full"}
+        <Box
+          maxW={"400px"}
+          w={"600px"}
           bg={useColorModeValue("white", "gray.900")}
           boxShadow={"2xl"}
           rounded={"lg"}
@@ -144,23 +101,34 @@ export default function PerfilPropietario() {
           textAlign={"center"}
         >
           <Text fontWeight={600} color={"gray.500"} mb={4}>
-            Medios de Contacto:
+            Publicaciones:
           </Text>
           <Stack direction={"row"} justify={"center"} spacing={4}>
-            <Button label={"Gmail"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faAt} fontSize="30px" />
-            </Button>
-            <Button label={"WhatsApp"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faWhatsapp} fontSize="30px" />
-            </Button>
-            <Button label={"Telegram"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faTelegram} fontSize="30px" />
-            </Button>
-            <Button label={"FacebookMessenger"} href={"#"} p={0}>
-              <FontAwesomeIcon icon={faFacebookMessenger} fontSize="30px" />
-            </Button>
+            <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
+              <Button onClick={handleDestacar}>Destacar publicación</Button>
+
+              {houses?.map((r) => {
+                console.log("AAAAA: ", houses);
+                return (
+                  <Box key={r.id}>
+                    <CardPerfil
+                      id={r.id}
+                      img={r.property.propertyImages}
+                      precio={r.property.price}
+                      ciudad={r.property.city.name}
+                      metros={r.property.surface}
+                      baño={r.property.bathrooms}
+                      dormitorio={r.property.rooms}
+                      ambientes={r.property.environments}
+                      mascota={r.property.pets}
+                      premium={r.premium}
+                    />
+                  </Box>
+                );
+              })}
+            </Box>
           </Stack>
-        </Box> */}
+        </Box>
       </Stack>
       <Footer />
     </Box>
