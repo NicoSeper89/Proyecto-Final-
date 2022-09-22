@@ -47,7 +47,6 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
           Destacr Publicación
         </button>
       </form>
-      {/* <Button onClick={onTest}>paymentTest</Button> */}
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>
   );
