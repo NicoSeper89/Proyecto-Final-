@@ -12,7 +12,7 @@ export const FILTER_AMB = "FILTER_AMB";
 export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
-
+export const SET_PUBLICATION = "SET_PUBLICATION";
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 export const CURRENT_PAGE = "CURRENT_PAGE";
@@ -178,6 +178,13 @@ export function setCurrentPage(page) {
 export function valueFilter(payload) {
   return {
     type: VALUE_FILTER,
+    payload,
+  };
+}
+
+export function setPublication(payload) {
+  return {
+    type: SET_PUBLICATION,
     payload,
   };
 }

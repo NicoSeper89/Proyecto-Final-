@@ -16,7 +16,8 @@ import {
   CURRENT_PAGE,
   VALUE_FILTER,
   DELETE_PUBLICACTION,
-  DELETE_PUBLICACTION_IMAGE
+  DELETE_PUBLICACTION_IMAGE,
+  SET_PUBLICATION
 } from "../actions";
 
 const initialState = {
@@ -35,6 +36,7 @@ const initialState = {
   loading: false,
   currentPage: 1,
   valueFilter: "",
+  publicationP:{},
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -177,6 +179,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       } 
+      case SET_PUBLICATION:
+      return {
+        ...state,
+        publicationP: action.payload,
+      };
     default:
       return state;
   }

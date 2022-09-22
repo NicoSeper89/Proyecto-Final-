@@ -165,7 +165,7 @@ router.post("/createProperty", async (req, res, next) => {
     ) {
       return res.status(404).send("fill out data");
     }
-    if(!propImg) propImg = "https://res.cloudinary.com/lookhouse/image/upload/v1663619810/hiq8jpgr6wzmzgf5yjaq.png"
+    if (!propImg) propImg = "https://res.cloudinary.com/lookhouse/image/upload/v1663619810/hiq8jpgr6wzmzgf5yjaq.png"
     let property = await Property.create({
       address,
       surface,
@@ -233,7 +233,7 @@ router.post("/postProperty", async (req, res, next) => {
 
 
 router.put("/editProperty/:id", async (req, res, next) => {
-  const {id} = req.params
+  const { id } = req.params
   const {
     address,
     surface,
@@ -299,7 +299,21 @@ router.put("/editProperty/:id", async (req, res, next) => {
     next(error);
   }
 });
-
+router.put("/makePremium/:id", async (req, res, next) => {
+  const { id } = req.params
+  const { description, status, premium } = req.body;
+  try {
+    await Publication.upsert({
+      id: id,
+      description,
+      status,
+      premium,
+    });
+    res.send('premium')
+  } catch (error) {
+    next(error);
+  }
+});
 
 
 router.delete("/image/delete/:id", async (req, res, next) => {
@@ -319,10 +333,10 @@ router.delete("/delete/:id", async (req, res, next) => {
   const { id } = req.params
   try {
     const post = await Publication.findByPk(id)
-    const deleteImg = await PropertyImage.findAll({where: {propertyId: post.propertyId}})
+    const deleteImg = await PropertyImage.findAll({ where: { propertyId: post.propertyId } })
     await deleteImg.map(img => img.destroy())
-    await Property.destroy({where: {id: post.propertyId}})
-    await Publication.destroy({where: {id: id}})
+    await Property.destroy({ where: { id: post.propertyId } })
+    await Publication.destroy({ where: { id: id } })
     res.send(`id ${id} was deleted`)
   } catch (error) {
     next(error)
@@ -330,10 +344,10 @@ router.delete("/delete/:id", async (req, res, next) => {
 })
 
 router.delete("/:id", async (req, res, next) => {
-  try {    
+  try {
     const id = req.params.id
     await cloudinary.uploader.destroy(id);
-    res.send('deleted from cloudinary')    
+    res.send('deleted from cloudinary')
   } catch (err) {
     next(err);
   }

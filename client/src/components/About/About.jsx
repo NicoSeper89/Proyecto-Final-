@@ -50,13 +50,13 @@ export default function About() {
             </Text>
             <br />
             <Stack>
-              <Link href="https://github.com/gabrielTor">Gabriel Torres</Link>
-              <Link href="https://github.com/ELJG">Jose Garcia</Link>
-              <Link href="https://github.com/MelHellrigl">Melissa Hellrigl</Link>
-              <Link href="https://github.com/NicoSeper89">Nicolás Sepertino</Link>
-              <Link href="https://github.com/rojebastidas">Rodrigo Bastidas</Link>
-              <Link href="https://github.com/thomneuhaus2">Thomas Neuhaus</Link>
-              <Link href="https://github.com/TomasTinto1234">Tomas Tinto</Link>
+              <Link Target="_blank" href="https://github.com/gabrielTor">Gabriel Torres</Link>
+              <Link Target="_blank" href="https://github.com/ELJG">Jose Garcia</Link>
+              <Link Target="_blank" href="https://github.com/MelHellrigl">Melissa Hellrigl</Link>
+              <Link Target="_blank" href="https://github.com/NicoSeper89">Nicolás Sepertino</Link>
+              <Link Target="_blank" href="https://github.com/rojebastidas">Rodrigo Bastidas</Link>
+              <Link Target="_blank" href="https://github.com/thomneuhaus2">Thomas Neuhaus</Link>
+              <Link Target="_blank" href="https://github.com/TomasTinto1234">Tomas Tinto</Link>
             </Stack>
           </Flex>
           <Stack direction={"row"} spacing={6} marginTop={"30px"}>
