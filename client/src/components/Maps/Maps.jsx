@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import './maps.css'
 import { MapContainer, TileLayer } from 'react-leaflet'
 
@@ -12,4 +12,4 @@ export default function Maps(){
             />
         </MapContainer>
     )
-}
+} */

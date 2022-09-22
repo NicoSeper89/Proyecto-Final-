@@ -10,7 +10,7 @@ import { getPublications } from "../../redux/actions/index.js";
 import { Box, Image, Text } from "@chakra-ui/react";
 import Loading from "../Loading/Loading.jsx";
 import gif from "../../Image/1490.gif";
-import Maps from "../Maps/Maps.jsx";
+/* import Maps from "../Maps/Maps.jsx"; */
 import PremiumCards from "../Cards/PremiumCards.jsx";
 
 const Home = () => {
@@ -36,7 +36,7 @@ const Home = () => {
         <Cards />
         <Footer />
       </Box>
-      <Maps/>
+      {/* <Maps/> */}
     </Box>
   );
 };
