@@ -1,0 +1,40 @@
+.container {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.containerText {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: justify;
+  padding: 50px;
+  margin-bottom: 40px;
+  padding-top: 100px;
+}
+
+.containerText div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+}
+
+.containerText p {
+  font-size: 1rem;
+  overflow: hidden;
+  width: 500px;
+  height: 100%;
+}
+
+.containerText a {
+  text-decoration: none;
+}
+
+.containerFooter {
+  position: relative;
+  width: 100%;
+  bottom: 0;
+}

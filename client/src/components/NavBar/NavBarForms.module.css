@@ -1,0 +1,16 @@
+
+.buttonAnimation:hover {
+  scale: 1.02;
+}
+
+.buttonAnimation:active {
+  scale: 0.98;
+}
+
+.buttonAnimation2:hover {
+  scale: 1.07;
+}
+
+.buttonAnimation2:active {
+  scale: 0.95;
+}
