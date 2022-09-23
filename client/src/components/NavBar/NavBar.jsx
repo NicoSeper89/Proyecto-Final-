@@ -26,7 +26,6 @@ const NavBar = () => {
   const {loginWithRedirect, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
   const dispatch = useDispatch()
   const history = useHistory();
-  const user2 = useSelector(state => state.infoUser)
   // const [displayMenu, setDisplayMenu] = useState(false);
 
   // const onClickMenu = (e) => {
