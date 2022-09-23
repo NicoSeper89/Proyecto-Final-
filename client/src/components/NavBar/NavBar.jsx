@@ -61,7 +61,7 @@ const NavBar = () => {
       history.push("/perfilInquilino");
     }
   };
-  console.log(user2);
+  // console.log(user2);
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
       <Flex
@@ -75,7 +75,7 @@ const NavBar = () => {
         // backgroundColor={"gray.100"}
       >
         <Link to="/">
-          <Image h={"140px"} marginTop={"20px"} src={logoImg} alt="homeLogo" />
+          <Image h={"160px"} marginTop={"20px"} src={logoImg} alt="homeLogo" />
         </Link>
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
@@ -87,7 +87,7 @@ const NavBar = () => {
           )}
 
           {/* <Box direction={"row"} spacing={6}> */}
-          <Box
+          {/* <Box
             marginRight={"10px"}
             px={"1rem"}
             py={".5rem"}
@@ -169,7 +169,7 @@ const NavBar = () => {
             >
               Contactanos
             </Link>
-          </Box>
+          </Box> */}
           {/* </Box> */}
           {/* <SearchBar /> */}
 
