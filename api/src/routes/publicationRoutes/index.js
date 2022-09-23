@@ -284,12 +284,14 @@ router.put("/editProperty/:id", async (req, res, next) => {
       pets,
       age,
     });
+
     if (service) {
       let ser = await Service.findAll({
         where: { name: service },
       });
       updatedProp.addService(ser);
     }
+
     let location = await City.findOne({
       where: { name: city },
     });
@@ -297,14 +299,14 @@ router.put("/editProperty/:id", async (req, res, next) => {
     let type = await TypeOfProp.findOne({
       where: { name: typProp },
     });
-    await PropertyImage.create({
-      url: propImg
-    });
     updatedProp.setTypeOfProp(type);
-    let img = await PropertyImage.findAll({
-      where: { url: propImg },
-    });
-    updatedProp.addPropertyImage(img);
+
+    propImg?.map( async(i) => {
+      let img = await PropertyImage.findAll({
+        where: { url: i.url },
+      });
+      updatedProp.addPropertyImage(img);
+    })
 
     res.send('post updated')
   } catch (error) {

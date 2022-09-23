@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublicationsDetail, clean, deletePublicaction } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import imgNotAvailable from "../../Image/Image_not_available.png";
+import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
   /* faHeart, */
   faRulerCombined,
@@ -27,7 +27,7 @@ import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
-import { Box, Text, Flex, Button, Heading, IdProvider } from "@chakra-ui/react";
+import { Box, Text, Flex, Button, Heading, Image, IdProvider } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 
@@ -82,10 +82,12 @@ export default function Detail(props, id) {
                   update
                 </Button>
               </Box>
-
+            { miStateDetail.property.propertyImages.length > 0 ?
               <Box position={"relative"} width={"50rem"}>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
-              </Box>
+              </Box> :
+              <Image src={imgNotAvailable} />
+              }
               <Button
                 onClick={(e) => {
                   handleDelete(e);
