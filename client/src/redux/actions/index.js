@@ -15,12 +15,12 @@ export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
 export const SET_PUBLICATION = "SET_PUBLICATION";
-export const SAVEFILTER = "SAVEFILTER"
+export const SAVEFILTER = "SAVEFILTER";
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 export const CURRENT_PAGE = "CURRENT_PAGE";
 export const VALUE_FILTER = "VALUE_FILTER";
-export const SAVESORT = "SAVESORT"
+export const SAVESORT = "SAVESORT";
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
 export const UPDATE_PROP = "UPDATE_PROP";
@@ -218,6 +218,7 @@ export function saveSort(payload) {
 }
 
 export function setPublication(payload) {
+  console.log('en setpub',payload)
   return {
     type: SET_PUBLICATION,
     payload,
@@ -253,28 +254,24 @@ export function deletePublicactionImage(url) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
-  
+// ACTUALIZAR DATOS DE PROPIEDAD
 
-
-  // ACTUALIZAR DATOS DE PROPIEDAD
-
-  export function updatedProp(id, inputPropiedad) {
-    console.log(inputPropiedad,"id de actualizacion", id)
+export function updatedProp(id, inputPropiedad) {
+  console.log(inputPropiedad, "id de actualizacion", id);
+  return async function (dispatch) {
     try {
-      return async function (dispatch) {
-        await axios.put(`/publication/editProperty/${id}`, inputPropiedad)
-        return dispatch({
-          type: UPDATE_PROP
-        })
-      }
+      await axios.put(`http://localhost:3001/publication/editProperty/${id}`, inputPropiedad);
+      return dispatch({
+        type: UPDATE_PROP,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  }
+  };
+}
 
   export function setInfoUser(user) {
     

@@ -11,7 +11,10 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
   const onDown = () => {
     history.push("/");
   };
- /*  const handleDestacar = () => {
+  /* const onTest = () => {
+    history.push("/PaymentOk");
+  }; */
+  /*  const handleDestacar = () => {
     
     let res = axios.post("http://localhost:3001/sell/premium", {});
     console.log('soy',res)
@@ -39,7 +42,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
       <Text>o</Text>
-      <form action="http://localhost:3001/sell/premium" method="POST">
+      <form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
         <button type="submit">
           Destacr Publicación
         </button>

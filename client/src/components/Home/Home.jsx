@@ -10,7 +10,7 @@ import { getPublications, setInfoUser } from "../../redux/actions/index.js";
 import { Box, Image, Text } from "@chakra-ui/react";
 import Loading from "../Loading/Loading.jsx";
 import gif from "../../Image/1490.gif";
-import Maps from "../Maps/Maps.jsx";
+/* import Maps from "../Maps/Maps.jsx"; */
 import PremiumCards from "../Cards/PremiumCards.jsx";
 
 const Home = () => {
@@ -19,8 +19,6 @@ const Home = () => {
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
   const cities = useSelector((state) => state.cities);
-  const loading = useSelector((state) => state.loading);
-  const houses = useSelector((state) => state.houses);
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
   useEffect(() => {
@@ -44,7 +42,7 @@ const Home = () => {
         <Cards />
         <Footer />
       </Box>
-      <Maps/>
+      {/* <Maps/> */}
     </Box>
   );
 };
