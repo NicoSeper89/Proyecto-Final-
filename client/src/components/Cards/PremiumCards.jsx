@@ -28,7 +28,9 @@ export default function PremiumCards() {
 
   const handleNext = (e) => {
     if (currentCarrusel === pages.length) {
-      dispatch(setCurrentCarrusel(1));//1currentCarrusel
+
+      dispatch(setCurrentCarrusel(1));
+
     } else {
       dispatch(setCurrentCarrusel(currentCarrusel + 1));
     }
@@ -36,7 +38,9 @@ export default function PremiumCards() {
 
   const handlePrev = (e) => {
     if (currentCarrusel === 1) {
-      dispatch(setCurrentCarrusel(pages.length));//1currentCarrusel
+
+      dispatch(setCurrentCarrusel(pages.length));
+
     } else {
       dispatch(setCurrentCarrusel(currentCarrusel - 1));
     }
@@ -87,10 +91,16 @@ export default function PremiumCards() {
       marginBottom={"8rem"}
     >
       <Box>
-        <Text textAlign={"center"} fontSize={"2xl"} fontFamily={"body"}>
+        <Text
+          display={"flex"}
+          justifyContent={"center"}
+          fontSize={"2xl"}
+          /*fontFamily={"body"}*/ as="samp"
+          textTransform={"uppercase"}
+        >
           Publicaciones Destacadas
         </Text>
-        <Flex direction={"row"} alignItems="center" w={"1500px"} justifyContent="center">
+        <Flex direction={"row"} alignItems="center" w={"1500px"} justifyContent="space-between">
           {/* {currentCarrusel !== 1 ? <Button onClick={handlePrev}>Prev</Button> : null} */}
           <Button m={"0px"} onClick={handlePrev}>
             <FontAwesomeIcon icon={faChevronLeft} fontSize="30px" />
