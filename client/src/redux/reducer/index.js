@@ -14,6 +14,7 @@ import {
   CLEAR_FILTERS,
   LOADING,
   CURRENT_PAGE,
+  CURRENT_CARRUSEL,
   VALUE_FILTER,
   SAVEFILTER,
   SAVESORT,
@@ -21,11 +22,13 @@ import {
   DELETE_PUBLICACTION_IMAGE,
   SET_PUBLICATION,
   UPDATE_PROP,
+  GET_PUBLICATIONS_PREMIUM,
 } from "../actions";
 
 const initialState = {
   infoUser:null,
   houses: [],
+  housePrem: [],
   services: [],
   typeOfProperties: [],
   cities: [],
@@ -39,6 +42,7 @@ const initialState = {
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
   loading: false,
   currentPage: 1,
+  currentCarrusel: 1,
   valueFilter: "",
   publicationP: "",
 };
@@ -168,6 +172,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         currentPage: action.payload,
       };
+    case CURRENT_CARRUSEL:
+      return {
+        ...state,
+        currentCarrusel: action.payload,
+      };
+    case GET_PUBLICATIONS_PREMIUM:
+      return {
+        ...state,
+        housePrem: action.payload,
+      };
     case VALUE_FILTER:
       return {
         ...state,
@@ -192,7 +206,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       }
     case SET_PUBLICATION:
-      console.log('en setpub reducer',action.payload)
+      console.log("en setpub reducer", action.payload);
       return {
         ...state,
         publicationP: action.payload,

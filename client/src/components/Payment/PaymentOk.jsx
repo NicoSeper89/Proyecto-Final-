@@ -17,13 +17,14 @@ export default function PaymentOk() {
   /*  const [loading, setLoading] = useState(false); */
   const history = useHistory();
   const busqueda = useLocation().search;
+
   const asignPremium = async (publicationInfo) => {
     const respuesta = {
       status: new URLSearchParams(busqueda).get("status"),
       collection_status: new URLSearchParams(busqueda).get("collection_status"),
       payment_id: new URLSearchParams(busqueda).get("payment_id"),
     };
-    if (true/* respuesta && respuesta.status === "approved" */) {
+    if (true /* respuesta && respuesta.status === "approved" */) {
       await axios.put("/publication/makePremium/" + publicationInfo, {
         /* description: publicationInfo.description,
           status: publicationInfo.status,
@@ -56,6 +57,7 @@ export default function PaymentOk() {
       position={"absolute"}
       // display={!alertSubmit[0] ? "none" : "flex"}
       // status={!alertSubmit[1] ? "error" : "success"}
+      status="success"
       variant="subtle"
       flexDirection="column"
       alignItems="center"
@@ -65,12 +67,11 @@ export default function PaymentOk() {
       top={"10rem"}
     >
       <AlertIcon boxSize="40px" mr={0}></AlertIcon>
-        <AlertTitle mt={4} mb={1} fontSize="lg">
-          Felicidades, destacaste tu publicación
-        </AlertTitle>
-        <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
-        <Button onClick={onDown}>Volver al inicio</Button>
-      
+      <AlertTitle mt={4} mb={1} fontSize="lg">
+        Felicidades, destacaste tu publicación
+      </AlertTitle>
+      <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
+      <Button onClick={onDown}>Volver al inicio</Button>
     </Alert>
   );
 }
