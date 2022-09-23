@@ -16,7 +16,6 @@ import {
 export default function PaymentOk() {
   /*  const [loading, setLoading] = useState(false); */
   const history = useHistory();
-  const publicationInfo = useSelector((state) => state.publicationP);
   const busqueda = useLocation().search;
   const asignPremium = async (publicationInfo) => {
     const respuesta = {
@@ -43,8 +42,8 @@ export default function PaymentOk() {
  
     createSuscription(userInfo);
   } */
-    console.log('en payment',publicationInfo)
-    asignPremium(publicationInfo);
+    let pubID =window.localStorage.getItem('publicationID')
+    asignPremium(pubID);
   }, []);
 
   return (
@@ -65,12 +64,12 @@ export default function PaymentOk() {
       top={"10rem"}
     >
       <AlertIcon boxSize="40px" mr={0}></AlertIcon>
-        <AlertTitle mt={4} mb={1} fontSize="lg">
-          Felicidades, destacaste tu publicación
-        </AlertTitle>
-        <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
-        <Button onClick={onDown}>Volver al inicio</Button>
-      
+      <AlertTitle mt={4} mb={1} fontSize="lg">
+        Felicidades, destacaste tu publicación
+      </AlertTitle>
+      <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
+      <Button onClick={onDown}>Volver al inicio</Button>
+
     </Alert>
   );
 }
