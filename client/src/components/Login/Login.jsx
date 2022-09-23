@@ -1,8 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import style from "./Login.module.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from "axios"
+import {useDispatch, useSelector} from "react-redux"
 import {
   Input,
   Box,
@@ -15,6 +16,7 @@ import {
   // Checkbox,
 } from "@chakra-ui/react";
 import logoImg from "../../Image/Logo LookHouse.png";
+import { setInfoUser } from "../../redux/actions";
 
 var name = /^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$/ //ragex para validar gmail
 
@@ -22,17 +24,25 @@ const Login = () => {
   const [login, setLogin] = useState({ name: "", password: "" });
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
-
+  const dispatch =  useDispatch()
+  const infoUsuario = useSelector(state => state.infoUser)
+   
   const changes = (e) => {
     setLogin({ ...login, [e.target.name]: e.target.value });
-  };
+  }; 
   const log_in = async (e) => {
     // ruta para loguearme **********************************
     console.log("enviando datos", login)
-   const respuesta = await axios.post("/user/logueado", login)
    alert(respuesta.data.mensaje)
-   
-   
+   const respuesta = await axios.post("http://localhost:3001/user/logueado", login)
+
+   if(respuesta.data.loguear) {
+   dispatch(setInfoUser(respuesta.data.userInfo))
+   window.localStorage.setItem("User",JSON.stringify(respuesta.data.userInfo))
+    alert(respuesta.data.mensaje)
+    
+  } else {
+   alert(respuesta.data.mensaje)}
   };
   var isError
   var isError2
@@ -97,6 +107,7 @@ const Login = () => {
           <p>Si no tenes una cuenta, podes {<Link to="checkin">REGISTRARTE</Link>}</p>
         </Box>
       </form>
+      <button onClick={() => console.log(infoUsuario)}>usuarioooo</button>
     </Box>
   );
 };
