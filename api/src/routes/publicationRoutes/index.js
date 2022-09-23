@@ -8,6 +8,7 @@ const {
   City,
   PropertyImage,
   Report,
+  User
 } = require("../../db");
 const router = Router();
 const {
@@ -214,10 +215,10 @@ router.post("/createProperty", async (req, res, next) => {
 });
 
 router.post("/postProperty", async (req, res, next) => {
-  const { description, status, premium, report, id } = req.body;
+  const { description, status, premium, report, id, userId } = req.body;
   try {
     if (!description) res.status(404).send("fill out description");
-
+console.log('soy',userId)
     let post = await Publication.create({
       description,
       status,
@@ -232,6 +233,8 @@ router.post("/postProperty", async (req, res, next) => {
 
     let property = await Property.findByPk(id);
     post.setProperty(property);
+    let user = await User.findByPk(userId);
+    post.setUser(user);
 
     res.send(post.id);
   } catch (error) {

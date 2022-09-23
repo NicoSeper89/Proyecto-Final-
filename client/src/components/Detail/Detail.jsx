@@ -38,6 +38,7 @@ export default function Detail(props, id) {
   // const miUseerState = useSelector((state) => state.user)
 
   useEffect(() => {
+    console.log(miStateDetail)
     dispatch(getPublicationsDetail(props.match.params.id));
   }, [dispatch, props.match.params.id]);
 
