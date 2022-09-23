@@ -6,11 +6,36 @@ import logoImg from "../../Image/Logo LookHouse.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../Search/SearchBar";
-import { Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {useAuth0} from "@auth0/auth0-react"
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import "./NavBar.module.css";
+
 
 const NavBar = () => {
-  const history = useHistory();
 
+  const {loginWithRedirect, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
+  const history = useHistory();
+  // const [displayMenu, setDisplayMenu] = useState(false);
+
+  // const onClickMenu = (e) => {
+  //   e.preventDefault();
+  //   setDisplayMenu(!displayMenu);
+  // };
+  const closeUser = () => {
+      window.localStorage.removeItem("User")      // me elimina el user de localStorage, cierra sesion
+      logout()
+      
+  }
   const [navbar, setNavbar] = useState(false);
 
   const cambioColor = () => {
@@ -29,6 +54,17 @@ const NavBar = () => {
     history.push("/createPost");
   };
 
+  const user = window.localStorage.getItem("User")
+  const user2 = JSON.parse(user)
+
+ const detallesUser = () => {
+  if(user2[0].typeOfUserId === 1) {
+    history.push("/perfilPropietario")
+  }else {
+    history.push("/perfilInquilino")
+  }
+ }
+  console.log(user2)
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
       <Flex
@@ -44,7 +80,13 @@ const NavBar = () => {
         <Link to="/">
           <Image h={"140px"} marginTop={"20px"} src={logoImg} alt="homeLogo" />
         </Link>
+
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
+          
+          {/* me oculta el boton si no esta logueado o es propietario */}
+          { user2 && user2[0].typeOfUserId === 1
+           &&    
+           <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
           {/* <Box direction={"row"} spacing={6}> */}
           <Box
             marginRight={"10px"}
@@ -133,24 +175,23 @@ const NavBar = () => {
           {/* <SearchBar /> */}
           <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
             Publicar
-          </Button>
+          </Button>}
+
           <Menu>
             <MenuButton aria-label="Options" variant="outline" px={"1rem"} py={".5rem"}>
               <FontAwesomeIcon icon={faCircleUser} className={style.img} />
             </MenuButton>
             <MenuList>
-              <Link to="/login">
-                <MenuItem>Iniciar Sesión</MenuItem>
-              </Link>
-              <Link to="/checkin">
-                <MenuItem>Registrarte</MenuItem>
-              </Link>
-              <Link to="/perfilPropietario">
-                <MenuItem>Perfil Propietario</MenuItem>
-              </Link>
-              <Link to="/perfilInquilino">
-                <MenuItem>Perfil Inquilino</MenuItem>
-              </Link>
+          
+              { !user2 && 
+                <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem> 
+              }
+              { user2 && 
+              <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>
+             }
+             { user2 &&
+              <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>
+              }
             </MenuList>
           </Menu>
         </Box>

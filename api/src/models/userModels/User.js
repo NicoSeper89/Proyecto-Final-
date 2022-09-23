@@ -2,7 +2,6 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   sequelize.define('user', {
-    
     name: {
       type: DataTypes.STRING,
 
@@ -24,6 +23,9 @@ module.exports = (sequelize) => {
     },
     ratingAmount:{
       type: DataTypes.INTEGER,
+    },
+    favorites:{
+      type: DataTypes.ARRAY(DataTypes.STRING)
     }
   });
 };

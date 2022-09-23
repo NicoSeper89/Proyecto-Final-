@@ -26,6 +26,7 @@ import {
 } from "../actions";
 
 const initialState = {
+  infoUser:null,
   houses: [],
   housePrem: [],
   services: [],
@@ -203,8 +204,7 @@ export default function rootReducer(state = initialState, action) {
     case DELETE_PUBLICACTION_IMAGE:
       return {
         ...state,
-      };
-
+      }
     case SET_PUBLICATION:
       console.log("en setpub reducer", action.payload);
       return {
@@ -216,6 +216,13 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+   
+      case "INFO_USER":
+      return {
+        ...state,
+        infoUser: action.payload
+      }
+   
 
     default:
       return state;

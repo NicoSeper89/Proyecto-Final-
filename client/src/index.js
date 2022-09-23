@@ -17,17 +17,18 @@ const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clienId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 //redirectUri="*/checkin"
 ReactDOM.render(
-  <Auth0Provider domain={domain} clientId={clienId} >
-    <ChakraProvider>
-      <Provider store={store}>
-        <BrowserRouter>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </BrowserRouter>
-      </Provider>
-    </ChakraProvider>
-  </Auth0Provider>,
+  <Auth0Provider domain={domain} clientId={clienId} redirectUri="http://localhost:3000/select">
+  <ChakraProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </BrowserRouter>
+    </Provider>
+  </ChakraProvider>
+  </Auth0Provider>
+  ,
   document.getElementById("root")
 );
 
