@@ -7,7 +7,8 @@ const {
   City,
   PropertyImage,
   Report,
-  User
+  User,
+  ContactInfo
 } = require("../../db");
 
 //habria que agregar FilterByParams que recibe publicaciones y filtros y devuelve las
@@ -82,6 +83,12 @@ const getDetail = async (id) => {
       },
       {
         model: User,
+        include:[
+          {
+            model: ContactInfo,
+            attributes: ["mail","whatsapp","telegram","facebook"],
+          },
+        ]
       }
     ],
   });
