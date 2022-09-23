@@ -45,7 +45,9 @@ function App() {
 
         <Route exact path="/about" component={About} />
         <Route exact path="/help" component={Help} />
+        
         <Route exact path="/details/:id" component={Detail} />
+
         <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
 
         <Route exact path="/perfilPropietario" render={() => {

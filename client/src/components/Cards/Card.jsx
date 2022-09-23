@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useSelector } from "react-redux";
 
 export default function Card({
   id,
@@ -28,7 +29,7 @@ export default function Card({
   premium,
 }) {
   // const property = {};
-
+  const infoUser = useSelector(state => state.infoUser)
   return (
     <Box className={style.container} zIndex={"80"}>
       {/* <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}>
@@ -94,9 +95,9 @@ export default function Card({
           <></>
         )}
       </Box>
-      <Link to={"/details/" + id} textAlign={"center"}>
+      { infoUser && <Link to={"/details/" + id} textAlign={"center"}>
         Detail
-      </Link>
+      </Link>}
     </Box>
   );
 }
