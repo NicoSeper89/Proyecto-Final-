@@ -60,6 +60,16 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+router.get("/premium", async(req,res,next)=>{
+  try {
+    const publications = await getAll()
+    const premium = await publications.filter(p=> p.premium)
+    res.send(premium)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get("/city", async (req, res, next) => {
   try {
     let names = await getCity();
@@ -224,7 +234,7 @@ router.post("/postProperty", async (req, res, next) => {
     let property = await Property.findByPk(id);
     post.setProperty(property);
 
-    res.send("post created");
+    res.send(post.id);
   } catch (error) {
     next(error);
   }

@@ -157,18 +157,25 @@ router.put("/editUser/:id", async (req, res) => {
   const {
     name,
     typUser,
-    // typeOfUserId,
+    city,
+    description,
+    rating,
+    ratingAmount
   } = req.body;
 
   try {
-    let userCrea = await User.create({
+    let userCrea = await User.update({
       name,
-      //typeOfUserId,
-    });
+      city,
+      description,
+      rating,
+      ratingAmount
+    },{where: { id: id }}
+    );
     let type = await TypeOfUser.findOne({
       where: { name: typUser },
     });
-    //console.log(userCrea)
+    
     userCrea.setTypeOfUser(type);
 
     res.status(200).send("Usuario adicionado correctamente");

@@ -25,7 +25,7 @@ export default function PaymentOk() {
       collection_status: new URLSearchParams(busqueda).get("collection_status"),
       payment_id: new URLSearchParams(busqueda).get("payment_id"),
     };
-    if (respuesta && respuesta.status === "approved") {
+    if (true/* respuesta && respuesta.status === "approved" */) {
       await axios.put("/publication/makePremium/" + publicationInfo, {
         /* description: publicationInfo.description,
           status: publicationInfo.status,
@@ -44,6 +44,7 @@ export default function PaymentOk() {
  
     createSuscription(userInfo);
   } */
+    console.log('en payment',publicationInfo)
     asignPremium(publicationInfo);
   }, []);
 
