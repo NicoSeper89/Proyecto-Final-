@@ -218,4 +218,52 @@ router.post("/login", async (req, res) => {
       : res.status(200).send({ mensaje: "Logueado Exitosamente", user, user2 });
 });
 
+//Esta ruta sirve para cargar una imagen de perfil
+router.post("/imageUser", async (req, res, next) => {
+  const { url, cloudId } = req.body;
+  try {
+    if (!url) return res.status(404).send("no image to upload");
+    await UserImage.create({
+      url,
+      cloudId,
+    });
+    res.send("image upload successful");
+  } catch (error) {
+    next(error);
+  }
+});
+
+//Esta ruta sirve para editar el perfil de cualquier usuario
+router.put("/editUser/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    typUser,
+    city,
+    description,
+    rating,
+    ratingAmount
+  } = req.body;
+
+  try {
+    let userCrea = await User.update({
+      name,
+      city,
+      description,
+      rating,
+      ratingAmount
+    },{where: { id: id }}
+    );
+    let type = await TypeOfUser.findOne({
+      where: { name: typUser },
+    });
+    
+    userCrea.setTypeOfUser(type);
+
+    res.status(200).send("Usuario adicionado correctamente");
+  } catch (error) {
+    res.status(400).send("error al crear usuario ");
+  }
+});
+
 module.exports = router;
