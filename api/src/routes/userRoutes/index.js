@@ -104,7 +104,7 @@ router.post("/login", async (req, res) => {
         const user2 = await loginCrea.setUser(nUser)
 
         const infoUser = await ContactInfo.create({mail})
-               infoUser.setUser(nUser)
+        await infoUser.setUser(nUser)
         
 
 

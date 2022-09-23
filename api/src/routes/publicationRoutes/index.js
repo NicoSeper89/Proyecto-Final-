@@ -218,7 +218,6 @@ router.post("/postProperty", async (req, res, next) => {
   const { description, status, premium, report, id, userId } = req.body;
   try {
     if (!description) res.status(404).send("fill out description");
-console.log('soy',userId)
     let post = await Publication.create({
       description,
       status,
