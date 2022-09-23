@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { TypeOfUser, User, LoginInfo, UserImage } = require("../../db");
+const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo  } = require("../../db");
 const {getAllUsers} = require("./controllers")
 
 router.get("/users", async (req, res) => {
@@ -102,6 +102,9 @@ router.post("/login", async (req, res) => {
         let loginCrea = await LoginInfo.create({mail, password }) 
         let  nUser = await User.findOne({where: {name: name }})
         const user2 = await loginCrea.setUser(nUser)
+
+        const infoUser = await ContactInfo.create({mail})
+               infoUser.setUser(nUser)
         
 
 

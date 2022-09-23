@@ -10,6 +10,7 @@ module.exports = (sequelize) => {
         whatsapp: {
             type: DataTypes.STRING,
             allowNull: true,
+            
         },
         telegram: {
             type: DataTypes.STRING,
