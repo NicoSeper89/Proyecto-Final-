@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublicationsDetail, clean, deletePublicaction } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,12 +30,15 @@ import { Link } from "react-router-dom";
 import { Box, Text, Flex, Button, Heading, IdProvider } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
+import AlertSubmit from "./AlertDeletePubli";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
   const miStateDetail = useSelector((state) => state.detail);
   const history = useHistory();
   // const miUseerState = useSelector((state) => state.user)
+  const [alertSubmit, setAlertSubmit] = useState([false, false])
+  const [propertyId, setPropertyId] = useState('');
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
@@ -257,7 +260,7 @@ export default function Detail(props, id) {
           <Loading />
         )}
       </Flex>
-
+      <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId}/>
       <Footer />
     </>
   );
