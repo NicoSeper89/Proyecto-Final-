@@ -59,7 +59,14 @@ const NavBar = () => {
   const user = window.localStorage.getItem("User")
   const user2 = JSON.parse(user)
 
-
+ const detallesUser = () => {
+  if(user2[0].typeOfUserId === 1) {
+    history.push("/perfilPropietario")
+  }else {
+    history.push("/perfilInquilino")
+  }
+ }
+  console.log(user2)
   return (
     <Box className={navbar ? "container bg" : "container"}>
       <Flex
@@ -100,7 +107,9 @@ const NavBar = () => {
               { user2 && 
               <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>
              }
-             <MenuItem onClick={() => console.log(user2)}>Info de User</MenuItem>
+             { user2 &&
+              <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>
+              }
             </MenuList>
           </Menu>
         </Box>

@@ -24,8 +24,13 @@ import Cards from "../Cards/Cards";
 
 export default function PerfilPropietario() {
   const houses = useSelector((state) => state.houses);
+ 
+  const user = window.localStorage.getItem("User")
+ const user2 = JSON.parse(user)
 
+  
   const handleDestacar = () => {};
+
 
   return (
     <Box>
@@ -55,7 +60,7 @@ export default function PerfilPropietario() {
               pos={"relative"}
             />
             <Heading fontSize={"2xl"} fontFamily={"body"}>
-              Nombre del Usuario
+              {user2[0].name}
             </Heading>
             {/* <Text fontWeight={600} color={"gray.500"} mb={4}>
               @lindsey_jam3s

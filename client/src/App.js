@@ -32,23 +32,39 @@ function App() {
     dispatch(getServices());
     dispatch(getTypesOfProperties());
   });
-
+  console.log(user2)
   return (
     <>
       <Switch>
         <Route exact path="/" component={Home} />
         
-        <Route exact path="/createPost" component={CreatePost}  />
+        <Route exact path="/createPost" render={()  => {
+          return user2 && user2[0].typeOfUserId === 1? <CreatePost/> :
+            <Redirect to="*"/>
+
+        }}  />
 
         <Route exact path="/about" component={About} />
         <Route exact path="/help" component={Help} />
         <Route exact path="/details/:id" component={Detail} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/checkin" component={NewUser} />
-      <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
-        <Route exact path="/perfilPropietario" component={PerfilPropietario} />
-        <Route exact path="/perfilInquilino" component={PerfilInquilino} />
-        <Route exact path="/PaymentOk" component={PaymentOk} />
+        <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
+
+        <Route exact path="/perfilPropietario" render={() => {
+          console.log(user2,"desde rutas")
+          return user2 && user2[0].typeOfUserId === 1? <PerfilPropietario/> :
+          <Redirect to="*"/>
+        }} />
+
+        <Route exact path="/perfilInquilino" render={() => {
+          return user2 && user2[0].typeOfUserId === 2? <PerfilInquilino/> :
+          <Redirect to="*"/>
+        }} />
+
+        <Route exact path="/PaymentOk" render={() => {
+          return user2 && user2[0].typeOfUserId === 1? <PaymentOk/> :
+          <Redirect to="*"/>
+        }} />
+        
         <Route exact path="/select" component={Select} />
         <Route path="*" component={Error404} />
        
