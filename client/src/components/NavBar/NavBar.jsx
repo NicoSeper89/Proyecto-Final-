@@ -24,7 +24,6 @@ import "./NavBar.module.css";
 const NavBar = () => {
 
   const {loginWithRedirect, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
-  const dispatch = useDispatch()
   const history = useHistory();
   // const [displayMenu, setDisplayMenu] = useState(false);
 
@@ -56,6 +55,9 @@ const NavBar = () => {
     e.preventDefault();
     history.push("/createPost");
   };
+
+  const user = window.localStorage.getItem("User")
+  const user2 = JSON.parse(user)
 
 
   return (

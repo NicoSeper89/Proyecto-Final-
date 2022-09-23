@@ -190,10 +190,7 @@ export default function rootReducer(state = initialState, action) {
     case DELETE_PUBLICACTION_IMAGE:
       return {
         ...state,
-      } 
-   
-      };
-
+      }
     case SET_PUBLICATION:
       console.log('en setpub reducer',action.payload)
       return {

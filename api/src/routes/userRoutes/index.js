@@ -55,15 +55,10 @@ router.post('/typeofusers', async(req,res)=>{
                
         //     })
     router.post('/users', async(req,res)=>{
-        const {
-            name, 
-            typUser
-           // typeOfUserId,
-            
-    }=req.body
-    
+        const {name, typUser}=req.body
+    })
    
-    try{
+
 
 router.post("/typeofusers", async (req, res) => {
   try {
@@ -75,8 +70,8 @@ router.post("/typeofusers", async (req, res) => {
     res.status(200).send("Usuario adicionado con exito");
   } catch (error) {
     res.status(404).send("error al crear tipo de usuario");
-  }
-});
+  
+    }});
 //ok
 // router.post('/users', async(req,res)=>{
 //     try{
@@ -212,11 +207,11 @@ router.post("/login", async (req, res) => {
     // }
     })
 
-  if (user2)
-    user2.password !== password
-      ? res.send({ mensaje: "Contraseña Incorrecto" })
-      : res.status(200).send({ mensaje: "Logueado Exitosamente", user, user2 });
-});
+//   if (user2)
+//     user2.password !== password
+//       ? res.send({ mensaje: "Contraseña Incorrecto" })
+//       : res.status(200).send({ mensaje: "Logueado Exitosamente", user, user2 });
+// });
 
 //Esta ruta sirve para cargar una imagen de perfil
 router.post("/imageUser", async (req, res, next) => {
@@ -232,7 +227,7 @@ router.post("/imageUser", async (req, res, next) => {
     next(error);
   }
 });
-
+       
 //Esta ruta sirve para editar el perfil de cualquier usuario
 router.put("/editUser/:id", async (req, res) => {
   const { id } = req.params;
@@ -266,4 +261,5 @@ router.put("/editUser/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+
+module.exports = router 

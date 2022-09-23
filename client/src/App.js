@@ -37,7 +37,9 @@ function App() {
     <>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/createPost" component={CreatePost} />
+        
+        <Route exact path="/createPost" component={CreatePost}  />
+
         <Route exact path="/about" component={About} />
         <Route exact path="/help" component={Help} />
         <Route exact path="/details/:id" component={Detail} />
@@ -47,7 +49,9 @@ function App() {
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/perfilInquilino" component={PerfilInquilino} />
         <Route exact path="/PaymentOk" component={PaymentOk} />
+        <Route exact path="/select" component={Select} />
         <Route path="*" component={Error404} />
+       
       </Switch>
     </>
   );
