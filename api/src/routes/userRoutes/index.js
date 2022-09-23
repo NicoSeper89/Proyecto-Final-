@@ -163,6 +163,9 @@ router.post("/login", async (req, res) => {
     //     (res.status(200).send({mensaje: "Logueado Exitosamente",userInfo:[user,user2],loguear: true}))
    
     // })
+
+    ////// super ruta para loguear un usuario y si no tiene una cuenta creada la crea y loguea \\\\\\
+
     router.post('/LoginOrCreate', async(req,res)=>{
         const {name, mail, password, typUser }=req.body
 

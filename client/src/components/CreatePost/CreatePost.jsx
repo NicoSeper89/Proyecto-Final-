@@ -50,6 +50,7 @@ const CreatePost = () => {
     pets: false,
     service: [],
   });
+  console.log(infoFormProp.propImg)
 
   const [infoFormPub, setInfoFormPub] = useState({
     description: "",

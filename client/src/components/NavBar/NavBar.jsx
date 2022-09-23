@@ -22,7 +22,8 @@ import "./NavBar.module.css";
 
 
 const NavBar = () => {
-  const {loginWithRedirect, user, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
+
+  const {loginWithRedirect, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
   const dispatch = useDispatch()
   const history = useHistory();
   const user2 = useSelector(state => state.infoUser)
@@ -33,9 +34,9 @@ const NavBar = () => {
   //   setDisplayMenu(!displayMenu);
   // };
   const closeUser = () => {
-      window.localStorage.removeItem("User")      // me elimina el user de localStorage y cierra sesion
-      dispatch(setInfoUser(null)) 
+      window.localStorage.removeItem("User")      // me elimina el user de localStorage, cierra sesion
       logout()
+      
   }
   const [navbar, setNavbar] = useState(false);
 
@@ -56,6 +57,7 @@ const NavBar = () => {
     e.preventDefault();
     history.push("/createPost");
   };
+
 
   return (
     <Box className={navbar ? "container bg" : "container"}>
@@ -90,16 +92,14 @@ const NavBar = () => {
               <FontAwesomeIcon icon={faCircleUser} className={style.img} />
             </MenuButton>
             <MenuList>
+          
               { !user2 && 
-                <MenuItem onClick={() => null}>Iniciar Sesión</MenuItem>
-                }
-              { !isAuthenticated && 
-                <MenuItem onClick={() => loginWithRedirect()}>Registrarte</MenuItem> 
+                <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem> 
               }
-              { isAuthenticated && 
+              { user2 && 
               <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>
              }
-             <MenuItem onClick={() => console.log(user)}>Info de User</MenuItem>
+             <MenuItem onClick={() => console.log(user2)}>Info de User</MenuItem>
             </MenuList>
           </Menu>
         </Box>
