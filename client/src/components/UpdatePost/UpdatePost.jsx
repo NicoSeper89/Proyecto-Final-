@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import NavBarForms from "../NavBar/NavBarForms";
 import { updatedProp, getPublicationsDetail } from "../../redux/actions";
 import AlertSubmitUpdate from "./AlertUpdate.jsx";
-import UploadImg from "../UploadImg/UploadImg";
+import UpdateImgPub from "../UploadImg/UpdateImgPub";
 import {
   Stack,
   Input,
@@ -119,7 +119,7 @@ const UpdatePost = (props) => {
         city: publication.property.city.name,
         service: publication.property.services.map((s) => s.name),
         typProp: publication.property.TypeOfProp.name,
-        propImg: publication.property.propertyImages,
+        propImg: [...publication.property.propertyImages],
         description: publication.description,
         status: publication.status,
         premium: publication.premium,
@@ -578,12 +578,12 @@ const UpdatePost = (props) => {
                 </FormLabel>
               </Box>
 
-              {/* <Box w={"100%"}>
-                <UploadImg
-                  setInputPropiedad={setInputPropiedad}
-                  inputPropiedad={inputPropiedad}
+              <Box w={"100%"}>
+                <UpdateImgPub
+                  setInfoFormProp={setInputPropiedad}
+                  infoFormProp={inputPropiedad}
                 />
-              </Box> */}
+              </Box>
 
               <Button
                 alignSelf={"flex-end"}
