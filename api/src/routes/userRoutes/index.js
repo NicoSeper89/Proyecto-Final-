@@ -102,6 +102,7 @@ router.post("/login", async (req, res) => {
         let loginCrea = await LoginInfo.create({mail, password }) 
         let  nUser = await User.findOne({where: {name: name }})
         const user2 = await loginCrea.setUser(nUser)
+        
 
 
         res.send({loguear: true,mensage:"logueado Correctamente",userInfo:[nUser2,user2]})
