@@ -6,7 +6,7 @@ import logoImg from "../../Image/Logo LookHouse.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "../Search/SearchBar";
-import {useAuth0} from "@auth0/auth0-react"
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   Box,
   Button,
@@ -20,10 +20,8 @@ import {
 } from "@chakra-ui/react";
 import "./NavBar.module.css";
 
-
 const NavBar = () => {
-
-  const {loginWithRedirect, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0(); // haciendo pruebas
   const history = useHistory();
   // const [displayMenu, setDisplayMenu] = useState(false);
 
@@ -32,10 +30,9 @@ const NavBar = () => {
   //   setDisplayMenu(!displayMenu);
   // };
   const closeUser = () => {
-      window.localStorage.removeItem("User")      // me elimina el user de localStorage, cierra sesion
-      logout()
-      
-  }
+    window.localStorage.removeItem("User"); // me elimina el user de localStorage, cierra sesion
+    logout();
+  };
   const [navbar, setNavbar] = useState(false);
 
   const cambioColor = () => {
@@ -54,17 +51,17 @@ const NavBar = () => {
     history.push("/createPost");
   };
 
-  const user = window.localStorage.getItem("User")
-  const user2 = JSON.parse(user)
+  const user = window.localStorage.getItem("User");
+  const user2 = JSON.parse(user);
 
- const detallesUser = () => {
-  if(user2[0].typeOfUserId === 1) {
-    history.push("/perfilPropietario")
-  }else {
-    history.push("/perfilInquilino")
-  }
- }
-  console.log(user2)
+  const detallesUser = () => {
+    if (user2[0].typeOfUserId === 1) {
+      history.push("/perfilPropietario");
+    } else {
+      history.push("/perfilInquilino");
+    }
+  };
+  console.log(user2);
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
       <Flex
@@ -82,11 +79,13 @@ const NavBar = () => {
         </Link>
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
-          
           {/* me oculta el boton si no esta logueado o es propietario */}
-          { user2 && user2[0].typeOfUserId === 1
-           &&    
-           <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
+          {user2 && user2[0].typeOfUserId === 1 && (
+            <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
+              Publicar
+            </Button>
+          )}
+
           {/* <Box direction={"row"} spacing={6}> */}
           <Box
             marginRight={"10px"}
@@ -173,25 +172,15 @@ const NavBar = () => {
           </Box>
           {/* </Box> */}
           {/* <SearchBar /> */}
-          <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
-            Publicar
-          </Button>}
 
           <Menu>
             <MenuButton aria-label="Options" variant="outline" px={"1rem"} py={".5rem"}>
               <FontAwesomeIcon icon={faCircleUser} className={style.img} />
             </MenuButton>
             <MenuList>
-          
-              { !user2 && 
-                <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem> 
-              }
-              { user2 && 
-              <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>
-             }
-             { user2 &&
-              <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>
-              }
+              {!user2 && <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem>}
+              {user2 && <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>}
+              {user2 && <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>}
             </MenuList>
           </Menu>
         </Box>
