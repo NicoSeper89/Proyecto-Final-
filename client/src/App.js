@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home.jsx";
 import CreatePost from "./components/CreatePost/CreatePost.jsx";
@@ -22,46 +22,46 @@ import { useAuth0 } from "@auth0/auth0-react";
 function App() {
   const {loginWithRedirect, isAuthenticated, logout} = useAuth0()
   const dispatch = useDispatch();
-  
- const user = window.localStorage.getItem("User")
- const user2 = JSON.parse(user)
- 
+   
+  const infoUser = useSelector(state => state.infoUser)
 
   useEffect(() => {
     dispatch(getCities());
     dispatch(getServices());
     dispatch(getTypesOfProperties());
   });
-  console.log(user2)
+  
+  console.log(infoUser, "desde rutas infoUser")
   return (
     <>
       <Switch>
         <Route exact path="/" component={Home} />
         
         <Route exact path="/createPost" render={()  => {
-          return user2 && user2[0].typeOfUserId === 1? <CreatePost/> :
+          return infoUser ? <CreatePost/> :
             <Redirect to="*"/>
 
         }}  />
 
         <Route exact path="/about" component={About} />
         <Route exact path="/help" component={Help} />
+        
         <Route exact path="/details/:id" component={Detail} />
+
         <Route exact path="/updatePublicaction/:id" component={UpdatePost}/>
 
         <Route exact path="/perfilPropietario" render={() => {
-          console.log(user2,"desde rutas")
-          return user2 && user2[0].typeOfUserId === 1? <PerfilPropietario/> :
+          return infoUser ? <PerfilPropietario/> :
           <Redirect to="*"/>
         }} />
 
-        <Route exact path="/perfilInquilino" render={() => {
+        {/* <Route exact path="/perfilInquilino" render={() => {
           return user2 && user2[0].typeOfUserId === 2? <PerfilInquilino/> :
           <Redirect to="*"/>
-        }} />
+        }} /> */}
 
         <Route exact path="/PaymentOk" render={() => {
-          return user2 && user2[0].typeOfUserId === 1? <PaymentOk/> :
+          return infoUser? <PaymentOk/> :
           <Redirect to="*"/>
         }} />
         
