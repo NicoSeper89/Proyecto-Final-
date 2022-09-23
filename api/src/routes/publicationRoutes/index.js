@@ -175,7 +175,6 @@ router.post("/createProperty", async (req, res, next) => {
     ) {
       return res.status(404).send("fill out data");
     }
-    if (!propImg) propImg = "https://res.cloudinary.com/lookhouse/image/upload/v1663619810/hiq8jpgr6wzmzgf5yjaq.png"
     let property = await Property.create({
       address,
       surface,

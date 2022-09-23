@@ -2,20 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { useHistory } from "react-router-dom";
 import NavBarForms from "../NavBar/NavBarForms";
-import {
-  updatedProp,
-  getPublicationsDetail,
-  /*  getCities,
-   getServices,
-   getTypesOfProperties, */
-} from "../../redux/actions";
+import { updatedProp, getPublicationsDetail } from "../../redux/actions";
+import AlertSubmitUpdate from "./AlertUpdate.jsx";
+import UpdateImgPub from "../UploadImg/UpdateImgPub";
 import {
   Stack,
   Input,
   Heading,
   Text,
-  /* Textarea,
-  Flex, */
+  Textarea,
+  Flex,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -28,15 +24,16 @@ import {
   FormLabel,
   Box,
 } from "@chakra-ui/react";
+import { faArrowTrendUp } from "@fortawesome/free-solid-svg-icons";
 
 const UpdatePost = (props) => {
-
   const dispatch = useDispatch();
-
   const publication = useSelector((state) => state.detail);
   const cities = useSelector((state) => state.cities);
   const typeOfProperties = useSelector((state) => state.typeOfProperties);
   const typeServices = useSelector((state) => state.services);
+  const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const [continueForm, setContinueForm] = useState(true);
   // const history = useHistory();
   /*   const [errors, setErrors] = useState({}); */
 
@@ -52,13 +49,13 @@ const UpdatePost = (props) => {
     pets: "",
     age: "",
     city: "",
-    service: "",
-    typeProp: "",
-    propImg: "",
+    service: [],
+    typProp: "",
+    propImg: [],
     description: "",
     status: "",
     premium: "",
-    propertyId: ""
+    propertyId: "",
   });
 
   /* function validate(input) {
@@ -104,12 +101,10 @@ const UpdatePost = (props) => {
   } */
 
   useEffect(() => {
-
     if (!Object.entries(publication).length) {
-      dispatch(getPublicationsDetail(props.match.params.id))
-    }
-
-    else {
+      dispatch(getPublicationsDetail(props.match.params.id));
+    } else {
+      console.log("hola")
       setInputPropiedad({
         address: publication.property.address,
         surface: publication.property.surface,
@@ -122,19 +117,16 @@ const UpdatePost = (props) => {
         pets: publication.property.pets,
         age: publication.property.age,
         city: publication.property.city.name,
-        services: publication.property.services,
+        service: publication.property.services.map((s) => s.name),
         typProp: publication.property.TypeOfProp.name,
-        propImg: publication.property.propertyImages,
+        propImg: [...publication.property.propertyImages],
         description: publication.description,
         status: publication.status,
         premium: publication.premium,
-        propertyId: publication.propertyId
-      })
+        propertyId: publication.propertyId,
+      });
     }
-    console.log(publication)
-
   }, [dispatch, props.match.params.id, publication]);
-
 
   function HandleChangePropiedad(e) {
     setInputPropiedad({
@@ -148,22 +140,28 @@ const UpdatePost = (props) => {
       })
     ); */
   }
+  const onContinueForm = () => {
+
+    setContinueForm(false)
+
+  }
 
   function handleSubmitPublication(e) {
     e.preventDefault();
-    dispatch(updatedProp(publication.propertyId, inputPropiedad));
+    
+    dispatch(updatedProp(publication.id, inputPropiedad));
   }
 
   const selectCheckBoxService = (e) => {
     if (e.target.checked === false) {
       setInputPropiedad({
         ...inputPropiedad,
-        service: inputPropiedad.service.filter((s) => s !== e.target.value),
+        service: inputPropiedad.service.filter((s) => s !== e.target.name),
       });
     } else {
       setInputPropiedad({
         ...inputPropiedad,
-        service: [...inputPropiedad.service, e.target.value],
+        service: [...inputPropiedad.service, e.target.name],
       });
     }
   };
@@ -173,263 +171,439 @@ const UpdatePost = (props) => {
       <Box>
         <NavBarForms />
       </Box>
-
-      {(!Object.entries(publication).length) ? null :
-        (<Box>
-          <Box
-            position={"relative"}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-            justifyContent={"flex-start"}
-            p={"1rem 0rem"}
+      <Box
+        position={"relative"}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        justifyContent={"flex-start"}
+        color={"gray.700"}
+        p={"1rem 0rem"}
+      >
+        <Box bg={"facebook.300"} borderRadius={".2rem"} w={"57.7%"} p={"1rem"}>
+          <Heading
+            color={"white"}
+            textShadow={"gray .1rem .1rem .2rem"}
+            textAlign={"center"}
+            fontSize="2.5rem"
           >
-            <Heading
-              bg={"facebook.300"}
-              color={"white"}
-              textShadow={"gray .1rem .1rem .2rem"}
-              textAlign={"left"}
-              fontSize="2.5rem"
-              borderRadius={".2rem"}
-              w={"57.7%"}
+            {" "}
+            Actualizar Propiedad
+          </Heading>
+        </Box>
+        <Flex
+          position="relative"
+          flexDirection={"column"}
+          justifyContent={"center"}
+          alignContent={"center"}
+          wrap="wrap"
+          overflow="hidden"
+          minWidth={"57.7%"}
+        >
+          {(continueForm) ? (
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
               p={"1rem"}
-            > Actualizar Propiedad
-            </Heading>
-          </Box>
-
-          <Box
-            position={"relative"}
-            display={"flex"}
-            flexDirection={"column"}
-            alignItems={"center"}
-            justifyContent={"flex-start"}
-            color={"gray.700"}
-            p={"1rem 0rem"}
-          >
-            <FormLabel>
-              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
-                Provincia
-              </Text>
-              <Select
-                color="gray.500"
+              w={"60%"}
+              gap=".5rem"
+              overflow="hidden"
+            >
+              <Box
+                display={"flex"}
+                flexDirection="column"
+                p=".9rem"
+                border="1px"
                 borderColor="gray.200"
-                name={"city"}
-                onChange={HandleChangePropiedad}
-                required
-                value={inputPropiedad.city.name}
               >
-                {cities.map((city, i) => (
-                  <option key={i} value={city.name}>
-                    {city.name}
-                  </option>
-                ))}
-              </Select>
-            </FormLabel>
-
-            <FormLabel>
-              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
-                Dirección
-              </Text>
-              <Input
-                color="gray.500"
-                autoComplete={"true"}
-                type="text"
-                name={"address"}
-                value={inputPropiedad.address}
-                onChange={HandleChangePropiedad}
-                required
-              />
-            </FormLabel>
-
-            <FormLabel>
-              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
-                Tipo De Inmueble
-              </Text>
-              <Select
-                color="gray.500"
-                name={"typProp"}
-                onChange={HandleChangePropiedad}
-              >
-                {typeOfProperties.map((type, i) => (
-                  <option key={i} value={type.name}>
-                    {type.name}
-                  </option>
-                ))}
-              </Select>
-            </FormLabel>
-
-            <FormLabel>
-              <Text
-                fontWeight={"semiBold"}
-                fontSize="1.07rem"
-                color="gray.500"
-              >
-                Precio
-              </Text>
-              <NumberInput color="gray.500"
-                value={inputPropiedad.price}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInputPropiedad({ ...inputPropiedad, price: parseInt(value) }) : null)}
-                min={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper color={"green.400"} />
-                  <NumberDecrementStepper color={"red.400"} />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormLabel>
-
-            <FormLabel>
-              <Text
-                fontWeight={"semiBold"}
-                fontSize="1.07rem"
-                color="gray.500"
-              >
-                Ambientes
-              </Text>
-              <NumberInput color="gray.500"
-                value={inputPropiedad.environments}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInputPropiedad({ ...inputPropiedad, environments: parseInt(value) }) : null)}
-                min={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper color={"green.400"} />
-                  <NumberDecrementStepper color={"red.400"} />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormLabel>
-
-            <FormLabel>
-              <Text
-                fontWeight={"semiBold"}
-                fontSize="1.07rem"
-                color="gray.500"
-              >
-                Baños
-              </Text>
-              <NumberInput color="gray.500"
-                value={inputPropiedad.bathrooms}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInputPropiedad({ ...inputPropiedad, bathrooms: parseInt(value) }) : null)}
-                min={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper color={"green.400"} />
-                  <NumberDecrementStepper color={"red.400"} />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormLabel>
-
-            <FormLabel>
-              <Text
-                fontWeight={"semiBold"}
-                fontSize="1.07rem"
-                color="gray.500"
-              >
-                Habitaciones
-              </Text>
-              <NumberInput color="gray.500"
-                value={inputPropiedad.rooms}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInputPropiedad({ ...inputPropiedad, rooms: parseInt(value) }) : null)}
-                min={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper color={"green.400"} />
-                  <NumberDecrementStepper color={"red.400"} />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormLabel>
-
-            <FormLabel>
-              <Text
-                fontWeight={"semiBold"}
-                fontSize="1.07rem"
-                color="gray.500"
-              >
-                Garage
-              </Text>
-              <NumberInput color="gray.500"
-                value={inputPropiedad.garage}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInputPropiedad({ ...inputPropiedad, garage: parseInt(value) }) : null)}
-                min={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper color={"green.400"} />
-                  <NumberDecrementStepper color={"red.400"} />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormLabel>
-
-            <FormLabel>
-              <Text
-                fontWeight={"semiBold"}
-                fontSize="1.07rem"
-                color="gray.500"
-              >
-                Patios
-              </Text>
-              <NumberInput color="gray.500"
-                value={inputPropiedad.yard}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInputPropiedad({ ...inputPropiedad, yard: parseInt(value) }) : null)}
-                min={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper color={"green.400"} />
-                  <NumberDecrementStepper color={"red.400"} />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormLabel>
-
-            <FormLabel>
-              <Text
-                fontWeight={"semiBold"}
-                fontSize="1.07rem"
-                color="gray.500"
-              >
-                Antigüedad
-              </Text>
-              <NumberInput color="gray.500"
-                value={inputPropiedad.age}
-                onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInputPropiedad({ ...inputPropiedad, age: parseInt(value) }) : null)}
-                min={0}
-              >
-                <NumberInputField />
-                <NumberInputStepper>
-                  <NumberIncrementStepper color={"green.400"} />
-                  <NumberDecrementStepper color={"red.400"} />
-                </NumberInputStepper>
-              </NumberInput>
-            </FormLabel>
-
-           {/*  <FormLabel display={"flex"} flexDirection="column" p=".9rem" gap={".7rem"} border="1px" borderColor="gray.200">
-                <Text fontWeight={"semiBold"} fontSize="1.15rem" color="gray.500">Servicios</Text>
-                <CheckboxGroup colorScheme="green">
-                  <Stack display={"flex"} justifyContent={"flex-start"} gap={".6rem"} flexWrap={"wrap"} spacing={[1, 5]} direction={["column", "row"]}>
-                    {typeServices.map((s, i) => (
-                      <Checkbox fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText" key={i} name={s.name} value={s.name} onChange={selectCheckBoxService}>
-                        {s.name[0].toUpperCase() + s.name.substring(1)}
-                      </Checkbox>
+                <FormLabel>
+                  <Text
+                    fontWeight={"semiBold"}
+                    fontSize="1.2rem"
+                    color="gray.500"
+                  >
+                    Provincia
+                  </Text>
+                  <Select
+                    color="gray.500"
+                    borderColor="gray.200"
+                    name={"city"}
+                    onChange={HandleChangePropiedad}
+                    required
+                    value={inputPropiedad.city}
+                  >
+                    {/* <option value={inputPropiedad.city}>{inputPropiedad.city}</option> */}
+                    {cities.map((city, i) => (
+                      <option key={i} value={city.name}>
+                        {city.name}
+                      </option>
                     ))}
-                  </Stack>
-                </CheckboxGroup>
-              </FormLabel> */}
+                  </Select>
+                </FormLabel>
+                <FormLabel>
+                  <Text
+                    fontWeight={"semiBold"}
+                    fontSize="1.2rem"
+                    color="gray.500"
+                  >
+                    Dirección
+                  </Text>
+                  <Input
+                    color="gray.500"
+                    autoComplete={"true"}
+                    type="text"
+                    name={"address"}
+                    value={inputPropiedad.address}
+                    onChange={HandleChangePropiedad}
+                    required
+                  />
+                </FormLabel>
 
-          </Box>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    Tipo De Inmueble
+                  </Text>
+                  <Select
+                    color="gray.500"
+                    name={"typProp"}
+                    value={inputPropiedad.typProp}
+                    onChange={HandleChangePropiedad}
+                  >
+                    {typeOfProperties.map((type, i) => (
+                      <option key={i} value={type.name}>
+                        {type.name}
+                      </option>
+                    ))}
+                  </Select>
+                </FormLabel>
 
-          <Button
-            alignSelf={"flex-end"}
-            colorScheme="blue"
-            type="submit"
-            value={"enviar"}
-            onClick={handleSubmitPublication}
-          >
-            Enviar
-          </Button>
-        </Box>)}
+                <Box
+                  display={"flex"}
+                  justifyContent={"space-around"}
+                  flexWrap={"wrap"}
+                  p=".5rem"
+                  border="1px"
+                  borderColor="gray.200"
+                >
+                  <FormLabel>
+                    <Text
+                      fontWeight={"semiBold"}
+                      fontSize="1.07rem"
+                      color="gray.500"
+                    >
+                      Precio
+                    </Text>
+                    <NumberInput
+                      color="gray.500"
+                      value={inputPropiedad.price}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            price: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+
+                  <FormLabel>
+                    <Text
+                      fontWeight={"semiBold"}
+                      fontSize="1.07rem"
+                      color="gray.500"
+                    >
+                      Antigüedad
+                    </Text>
+                    <NumberInput
+                      color="gray.500"
+                      value={inputPropiedad.age}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            age: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+
+                </Box>
+                <Box
+                  display={"flex"}
+                  justifyContent={"space-around"}
+                  flexWrap={"wrap"}
+                  p=".5rem"
+                  border="1px"
+                  borderColor="gray.200"
+                >
+                  <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Superficie</Text>
+                    <NumberInput
+                      value={inputPropiedad.surface}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            surface: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+                  <FormLabel>
+                    <Text
+                      fontWeight={"semiBold"}
+                      fontSize="1.07rem"
+                      color="gray.500"
+                    >
+                      Ambientes
+                    </Text>
+                    <NumberInput
+                      color="gray.500"
+                      value={inputPropiedad.environments}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            environments: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+
+                  <FormLabel>
+                    <Text
+                      fontWeight={"semiBold"}
+                      fontSize="1.07rem"
+                      color="gray.500"
+                    >
+                      Baños
+                    </Text>
+                    <NumberInput
+                      color="gray.500"
+                      value={inputPropiedad.bathrooms}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            bathrooms: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+
+                  <FormLabel>
+                    <Text
+                      fontWeight={"semiBold"}
+                      fontSize="1.07rem"
+                      color="gray.500"
+                    >
+                      Habitaciones
+                    </Text>
+                    <NumberInput
+                      color="gray.500"
+                      value={inputPropiedad.rooms}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            rooms: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+
+                  <FormLabel>
+                    <Text
+                      fontWeight={"semiBold"}
+                      fontSize="1.07rem"
+                      color="gray.500"
+                    >
+                      Garage
+                    </Text>
+                    <NumberInput
+                      color="gray.500"
+                      value={inputPropiedad.garage}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            garage: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+
+                  <FormLabel>
+                    <Text
+                      fontWeight={"semiBold"}
+                      fontSize="1.07rem"
+                      color="gray.500"
+                    >
+                      Patios
+                    </Text>
+                    <NumberInput
+                      color="gray.500"
+                      value={inputPropiedad.yard}
+                      onChange={(value) =>
+                        /^[0-9]+$/i.test(value) || value === ""
+                          ? setInputPropiedad({
+                            ...inputPropiedad,
+                            yard: (value === "")? 0 : parseInt(value),
+                          })
+                          : null
+                      }
+                      min={0}
+                    >
+                      <NumberInputField />
+                      <NumberInputStepper>
+                        <NumberIncrementStepper color={"green.400"} />
+                        <NumberDecrementStepper color={"red.400"} />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormLabel>
+                </Box>
+                <FormLabel display={"flex"} flexDirection="column" p=".9rem" gap={".7rem"} border="1px" borderColor="gray.200">
+                  <Text fontWeight={"semiBold"} fontSize="1.15rem" color="gray.500">Servicios</Text>
+                  <CheckboxGroup colorScheme="green">
+                    <Stack display={"flex"} justifyContent={"flex-start"} gap={".6rem"} flexWrap={"wrap"} spacing={[1, 5]} direction={["column", "row"]} fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText">
+                      {typeServices?.map((serv, i) => ( 
+                        <Checkbox isChecked={inputPropiedad.service?.some((elem)=> elem === serv.name) }  fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText" key={i} name={serv.name} onChange={selectCheckBoxService}>
+                          {serv.name[0].toUpperCase() + serv.name.substring(1)}
+                        </Checkbox>
+                      ))}
+                    </Stack>
+                  </CheckboxGroup>
+                </FormLabel>
+                {/* <UploadImg inputPropiedad={inputPropiedad} setInputPropiedad={setInputPropiedad}/> */}
+              </Box>
+
+              <Button
+                alignSelf={"flex-end"}
+                colorScheme="blue"
+                type="submit"
+                value={"enviar"}
+                onClick={onContinueForm}
+              >
+                Continuar Formulario
+              </Button>
+            </Box>
+          ) : (
+            <Box
+              display={"flex"}
+              flexDirection={"column"}
+              p={"1rem"}
+              w={"100%"}
+              alignItems={"center"}
+              gap=".5rem"
+              overflow="hidden"
+            >
+              <Box
+                display={"flex"}
+                flexDirection="column"
+                p=".9rem"
+                w={"100%"}
+                border="1px"
+                borderColor="gray.200"
+              >
+                <FormLabel>
+                  <Text
+                    fontWeight={"semiBold"}
+                    fontSize="1.2rem"
+                    color="gray.500"
+                  >
+                    Descripcion
+                  </Text>
+                  <Textarea
+                    name={"description"}
+                    value={inputPropiedad.description}
+                    size="sm"
+                    resize={"none"}
+                    onChange={HandleChangePropiedad}
+                  />
+                </FormLabel>
+              </Box>
+
+              <Box w={"100%"}>
+                <UpdateImgPub
+                  setInfoFormProp={setInputPropiedad}
+                  infoFormProp={inputPropiedad}
+                />
+              </Box>
+
+              <Button
+                alignSelf={"flex-end"}
+                colorScheme="blue"
+                type="submit"
+                value={"enviar"}
+                onClick={handleSubmitPublication}
+              >
+                Enviar
+              </Button>
+
+            </Box>
+          )}
+        </Flex>
+        {/* 
+          <AlertSubmitUpdate
+              alertSubmit={alertSubmit}
+              propertyId={propertyId}
+            />{" "} */}
+      </Box>
     </>
   );
 };

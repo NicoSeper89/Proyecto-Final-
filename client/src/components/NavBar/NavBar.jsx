@@ -19,10 +19,12 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import "./NavBar.module.css";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0(); // haciendo pruebas
   const history = useHistory();
+   const infoUser = useSelector(state => state.infoUser)
   // const [displayMenu, setDisplayMenu] = useState(false);
 
   // const onClickMenu = (e) => {
@@ -55,13 +57,11 @@ const NavBar = () => {
   const user2 = JSON.parse(user);
 
   const detallesUser = () => {
-    if (user2[0].typeOfUserId === 1) {
+    
       history.push("/perfilPropietario");
-    } else {
-      history.push("/perfilInquilino");
-    }
+   
   };
-  // console.log(user2);
+  
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
       <Flex
@@ -80,11 +80,11 @@ const NavBar = () => {
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
           {/* me oculta el boton si no esta logueado o es propietario */}
-          {user2 && user2[0].typeOfUserId === 1 && (
+          {user2 && 
             <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
               Publicar
             </Button>
-          )}
+          }
 
           {/* <Box direction={"row"} spacing={6}> */}
           {/* <Box
@@ -183,7 +183,7 @@ const NavBar = () => {
               {user2 && <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>}
             </MenuList>
           </Menu>
-        </Box>
+        </Box>  
       </Flex>
     </div>
   );
