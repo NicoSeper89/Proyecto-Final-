@@ -147,8 +147,7 @@ const CreatePost = () => {
         ...infoFormPub,
         id: res.data,
       });
-      console.log('en create',idPub.data)
-      dispatch(setPublication(idPub.data));
+      window.localStorage.setItem('publicationID',idPub.data)
       setAlertSubmit([true, true]);
       window.scroll({
         top: 0, 
