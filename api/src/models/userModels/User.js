@@ -9,6 +9,9 @@ module.exports = (sequelize) => {
       allowNull: true, 
       unique: true
     },
+    city:{
+      type: DataTypes.STRING
+    },
     description:{
       type:DataTypes.STRING,
       allowNull: true,
@@ -18,6 +21,9 @@ module.exports = (sequelize) => {
       type:DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
+    },
+    ratingAmount:{
+      type: DataTypes.INTEGER,
     }
   });
 };
