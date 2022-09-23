@@ -165,7 +165,7 @@ router.post("/createProperty", async (req, res, next) => {
     ) {
       return res.status(404).send("fill out data");
     }
-    if(!propImg) propImg = "https://res.cloudinary.com/lookhouse/image/upload/v1663619810/hiq8jpgr6wzmzgf5yjaq.png"
+    if (!propImg) propImg = "https://res.cloudinary.com/lookhouse/image/upload/v1663619810/hiq8jpgr6wzmzgf5yjaq.png"
     let property = await Property.create({
       address,
       surface,
@@ -224,7 +224,7 @@ router.post("/postProperty", async (req, res, next) => {
     let property = await Property.findByPk(id);
     post.setProperty(property);
 
-    res.send("post created");
+    res.send(post.id);
   } catch (error) {
     next(error);
   }
@@ -233,7 +233,7 @@ router.post("/postProperty", async (req, res, next) => {
 
 
 router.put("/editProperty/:id", async (req, res, next) => {
-  const {id} = req.params
+  const { id } = req.params
   const {
     address,
     surface,
@@ -299,17 +299,32 @@ router.put("/editProperty/:id", async (req, res, next) => {
     next(error);
   }
 });
+router.put("/makePremium/:id", async (req, res, next) => {
+  const { id } = req.params
+  /* const { description, status, premium } = req.body; */
+  try {
+    let updatedPub = await Publication.findByPk(id)
+    await Publication.upsert({
+      id: id,
+      description:updatedPub.description,
+      status:updatedPub.status,
+      premium:true,
+    });
+    res.send('premium')
+  } catch (error) {
+    next(error);
+  }
+});
 
 
-
-router.delete("/image/delete/:id", async (req, res, next) => {
-  const { id } = req.params;
+router.post("/image/delete", async (req, res, next) => {
+  const { id } = req.body;
   try {
     await cloudinary.uploader.destroy(id);
     await PropertyImage.destroy({ where: { cloudId: id } });
     res.send(`image cloudId ${id} was deleted from db and cloudinary`);
   } catch (error) {
-    next(err);
+    next(error);
   }
 });
 
@@ -319,6 +334,7 @@ router.delete("/delete/:id", async (req, res, next) => {
   const { id } = req.params
   try {
     const post = await Publication.findByPk(id)
+
     const deleteImg = await PropertyImage.findAll({where: {propertyId: post.propertyId}})
     await deleteImg.map(img => {
       cloudinary.uploader.destroy(img.cloudId)
@@ -326,11 +342,13 @@ router.delete("/delete/:id", async (req, res, next) => {
     })
     await Property.destroy({where: {id: post.propertyId}})
     await Publication.destroy({where: {id: id}})
+
     res.send(`id ${id} was deleted`)
   } catch (error) {
     next(error)
   }
 })
+
 
 
 module.exports = router;

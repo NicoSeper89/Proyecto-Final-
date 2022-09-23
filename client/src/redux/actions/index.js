@@ -8,19 +8,22 @@ export const GET_CITIES = "GET_CITIES";
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
+export const ULPOAD_IMG_USER = "ULPOAD_IMG_USER";
 export const FILTER_PROP = "FILTER_PROP";
 export const FILTER_AMB = "FILTER_AMB";
 export const FILTER_PET = "FILTER_PET";
 export const SORT_PRICE = "SORT_PRICE";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
-export const SAVEFILTER = "SAVEFILTER"
+export const SET_PUBLICATION = "SET_PUBLICATION";
+export const SAVEFILTER = "SAVEFILTER";
 export const CLEAN = "CLEAN";
 export const LOADING = "LOADING";
 export const CURRENT_PAGE = "CURRENT_PAGE";
 export const VALUE_FILTER = "VALUE_FILTER";
-export const SAVESORT = "SAVESORT"
+export const SAVESORT = "SAVESORT";
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
+export const UPDATE_PROP = "UPDATE_PROP";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -163,6 +166,22 @@ export function imgUpload(value) {
   };
 }
 
+//Esto sube la imagen a la tabla UserImages
+export function imgUserUpload(value) {
+  return async function (dispatch) {
+    try {
+      await axios.post("/publication/imageUser", value);
+      return dispatch({
+        type: ULPOAD_IMG_USER,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+
 export function loading(payload) {
   return {
     type: LOADING,
@@ -198,12 +217,21 @@ export function saveSort(payload) {
   };
 }
 
+export function setPublication(payload) {
+  console.log('en setpub',payload)
+  return {
+    type: SET_PUBLICATION,
+    payload,
+  };
+}
+
 //ELIMINAR UNA PUBLICACION
 export function deletePublicaction(id) {
+
   console.log(id,"id")
 return async function (dispatch) {
   try {
-    await axios.delete(`http://localhost:3001/publication/delete/${id}`)
+    await axios.delete(`/publication/delete/${id}`)
     return dispatch({
       type: DELETE_PUBLICACTION
     })
@@ -211,22 +239,39 @@ return async function (dispatch) {
     console.log(error)
   }
 }
+
 }
 
 // ELIMINAR UNA IMAGEN DE UNA PUBLICACION
 export function deletePublicactionImage(url) {
-  console.log(url,"URL")
+  console.log(url, "URL");
   return async function (dispatch) {
     try {
-      await axios.post(`http://localhost:3001/publication/image/delete`, url)
+      await axios.post(`/publication/image/delete`, url)
       return dispatch({
-        type: DELETE_PUBLICACTION_IMAGE
-      })
+        type: DELETE_PUBLICACTION_IMAGE,
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  }
+  };
+}
+
+// ACTUALIZAR DATOS DE PROPIEDAD
+
+export function updatedProp(id, inputPropiedad) {
+  console.log(inputPropiedad, "id de actualizacion", id);
+  return async function (dispatch) {
+    try {
+      await axios.put(`http://localhost:3001/publication/editProperty/${id}`, inputPropiedad);
+      return dispatch({
+        type: UPDATE_PROP,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
 
   export function setInfoUser(user) {
     

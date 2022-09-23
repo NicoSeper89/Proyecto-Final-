@@ -6,16 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import dotenv from "dotenv";
 import { Provider } from "react-redux";
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider } from "@chakra-ui/react";
 import store from "./redux/store/index";
 import { BrowserRouter } from "react-router-dom";
-import {Auth0Provider} from "@auth0/auth0-react"
+import { Auth0Provider } from "@auth0/auth0-react";
 dotenv.config();
 
 axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
-const domain = process.env.REACT_APP_AUTH0_DOMAIN 
-const clienId = process.env.REACT_APP_AUTH0_CLIENT_ID
-
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clienId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+//redirectUri="*/checkin"
 ReactDOM.render(
   <Auth0Provider domain={domain} clientId={clienId} redirectUri="http://localhost:3000/select">
   <ChakraProvider>

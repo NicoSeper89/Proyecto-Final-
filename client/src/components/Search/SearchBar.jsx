@@ -48,18 +48,18 @@ const SearchBar = () => {
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
+
   //BUSCADOR
   const changes = (e) => {
     setCity(e.target.value);
   };
-
   const search_House = () => {
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
-    setCity(""); /* esto es para que se setee el estado del input */
+    setCity("");
   };
 
-  //SELECT PROPIEDADES 
+  //SELECT PROPIEDADES
   const selectPropType = (e) => {
     dispatch(updateFilterProp(e.target.value));
     dispatch(setCurrentPage(1));
@@ -82,7 +82,7 @@ const SearchBar = () => {
 
   //SORT PLATA
   const orderByPrice = (e) => {
-    var orden;
+    let orden;
 
     if (e.target.value === "Precio") orden = { name: "default", direccion: "minMax" };
     else orden = { name: "price", direccion: e.target.value };
@@ -128,7 +128,6 @@ const SearchBar = () => {
               value={city}
             />
           </InputGroup>
-          {/* agregué este value. Mel */}
           {/* <Button colorScheme="teal" variant="link" onClick={search_House}>
             Buscar
           </Button> */}
@@ -238,8 +237,8 @@ const SearchBar = () => {
           </Select>
         </Menu>
       </Box>
-      <Box marginTop={"80px"}>
-      <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={city}/>
+      <Box>
+        <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={city} />
       </Box>
     </Box>
   );

@@ -18,7 +18,9 @@ import {
   SAVEFILTER,
   SAVESORT,
   DELETE_PUBLICACTION,
-  DELETE_PUBLICACTION_IMAGE
+  DELETE_PUBLICACTION_IMAGE,
+  SET_PUBLICATION,
+  UPDATE_PROP,
 } from "../actions";
 
 const initialState = {
@@ -38,6 +40,7 @@ const initialState = {
   loading: false,
   currentPage: 1,
   valueFilter: "",
+  publicationP: "",
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -173,26 +176,40 @@ export default function rootReducer(state = initialState, action) {
     case SAVEFILTER:
       return {
         ...state,
-        filters: action.payload
-      }
+        filters: action.payload,
+      };
     case SAVESORT:
       return {
         ...state,
-        sorting: action.payload
-      }
-     case DELETE_PUBLICACTION:
+        sorting: action.payload,
+      };
+    case DELETE_PUBLICACTION:
       return {
         ...state,
-      } 
-     case DELETE_PUBLICACTION_IMAGE:
+      };
+    case DELETE_PUBLICACTION_IMAGE:
       return {
         ...state,
-      } 
+      };
+
+    case SET_PUBLICATION:
+      console.log('en setpub reducer',action.payload)
+      return {
+        ...state,
+        publicationP: action.payload,
+      };
+
+    case UPDATE_PROP:
+      return {
+        ...state,
+      };
     case "INFO_USER":
       return {
         ...state,
         infoUser: action.payload
       }
+   
+
     default:
       return state;
   }

@@ -5,12 +5,20 @@
   padding: 0rem 0.2rem;
   /* border-bottom: rgb(58, 58, 58) solid 1px; */
   height: 60px;
+  transition: 0.3s ease-in;
   width: 100%;
   position: fixed;
-  z-index: 10px;
+
+  z-index: 10;
 }
 
-.container > img {
+.container.bg {
+  /* background-color: gray.100; */
+  background-color: black;
+  z-index: 10;
+}
+
+/* .container > img {
   width: 30px;
 }
 
@@ -58,7 +66,7 @@
 .container img {
   margin-top: 20px;
   height: 140px;
-}
+} */
 
 .img {
   height: 30px;

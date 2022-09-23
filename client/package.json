@@ -19,11 +19,13 @@
     "framer-motion": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.4.0",
     "react-redux": "^7.2.8",
     "react-responsive-carousel": "^3.2.23",
     "react-router": "^6.3.0",
     "react-router-dom": "^5.3.3",
     "react-scripts": "4.0.3",
+    "react-slick": "^0.29.0",
     "redux": "^4.2.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
@@ -41,16 +43,9 @@
       "react-app/jest"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
 }

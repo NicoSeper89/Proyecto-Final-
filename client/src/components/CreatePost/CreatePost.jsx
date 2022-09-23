@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import UploadImg from "../UploadImg/UploadImg";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import {
+  setPublication,
+} from "../../redux/actions";
 import {
   Stack,
   Input,
@@ -26,6 +29,7 @@ import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
 
 const CreatePost = () => {
+  const dispatch = useDispatch();
   const propertys = useSelector((state) => state.typeOfProperties);
   const cities = useSelector((state) => state.cities);
   const services = useSelector((state) => state.services);
@@ -60,7 +64,7 @@ const CreatePost = () => {
   const [disableButtonContinue, setDisableButtonContinue] = useState(true);
   const [continueForm, setContinueForm] = useState(true);
   const [alertSubmit, setAlertSubmit] = useState([false, false])
-
+  const [propertyId, setPropertyId] = useState('');
   useEffect(() => {
     const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age, typProp } =
       infoFormProp;
@@ -134,17 +138,18 @@ const CreatePost = () => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    console.log("lppepepapaep")
     try {
 
-      let res = await axios.post("http://localhost:3001/publication/createProperty", {
+      let res = await axios.post("/publication/createProperty", {
         ...infoFormProp,
       });
 
-      await axios.post("http://localhost:3001/publication/postProperty", {
+      let idPub= await axios.post("/publication/postProperty", {
         ...infoFormPub,
         id: res.data,
       });
+      console.log('en create',idPub.data)
+      dispatch(setPublication(idPub.data));
       setAlertSubmit([true, true]);
       window.scroll({
         top: 0, 
@@ -429,7 +434,7 @@ const CreatePost = () => {
           }
         </Flex>
 
-        <AlertSubmit alertSubmit={alertSubmit}/>
+        <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId}/>
 
       </Box>
     </>

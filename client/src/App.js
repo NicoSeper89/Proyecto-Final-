@@ -11,7 +11,11 @@ import Detail from "./components/Detail/Detail";
 import NewUser from "./components/Check_in/Check_in";
 import Error404 from "./components/Error404/Error404.jsx";
 import { getCities, getServices, getTypesOfProperties } from "./redux/actions/index.js";
-import UpdatePost from "./components/UpdatePost/UpdatePost"
+import UpdatePost from "./components/UpdatePost/UpdatePost";
+import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
+import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
+import PaymentOk from "./components/Payment/PaymentOk";
+import PaymentFail from "./components/Payment/PaymentFail.jsx";
 import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -36,7 +40,7 @@ function App() {
       {/* <Route exact path="/createPost" component={CreatePost} /> */}
 
       <Route exact path="/createPost" render={() => {
-        return user2  ? <CreatePost/> : loginWithRedirect()
+        return user && user[0].typeOfUserId === 1 ? CreatePost : <Redirect to="login"/>
           
       }} />
 

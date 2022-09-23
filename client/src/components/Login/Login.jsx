@@ -33,6 +33,7 @@ const Login = () => {
   const log_in = async (e) => {
     // ruta para loguearme **********************************
     console.log("enviando datos", login)
+   alert(respuesta.data.mensaje)
    const respuesta = await axios.post("http://localhost:3001/user/logueado", login)
 
    if(respuesta.data.loguear) {
