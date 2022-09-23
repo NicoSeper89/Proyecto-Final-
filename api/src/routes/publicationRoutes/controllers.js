@@ -7,6 +7,7 @@ const {
   City,
   PropertyImage,
   Report,
+  User
 } = require("../../db");
 
 //habria que agregar FilterByParams que recibe publicaciones y filtros y devuelve las
@@ -79,6 +80,9 @@ const getDetail = async (id) => {
       {
         model: Report,
       },
+      {
+        model: User,
+      }
     ],
   });
 };

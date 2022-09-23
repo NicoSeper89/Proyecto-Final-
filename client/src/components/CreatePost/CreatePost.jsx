@@ -139,14 +139,14 @@ const CreatePost = () => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-
+      let user=JSON.parse(window.localStorage.getItem('User'));
       let res = await axios.post("/publication/createProperty", {
-        ...infoFormProp,
+        ...infoFormProp
       });
 
       let idPub= await axios.post("/publication/postProperty", {
         ...infoFormPub,
-        id: res.data,
+        id: res.data,userId:user[0].id
       });
       window.localStorage.setItem('publicationID',idPub.data)
       console.log('en create',idPub.data)

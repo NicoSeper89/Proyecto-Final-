@@ -28,7 +28,7 @@ export default function PremiumCards() {
 
   const handleNext = (e) => {
     if (currentCarrusel === pages.length) {
-      dispatch(setCurrentCarrusel(currentCarrusel));
+      dispatch(setCurrentCarrusel(1));//1currentCarrusel
     } else {
       dispatch(setCurrentCarrusel(currentCarrusel + 1));
     }
@@ -36,7 +36,7 @@ export default function PremiumCards() {
 
   const handlePrev = (e) => {
     if (currentCarrusel === 1) {
-      dispatch(setCurrentCarrusel(currentCarrusel));
+      dispatch(setCurrentCarrusel(pages.length));//1currentCarrusel
     } else {
       dispatch(setCurrentCarrusel(currentCarrusel - 1));
     }
