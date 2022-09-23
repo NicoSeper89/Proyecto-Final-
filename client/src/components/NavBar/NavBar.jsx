@@ -23,7 +23,8 @@ import { setInfoUser } from "../../redux/actions";
 
 
 const NavBar = () => {
-  const {loginWithRedirect, user, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
+
+  const {loginWithRedirect, isAuthenticated, logout} = useAuth0()  // haciendo pruebas 
   const dispatch = useDispatch()
   const history = useHistory();
   const user2 = useSelector(state => state.infoUser)
@@ -43,6 +44,7 @@ const NavBar = () => {
     e.preventDefault();
     history.push("/createPost");
   };
+
 
   return (
     <Box>
@@ -77,13 +79,13 @@ const NavBar = () => {
             </MenuButton>
             <MenuList>
           
-              { !isAuthenticated && 
+              { !user2 && 
                 <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem> 
               }
-              { isAuthenticated && 
+              { user2 && 
               <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>
              }
-             <MenuItem onClick={() => console.log(user)}>Info de User</MenuItem>
+             <MenuItem onClick={() => console.log(user2)}>Info de User</MenuItem>
             </MenuList>
           </Menu>
           {/* <div>

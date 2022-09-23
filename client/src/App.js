@@ -13,10 +13,15 @@ import Error404 from "./components/Error404/Error404.jsx";
 import { getCities, getServices, getTypesOfProperties } from "./redux/actions/index.js";
 import UpdatePost from "./components/UpdatePost/UpdatePost"
 import Select from "./components/SelectTypeUser/Select";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function App() {
+  const {loginWithRedirect, isAuthenticated, logout} = useAuth0()
   const dispatch = useDispatch();
+  
  const user = window.localStorage.getItem("User")
+ const user2 = JSON.parse(user)
+ 
 
   useEffect(() => {
     dispatch(getCities());
@@ -31,7 +36,7 @@ function App() {
       {/* <Route exact path="/createPost" component={CreatePost} /> */}
 
       <Route exact path="/createPost" render={() => {
-        return user && user[0].typeOfUserId === 1 ? CreatePost : <Redirect to="login"/>
+        return user2  ? <CreatePost/> : loginWithRedirect()
           
       }} />
 

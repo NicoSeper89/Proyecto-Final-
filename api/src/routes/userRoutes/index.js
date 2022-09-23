@@ -149,7 +149,8 @@ router.post('/typeofusers', async(req,res)=>{
    
     // })
 
-    ////// super ruta para loguear un usuario y si no tiene una cuenta creada la crea y loguea 
+    ////// super ruta para loguear un usuario y si no tiene una cuenta creada la crea y loguea \\\\\\
+
     router.post('/LoginOrCreate', async(req,res)=>{
         const {name, mail, password, typUser }=req.body
 
