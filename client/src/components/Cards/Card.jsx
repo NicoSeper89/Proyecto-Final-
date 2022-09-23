@@ -11,7 +11,7 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
@@ -47,44 +47,55 @@ export default function Card({
         alt="Img not found"
         className={style.img}
       />
-      <Link to={"/details/" + id}>
-        <Box className={style.container2}>
-          {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
+      <Box className={style.container2}>
+        <Flex direction={"row"}>
+          {premium === true ? (
+            <Tag size={"sm"} variant="solid" backgroundColor={"teal"}>
+              Destacado
+            </Tag>
+          ) : (
+            // <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
+            <></>
+          )}
+          <FontAwesomeIcon className={style.containerIcon} icon={faHeart} />
+        </Flex>
+        {/* <Tag size={"sm"} variant="solid" colorScheme="teal"></Tag> */}
+        {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
+
+        <Box>
           <Text as="b" textTransform={"uppercase"} fontSize="l" textAlign={"center"}>
             {ciudad}
           </Text>
           <Text as="samp" fontSize="xl">
             $ {precio}
           </Text>
-          {/* {premium === true ? (
-            <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
-          ) : (
-            <></>
-          )} */}
         </Box>
+      </Box>
 
-        <Box className={style.containerInfo}>
-          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
-            {metros} m²
-          </Text>
-          <FontAwesomeIcon className={style.containerIcon} icon={faToilet} />
-          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
-            {baño}
-          </Text>
-          <FontAwesomeIcon className={style.containerIcon} icon={faBed} />
-          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
-            {dormitorio}
-          </Text>
-          <FontAwesomeIcon className={style.containerIcon} icon={faDoorOpen} />
-          <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
-            {ambientes}
-          </Text>
-          {mascota === true ? (
-            <FontAwesomeIcon className={style.containerIcon} icon={faPaw} />
-          ) : (
-            <></>
-          )}
-        </Box>
+      <Box className={style.containerInfo}>
+        <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+          {metros} m²
+        </Text>
+        <FontAwesomeIcon className={style.containerIcon} icon={faToilet} />
+        <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+          {baño}
+        </Text>
+        <FontAwesomeIcon className={style.containerIcon} icon={faBed} />
+        <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+          {dormitorio}
+        </Text>
+        <FontAwesomeIcon className={style.containerIcon} icon={faDoorOpen} />
+        <Text as="samp" color={"rgb(87, 87, 87)"} marginRight={"30px"}>
+          {ambientes}
+        </Text>
+        {mascota === true ? (
+          <FontAwesomeIcon className={style.containerIcon} icon={faPaw} />
+        ) : (
+          <></>
+        )}
+      </Box>
+      <Link to={"/details/" + id} textAlign={"center"}>
+        Detail
       </Link>
     </Box>
   );

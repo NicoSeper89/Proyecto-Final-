@@ -11,7 +11,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
   const onDown = () => {
     history.push("/");
   };
-  /* const onTest = () => {
+ /*  const onTest = async () => {
     history.push("/PaymentOk");
   }; */
   /*  const handleDestacar = () => {
@@ -47,6 +47,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
           Destacr Publicación
         </button>
       </form>
+      {/* <Button onClick={onTest}>test mp</Button> */}
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>
   );

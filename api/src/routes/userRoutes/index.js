@@ -1,14 +1,8 @@
 const { Router } = require("express");
 const router = Router();
-const { TypeOfUser, User, LoginInfo } = require("../../db");
+const { TypeOfUser, User, LoginInfo, UserImage } = require("../../db");
+const {getAllUsers} = require("./controllers")
 
-const getDbInfo = async () => {
-  return await User.findAll();
-};
-const getAllUsers = async () => {
-  const dbInfo = await getDbInfo();
-  return dbInfo;
-};
 router.get("/users", async (req, res) => {
   const name = req.query.name;
   //const {name}=req.params
@@ -23,94 +17,18 @@ router.get("/users", async (req, res) => {
   }
 });
 
-router.post('/typeofusers', async(req,res)=>{
-        try{
-        const {
-              name,
-        }=req.body
-        
-        let typeOfUserCrea = await TypeOfUser.create({
-            name,                     
-        }) 
-        res.status(200).send("Usuario adicionado con exito")
-        }catch(error){
-            res.status(404).send("error al crear tipo de usuario")
-        }
-           
-        })
-        //ok
-        // router.post('/users', async(req,res)=>{
-        //     try{
-        //     const {
-        //           name,
-        //     }=req.body
-            
-        //     let typeOfUserCrea = await TypeOfUser.create({
-        //         name,                     
-        //     }) 
-        //     res.status(200).send("Usuario adicionado con exito")
-        //     }catch(error){
-        //         res.status(404).send("error al crear tipo de usuario")
-        //     }
-               
-        //     })
-    router.post('/users', async(req,res)=>{
-        const {name, typUser}=req.body
-    })
-   
-
-
 router.post("/typeofusers", async (req, res) => {
   try {
     const { name } = req.body;
-
-    let typeOfUserCrea = await TypeOfUser.create({
+    await TypeOfUser.create({
       name,
     });
+
     res.status(200).send("Usuario adicionado con exito");
   } catch (error) {
     res.status(404).send("error al crear tipo de usuario");
-  
-    }});
-//ok
-// router.post('/users', async(req,res)=>{
-//     try{
-//     const {
-//           name,
-//     }=req.body
+  }});
 
-//     let typeOfUserCrea = await TypeOfUser.create({
-//         name,
-//     })
-//     res.status(200).send("Usuario adicionado con exito")
-//     }catch(error){
-//         res.status(404).send("error al crear tipo de usuario")
-//     }
-
-//     })
-router.post("/users", async (req, res) => {
-  const {
-    name,
-    typUser,
-    // typeOfUserId,
-  } = req.body;
-
-  try {
-    let userCrea = await User.create({
-      name,
-      //typeOfUserId,
-    });
-    let type = await TypeOfUser.findOne({
-      where: { name: typUser },
-    });
-    //console.log(userCrea)
-    userCrea.setTypeOfUser(type);
-
-    res.status(200).send("Usuario adicionado correctamente");
-  } catch (error) {
-    res.status(400).send("error al crear usuario ");
-  }
-});
 
 router.post("/login", async (req, res) => {
   const {
@@ -215,13 +133,15 @@ router.post("/login", async (req, res) => {
 
 //Esta ruta sirve para cargar una imagen de perfil
 router.post("/imageUser", async (req, res, next) => {
-  const { url, cloudId } = req.body;
+  const { url, cloudId, userId } = req.body;
   try {
     if (!url) return res.status(404).send("no image to upload");
-    await UserImage.create({
+    let user = await User.findByPk(userId)
+    let img = await UserImage.create({
       url,
-      cloudId,
+      cloudId
     });
+    user.setUserImage(img)
     res.send("image upload successful");
   } catch (error) {
     next(error);
@@ -229,35 +149,41 @@ router.post("/imageUser", async (req, res, next) => {
 });
        
 //Esta ruta sirve para editar el perfil de cualquier usuario
-router.put("/editUser/:id", async (req, res) => {
+router.put("/editUser/:id", async (req, res, next) => {
   const { id } = req.params;
-  const {
-    name,
-    typUser,
-    city,
-    description,
-    rating,
-    ratingAmount
-  } = req.body;
-
+  const { name, typUser, city, description, rating, ratingAmount } = req.body;
   try {
-    let userCrea = await User.update({
-      name,
-      city,
-      description,
-      rating,
-      ratingAmount
-    },{where: { id: id }}
-    );
-    let type = await TypeOfUser.findOne({
-      where: { name: typUser },
-    });
-    
-    userCrea.setTypeOfUser(type);
-
-    res.status(200).send("Usuario adicionado correctamente");
+    if(name){
+      await User.upsert({
+        id: id,
+        name: name
+      });
+      return res.send("updated name");
+    }
+    else if(city){
+      await User.upsert({
+        id: id,
+        city: city
+      });
+      return res.send("updated city");
+    }
+    else if(description){
+      await User.upsert({
+        id: id,
+        description: description
+      });
+      return res.send("updated description");
+    }
+    if(rating && ratingAmount){
+      await User.upsert({
+        id: id,
+        rating: rating,
+        ratingAmount: ratingAmount
+      });
+      return res.send("updated rating");
+    }
   } catch (error) {
-    res.status(400).send("error al crear usuario ");
+    next(error)
   }
 });
 
