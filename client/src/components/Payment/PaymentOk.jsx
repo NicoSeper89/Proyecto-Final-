@@ -16,7 +16,6 @@ import {
 export default function PaymentOk() {
   /*  const [loading, setLoading] = useState(false); */
   const history = useHistory();
-  const publicationInfo = useSelector((state) => state.publicationP);
   const busqueda = useLocation().search;
   const asignPremium = async (publicationInfo) => {
     const respuesta = {
@@ -43,8 +42,9 @@ export default function PaymentOk() {
  
     createSuscription(userInfo);
   } */
-    console.log('en payment',publicationInfo)
-    asignPremium(publicationInfo);
+    let pubID=window.localStorage.getItem('publicationID')
+    console.log('en payment',pubID)
+    asignPremium(pubID);
   }, []);
 
   return (
