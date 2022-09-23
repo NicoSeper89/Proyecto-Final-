@@ -22,6 +22,7 @@ import {
   DELETE_PUBLICACTION_IMAGE,
   SET_PUBLICATION,
   UPDATE_PROP,
+  GET_PUBLICATIONS_PREMIUM,
 } from "../actions";
 
 const initialState = {
@@ -62,7 +63,6 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         houses: action.payload,
-        housePrem: action.payload,
       };
     case GET_PUBLICATIONS_DETAIL:
       return {
@@ -176,6 +176,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         currentCarrusel: action.payload,
       };
+    case GET_PUBLICATIONS_PREMIUM:
+      return {
+        ...state,
+        housePrem: action.payload,
+      };
     case VALUE_FILTER:
       return {
         ...state,
@@ -201,7 +206,7 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case SET_PUBLICATION:
-      console.log('en setpub reducer',action.payload)
+      console.log("en setpub reducer", action.payload);
       return {
         ...state,
         publicationP: action.payload,

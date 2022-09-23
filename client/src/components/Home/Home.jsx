@@ -6,12 +6,13 @@ import Header from "../Header/Header.jsx";
 // import style from "./Home.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublications } from "../../redux/actions/index.js";
+import { getPublications, getPublicationsPremium } from "../../redux/actions/index.js";
 import { Box, Image, Text } from "@chakra-ui/react";
 import Loading from "../Loading/Loading.jsx";
 import gif from "../../Image/1490.gif";
 /* import Maps from "../Maps/Maps.jsx"; */
 import PremiumCards from "../Cards/PremiumCards.jsx";
+import SearchBar from "../Search/SearchBar.jsx";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getPublications(filters, sorting, ""));
+    dispatch(getPublicationsPremium());
   }, [dispatch, filters, sorting, cities]);
 
   return (
@@ -30,7 +32,8 @@ const Home = () => {
       <NavBar />
       <Box zIndex={"100px"}>
         <Header />
-        {/* <PremiumCards /> */}
+        <PremiumCards />
+        <SearchBar />
         <Cards />
         <Footer />
       </Box>

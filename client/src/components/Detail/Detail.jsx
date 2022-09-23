@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicationsDetail, clean, deletePublicaction, } from "../../redux/actions";
+import { getPublicationsDetail, clean, deletePublicaction } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
@@ -27,17 +27,9 @@ import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
-import {
-  Box,
-  Text,
-  Flex,
-  Button,
-  Heading,
-  IdProvider,
-} from "@chakra-ui/react";
+import { Box, Text, Flex, Button, Heading, IdProvider } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
-import {  useHistory } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -53,13 +45,12 @@ export default function Detail(props, id) {
   //   dispatch(getPublicationsDetail(props.match.params.id));
   // }, [dispatch, props.match.params.id]);
 
-  function handleDelete(){
-    dispatch(deletePublicaction(props.match.params.id))
-    console.log(props.match.params.id)
-    alert("LA PUBLICACION SE ELIMINO CORRECTAMENTE")
+  function handleDelete() {
+    dispatch(deletePublicaction(props.match.params.id));
+    console.log(props.match.params.id);
+    alert("LA PUBLICACION SE ELIMINO CORRECTAMENTE");
     history.push("/");
   }
-
 
   return (
     <>
@@ -74,14 +65,7 @@ export default function Detail(props, id) {
         position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
-
-          <Flex
-            p={"1rem"}
-            w={"100%"}
-            alignItems={"flex-start"}
-            justifyContent={"flex-start"}
-          >
-
+          <Flex p={"1rem"} w={"100%"} alignItems={"flex-start"} justifyContent={"flex-start"}>
             <Flex
               flexDirection={"column"}
               gap={".7rem"}
@@ -91,16 +75,23 @@ export default function Detail(props, id) {
               position={"relative"}
             >
               <Box>
-                <Button  onClick={()=> history.push("/updatePublicaction/" + props.match.params.id)}>update
+                <Button
+                  onClick={() => history.push("/updatePublicaction/" + props.match.params.id)}
+                >
+                  update
                 </Button>
               </Box>
 
               <Box position={"relative"} width={"50rem"}>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
               </Box>
-              <Button onClick={(e)=> {
-                handleDelete(e)
-              }}>BORRAR PUBLICACION</Button>
+              <Button
+                onClick={(e) => {
+                  handleDelete(e);
+                }}
+              >
+                BORRAR PUBLICACION
+              </Button>
             </Flex>
             <Flex
               w={"100%"}
@@ -193,10 +184,7 @@ export default function Detail(props, id) {
 
                   <Flex alignItems={"center"} gap={".4rem"}>
                     <FontAwesomeIcon icon={faHouse} />
-                    <Text>
-                      Tipo de propiedad:{" "}
-                      {miStateDetail.property.TypeOfProp.name}
-                    </Text>
+                    <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
                   </Flex>
 
                   <Flex alignItems={"center"} gap={".4rem"}>
@@ -223,9 +211,7 @@ export default function Detail(props, id) {
 
                   <Flex alignItems={"center"} gap={".4rem"}>
                     <FontAwesomeIcon icon={faDoorOpen} />
-                    <Text>
-                      Ambientes: {miStateDetail.property.environments}
-                    </Text>
+                    <Text>Ambientes: {miStateDetail.property.environments}</Text>
                   </Flex>
 
                   <Flex alignItems={"center"} gap={".4rem"}>

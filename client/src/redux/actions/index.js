@@ -24,6 +24,7 @@ export const SAVESORT = "SAVESORT";
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
 export const UPDATE_PROP = "UPDATE_PROP";
+export const GET_PUBLICATIONS_PREMIUM = "GET_PUBLICATIONS_PREMIUM";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -105,6 +106,20 @@ export function getTypesOfProperties() {
       if (error.response) {
         alert(error.response.data);
       }
+    }
+  };
+}
+
+export function getPublicationsPremium() {
+  return async function (dispatch) {
+    try {
+      let info = await axios.get("/publication/premium");
+      return dispatch({
+        type: GET_PUBLICATIONS_PREMIUM,
+        payload: info.data,
+      });
+    } catch (error) {
+      alert(error.response.data);
     }
   };
 }
@@ -225,7 +240,7 @@ export function saveSort(payload) {
 }
 
 export function setPublication(payload) {
-  console.log('en setpub',payload)
+  console.log("en setpub", payload);
   return {
     type: SET_PUBLICATION,
     payload,

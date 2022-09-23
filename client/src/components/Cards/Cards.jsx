@@ -28,11 +28,19 @@ export default function Cards() {
   };
 
   const handleNext = (e) => {
-    dispatch(setCurrentPage(currentPage + 1));
+    if (currentPage === pages.length) {
+      dispatch(setCurrentPage(currentPage));
+    } else {
+      dispatch(setCurrentPage(currentPage + 1));
+    }
   };
 
   const handlePrev = (e) => {
-    dispatch(setCurrentPage(currentPage - 1));
+    if (currentPage === 1) {
+      dispatch(setCurrentPage(currentPage));
+    } else {
+      dispatch(setCurrentPage(currentPage - 1));
+    }
   };
 
   const renderPaginado = pages.map((number) => {
@@ -50,19 +58,17 @@ export default function Cards() {
 
   /* **************** RENDER CARDS **************** */
   return (
-    <Box display={"flex"} justifyContent="center" marginTop="5rem" minHeight="100%" zIndex={"90"}>
+    <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%" zIndex={"90"}>
       {/* {loading ? (
         <Loading /> */}
       {Object.entries(houses).length > 0 ? (
         <Box>
           <List className={style.paginadoBtn}>
-            {currentPage !== 1 ? <ListItem onClick={handlePrev}>Prev</ListItem> : null}
+            <ListItem onClick={handlePrev}>Prev</ListItem>
             {renderPaginado}
-            {currentPage !== pages.length && renderPaginado ? (
-              <ListItem onClick={handleNext}>Next</ListItem>
-            ) : null}
+            <ListItem onClick={handleNext}>Next</ListItem>
           </List>
-          <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
+          <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"30px"}>
             {currentHouse?.map((r) => {
               return (
                 <Box key={r.id}>

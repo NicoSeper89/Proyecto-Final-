@@ -15,6 +15,7 @@ export default function PaymentFail() {
       position={"absolute"}
       // display={!alertSubmit[0] ? "none" : "flex"}
       // status={!alertSubmit[1] ? "error" : "success"}
+      status="error"
       variant="subtle"
       flexDirection="column"
       alignItems="center"

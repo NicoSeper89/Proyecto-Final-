@@ -2,8 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
 import style from "./Card.module.css";
-import { Box, Button, List, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, List, Text } from "@chakra-ui/react";
 import { setCurrentCarrusel } from "../../redux/actions/index";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function PremiumCards() {
   const dispatch = useDispatch();
@@ -25,11 +27,19 @@ export default function PremiumCards() {
   };
 
   const handleNext = (e) => {
-    dispatch(setCurrentCarrusel(currentCarrusel + 1));
+    if (currentCarrusel === pages.length) {
+      dispatch(setCurrentCarrusel(currentCarrusel));
+    } else {
+      dispatch(setCurrentCarrusel(currentCarrusel + 1));
+    }
   };
 
   const handlePrev = (e) => {
-    dispatch(setCurrentCarrusel(currentCarrusel - 1));
+    if (currentCarrusel === 1) {
+      dispatch(setCurrentCarrusel(currentCarrusel));
+    } else {
+      dispatch(setCurrentCarrusel(currentCarrusel - 1));
+    }
   };
 
   const renderPaginado = pages.map((number) => {
@@ -68,21 +78,34 @@ export default function PremiumCards() {
 
   /* **************** RENDER CARDS **************** */
   return (
-    <Box display={"flex"} justifyContent="center" marginTop="5rem" minHeight="100%" zIndex={"3"}>
+    <Box
+      display={"flex"}
+      justifyContent="center"
+      marginTop="5rem"
+      minHeight="100%"
+      zIndex={"3"}
+      marginBottom={"8rem"}
+    >
       <Box>
         <Text textAlign={"center"} fontSize={"2xl"} fontFamily={"body"}>
           Publicaciones Destacadas
         </Text>
-        <List className={style.paginadoBtn}>
-          {currentCarrusel !== 1 ? <Button onClick={handlePrev}>Prev</Button> : null}
-          {renderPaginado}
-          {currentCarrusel !== pages.length ? <Button onClick={handleNext}>Next</Button> : null}
-        </List>
-        <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
-          {slides.map((a, index) => {
-            return <Box key={index}>{a}</Box>;
-          })}
-        </Box>
+        <Flex direction={"row"} alignItems="center" w={"1500px"} justifyContent="center">
+          {/* {currentCarrusel !== 1 ? <Button onClick={handlePrev}>Prev</Button> : null} */}
+          <Button m={"0px"} onClick={handlePrev}>
+            <FontAwesomeIcon icon={faChevronLeft} fontSize="30px" />
+          </Button>
+          {/* <List className={style.paginadoBtn}>{renderPaginado}</List> */}
+          <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"0px"}>
+            {slides.map((a, index) => {
+              return <Box key={index}>{a}</Box>;
+            })}
+          </Box>
+          <Button m={"0px"} onClick={handleNext}>
+            <FontAwesomeIcon icon={faChevronRight} fontSize="30px" />
+          </Button>
+          {/* {currentCarrusel !== pages.length ? <Button onClick={handleNext}>Next</Button> : null} */}
+        </Flex>
       </Box>
     </Box>
   );
