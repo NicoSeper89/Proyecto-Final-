@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
-import style from "./Card.module.css";
-import { Box, Button, Flex, List, Text } from "@chakra-ui/react";
+// import style from "./Card.module.css";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { setCurrentCarrusel } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
@@ -22,9 +22,9 @@ export default function PremiumCards() {
   const firstPage = lastPage - houseCarrusel;
   const currentHouse = housePrem.slice(firstPage, lastPage);
 
-  const handleClick = (e) => {
-    dispatch(setCurrentCarrusel(Number(e.target.id)));
-  };
+  // const handleClick = (e) => {
+  //   dispatch(setCurrentCarrusel(Number(e.target.id)));
+  // };
 
   const handleNext = (e) => {
     if (currentCarrusel === pages.length) {
@@ -46,18 +46,18 @@ export default function PremiumCards() {
     }
   };
 
-  const renderPaginado = pages.map((number) => {
-    return (
-      <li
-        key={number}
-        id={number}
-        onClick={handleClick}
-        className={currentCarrusel === number ? style.active : null}
-      >
-        {number}
-      </li>
-    );
-  });
+  // const renderPaginado = pages.map((number) => {
+  //   return (
+  //     <li
+  //       key={number}
+  //       id={number}
+  //       onClick={handleClick}
+  //       className={currentCarrusel === number ? style.active : null}
+  //     >
+  //       {number}
+  //     </li>
+  //   );
+  // });
 
   const slides = currentHouse?.map((r) => {
     if (r.premium) {
@@ -102,7 +102,7 @@ export default function PremiumCards() {
         </Text>
         <Flex direction={"row"} alignItems="center" w={"1500px"} justifyContent="space-between">
           {/* {currentCarrusel !== 1 ? <Button onClick={handlePrev}>Prev</Button> : null} */}
-          <Button m={"0px"} onClick={handlePrev}>
+          <Button m={"0px"} onClick={handlePrev} marginLeft={"50px"}>
             <FontAwesomeIcon icon={faChevronLeft} fontSize="30px" />
           </Button>
           {/* <List className={style.paginadoBtn}>{renderPaginado}</List> */}
@@ -111,7 +111,7 @@ export default function PremiumCards() {
               return <Box key={index}>{a}</Box>;
             })}
           </Box>
-          <Button m={"0px"} onClick={handleNext}>
+          <Button m={"0px"} onClick={handleNext} marginRight={"50px"}>
             <FontAwesomeIcon icon={faChevronRight} fontSize="30px" />
           </Button>
           {/* {currentCarrusel !== pages.length ? <Button onClick={handleNext}>Next</Button> : null} */}

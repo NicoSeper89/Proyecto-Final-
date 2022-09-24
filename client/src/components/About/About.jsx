@@ -1,8 +1,8 @@
 import React from "react";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
-import style from "./About.module.css";
-import { Box, Flex, Icon, Image, Link, Stack, Text } from "@chakra-ui/react";
+// import style from "./About.module.css";
+import { Flex, Icon, Link, Stack, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareJs, faReact, faNodeJs } from "@fortawesome/free-brands-svg-icons";
 import logoMySql from "../../Image/icons8-logo-de-mysql-50.png";
@@ -25,16 +25,16 @@ export default function About() {
           </Text>
           <br />
           <Text w={"400px"} h={"100%"}>
-              LookHouse es una App Web creada por un pequeño grupo de alumnos de SoyHenry en el año
-            2022. 
+            LookHouse es una App Web creada por un pequeño grupo de alumnos de SoyHenry en el año
+            2022.
           </Text>
           <Text w={"400px"} h={"100%"}>
-              Fue creada con la intención de brindar una plataforma intuitiva y de facil acceso para
+            Fue creada con la intención de brindar una plataforma intuitiva y de facil acceso para
             el alquiler de inmuebles a dueño directo.
           </Text>
           <Text w={"400px"} h={"100%"}>
-              Desde LookHouse buscamos brindar un puente entre inquilinos y propietarios al igual que
-            los modelos tradicionales de alquiler pero sin las tarifas y cargos intermedios, asi 
+            Desde LookHouse buscamos brindar un puente entre inquilinos y propietarios al igual que
+            los modelos tradicionales de alquiler pero sin las tarifas y cargos intermedios, asi
             pudiendo ser accesible a un mercado más amplio.
           </Text>
         </Flex>
@@ -50,13 +50,27 @@ export default function About() {
             </Text>
             <br />
             <Stack>
-              <Link Target="_blank" href="https://github.com/gabrielTor">Gabriel Torres</Link>
-              <Link Target="_blank" href="https://github.com/ELJG">Jose Garcia</Link>
-              <Link Target="_blank" href="https://github.com/MelHellrigl">Melissa Hellrigl</Link>
-              <Link Target="_blank" href="https://github.com/NicoSeper89">Nicolás Sepertino</Link>
-              <Link Target="_blank" href="https://github.com/rojebastidas">Rodrigo Bastidas</Link>
-              <Link Target="_blank" href="https://github.com/thomneuhaus2">Thomas Neuhaus</Link>
-              <Link Target="_blank" href="https://github.com/TomasTinto1234">Tomas Tinto</Link>
+              <Link Target="_blank" href="https://github.com/gabrielTor">
+                Gabriel Torres
+              </Link>
+              <Link Target="_blank" href="https://github.com/ELJG">
+                Jose Garcia
+              </Link>
+              <Link Target="_blank" href="https://github.com/MelHellrigl">
+                Melissa Hellrigl
+              </Link>
+              <Link Target="_blank" href="https://github.com/NicoSeper89">
+                Nicolás Sepertino
+              </Link>
+              <Link Target="_blank" href="https://github.com/rojebastidas">
+                Rodrigo Bastidas
+              </Link>
+              <Link Target="_blank" href="https://github.com/thomneuhaus2">
+                Thomas Neuhaus
+              </Link>
+              <Link Target="_blank" href="https://github.com/TomasTinto1234">
+                Tomas Tinto
+              </Link>
             </Stack>
           </Flex>
           <Stack direction={"row"} spacing={6} marginTop={"30px"}>

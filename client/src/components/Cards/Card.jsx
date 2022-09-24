@@ -2,18 +2,9 @@ import React from "react";
 import style from "./Card.module.css";
 import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faToilet,
-  faBed,
-  faDoorOpen,
-  faPaw,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faToilet, faBed, faDoorOpen, faPaw } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Badge, Box, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 export default function Card({
@@ -29,7 +20,10 @@ export default function Card({
   premium,
 }) {
   // const property = {};
-  const infoUser = useSelector(state => state.infoUser)
+  const infoUser = useSelector((state) => state.infoUser);
+  const user = window.localStorage.getItem("User");
+  const user2 = JSON.parse(user);
+
   return (
     <Box className={style.container} zIndex={"2"}>
       <Box position="relative">
@@ -50,6 +44,7 @@ export default function Card({
               display={"flex"}
               size={"sm"}
               variant="solid"
+              borderRadius={"5px 0px 5px 5px"}
               backgroundColor="rgba(216, 158, 26, 0.85)"
               paddingRight={"15px"}
               position="absolute"
@@ -68,11 +63,12 @@ export default function Card({
           className={style.img}
         />
       </Box>
-      <Flex direction={"row"} justifyContent="space-between" p={"5px"}>
+      <Flex direction={"row"} justifyContent={"space-between"} p={"5px"}>
         <Link to={"/"} p={"0"}>
           <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
         </Link>
-        <Link to={"/details/" + id} display={"flex"} justifyContent={"flex-end"}>
+
+        <Link to={user2 ? "/details/" + id : "/"} display={"flex"}>
           <Tag size={"sm"} variant="solid" backgroundColor={"teal"} marginLeft={"15px"} w={"5rem"}>
             + Detalles
           </Tag>

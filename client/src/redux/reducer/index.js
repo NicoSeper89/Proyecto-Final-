@@ -23,12 +23,15 @@ import {
   SET_PUBLICATION,
   UPDATE_PROP,
   GET_PUBLICATIONS_PREMIUM,
+  INFO_USER,
+  EDIT_USER,
+  GET_PUBLICATION_USER,
 } from "../actions";
 
 const initialState = {
-  infoUser:null,
-  houses: [],
-  housePrem: [],
+  infoUser: null,
+  houses: [], //Todas las publicaciones
+  housePrem: [], //Publicación Premium
   services: [],
   typeOfProperties: [],
   cities: [],
@@ -41,10 +44,12 @@ const initialState = {
   },
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
   loading: false,
-  currentPage: 1,
-  currentCarrusel: 1,
+  currentPage: 1, //Posición de página de todas las publicaciones
+  currentCarrusel: 1, //Posición de página de las destacadas
   valueFilter: "",
   publicationP: "",
+  publicationsUser: [], //publicaciones de cada usuario
+  favoritesUser: [], //favoritos de cada usuario
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -204,7 +209,7 @@ export default function rootReducer(state = initialState, action) {
     case DELETE_PUBLICACTION_IMAGE:
       return {
         ...state,
-      }
+      };
     case SET_PUBLICATION:
       console.log("en setpub reducer", action.payload);
       return {
@@ -216,13 +221,22 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-   
-      case "INFO_USER":
+
+    case EDIT_USER:
       return {
         ...state,
-        infoUser: action.payload
-      }
-   
+      };
+
+    case INFO_USER:
+      return {
+        ...state,
+        infoUser: action.payload,
+      };
+    case GET_PUBLICATION_USER:
+      return {
+        ...state,
+        publicationsUser: action.payload,
+      };
 
     default:
       return state;
