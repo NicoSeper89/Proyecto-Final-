@@ -7,6 +7,11 @@ import {
   Flex,
   Heading,
   Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -14,23 +19,26 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookMessenger, faTelegram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { faAt } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faAt, faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
 import { useSelector } from "react-redux";
 
 import CardPerfil from "../Cards/CardPerfil";
 import Cards from "../Cards/Cards";
+import { useHistory } from "react-router-dom";
 
 export default function PerfilPropietario() {
+  const history = useHistory();
   const houses = useSelector((state) => state.houses);
- 
-  const user = window.localStorage.getItem("User")
- const user2 = JSON.parse(user)
+  const infoUser = useSelector((state) => state.infoUser);
 
-  
-  const handleDestacar = () => {};
+  const user = window.localStorage.getItem("User");
+  const user2 = JSON.parse(user);
 
+  const handleEdit = () => {
+    history.push("/updatePerfil/" + "id");
+  };
 
   return (
     <Box>
@@ -46,35 +54,35 @@ export default function PerfilPropietario() {
           <Box
             maxW={"400px"}
             w={"600px"}
+            h={"500px"}
             bg={useColorModeValue("white", "gray.900")}
             boxShadow={"2xl"}
             rounded={"lg"}
             p={6}
             textAlign={"center"}
           >
-            <Avatar
-              size={"2xl"}
-              //   src={}
-              alt={"Avatar Alt"}
-              mb={4}
-              pos={"relative"}
-            />
+            <Flex>
+              <Button onClick={() => handleEdit()}>
+                <FontAwesomeIcon icon={faUserPen} fontSize="30px" p={"0"} />
+              </Button>
+            </Flex>
+            <Avatar size={"2xl"} src={infoUser[0].img} alt={"Avatar Alt"} mb={4} pos={"relative"} />
             <Heading fontSize={"2xl"} fontFamily={"body"}>
-              {user2[0].name}
+              {infoUser[0].name}
             </Heading>
             {/* <Text fontWeight={600} color={"gray.500"} mb={4}>
               @lindsey_jam3s
             </Text> */}
             <Flex justifyContent="center" alignContent="center">
-              <Rating rating={""} numReviews={""} />
+              <Rating rating={infoUser[0].rating} numReviews={""} />
             </Flex>
             <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-                Ciudad: {""}
+                Ciudad: {infoUser[0].city}
               </Text>
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
-                Descripción: {""}
+                Descripción: {infoUser[0].description}
               </Text>
             </Flex>
             <br />
@@ -88,47 +96,54 @@ export default function PerfilPropietario() {
               <Button label={"WhatsApp"} href={"#"} p={0}>
                 <FontAwesomeIcon icon={faWhatsapp} fontSize="30px" />
               </Button>
-              <Button label={"Telegram"} href={"#"} p={0}>
-                <FontAwesomeIcon icon={faTelegram} fontSize="30px" />
-              </Button>
-              <Button label={"FacebookMessenger"} href={"#"} p={0}>
-                <FontAwesomeIcon icon={faFacebookMessenger} fontSize="30px" />
-              </Button>
             </Stack>
           </Box>
         </Center>
         <Box
           maxW={"600px"}
           w={"600px"}
+          h={"500px"}
           bg={useColorModeValue("white", "gray.900")}
           boxShadow={"2xl"}
           rounded={"lg"}
           p={6}
           textAlign={"center"}
+          overflowY={"scroll"}
         >
-          <Text fontWeight={600} color={"gray.500"} mb={4}>
-            Publicaciones:
-          </Text>
-          <Stack direction={"row"} justify={"center"} spacing={4}>
-            <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"60px"}>
-              <Button onClick={handleDestacar}>Destacar publicación</Button>
-              <Cards />
-              {/* {houses?.map((r) => {
-                console.log("AAAAA: ", houses);
-                return (
-                  <Box key={r.id}>
-                    <CardPerfil
-                      id={r.id}
-                      img={r.property.propertyImages}
-                      precio={r.property.price}
-                      ciudad={r.property.city.name}
-                      premium={r.premium}
-                    />
-                  </Box>
-                );
-              })} */}
-            </Box>
-          </Stack>
+          <Tabs variant="soft-rounded" colorScheme="green">
+            <TabList>
+              <Tab fontWeight={600} color={"gray.500"} mb={4}>
+                Mis Publicaciones
+              </Tab>
+              <Tab fontWeight={600} color={"gray.500"} mb={4}>
+                Mis Favoritos
+              </Tab>
+            </TabList>
+            <TabPanels display={"flex"} justifyContent="center">
+              <TabPanel>
+                <CardPerfil />
+                <CardPerfil />
+                <CardPerfil />
+                <CardPerfil />
+                <CardPerfil />
+              </TabPanel>
+              <TabPanel>
+                {infoUser[0].favorites?.map((f) => {
+                  return (
+                    <Box>
+                      <CardPerfil
+                        id={f.id}
+                        img={f.propertyImages}
+                        precio={f.price}
+                        ciudad={f.city.name}
+                        premium={f.premium}
+                      />
+                    </Box>
+                  );
+                })}
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Box>
       </Stack>
       <Footer />

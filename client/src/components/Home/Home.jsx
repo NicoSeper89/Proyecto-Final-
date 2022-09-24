@@ -8,15 +8,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublications, getPublicationsPremium } from "../../redux/actions/index.js";
 import { setInfoUser } from "../../redux/actions/index.js";
-import { Box, Image, Text } from "@chakra-ui/react";
-import Loading from "../Loading/Loading.jsx";
-import gif from "../../Image/1490.gif";
+import { Box } from "@chakra-ui/react";
+// import Loading from "../Loading/Loading.jsx";
+// import gif from "../../Image/1490.gif";
 /* import Maps from "../Maps/Maps.jsx"; */
 import PremiumCards from "../Cards/PremiumCards.jsx";
 import SearchBar from "../Search/SearchBar.jsx";
 
 const Home = () => {
- 
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
@@ -24,12 +23,10 @@ const Home = () => {
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
   useEffect(() => {
-    const dataUser = window.localStorage.getItem("User")
-     dataUser && dispatch(setInfoUser(JSON.parse(dataUser))) 
-     console.log(JSON.parse(dataUser))    //si tengo un usuario iniciado me lo setea en el global
-  },[])
-  
-
+    const dataUser = window.localStorage.getItem("User");
+    dataUser && dispatch(setInfoUser(JSON.parse(dataUser)));
+    console.log(JSON.parse(dataUser)); //si tengo un usuario iniciado me lo setea en el global
+  }, []);
 
   useEffect(() => {
     dispatch(getPublications(filters, sorting, ""));

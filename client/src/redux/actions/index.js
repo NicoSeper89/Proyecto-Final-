@@ -26,6 +26,7 @@ export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
 export const UPDATE_PROP = "UPDATE_PROP";
 export const GET_PUBLICATIONS_PREMIUM = "GET_PUBLICATIONS_PREMIUM";
+export const INFO_USER = "INFO_USER";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -294,10 +295,9 @@ export function updatedProp(id, inputPropiedad) {
   };
 }
 
-  export function setInfoUser(user) {
-    
-     return {
-      type: "INFO_USER",
-      payload: user
-     }
-  }
+export function setInfoUser(user) {
+  return {
+    type: INFO_USER,
+    payload: user,
+  };
+}

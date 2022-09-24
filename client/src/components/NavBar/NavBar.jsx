@@ -5,26 +5,16 @@ import { Link } from "react-router-dom";
 import logoImg from "../../Image/Logo LookHouse.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import SearchBar from "../Search/SearchBar";
+// import SearchBar from "../Search/SearchBar";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import "./NavBar.module.css";
 import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0(); // haciendo pruebas
   const history = useHistory();
-   const infoUser = useSelector(state => state.infoUser)
+  const infoUser = useSelector((state) => state.infoUser);
   // const [displayMenu, setDisplayMenu] = useState(false);
 
   // const onClickMenu = (e) => {
@@ -35,8 +25,8 @@ const NavBar = () => {
     window.localStorage.removeItem("User"); // me elimina el user de localStorage, cierra sesion
     logout();
   };
-  const [navbar, setNavbar] = useState(false);
 
+  const [navbar, setNavbar] = useState(false);
   const cambioColor = () => {
     /* console.log(window.scrollY); */
     if (window.scrollY > 150) {
@@ -45,7 +35,6 @@ const NavBar = () => {
       setNavbar(false);
     }
   };
-
   window.addEventListener("scroll", cambioColor);
 
   const buttonCreatePost = (e) => {
@@ -57,11 +46,9 @@ const NavBar = () => {
   const user2 = JSON.parse(user);
 
   const detallesUser = () => {
-    
-      history.push("/perfilPropietario");
-   
+    history.push("/perfilPropietario");
   };
-  
+
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
       <Flex
@@ -80,11 +67,11 @@ const NavBar = () => {
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
           {/* me oculta el boton si no esta logueado o es propietario */}
-          {user2 && 
+          {user2 && (
             <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
               Publicar
             </Button>
-          }
+          )}
 
           {/* <Box direction={"row"} spacing={6}> */}
           {/* <Box
@@ -183,7 +170,7 @@ const NavBar = () => {
               {user2 && <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>}
             </MenuList>
           </Menu>
-        </Box>  
+        </Box>
       </Flex>
     </div>
   );
