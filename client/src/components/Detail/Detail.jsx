@@ -17,12 +17,18 @@ import {
   faCalendar,
   faCheck,
   faX,
-  // faCircleUser,
-  // faPhone,
-  // faComment,
-  // faCity,
+  faUser,
+  faCircleUser,
+  faPhone,
+  faComment,
+  faCity,
   faLocationDot,
+  faStar,
+  faMailBulk
+  // faTelegram,
+  // faFacebook,
 } from "@fortawesome/free-solid-svg-icons";
+import {faWhatsapp} from "@fortawesome/free-brands-svg-icons"
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
@@ -31,12 +37,14 @@ import { Box, Text, Flex, Button, Heading, Image, IdProvider } from "@chakra-ui/
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
+import { faFacebook, faTelegram } from "@fortawesome/free-brands-svg-icons";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
   const history = useHistory();
   const miStateDetail = useSelector((state) => state.detail);
   const myUser = useSelector((state) => state.infoUser)
+
   const [alertSubmit, setAlertSubmit] = useState([false, false])
 
   useEffect(() => {
@@ -248,8 +256,53 @@ export default function Detail(props, id) {
                 <Text>{miUseerState[0].description}</Text>
                 <Text>service: {miStateDetail.property.service.name}</Text>
               </Box> */}
+              <Box>
+              <Box
+                  borderRadius={"0.5rem 0.5rem 0rem 0rem"}
+                  width={"90%"}
+                  boxShadow='dark-lg' p='6' rounded='md' 
+                  textAlign={"center"}
+                  bg={"yellow.300"}
+                >
+                  <Heading color={"white"}>Datos del Propietario</Heading>
+                </Box>
+                <Box
+                  borderRadius={"0rem 0rem 0.5rem 0.5rem"}
+                  flexDirection={"column"}
+                  gap={".5rem"}
+                  color={"gray.600"}
+                  width={"90%"}
+                  display={"flex"}
+                  p={"1rem"}
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  bg={"yellow.100"}
+                >
+                <Text><FontAwesomeIcon icon={faCircleUser}/> {miStateDetail.user.name}</Text>
+                <Text><FontAwesomeIcon icon={faStar}/> {miStateDetail.user.rating}</Text>
+                {/* <Text><FontAwesomeIcon icon={faCity}/> {miStateDetail.user.city}</Text>
+                <Text><FontAwesomeIcon icon={faMailBulk}/> {miStateDetail.user.contactInfo.mail}</Text> */}
+                
+                <Box
+                 borderRadius={"0rem 0rem 0.5rem 0.5rem"}
+                 flexDirection={"column"}
+                 gap={".5rem"}
+                 color={"gray.600"}
+                 width={"90%"}
+                 display={"flex"}
+                 p={"1rem"}
+                 borderWidth="1px"
+                 borderColor="gray.200"
+                 bg={"yellow.100"}
+                >
+                <Text><FontAwesomeIcon icon={faWhatsapp}/><Link to={miStateDetail.user.contactInfo.whatsapp} href={miStateDetail.user.contactInfo.whatsapp}/> {miStateDetail.user.contactInfo.whatsapp}</Text>
+                {/* <Text><FontAwesomeIcon icon={faTelegram}/><Link to={miStateDetail.user.contactInfo.telegram} href={miStateDetail.user.contactInfo.telegram}/> {miStateDetail.user.contactInfo.telegram}</Text>
+                <Text><FontAwesomeIcon icon={faFacebook}/><Link to={miStateDetail.user.contactInfo.facebook} href={miStateDetail.user.contactInfo.facebook}/> {miStateDetail.user.contactInfo.facebook}</Text> */}
+                <Text> <FontAwesomeIcon icon={faComment} /> {miStateDetail.user.description}</Text>
+                </Box>
+                </Box>
+              </Box>
               </Flex>
-
             </Flex>
             {(myUser[0].id === miStateDetail.userId) ?
               <Flex>
