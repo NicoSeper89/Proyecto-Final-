@@ -26,6 +26,12 @@ export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
 export const UPDATE_PROP = "UPDATE_PROP";
 export const GET_PUBLICATIONS_PREMIUM = "GET_PUBLICATIONS_PREMIUM";
+export const INFO_USER = "INFO_USER";
+export const EDIT_USER = "EDIT_USER";
+export const RANK_USER = "RANK_USER";
+export const GET_PUBLICATION_USER = "GET_PUBLICATION_USER";
+export const GET_FAVORITES_USER = "GET_FAVORITES_USER";
+export const SET_FAVORITE = "SET_FAVORITE";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -117,6 +123,49 @@ export function getPublicationsPremium() {
       let info = await axios.get("/publication/premium");
       return dispatch({
         type: GET_PUBLICATIONS_PREMIUM,
+        payload: info.data,
+      });
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+}
+
+//Esto trae las publicaciones del mismo usuario
+export function getPubsUser(id) {
+  return async function (dispatch) {
+    try {
+      let info = await axios.get(`/user/getPubs/${id}`);
+      return dispatch({
+        type: GET_PUBLICATION_USER,
+        payload: info.data,
+      });
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+}
+//Esto trae las publicaciones favoritas del mismo usuario
+export function getFavsUser(id) {
+  return async function (dispatch) {
+    try {
+      let info = await axios.get(`/user/getFavs/${id}`);
+      return dispatch({
+        type: GET_FAVORITES_USER,
+        payload: info.data,
+      });
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+}
+//Esto setea una publicacion en favoritos del usuario
+export function setFav(id,pubId) {
+  return async function (dispatch) {
+    try {
+      let info = await axios.put(`/user/setFav?userId=${id}&pubId=${pubId}`,{});
+      return dispatch({
+        type: SET_FAVORITE,
         payload: info.data,
       });
     } catch (error) {
@@ -265,7 +314,6 @@ export function deletePublicaction(id) {
 
 // ELIMINAR UNA IMAGEN DE UNA PUBLICACION
 export function deletePublicactionImage(url) {
-  console.log(url, "URL");
   return async function (dispatch) {
     try {
       await axios.post(`/publication/image/delete`, url);
@@ -279,12 +327,11 @@ export function deletePublicactionImage(url) {
 }
 
 // ACTUALIZAR DATOS DE PROPIEDAD
-
 export function updatedProp(id, inputPropiedad) {
   console.log(inputPropiedad, "id de actualizacion", id);
   return async function (dispatch) {
     try {
-      await axios.put(`http://localhost:3001/publication/editProperty/${id}`, inputPropiedad);
+      await axios.put(`/publication/editProperty/${id}`, inputPropiedad);
       return dispatch({
         type: UPDATE_PROP,
       });
@@ -294,10 +341,36 @@ export function updatedProp(id, inputPropiedad) {
   };
 }
 
-  export function setInfoUser(user) {
-    
-     return {
-      type: "INFO_USER",
-      payload: user
-     }
-  }
+// ACTUALIZAR DATOS DE USUARIO
+export function editUser(id, input) {
+  return async function (dispatch) {
+    try {
+      await axios.put(`/user/editUser/${id}`, input);
+      return dispatch({
+        type: EDIT_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+export function rank(id, rank) {
+  return async function (dispatch) {
+    try {
+      await axios.put(`/user/rate?id=${id}&rating=${rank}`, {});
+      return dispatch({
+        type: RANK_USER,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+// Info del usuario
+export function getInfoUser(user) {
+  return {
+    type: INFO_USER,
+    payload: user,
+  };
+}

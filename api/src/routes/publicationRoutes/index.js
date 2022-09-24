@@ -20,7 +20,6 @@ const {
   propTypArr,
   serviceTypes,
   getCity,
-  
 } = require("./controllers");
 
 //para el home y para el searchbar get con query
