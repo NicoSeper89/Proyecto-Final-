@@ -37,6 +37,7 @@ import { Box, Text, Flex, Button, Heading, Image, IdProvider } from "@chakra-ui/
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
+import Maps from "../Maps/Maps";
 import { faFacebook, faTelegram } from "@fortawesome/free-brands-svg-icons";
 
 export default function Detail(props, id) {
@@ -44,12 +45,16 @@ export default function Detail(props, id) {
   const history = useHistory();
   const miStateDetail = useSelector((state) => state.detail);
   const myUser = useSelector((state) => state.infoUser)
-
+  const [showMap, setShowMap] = useState(false)
   const [alertSubmit, setAlertSubmit] = useState([false, false])
 
   useEffect(() => {
 
     dispatch(getPublicationsDetail(props.match.params.id));
+    setTimeout(()=>{
+      setShowMap(true)
+    }, 1000)
+  }, [dispatch, props.match.params.id]);
 
     if (!myUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
@@ -325,7 +330,11 @@ export default function Detail(props, id) {
           <Loading />
         )}
       </Flex>
-      <AlertDelete alertSubmit={alertSubmit} />
+      <AlertDelete alertSubmit={alertSubmit}/>
+      {
+        showMap &&
+      <Maps position={miStateDetail}/>
+      }
       <Footer />
     </>
   );
