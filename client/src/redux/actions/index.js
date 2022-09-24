@@ -28,6 +28,7 @@ export const UPDATE_PROP = "UPDATE_PROP";
 export const GET_PUBLICATIONS_PREMIUM = "GET_PUBLICATIONS_PREMIUM";
 export const INFO_USER = "INFO_USER";
 export const EDIT_USER = "EDIT_USER";
+export const GET_PUBLICATION_USER = "GET_PUBLICATION_USER";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -119,6 +120,21 @@ export function getPublicationsPremium() {
       let info = await axios.get("/publication/premium");
       return dispatch({
         type: GET_PUBLICATIONS_PREMIUM,
+        payload: info.data,
+      });
+    } catch (error) {
+      alert(error.response.data);
+    }
+  };
+}
+
+//Esto trae las publicaciones del mismo usuario
+export function getPubsUser(id) {
+  return async function (dispatch) {
+    try {
+      let info = await axios.get(`http://localhost:3001/user/pubs/${id}`);
+      return dispatch({
+        type: GET_PUBLICATION_USER,
         payload: info.data,
       });
     } catch (error) {
