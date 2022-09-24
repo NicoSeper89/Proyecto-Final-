@@ -70,9 +70,12 @@ const {
   TypeOfUser,
   User,
   UserImage,
+  ContactInfo
 } = sequelize.models;
 
 // //Relaciones usario
+User.hasOne(ContactInfo); // 1 a 1
+ContactInfo.belongsTo(User); // 1 a 1
 User.hasOne(LoginInfo); // 1 a 1
 LoginInfo.belongsTo(User); // 1 a 1
 User.hasOne(UserImage); // 1 a 1

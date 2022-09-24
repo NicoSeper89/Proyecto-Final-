@@ -139,14 +139,14 @@ const CreatePost = () => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-
+      let user=JSON.parse(window.localStorage.getItem('User'));
       let res = await axios.post("/publication/createProperty", {
-        ...infoFormProp,
+        ...infoFormProp
       });
 
       let idPub= await axios.post("/publication/postProperty", {
         ...infoFormPub,
-        id: res.data,
+        id: res.data,userId:user[0].id
       });
       window.localStorage.setItem('publicationID',idPub.data)
       console.log('en create',idPub.data)
@@ -355,7 +355,7 @@ const CreatePost = () => {
               </Box>
 
               <Box display={"flex"} gap={"1rem"} p=".9rem" border="1px" borderColor="gray.200" >
-                <CheckboxGroup colorScheme="green">
+                {/* <CheckboxGroup colorScheme="green">
                   <Stack spacing={[1, 5]} direction={["column", "row"]}>
                     <Checkbox
                       name={"premium"}
@@ -369,7 +369,7 @@ const CreatePost = () => {
                       <Text fontWeight={"semiBold"} fontSize="1.08rem" color="GrayText">Premium</Text>
                     </Checkbox>
                   </Stack>
-                </CheckboxGroup>
+                </CheckboxGroup> */}
 
                 <CheckboxGroup colorScheme="green">
                   <Stack spacing={[1, 5]} direction={["column", "row"]}>

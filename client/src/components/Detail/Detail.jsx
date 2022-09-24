@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPublicationsDetail, clean, deletePublicaction } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import imgNotAvailable from "../../Image/Image_not_available.png";
+import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
   /* faHeart, */
   faRulerCombined,
@@ -27,17 +27,21 @@ import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
-import { Box, Text, Flex, Button, Heading, IdProvider } from "@chakra-ui/react";
+import { Box, Text, Flex, Button, Heading, Image, IdProvider } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
+import AlertSubmit from "./AlertDeletePubli";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
   const miStateDetail = useSelector((state) => state.detail);
   const history = useHistory();
   // const miUseerState = useSelector((state) => state.user)
+  const [alertSubmit, setAlertSubmit] = useState([false, false])
+  const [propertyId, setPropertyId] = useState('');
 
   useEffect(() => {
+    console.log(miStateDetail)
     dispatch(getPublicationsDetail(props.match.params.id));
   }, [dispatch, props.match.params.id]);
 
@@ -81,10 +85,12 @@ export default function Detail(props, id) {
                   update
                 </Button>
               </Box>
-
+            { miStateDetail.property.propertyImages.length > 0 ?
               <Box position={"relative"} width={"50rem"}>
                 <ImageSlider slides={miStateDetail.property.propertyImages} />
-              </Box>
+              </Box> :
+              <Image src={imgNotAvailable} />
+              }
               <Button
                 onClick={(e) => {
                   handleDelete(e);
@@ -257,7 +263,7 @@ export default function Detail(props, id) {
           <Loading />
         )}
       </Flex>
-
+      <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId}/>
       <Footer />
     </>
   );
