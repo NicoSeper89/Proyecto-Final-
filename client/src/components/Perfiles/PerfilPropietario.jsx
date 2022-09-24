@@ -47,7 +47,7 @@ export default function PerfilPropietario() {
   useEffect(() => {
     dispatch(getPubs(id));
   });
-
+  //asas
   return (
     <Box>
       <NavBarForms />
