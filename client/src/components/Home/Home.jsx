@@ -42,7 +42,7 @@ const Home = () => {
         <Cards />
         <Footer />
       </Box>
-      <Maps/>
+      {/* <Maps/> */}
     </Box>
   );
 };

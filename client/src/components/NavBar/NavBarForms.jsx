@@ -6,16 +6,23 @@ import logoImg from "../../Image/Logo LookHouse.png";
 // import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { Box, Button, Flex, Image, useColorModeValue } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { clearFilters } from "../../redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { clearFilters, getPublicationsDetail } from "../../redux/actions";
 
 export default function NavBarForms() {
   const history = useHistory();
   const dispatch = useDispatch();
+  
 
+  const detailsPub = useSelector((state) => state.detail)
+  
   function handleClick(e) {
     e.preventDefault();
     dispatch(clearFilters());
+    const rutaArr = history.location.pathname.split("/")
+    if(rutaArr[1] === "updatePublicaction") { if (!detailsPub) dispatch(getPublicationsDetail(rutaArr[2]))
+                                              return history.push(`/details/${rutaArr[2]}`)}
+
     history.push("/");
   }
 
