@@ -13,11 +13,12 @@ import Error404 from "./components/Error404/Error404.jsx";
 import { getCities, getServices, getTypesOfProperties } from "./redux/actions/index.js";
 import UpdatePost from "./components/UpdatePost/UpdatePost";
 import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
-import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
+// import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
 import PaymentOk from "./components/Payment/PaymentOk";
 import PaymentFail from "./components/Payment/PaymentFail.jsx";
 import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
+import EditPerfil from "./components/Perfiles/EditPerfil";
 
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
@@ -50,6 +51,7 @@ function App() {
         <Route exact path="/help" component={Help} />
         <Route exact path="/details/:id" component={Detail} />
         <Route exact path="/updatePublicaction/:id" component={UpdatePost} />
+        <Route exact path="/updatePerfil/:id" component={EditPerfil} />
         <Route
           exact
           path="/perfilPropietario"
