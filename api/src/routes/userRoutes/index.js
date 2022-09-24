@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo, Publication } = require("../../db");
-const { getAllUsers, getPubs,getPublications } = require("./controllers")
+const { getAllUsers, getPubs, getPublications } = require("./controllers")
 var Sequelize = require('sequelize');
 
 
@@ -158,40 +158,33 @@ router.post("/imageUser", async (req, res, next) => {
 //Esta ruta sirve para editar el perfil de cualquier usuario
 router.put("/editUser/:id", async (req, res, next) => {
   const { id } = req.params;
-  const { name, typUser, city, description, rating, ratingAmount } = req.body;
+  const { name, typUser, city, description} = req.body;
   try {
-    if (name) {
       await User.upsert({
         id: id,
-        name: name
-      });
-      return res.send("updated name");
+        name,
+        city,
+        description,
+      })
+      res.send("updated name")
     }
-    else if (city) {
-      await User.upsert({
-        id: id,
-        city: city
-      });
-      return res.send("updated city");
-    }
-    else if (description) {
-      await User.upsert({
-        id: id,
-        description: description
-      });
-      return res.send("updated description");
-    }
-    if (rating && ratingAmount) {
-      await User.upsert({
-        id: id,
-        rating: rating,
-        ratingAmount: ratingAmount
-      });
-      return res.send("updated rating");
-    }
-  } catch (error) {
+   catch (error) {
     next(error)
   }
+});
+
+router.put("/rate", async (req, res, next) => {
+  const { id, rating } = req.body;
+  const user = await User.findByPk(id)
+  let currentRating = rating+(user.rating*user.ratingAmount);
+  let currentAmount = user.ratingAmount+1;
+  let futureRating= (currentRating/currentAmount).toFixed(2)
+  await User.upsert({
+    id: id,
+    rating: rating,
+    ratingAmount: futureRating
+  });
+  return res.send("updated rating");
 });
 
 router.get("/getPubs/:id", async (req, res, next) => {
@@ -228,7 +221,7 @@ router.get("/getFavs/:id", async (req, res, next) => {
     let favoritos2 = [];
     for (let i = 0; i < favoritos.length; i++) {
       favoritos2.push(await getPublications(favoritos[i]))
-      console.log('fav2',favoritos2)
+      console.log('fav2', favoritos2)
     }
     res.send(favoritos2)
   } catch (error) {
