@@ -25,6 +25,7 @@ import {
   GET_PUBLICATIONS_PREMIUM,
   INFO_USER,
   EDIT_USER,
+  GET_PUBLICATION_USER,
 } from "../actions";
 
 const initialState = {
@@ -230,6 +231,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         infoUser: action.payload,
+      };
+    case GET_PUBLICATION_USER:
+      return {
+        ...state,
+        publicationsUser: action.payload,
       };
 
     default:
