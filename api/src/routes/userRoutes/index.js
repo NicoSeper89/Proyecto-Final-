@@ -167,7 +167,7 @@ router.put("/editUser/:id", async (req, res, next) => {
 
 //este recibe el id de la persona rankeada, y el rating que se le va a poner
 router.put("/rate", async (req, res, next) => {
-  const { id, rating } = req.body;
+  const { id, rating } = req.query;
   const user = await User.findByPk(id);
   let currentRating = rating + user.rating * user.ratingAmount;
   let currentAmount = user.ratingAmount + 1;
@@ -195,7 +195,7 @@ router.get("/getPubs/:id", async (req, res, next) => {
 //
 router.put("/setFav", async (req, res, next) => {
   try {
-    let { userId, pubId } = req.query.city;
+    let { userId, pubId } = req.query;
     await User.update(
       {
         favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),

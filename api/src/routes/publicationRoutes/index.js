@@ -20,7 +20,6 @@ const {
   propTypArr,
   serviceTypes,
   getCity,
-  
 } = require("./controllers");
 
 //para el home y para el searchbar get con query
@@ -284,7 +283,10 @@ router.put("/editProperty/:id", async (req, res, next) => {
       pets,
       age,
     });
-
+    
+    let allServices = await Service.findAll()
+    let deleteSer = allServices.filter(s => s !== service)
+    updatedProp.removeService(deleteSer)
     if (service) {
       let ser = await Service.findAll({
         where: { name: service },

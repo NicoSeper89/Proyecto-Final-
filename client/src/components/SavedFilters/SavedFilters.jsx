@@ -28,7 +28,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
   const [storedValues, setStoredValues] = useState([]);
 
   useEffect(() => {
-    setStoredValues(Object.keys(localStorage));
+    setStoredValues(Object.keys(localStorage).filter(k => k !== "User" && k !== "publicationID"));
   }, [savedValue]);
 
   const handleLocalStorage = (keyValue) => {
