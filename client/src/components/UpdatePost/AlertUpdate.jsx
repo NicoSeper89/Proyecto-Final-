@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription} from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text} from "@chakra-ui/react";
 
 const AlertSubmitUpdate = ({ alertSubmit }) => {
   const history = useHistory();
@@ -31,6 +31,12 @@ const AlertSubmitUpdate = ({ alertSubmit }) => {
       </AlertTitle>
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
+      <Text>o</Text>
+      <form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
+        <button type="submit">
+          Destacr Publicación
+        </button>
+      </form>
     </Alert>
   );
 };
