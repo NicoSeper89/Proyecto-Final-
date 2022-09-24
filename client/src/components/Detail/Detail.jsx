@@ -30,7 +30,7 @@ import { Link } from "react-router-dom";
 import { Box, Text, Flex, Button, Heading, Image, IdProvider } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
-import AlertSubmit from "./AlertDeletePubli";
+import AlertDelete from "./AlertDeletePubli";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export default function Detail(props, id) {
   const history = useHistory();
   // const miUseerState = useSelector((state) => state.user)
   const [alertSubmit, setAlertSubmit] = useState([false, false])
-  const [propertyId, setPropertyId] = useState('');
+
 
   useEffect(() => {
     console.log(miStateDetail)
@@ -51,9 +51,13 @@ export default function Detail(props, id) {
 
   function handleDelete() {
     dispatch(deletePublicaction(props.match.params.id));
+    setAlertSubmit([true, true]);
+      window.scroll({
+        top: 0, 
+        left: 0, 
+        behavior: 'smooth' 
+       })
     console.log(props.match.params.id);
-    alert("LA PUBLICACION SE ELIMINO CORRECTAMENTE");
-    history.push("/");
   }
 
   return (
@@ -263,7 +267,7 @@ export default function Detail(props, id) {
           <Loading />
         )}
       </Flex>
-      <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId}/>
+      <AlertDelete alertSubmit={alertSubmit}/>
       <Footer />
     </>
   );

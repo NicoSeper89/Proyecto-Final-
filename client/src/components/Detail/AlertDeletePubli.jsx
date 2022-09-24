@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
 
-const AlertSubmit = ({ alertSubmit, propertyId }) => {
+const AlertDelete = ({ alertSubmit }) => {
   const history = useHistory();
 
   const onDown = () => {
@@ -47,4 +47,4 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
   );
 };
 
-export default AlertSubmit;
+export default AlertDelete;
