@@ -129,7 +129,7 @@ export function getPublicationsPremium() {
 }
 
 //Esto trae las publicaciones del mismo usuario
-export function getPubsUser(id) {
+export function getPubs(id) {
   return async function (dispatch) {
     try {
       let info = await axios.get(`http://localhost:3001/user/pubs/${id}`);

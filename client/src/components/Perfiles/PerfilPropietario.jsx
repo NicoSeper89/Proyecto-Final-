@@ -22,23 +22,31 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faAt, faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import CardPerfil from "../Cards/CardPerfil";
 import Cards from "../Cards/Cards";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import { getPubs } from "../../redux/actions";
 
 export default function PerfilPropietario() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const houses = useSelector((state) => state.houses);
   const infoUser = useSelector((state) => state.infoUser);
+  const publicationsUser = useSelector((state) => state.publicationsUser);
+  const { id } = useParams();
 
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
 
   const handleEdit = () => {
-    history.push("/updatePerfil/" + "id");
+    history.push("/updatePerfil/" + id);
   };
+
+  useEffect(() => {
+    dispatch(getPubs(id));
+  });
 
   return (
     <Box>
@@ -121,11 +129,19 @@ export default function PerfilPropietario() {
             </TabList>
             <TabPanels display={"flex"} justifyContent="center">
               <TabPanel>
-                <CardPerfil />
-                <CardPerfil />
-                <CardPerfil />
-                <CardPerfil />
-                <CardPerfil />
+                {publicationsUser?.map((f) => {
+                  return (
+                    <Box>
+                      <CardPerfil
+                        id={f.id}
+                        img={f.propertyImages}
+                        precio={f.price}
+                        ciudad={f.city.name}
+                        premium={f.premium}
+                      />
+                    </Box>
+                  );
+                })}
               </TabPanel>
               <TabPanel>
                 {infoUser[0].favorites?.map((f) => {
