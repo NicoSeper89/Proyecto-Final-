@@ -31,6 +31,7 @@ import { Box, Text, Flex, Button, Heading, Image, IdProvider } from "@chakra-ui/
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
+import Maps from "../Maps/Maps";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -38,11 +39,14 @@ export default function Detail(props, id) {
   const history = useHistory();
   // const miUseerState = useSelector((state) => state.user)
   const [alertSubmit, setAlertSubmit] = useState([false, false])
-
+  const [showMap, setShowMap] = useState(false)
 
   useEffect(() => {
     console.log(miStateDetail)
     dispatch(getPublicationsDetail(props.match.params.id));
+    setTimeout(()=>{
+      setShowMap(true)
+    }, 1000)
   }, [dispatch, props.match.params.id]);
 
   // useEffect(() => {
@@ -268,6 +272,10 @@ export default function Detail(props, id) {
         )}
       </Flex>
       <AlertDelete alertSubmit={alertSubmit}/>
+      {
+        showMap &&
+      <Maps position={miStateDetail}/>
+      }
       <Footer />
     </>
   );
