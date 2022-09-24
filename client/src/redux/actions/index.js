@@ -145,6 +145,7 @@ export function getPubs(id) {
     }
   };
 }
+
 //Esto trae las publicaciones favoritas del mismo usuario
 export function getFavsUser(id) {
   return async function (dispatch) {
@@ -159,17 +160,17 @@ export function getFavsUser(id) {
     }
   };
 }
+
 //Esto setea una publicacion en favoritos del usuario
-export function setFav(id,pubId) {
+export function setFav(id, pubId) {
   return async function (dispatch) {
     try {
-      let info = await axios.put(`/user/setFav?userId=${id}&pubId=${pubId}`,{});
+      await axios.put(`/user/setFav?userId=${id}&pubId=${pubId}`, {});
       return dispatch({
         type: SET_FAVORITE,
-        payload: info.data,
       });
     } catch (error) {
-      alert(error.response.data);
+      alert(error);
     }
   };
 }

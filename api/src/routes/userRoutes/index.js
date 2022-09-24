@@ -219,9 +219,11 @@ router.get("/getFavs/:id", async (req, res, next) => {
     const user = await User.findByPk(id);
     let favoritos = user.favorites;
     let favoritos2 = [];
-    for (let i = 0; i < favoritos.length; i++) {
-      favoritos2.push(await getPublications(favoritos[i]));
-      console.log("fav2", favoritos2);
+    if (favoritos) {
+      for (let i = 0; i < favoritos.length; i++) {
+        favoritos2.push(await getPublications(favoritos[i]));
+        console.log("fav2", favoritos2);
+      }
     }
     res.send(favoritos2);
   } catch (error) {

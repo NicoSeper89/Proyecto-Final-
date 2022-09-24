@@ -4,8 +4,9 @@ import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faToilet, faBed, faDoorOpen, faPaw } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Badge, Box, Flex, Image, Tag, Text } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFav } from "../../redux/actions";
 
 export default function Card({
   id,
@@ -20,9 +21,14 @@ export default function Card({
   premium,
 }) {
   // const property = {};
+  const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
+
+  const handleClickFav = () => {
+    dispatch(setFav(id, infoUser[1].userId));
+  };
 
   return (
     <Box className={style.container} zIndex={"2"}>
@@ -63,10 +69,13 @@ export default function Card({
           className={style.img}
         />
       </Box>
-      <Flex direction={"row"} justifyContent={"space-between"} p={"5px"}>
-        <Link to={"/"} p={"0"}>
+      <Flex direction={"row"} justifyContent={"space-between"} p={"5px"} h={"30px"}>
+        {/* que el corazon aparezca solo en las publicaciones que no son mias */}
+        {/* <Link to={"/"} p={"0"}> */}
+        <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav}>
           <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
-        </Link>
+        </Button>
+        {/* </Link> */}
 
         <Link to={user2 ? "/details/" + id : "/"} display={"flex"}>
           <Tag size={"sm"} variant="solid" backgroundColor={"teal"} marginLeft={"15px"} w={"5rem"}>

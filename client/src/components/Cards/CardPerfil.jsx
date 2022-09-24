@@ -12,13 +12,13 @@ export default function CardPerfil({ id, img, precio, ciudad, premium }) {
     history.push("/details/" + id);
   };
 
-  const data = {
-    id: 1,
-    img: "",
-    precio: "10.000",
-    ciudad: "Ciudad Autonoma de Buenos Aires, la chuchaaa aaaaaaaa asdasdsd",
-    premium: true,
-  };
+  // const data = {
+  //   id: 1,
+  //   img: "",
+  //   precio: "10.000",
+  //   ciudad: "Ciudad Autonoma de Buenos Aires, la chuchaaa aaaaaaaa asdasdsd",
+  //   premium: true,
+  // };
 
   return (
     <Box
@@ -39,13 +39,13 @@ export default function CardPerfil({ id, img, precio, ciudad, premium }) {
       <Image
         h="180px"
         w="150 "
-        src={data.img[0] ? data.img[0].url : imgNotAvailable}
+        src={img[0] ? img[0].url : imgNotAvailable}
         alt="Img not found"
         border={"1px solid"}
         borderColor="black"
       />
       <Box display={"flex"} justifyContent={"flex-star"} position="absolute">
-        {data.premium === true ? (
+        {premium === true ? (
           <Badge
             display={"flex"}
             size={"sm"}
@@ -71,10 +71,10 @@ export default function CardPerfil({ id, img, precio, ciudad, premium }) {
         w={"180px"}
       >
         <Text as="b" fontSize="xl" marginBottom={"0px"}>
-          $ {data.precio}
+          $ {precio}
         </Text>
         <Text as="samp" fontSize="l" textAlign={"center"} width="150px">
-          {data.ciudad}
+          {ciudad}
         </Text>
         {/* {premium === true ? (
           <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
