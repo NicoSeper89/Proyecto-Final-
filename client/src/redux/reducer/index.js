@@ -24,6 +24,7 @@ import {
   UPDATE_PROP,
   GET_PUBLICATIONS_PREMIUM,
   INFO_USER,
+  EDIT_USER,
 } from "../actions";
 
 const initialState = {
@@ -216,6 +217,11 @@ export default function rootReducer(state = initialState, action) {
       };
 
     case UPDATE_PROP:
+      return {
+        ...state,
+      };
+
+    case EDIT_USER:
       return {
         ...state,
       };

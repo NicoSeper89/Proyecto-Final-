@@ -90,10 +90,10 @@ export default function PerfilPropietario() {
               Medios de Contacto:
             </Text>
             <Stack direction={"row"} justify={"center"} spacing={4}>
-              <Button label={"Gmail"} href={"#"} p={0}>
+              <Button label={"Gmail"} href={infoUser[1].mail} p={0}>
                 <FontAwesomeIcon icon={faAt} fontSize="30px" />
               </Button>
-              <Button label={"WhatsApp"} href={"#"} p={0}>
+              <Button label={"WhatsApp"} href={infoUser.whatsapp} p={0}>
                 <FontAwesomeIcon icon={faWhatsapp} fontSize="30px" />
               </Button>
             </Stack>

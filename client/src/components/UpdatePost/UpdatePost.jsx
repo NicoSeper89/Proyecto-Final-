@@ -104,7 +104,7 @@ const UpdatePost = (props) => {
     if (!Object.entries(publication).length) {
       dispatch(getPublicationsDetail(props.match.params.id));
     } else {
-      console.log("hola")
+      console.log("hola");
       setInputPropiedad({
         address: publication.property.address,
         surface: publication.property.surface,
@@ -141,14 +141,12 @@ const UpdatePost = (props) => {
     ); */
   }
   const onContinueForm = () => {
-
-    setContinueForm(false)
-
-  }
+    setContinueForm(false);
+  };
 
   function handleSubmitPublication(e) {
     e.preventDefault();
-    
+
     dispatch(updatedProp(publication.id, inputPropiedad));
   }
 
@@ -200,7 +198,7 @@ const UpdatePost = (props) => {
           overflow="hidden"
           minWidth={"57.7%"}
         >
-          {(continueForm) ? (
+          {continueForm ? (
             <Box
               display={"flex"}
               flexDirection={"column"}
@@ -217,11 +215,7 @@ const UpdatePost = (props) => {
                 borderColor="gray.200"
               >
                 <FormLabel>
-                  <Text
-                    fontWeight={"semiBold"}
-                    fontSize="1.2rem"
-                    color="gray.500"
-                  >
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                     Provincia
                   </Text>
                   <Select
@@ -241,11 +235,7 @@ const UpdatePost = (props) => {
                   </Select>
                 </FormLabel>
                 <FormLabel>
-                  <Text
-                    fontWeight={"semiBold"}
-                    fontSize="1.2rem"
-                    color="gray.500"
-                  >
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                     Dirección
                   </Text>
                   <Input
@@ -286,11 +276,7 @@ const UpdatePost = (props) => {
                   borderColor="gray.200"
                 >
                   <FormLabel>
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.07rem"
-                      color="gray.500"
-                    >
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
                       Precio
                     </Text>
                     <NumberInput
@@ -299,9 +285,9 @@ const UpdatePost = (props) => {
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            price: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              price: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -315,11 +301,7 @@ const UpdatePost = (props) => {
                   </FormLabel>
 
                   <FormLabel>
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.07rem"
-                      color="gray.500"
-                    >
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
                       Antigüedad
                     </Text>
                     <NumberInput
@@ -328,9 +310,9 @@ const UpdatePost = (props) => {
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            age: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              age: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -342,7 +324,6 @@ const UpdatePost = (props) => {
                       </NumberInputStepper>
                     </NumberInput>
                   </FormLabel>
-
                 </Box>
                 <Box
                   display={"flex"}
@@ -352,15 +333,18 @@ const UpdatePost = (props) => {
                   border="1px"
                   borderColor="gray.200"
                 >
-                  <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Superficie</Text>
+                  <FormLabel>
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                      Superficie
+                    </Text>
                     <NumberInput
                       value={inputPropiedad.surface}
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            surface: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              surface: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -373,11 +357,7 @@ const UpdatePost = (props) => {
                     </NumberInput>
                   </FormLabel>
                   <FormLabel>
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.07rem"
-                      color="gray.500"
-                    >
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
                       Ambientes
                     </Text>
                     <NumberInput
@@ -386,9 +366,9 @@ const UpdatePost = (props) => {
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            environments: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              environments: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -402,11 +382,7 @@ const UpdatePost = (props) => {
                   </FormLabel>
 
                   <FormLabel>
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.07rem"
-                      color="gray.500"
-                    >
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
                       Baños
                     </Text>
                     <NumberInput
@@ -415,9 +391,9 @@ const UpdatePost = (props) => {
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            bathrooms: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              bathrooms: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -431,11 +407,7 @@ const UpdatePost = (props) => {
                   </FormLabel>
 
                   <FormLabel>
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.07rem"
-                      color="gray.500"
-                    >
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
                       Habitaciones
                     </Text>
                     <NumberInput
@@ -444,9 +416,9 @@ const UpdatePost = (props) => {
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            rooms: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              rooms: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -460,11 +432,7 @@ const UpdatePost = (props) => {
                   </FormLabel>
 
                   <FormLabel>
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.07rem"
-                      color="gray.500"
-                    >
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
                       Garage
                     </Text>
                     <NumberInput
@@ -473,9 +441,9 @@ const UpdatePost = (props) => {
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            garage: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              garage: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -489,11 +457,7 @@ const UpdatePost = (props) => {
                   </FormLabel>
 
                   <FormLabel>
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.07rem"
-                      color="gray.500"
-                    >
+                    <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
                       Patios
                     </Text>
                     <NumberInput
@@ -502,9 +466,9 @@ const UpdatePost = (props) => {
                       onChange={(value) =>
                         /^[0-9]+$/i.test(value) || value === ""
                           ? setInputPropiedad({
-                            ...inputPropiedad,
-                            yard: (value === "")? 0 : parseInt(value),
-                          })
+                              ...inputPropiedad,
+                              yard: value === "" ? 0 : parseInt(value),
+                            })
                           : null
                       }
                       min={0}
@@ -517,12 +481,39 @@ const UpdatePost = (props) => {
                     </NumberInput>
                   </FormLabel>
                 </Box>
-                <FormLabel display={"flex"} flexDirection="column" p=".9rem" gap={".7rem"} border="1px" borderColor="gray.200">
-                  <Text fontWeight={"semiBold"} fontSize="1.15rem" color="gray.500">Servicios</Text>
+                <FormLabel
+                  display={"flex"}
+                  flexDirection="column"
+                  p=".9rem"
+                  gap={".7rem"}
+                  border="1px"
+                  borderColor="gray.200"
+                >
+                  <Text fontWeight={"semiBold"} fontSize="1.15rem" color="gray.500">
+                    Servicios
+                  </Text>
                   <CheckboxGroup colorScheme="green">
-                    <Stack display={"flex"} justifyContent={"flex-start"} gap={".6rem"} flexWrap={"wrap"} spacing={[1, 5]} direction={["column", "row"]} fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText">
-                      {typeServices?.map((serv, i) => ( 
-                        <Checkbox isChecked={inputPropiedad.service?.some((elem)=> elem === serv.name) }  fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText" key={i} name={serv.name} onChange={selectCheckBoxService}>
+                    <Stack
+                      display={"flex"}
+                      justifyContent={"flex-start"}
+                      gap={".6rem"}
+                      flexWrap={"wrap"}
+                      spacing={[1, 5]}
+                      direction={["column", "row"]}
+                      fontWeight={"semiBold"}
+                      fontSize="1.15rem"
+                      color="GrayText"
+                    >
+                      {typeServices?.map((serv, i) => (
+                        <Checkbox
+                          isChecked={inputPropiedad.service?.some((elem) => elem === serv.name)}
+                          fontWeight={"semiBold"}
+                          fontSize="1.15rem"
+                          color="GrayText"
+                          key={i}
+                          name={serv.name}
+                          onChange={selectCheckBoxService}
+                        >
                           {serv.name[0].toUpperCase() + serv.name.substring(1)}
                         </Checkbox>
                       ))}
@@ -561,11 +552,7 @@ const UpdatePost = (props) => {
                 borderColor="gray.200"
               >
                 <FormLabel>
-                  <Text
-                    fontWeight={"semiBold"}
-                    fontSize="1.2rem"
-                    color="gray.500"
-                  >
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                     Descripcion
                   </Text>
                   <Textarea
@@ -579,10 +566,7 @@ const UpdatePost = (props) => {
               </Box>
 
               <Box w={"100%"}>
-                <UpdateImgPub
-                  setInfoFormProp={setInputPropiedad}
-                  infoFormProp={inputPropiedad}
-                />
+                <UpdateImgPub setInfoFormProp={setInputPropiedad} infoFormProp={inputPropiedad} />
               </Box>
 
               <Button
@@ -594,7 +578,6 @@ const UpdatePost = (props) => {
               >
                 Enviar
               </Button>
-
             </Box>
           )}
         </Flex>
