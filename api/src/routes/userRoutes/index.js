@@ -196,6 +196,7 @@ router.get("/getPubs/:id", async (req, res, next) => {
 router.put("/setFav", async (req, res, next) => {
   try {
     let { userId, pubId } = req.query;
+    
     await User.update(
       {
         favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),
@@ -211,6 +212,27 @@ router.put("/setFav", async (req, res, next) => {
     next(error);
   }
 });
+router.get("/removeFav", async (req, res, next) => {
+  try {
+    let { userId, pubId } = req.query;
+    const user = await User.findByPk(userId);
+    let favoritos = user.favorites;
+    let index= favoritos.indexOf(pubId)
+    if (index > -1) {
+      favoritos=favoritos.splice(index,1)
+    }
+    await User.upsert({
+      id: userId,
+      favorites:favoritos
+    });
+    res.send(`removi ${pubId} a ${userId}`);
+  } catch (error) {
+    next(error);
+  }
+});
+
+
+
 
 //este me trae los favoritos del mismo usuario
 router.get("/getFavs/:id", async (req, res, next) => {

@@ -32,7 +32,7 @@ export const RANK_USER = "RANK_USER";
 export const GET_PUBLICATION_USER = "GET_PUBLICATION_USER";
 export const GET_FAVORITES_USER = "GET_FAVORITES_USER";
 export const SET_FAVORITE = "SET_FAVORITE";
-
+export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -168,6 +168,19 @@ export function setFav(id, pubId) {
       await axios.put(`/user/setFav?userId=${id}&pubId=${pubId}`, {});
       return dispatch({
         type: SET_FAVORITE,
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+}
+//Esto quita una publicacion en favoritos del usuario
+export function setFav(id, pubId) {
+  return async function (dispatch) {
+    try {
+      await axios.put(`/user/removeFav?userId=${id}&pubId=${pubId}`, {});
+      return dispatch({
+        type: REMOVE_FAVORITE,
       });
     } catch (error) {
       alert(error);
