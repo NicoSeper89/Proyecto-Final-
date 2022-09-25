@@ -21,6 +21,7 @@ const {
   serviceTypes,
   getCity,
 } = require("./controllers");
+const { where } = require("sequelize");
 
 //para el home y para el searchbar get con query
 
@@ -35,8 +36,8 @@ router.post("/", async (req, res, next) => {
         services:[{name: "luz"},{name: "agua"}]
         } */
     /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
-    let publications = await getAll(); /// me trae todas las casas con sus propiedades
-
+    let allPublications = await getAll(); /// me trae todas las casas con sus propiedades
+    let publications = allPublications.filter(p => !p.deleted)
     publications = await getFiltered(publications, filters); // envia todas las casas y un filtro
 
     if (city) {
@@ -365,6 +366,20 @@ router.delete("/delete/:id", async (req, res, next) => {
   }
 })
 
+
+router.put('/unavailable/:id', async (req, res, next)=>{
+  const {id} = req.params
+  try {
+    let publi = await Publication.findByPk(id)
+    await Publication.update(
+      { deleted: !publi.deleted },
+      { where: { id: id } }
+    )
+    res.send('publication availablity has changed')
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 module.exports = router;
