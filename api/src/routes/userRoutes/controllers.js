@@ -18,6 +18,17 @@ const getAllUsers = async () => {
         ]
     })
 };
+const getOneUser = async (id) => {
+  return await User.findOne({
+    where: { id: id },
+      include: [
+         { model: TypeOfUser },
+         { model: LoginInfo },
+         { model: UserImage },
+         { model: Publication }
+      ]
+  })
+};
 const getPubs = async (id) => {
     return await Publication.findAll({
       where: { userId: id },
@@ -96,4 +107,4 @@ const getPubs = async (id) => {
       ],
     });
   };
-module.exports = {getAllUsers,getPubs,getPublications}
+module.exports = {getAllUsers,getPubs,getPublications,getOneUser}
