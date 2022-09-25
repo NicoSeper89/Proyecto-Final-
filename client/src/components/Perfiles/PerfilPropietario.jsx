@@ -22,23 +22,35 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faAt, faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import CardPerfil from "../Cards/CardPerfil";
-import Cards from "../Cards/Cards";
 import { useHistory } from "react-router-dom";
+import { getFavsUser, getInfoUser, getPubs } from "../../redux/actions";
 
 export default function PerfilPropietario() {
   const history = useHistory();
-  const houses = useSelector((state) => state.houses);
+  const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
+  const publicationsUser = useSelector((state) => state.publicationsUser);
+  const favoritesUser = useSelector((state) => state.favoritesUser);
 
-  const user = window.localStorage.getItem("User");
-  const user2 = JSON.parse(user);
+  // const user = window.localStorage.getItem("User");
+  // const user2 = JSON.parse(user);
 
   const handleEdit = () => {
-    history.push("/updatePerfil/" + "id");
+    history.push("/updatePerfil/" + infoUser[0].id);
   };
+
+  useEffect(() => {
+    console.log("hola");
+    dispatch(getPubs(infoUser[0].id));
+    dispatch(getFavsUser(infoUser[0].id));
+    if (!infoUser) {
+      const user = JSON.parse(window.localStorage.getItem("User"));
+      dispatch(getInfoUser(user));
+    }
+  }, [dispatch]);
 
   return (
     <Box>
@@ -74,7 +86,7 @@ export default function PerfilPropietario() {
               @lindsey_jam3s
             </Text> */}
             <Flex justifyContent="center" alignContent="center">
-              <Rating rating={infoUser[0].rating} numReviews={""} />
+              {/* <Rating rating={infoUser[0].rating} numReviews={""} /> */}
             </Flex>
             <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
@@ -121,21 +133,29 @@ export default function PerfilPropietario() {
             </TabList>
             <TabPanels display={"flex"} justifyContent="center">
               <TabPanel>
-                <CardPerfil />
-                <CardPerfil />
-                <CardPerfil />
-                <CardPerfil />
-                <CardPerfil />
-              </TabPanel>
-              <TabPanel>
-                {infoUser[0].favorites?.map((f) => {
+                {publicationsUser?.map((f, index) => {
                   return (
-                    <Box>
+                    <Box key={index}>
                       <CardPerfil
                         id={f.id}
-                        img={f.propertyImages}
-                        precio={f.price}
-                        ciudad={f.city.name}
+                        img={f.property.propertyImages}
+                        precio={f.property.price}
+                        ciudad={f.property.city.name}
+                        premium={f.premium}
+                      />
+                    </Box>
+                  );
+                })}
+              </TabPanel>
+              <TabPanel>
+                {favoritesUser?.map((f, index) => {
+                  return (
+                    <Box key={index}>
+                      <CardPerfil
+                        id={f.id}
+                        img={f.property.propertyImages}
+                        precio={f.property.price}
+                        ciudad={f.property.city.name}
                         premium={f.premium}
                       />
                     </Box>
