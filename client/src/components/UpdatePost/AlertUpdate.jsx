@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text} from "@chakra-ui/react";
 
-const AlertSubmitUpdate = ({ alertSubmit }) => {
+const AlertSubmitUpdate = ({ alertSubmit, premium }) => {
   const history = useHistory();
 
   const onDown = () => {
@@ -22,6 +22,7 @@ const AlertSubmitUpdate = ({ alertSubmit }) => {
       textAlign="center"
       height="15rem"
       top={"10rem"}
+      gap={"0.5rem"}
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
@@ -31,12 +32,12 @@ const AlertSubmitUpdate = ({ alertSubmit }) => {
       </AlertTitle>
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
-      <Text>o</Text>
-      <form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
-        <button type="submit">
+      {(!premium)?
+      (<form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
+        <Button type="submit">
           Destacr Publicación
-        </button>
-      </form>
+        </Button>
+      </form>): null}
     </Alert>
   );
 };
