@@ -90,12 +90,12 @@ export default function Card({
             <></>
           )}
         </Box>
-        <Image
+        {/* <Image
           src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
           alt="Img not found"
           // className={style.img}
           borderBottom={"0.2px solid rgb(126, 125, 125)"}
-        /> */}
+        />  */}
       </Box>
       <Flex direction={"row"} justifyContent={"space-between"} p={"5px"} h={"30px"}>
         {/* que el corazon aparezca solo en las publicaciones que no son mias */}
