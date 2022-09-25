@@ -27,7 +27,7 @@ export default function Card({
   const user2 = JSON.parse(user);
 
   const handleClickFav = () => {
-    dispatch(setFav(id, infoUser[1].userId));
+    dispatch(setFav( infoUser[1].userId,id));
   };
 
   return (
