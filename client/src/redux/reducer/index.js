@@ -148,17 +148,10 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case SORT_PRICE:
-      if (action.payload === "Precio") {
-        state.sorting = { name: "default", direccion: "minMax" };
         return {
           ...state,
+          sorting: {name: action.payload.name, direccion: action.payload.direccion}
         };
-      } else {
-        state.sorting = { name: "price", direccion: action.payload };
-        return {
-          ...state,
-        };
-      }
     case CLEAR_FILTERS:
       state.filters = {
         publication: [],
