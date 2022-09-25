@@ -90,8 +90,8 @@ export default function Card({
             <></>
           )}
         </Box>
-        {/* <Image
-          src={img[0] ? img[0].url : imgNotAvailable}
+        <Image
+          src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
           alt="Img not found"
           // className={style.img}
           borderBottom={"0.2px solid rgb(126, 125, 125)"}

@@ -1,23 +1,14 @@
 import { Box, Button, Flex, FormLabel, Image, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { imgUserUpload } from "../../redux/actions";
 
-export default function UserUploadImg({ userId }) {
+export default function UserUploadImg() {
   const dispatch = useDispatch();
-  const [fileInput, setFileInput] = useState("");
+  const infoUser = useSelector((state) => state.infoUser);
   const [preview, setPreview] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
-  // const [disableButtonUploadImg, setDisableButtonUploadImg] = useState(true);
-
-  // useEffect(() => {
-  //   if (input.img) {
-  //     setDisableButtonUploadImg(true);
-  //   } else {
-  //     setDisableButtonUploadImg(false);
-  //   }
-  // }, [input.img, setDisableButtonUploadImg]);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -27,35 +18,20 @@ export default function UserUploadImg({ userId }) {
     };
   };
 
-  const upload = () => {
-    const formData = new FormData();
-    formData.append("file", fileInput);
+  const handleChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      previewFile(file);
+      const formData = new FormData();
+    formData.append("file", file);
     formData.append("upload_preset", "czwgzdiw");
 
     axios
       .post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
       .then((resp) => {
-        console.log("INFOOO: ", resp.data);
-        dispatch(
-          imgUserUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id, userId: userId })
-        );
+        dispatch(imgUserUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id, userId: infoUser[0].id }))
       })
       .catch((err) => console.log(err))
-      .finally(
-        setFileInput(""),
-        setPreview(""),
-        setSuccessMsg("Image uploaded successfully"),
-        setTimeout(() => {
-          setSuccessMsg("");
-        }, 2000)
-      );
-  };
-
-  const handleChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      previewFile(file);
-      setFileInput(event.target.files[0]);
     }
   };
 
@@ -91,8 +67,6 @@ export default function UserUploadImg({ userId }) {
         <Flex justifyContent={"center"} alignItems={"center"} w={"100%"} h={"25rem"}>
           {preview ? (
             <Image maxH={"98%"} src={preview} alt="chosen" />
-          ) : successMsg ? (
-            <Text>{successMsg}</Text>
           ) : (
             <Text color={"gray.500"}>Ningún archivo seleccionado...</Text>
           )}
@@ -121,14 +95,6 @@ export default function UserUploadImg({ userId }) {
           type="file"
           onChange={(e) => handleChange(e)}
         />
-        <Button
-          // disabled={disableButtonUploadImg}
-          colorScheme="blue"
-          value={"Cargar"}
-          onClick={upload}
-        >
-          Agregar
-        </Button>
       </FormLabel>
     </Flex>
   );

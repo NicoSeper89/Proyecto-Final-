@@ -29,10 +29,12 @@ import {
   GET_FAVORITES_USER,
   SET_FAVORITE,
   REMOVE_FAVORITE,
-  RANK_USER
+  RANK_USER,
+  GETUSER
 } from "../actions";
 
 const initialState = {
+  allUserInfo: [],
   infoUser: null,
   houses: [], //Todas las publicaciones
   housePrem: [], //Publicación Premium
@@ -251,6 +253,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+    case GETUSER:
+      return{
+        ...state,
+        allUserInfo: action.payload
+      }
 
     default:
       return state;

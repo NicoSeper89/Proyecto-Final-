@@ -33,6 +33,7 @@ export const GET_PUBLICATION_USER = "GET_PUBLICATION_USER";
 export const GET_FAVORITES_USER = "GET_FAVORITES_USER";
 export const SET_FAVORITE = "SET_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
+export const GETUSER = "GETUSER"
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -388,4 +389,14 @@ export function getInfoUser(user) {
     type: INFO_USER,
     payload: user,
   };
+}
+
+export function getUserInfo(id){
+  return async function (dispatch) {
+    const resp = await axios.get(`/user/userInfo/${id}`);
+      return dispatch({
+        type: GETUSER,
+        payload: resp.data
+      });
+  }
 }

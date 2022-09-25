@@ -26,15 +26,16 @@ import { useDispatch, useSelector } from "react-redux";
 import foto from "../../Image/Image_not_available.png";
 import CardPerfil from "../Cards/CardPerfil";
 import { useHistory } from "react-router-dom";
-import { getFavsUser, getInfoUser, getPubs } from "../../redux/actions";
+import { getFavsUser, getInfoUser, getPubs, getUserInfo } from "../../redux/actions";
 
 export default function PerfilPropietario() {
   const history = useHistory();
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
+  const allUserInfo = useSelector(state => state.allUserInfo)
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const favoritesUser = useSelector((state) => state.favoritesUser);
-
+  
   // const user = window.localStorage.getItem("User");
   // const user2 = JSON.parse(user);
 
@@ -49,6 +50,7 @@ export default function PerfilPropietario() {
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
+      dispatch(getUserInfo(infoUser[0].id))
     }
   }, [dispatch]);
 
