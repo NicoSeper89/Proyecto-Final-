@@ -148,7 +148,7 @@ export default function EditPerfil(props) {
               Foto de perfil:{" "}
             </FormLabel>
             <Box w={"100%"}>
-              <UserUploadImg userId={infoUser[0].id} />
+              <UserUploadImg/>
             </Box>
           </Box>
           <Button type="submit" value="enviar" onClick={handleSubmit} disabled={disabledButton}>

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo, Publication } = require("../../db");
-const { getAllUsers, getPubs, getPublications } = require("./controllers");
+const { getAllUsers, getPubs, getPublications, getOneUser } = require("./controllers");
 var Sequelize = require("sequelize");
 
 router.get("/users", async (req, res) => {
@@ -17,6 +17,16 @@ router.get("/users", async (req, res) => {
     res.status(200).send(usersTotal);
   }
 });
+
+router.get("/userInfo/:id", async(req,res,next)=>{
+  const {id} = req.params
+  try {
+    let user = await getOneUser(id)
+    res.send(user)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.post("/typeofusers", async (req, res) => {
   try {
