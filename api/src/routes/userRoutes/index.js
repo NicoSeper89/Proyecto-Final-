@@ -153,13 +153,15 @@ router.put("/editUser/:id", async (req, res, next) => {
   const { id } = req.params;
   const { name, typUser, city, description } = req.body;
   try {
+    console.log("IDDDDD: ", id);
     await User.upsert({
       id: id,
       name,
       city,
       description,
     });
-    res.send("updated name");
+    let res = await User.findByPk(id);
+    res.send(res);
   } catch (error) {
     next(error);
   }
