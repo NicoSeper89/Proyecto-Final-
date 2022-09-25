@@ -11,9 +11,9 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
   const onDown = () => {
     history.push("/");
   };
- /*  const onTest = async () => {
-    history.push("/PaymentOk");
-  }; */
+  /*  const onTest = async () => {
+     history.push("/PaymentOk");
+   }; */
   /*  const handleDestacar = () => {
     
     let res = axios.post("http://localhost:3001/sell/premium", {});
@@ -32,6 +32,7 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
       textAlign="center"
       height="15rem"
       top={"10rem"}
+      gap={"0.5rem"}
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
@@ -41,11 +42,10 @@ const AlertSubmit = ({ alertSubmit, propertyId }) => {
       </AlertTitle>
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
-      <Text>o</Text>
       <form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
-        <button type="submit">
-          Destacr Publicación
-        </button>
+        <Button type="submit">
+          Destacar Publicación
+        </Button>
       </form>
       {/* <Button onClick={onTest}>test mp</Button> */}
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
