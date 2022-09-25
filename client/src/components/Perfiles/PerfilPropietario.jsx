@@ -23,7 +23,7 @@ import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faAt, faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
 import { useDispatch, useSelector } from "react-redux";
-
+import foto from "../../Image/Image_not_available.png";
 import CardPerfil from "../Cards/CardPerfil";
 import { useHistory } from "react-router-dom";
 import { getFavsUser, getInfoUser, getPubs } from "../../redux/actions";
@@ -78,7 +78,13 @@ export default function PerfilPropietario() {
                 <FontAwesomeIcon icon={faUserPen} fontSize="30px" p={"0"} />
               </Button>
             </Flex>
-            <Avatar size={"2xl"} src={infoUser[0].img} alt={"Avatar Alt"} mb={4} pos={"relative"} />
+            <Avatar
+              size={"2xl"}
+              src={infoUser.img ? infoUser.img : foto}
+              alt={"Avatar Alt"}
+              mb={4}
+              pos={"relative"}
+            />
             <Heading fontSize={"2xl"} fontFamily={"body"}>
               {infoUser[0].name}
             </Heading>

@@ -1,20 +1,23 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
 
-const AlertSubmitUpdate = ({ alertSubmit, premium }) => {
+const AlertPerfil = ({ alertSubmit }) => {
   const history = useHistory();
 
   const onDown = () => {
     history.push("/");
   };
+  const onUser = () => {
+    history.push("/perfilPropietario");
+  };
 
   return (
     <Alert
       position={"absolute"}
-      display={!alertSubmit[0] ? "none" : "flex"}
-      status={!alertSubmit[1] ? "error" : "success"}
+      display={"flex"}
+      status={"success"}
       variant="subtle"
       flexDirection="column"
       alignItems="center"
@@ -25,20 +28,17 @@ const AlertSubmitUpdate = ({ alertSubmit, premium }) => {
       gap={"0.5rem"}
     >
       <AlertIcon boxSize="40px" mr={0} />
-      <AlertTitle mt={4} mb={1} fontSize="lg">
+      {/* <AlertTitle mt={4} mb={1} fontSize="lg">
         {!alertSubmit[1]
           ? "La publicación no se pudo Actualizar, lo sentimos mucho!"
           : "La publicación se Actualizo correctamente"}
-      </AlertTitle>
-      <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
+      </AlertTitle> */}
+      <AlertDescription maxWidth="sm">Perfil Actualizado!</AlertDescription>
+      <Button onClick={onUser}>Aceptar</Button>
+      <br />
       <Button onClick={onDown}>Volver al inicio</Button>
-      {!premium ? (
-        <form action="https://lookhouse-pf.herokuapp.com/sell/premium" method="POST">
-          <Button type="submit">Destacar Publicación</Button>
-        </form>
-      ) : null}
     </Alert>
   );
 };
 
-export default AlertSubmitUpdate;
+export default AlertPerfil;
