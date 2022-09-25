@@ -28,12 +28,13 @@ import {
   // faTelegram,
   // faFacebook,
 } from "@fortawesome/free-solid-svg-icons";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons"
+import { faWhatsapp} from "@fortawesome/free-brands-svg-icons"
+import { faAt} from "@fortawesome/free-solid-svg-icons";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
-import { Link } from "react-router-dom";
-import { Box, Text, Flex, Button, Heading, Image, SimpleGrid } from "@chakra-ui/react";
+/* import { Link } from "react-router-dom"; */
+import { Box, Text, Flex,Link, Button, Heading, Image, SimpleGrid } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
@@ -75,7 +76,6 @@ export default function Detail(props, id) {
   return (
     <>
       <NavBarForms />
-
       <Flex
         w={"100%"}
         flexDirection={"column"}
@@ -97,7 +97,7 @@ export default function Detail(props, id) {
                 position={"relative"}
               >
                 {miStateDetail.property.propertyImages.length > 0 ?
-                  <Box w={"42rem"} position={"relative"} >
+                  <Box w={"42rem"} h={"42rem"} position={"relative"} >
                     <ImageSlider slides={miStateDetail.property.propertyImages} />
                   </Box> :
                   <Image src={imgNotAvailable} />
@@ -238,10 +238,12 @@ export default function Detail(props, id) {
                   >
                     <Text><FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}</Text>
                     <Text><FontAwesomeIcon icon={faStar} /> {miStateDetail.user.rating}</Text>
+
+                    <Flex gap='5px' alignItems='center'><FontAwesomeIcon icon={faAt} /><Link href={`mailto:${miStateDetail.user.contactInfo.mail}`} >{miStateDetail.user.contactInfo.mail}</Link></Flex>
                     {/* <Text><FontAwesomeIcon icon={faCity}/> {miStateDetail.user.city}</Text>
                 <Text><FontAwesomeIcon icon={faMailBulk}/> {miStateDetail.user.contactInfo.mail}</Text> */}
 
-                    <Box
+                    {/* <Box
                       borderRadius={"0rem 0rem 0.5rem 0.5rem"}
                       flexDirection={"column"}
                       gap={".5rem"}
@@ -253,11 +255,9 @@ export default function Detail(props, id) {
                       borderColor="gray.200"
                       bg={"yellow.100"}
                     >
-                      {/* <Text><FontAwesomeIcon icon={faWhatsapp} /><Link to={miStateDetail.user.contactInfo.whatsapp} href={miStateDetail.user.contactInfo.whatsapp} /> {miStateDetail.user.contactInfo.whatsapp}</Text> */}
-                      {/* <Text><FontAwesomeIcon icon={faTelegram}/><Link to={miStateDetail.user.contactInfo.telegram} href={miStateDetail.user.contactInfo.telegram}/> {miStateDetail.user.contactInfo.telegram}</Text>
-                      <Text><FontAwesomeIcon icon={faFacebook}/><Link to={miStateDetail.user.contactInfo.facebook} href={miStateDetail.user.contactInfo.facebook}/> {miStateDetail.user.contactInfo.facebook}</Text> */}
-                      <Text> <FontAwesomeIcon icon={faComment} /> {miStateDetail.user.description}</Text>
-                    </Box>
+      
+                      <Text> <FontAwesomeIcon icon={faComment} /> </Text>
+                    </Box> */}
                   </Box>
                 </Flex>
               </Flex>
