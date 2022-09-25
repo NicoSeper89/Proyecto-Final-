@@ -34,7 +34,7 @@ const Login = () => {
     // ruta para loguearme **********************************
     console.log("enviando datos", login);
     alert(respuesta.data.mensaje);
-    const respuesta = await axios.post("http://localhost:3001/user/logueado", login);
+    const respuesta = await axios.post("/user/logueado", login);
 
     if (respuesta.data.loguear) {
       dispatch(getInfoUser(respuesta.data.userInfo));

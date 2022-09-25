@@ -6,17 +6,39 @@ import { editUser, getInfoUser } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import UserUploadImg from "../UploadImg/UserUploadImg";
+import { useHistory } from "react-router-dom";
 
 export default function EditPerfil(props) {
   const dispatch = useDispatch();
+  const history = useHistory();
   const infoUser = useSelector((state) => state.infoUser);
+  const [disabledButton, setDisabledButton] = useState(false);
   const [input, setInput] = useState({
-    img: [],
+    // img: "",
     name: "",
-    ciudad: "",
+    city: "",
     description: "",
-    contacto: "",
+    // contacto: "",
   });
+
+  useEffect(() => {
+    if (!Object.entries(infoUser).length) {
+      dispatch(getInfoUser(props.match.params.id));
+    } else {
+      setInput({
+        // img: infoUser.propertyImages,
+        name: infoUser[0].name,
+        city: infoUser[0].city,
+        description: infoUser[0].description,
+      });
+    }
+  }, [dispatch, props.match.params.id, infoUser]);
+
+  useEffect(() => {
+    !input.name || !input.city || /^[\s]+$/i.test(input.description)
+      ? setDisabledButton(true)
+      : setDisabledButton(false);
+  }, [input.name, input.city]);
 
   function handleEdit(e) {
     setInput({
@@ -27,23 +49,17 @@ export default function EditPerfil(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(editUser(infoUser.id, input));
+    console.log("ACAAAA: ", input);
+    dispatch(editUser(infoUser[0].id, input));
+    let user = infoUser;
+    user[0].city = input.city;
+    user[0].name = input.name;
+    user[0].description = input.description;
+    window.localStorage.setItem("User", JSON.stringify(user));
+    alert("perfil actualizado");
+    history.push("/perfilPropietario");
   }
 
-  // useEffect(() => {
-  //   if (!Object.entries(infoUser).length) {
-  //     dispatch(getInfoUser(props.match.params.id));
-  //   } else {
-  //     setInput({
-  //       ciudad: infoUser.property.city.name,
-  //       img: [...infoUser.property.propertyImages],
-  //       description: infoUser.description,
-  //       premium: infoUser.premium,
-  //     });
-  //   }
-  // }, [dispatch, props.match.params.id, infoUser]);
-
-  //aa
   return (
     <Box>
       <NavBarForms />
@@ -63,7 +79,7 @@ export default function EditPerfil(props) {
         <Input type="text" name={"name"} value={input.name} onChange={handleEdit} />
 
         <FormLabel htmlFor="">Ciudad: </FormLabel>
-        <Input type="text" name={"ciudad"} value={input.ciudad} onChange={handleEdit} />
+        <Input type="text" name={"city"} value={input.city} onChange={handleEdit} />
 
         <FormLabel htmlFor="">Descripción: </FormLabel>
         <Input type="text" name={"description"} value={input.description} onChange={handleEdit} />
@@ -77,7 +93,7 @@ export default function EditPerfil(props) {
           <UserUploadImg input={input} setInput={setInput} />
         </Box>
       </Box>
-      <Button type="submit" value="enviar" onClick={handleSubmit}>
+      <Button type="submit" value="enviar" onClick={handleSubmit} disabled={disabledButton}>
         Confirmar cambios
       </Button>
     </Box>
