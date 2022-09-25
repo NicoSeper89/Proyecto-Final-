@@ -68,7 +68,7 @@ export default function Card({
           )}
         </Box>
         <Image
-          src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
+          src={img[img.length - 1] ? img[img.length - 1].url : imgNotAvailable}
           alt="Img not found"
           className={style.img}
         />
@@ -76,13 +76,15 @@ export default function Card({
       <Flex direction={"row"} justifyContent={"space-between"} p={"5px"} h={"30px"}>
         {/* que el corazon aparezca solo en las publicaciones que no son mias */}
         {/* <Link to={"/"} p={"0"}> */}
-        {/* {idUser === infoUser[1].userId ? (
-          <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
-        ) : ( */}
-        <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav}>
-          <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
-        </Button>
-        {/* )} */}
+        {idUser === infoUser[1].userId ? (
+          <Tag size={"sm"} variant="solid" backgroundColor={"grey.300"}  w={"5rem"}>
+            Propietario
+          </Tag>
+        ) : (
+          <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav} colorScheme={"transparent"}>
+            <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
+          </Button>
+        )}
         {/* </Link> */}
 
         <Link to={infoUser ? `/details/${id}` : "/redirectRegister"} display={"flex"}>
