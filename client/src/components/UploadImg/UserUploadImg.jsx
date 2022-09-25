@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { imgUserUpload } from "../../redux/actions";
 
-export default function UserUploadImg({ inputPropiedad, setInputPropiedad }) {
+export default function UserUploadImg({ userId }) {
   const dispatch = useDispatch();
   const [fileInput, setFileInput] = useState("");
   const [preview, setPreview] = useState("");
@@ -12,12 +12,12 @@ export default function UserUploadImg({ inputPropiedad, setInputPropiedad }) {
   // const [disableButtonUploadImg, setDisableButtonUploadImg] = useState(true);
 
   // useEffect(() => {
-  //   if (inputPropiedad.img.length >= 7) {
+  //   if (input.img) {
   //     setDisableButtonUploadImg(true);
   //   } else {
   //     setDisableButtonUploadImg(false);
   //   }
-  // }, [inputPropiedad.img.length, setDisableButtonUploadImg]);
+  // }, [input.img, setDisableButtonUploadImg]);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -35,11 +35,10 @@ export default function UserUploadImg({ inputPropiedad, setInputPropiedad }) {
     axios
       .post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
       .then((resp) => {
-        dispatch(imgUserUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id }));
-        setInputPropiedad({
-          ...inputPropiedad,
-          img: [...inputPropiedad.img, { url: resp.data.secure_url, cloudId: resp.data.public_id }],
-        });
+        console.log("INFOOO: ", resp.data);
+        dispatch(
+          imgUserUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id, userId: userId })
+        );
       })
       .catch((err) => console.log(err))
       .finally(
@@ -61,17 +60,55 @@ export default function UserUploadImg({ inputPropiedad, setInputPropiedad }) {
   };
 
   return (
-    <Box>
-      <Flex>
-        {preview ? (
-          <Image maxH={"98%"} src={preview} alt="chosen" />
-        ) : successMsg ? (
-          <Text>{successMsg}</Text>
-        ) : (
-          <Text color={"gray.500"}>Ningún archivo seleccionado...</Text>
-        )}
+    <Flex
+      border={"2px"}
+      gap={"0.6rem"}
+      borderColor={"gray.200"}
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent={"flex-start"}
+      alignItems={"center"}
+      position={"relative"}
+      p=".9rem"
+    >
+      <Text
+        alignSelf={"flex-start"}
+        ml="4%"
+        fontWeight={"semiBold"}
+        fontSize="1.2rem"
+        color="gray.500"
+      >
+        Imagen de perfil
+      </Text>
+      <Flex
+        flexDirection={"column"}
+        w={"92%"}
+        border={"2px"}
+        gap={"2rem"}
+        borderColor={"gray.200"}
+        p={"1.4rem"}
+      >
+        <Flex justifyContent={"center"} alignItems={"center"} w={"100%"} h={"25rem"}>
+          {preview ? (
+            <Image maxH={"98%"} src={preview} alt="chosen" />
+          ) : successMsg ? (
+            <Text>{successMsg}</Text>
+          ) : (
+            <Text color={"gray.500"}>Ningún archivo seleccionado...</Text>
+          )}
+        </Flex>
       </Flex>
-      <FormLabel>
+
+      <FormLabel
+        display={"flex"}
+        alignItems={"center"}
+        alignSelf={"center"}
+        w={"95%"}
+        border={"2px"}
+        borderColor={"gray.200"}
+        p={".7rem"}
+        justifyContent={"center"}
+      >
         <Input
           mt={".6rem"}
           color={"gray.600"}
@@ -93,6 +130,6 @@ export default function UserUploadImg({ inputPropiedad, setInputPropiedad }) {
           Agregar
         </Button>
       </FormLabel>
-    </Box>
+    </Flex>
   );
 }

@@ -7,9 +7,12 @@ import { Link } from "react-router-dom";
 import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFav } from "../../redux/actions";
+import Select from "../SelectTypeUser/Select";
+import AlertCard from "./AlertCard";
 
 export default function Card({
   id,
+  idUser,
   img,
   precio,
   ciudad,
@@ -23,6 +26,7 @@ export default function Card({
   // const property = {};
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
+  const publicationsUser = useSelector((state) => state.publicationsUser);
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
 
@@ -72,12 +76,16 @@ export default function Card({
       <Flex direction={"row"} justifyContent={"space-between"} p={"5px"} h={"30px"}>
         {/* que el corazon aparezca solo en las publicaciones que no son mias */}
         {/* <Link to={"/"} p={"0"}> */}
+        {/* {idUser === infoUser[1].userId ? (
+          <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
+        ) : ( */}
         <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav}>
           <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
         </Button>
+        {/* )} */}
         {/* </Link> */}
 
-        <Link to={user2 ? "/details/" + id : "/"} display={"flex"}>
+        <Link to={infoUser ? `/details/${id}` : "/redirectRegister"} display={"flex"}>
           <Tag size={"sm"} variant="solid" backgroundColor={"teal"} marginLeft={"15px"} w={"5rem"}>
             + Detalles
           </Tag>

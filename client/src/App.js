@@ -19,6 +19,7 @@ import PaymentFail from "./components/Payment/PaymentFail.jsx";
 import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
+import AlertCard from "./components/Cards/AlertCard";
 
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
@@ -52,13 +53,15 @@ function App() {
         <Route exact path="/details/:id" component={Detail} />
         <Route exact path="/updatePublicaction/:id" component={UpdatePost} />
         <Route exact path="/updatePerfil/:id" component={EditPerfil} />
-        <Route
-          exact
-          path="/perfilPropietario"
-          render={() => {
-            return infoUser ? <PerfilPropietario /> : <Redirect to="*" />;
-          }}
-        />
+        <Route exact path="/perfilPropietario" component={PerfilPropietario} />
+        <Route exact path="/redirectRegister" component={AlertCard} />
+        {/* //<Route
+        //   exact
+        //   path="/perfilPropietario"
+        //   render={() => {
+        //     return infoUser ? <PerfilPropietario /> : <Redirect to="*" />;
+        //   }}
+        // /> */}
 
         {/* <Route exact path="/perfilInquilino" render={() => {
           return user2 && user2[0].typeOfUserId === 2? <PerfilInquilino/> :

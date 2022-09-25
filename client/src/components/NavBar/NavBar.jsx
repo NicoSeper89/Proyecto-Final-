@@ -7,7 +7,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 // import SearchBar from "../Search/SearchBar";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button, Flex, Image, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Tooltip,
+} from "@chakra-ui/react";
 import "./NavBar.module.css";
 import { useSelector } from "react-redux";
 
@@ -48,6 +58,9 @@ const NavBar = () => {
   const detallesUser = () => {
     history.push("/perfilPropietario");
   };
+
+  const activeColor = "green.500";
+  const inactiveColor = "gray.400";
 
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
@@ -161,13 +174,60 @@ const NavBar = () => {
           {/* <SearchBar /> */}
 
           <Menu>
-            <MenuButton aria-label="Options" variant="outline" px={"1rem"} py={".5rem"}>
-              <FontAwesomeIcon icon={faCircleUser} className={style.img} />
-            </MenuButton>
+            <Box position={"relative"} display="flex" alignItems="flex-end">
+              <MenuButton aria-label="Options" variant="outline" px={"1rem"} py={".5rem"}>
+                {!user2 && (
+                  <Box position={"relative"} display="flex" alignItems="flex-end">
+                    <FontAwesomeIcon icon={faCircleUser} className={style.img} />
+                    <Tooltip label={`Status: Inactive`} textTransform="capitalize">
+                      <Box
+                        as="div"
+                        h="12px"
+                        w="12px"
+                        position="absolute"
+                        bgColor={inactiveColor}
+                        borderRadius="50%"
+                      />
+                    </Tooltip>
+                  </Box>
+                )}
+                {user2 && (
+                  <Box position={"relative"} display="flex" alignItems="flex-end">
+                    <FontAwesomeIcon icon={faCircleUser} className={style.img} />
+                    <Tooltip label={`Status: Active`} textTransform="capitalize">
+                      <Box
+                        as="div"
+                        h="12px"
+                        w="12px"
+                        position="absolute"
+                        bgColor={activeColor}
+                        borderRadius="50%"
+                        // _before={{
+                        //   content: "''",
+                        //   position: 'relative',
+                        //   display: 'block',
+                        //   width: '300%',
+                        //   height: '300%',
+                        //   boxSizing: 'border-box',
+                        //   marginLeft: '-100%',
+                        //   marginTop: '-100%',
+                        //   borderRadius: '50%',
+                        //   bgColor: activeColor,
+                        //   animation: `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
+                        // }}
+                        // _after={{
+                        //   animation: `2.25s ${pulseDot} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
+                        // }}
+                      />
+                    </Tooltip>
+                  </Box>
+                )}
+              </MenuButton>
+            </Box>
             <MenuList>
               {!user2 && <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem>}
-              {user2 && <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>}
               {user2 && <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>}
+              {user2 && <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>}
             </MenuList>
           </Menu>
         </Box>

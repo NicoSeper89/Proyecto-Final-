@@ -7,21 +7,31 @@ import logoImg from "../../Image/Logo LookHouse.png";
 import { Box, Button, Flex, Image, useColorModeValue } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clearFilters, getPublicationsDetail } from "../../redux/actions";
+import { clearFilters, getInfoUser, getPublicationsDetail } from "../../redux/actions";
 
 export default function NavBarForms() {
   const history = useHistory();
   const dispatch = useDispatch();
-  
 
-  const detailsPub = useSelector((state) => state.detail)
-  
+  const detailsPub = useSelector((state) => state.detail);
+  const infoUser = useSelector((state) => state.infoUser);
+
   function handleClick(e) {
     e.preventDefault();
     dispatch(clearFilters());
-    const rutaArr = history.location.pathname.split("/")
-    if(rutaArr[1] === "updatePublicaction") { if (!detailsPub) dispatch(getPublicationsDetail(rutaArr[2]))
-                                              return history.push(`/details/${rutaArr[2]}`)}
+    const rutaArr = history.location.pathname.split("/");
+    if (rutaArr[1] === "updatePublicaction") {
+      if (!detailsPub) dispatch(getPublicationsDetail(rutaArr[2]));
+      return history.push(`/details/${rutaArr[2]}`);
+    }
+    if (rutaArr[1] === "updatePerfil") {
+      if (!infoUser) dispatch(getInfoUser());
+      return history.push(`/perfilPropietario`);
+    }
+    if (rutaArr[1] === "details") {
+      if (!infoUser) dispatch(getInfoUser());
+      return history.push(`/perfilPropietario`);
+    }
 
     history.push("/");
   }
