@@ -249,7 +249,7 @@ export function imgUpload(value) {
 export function imgUserUpload(value) {
   return async function (dispatch) {
     try {
-      await axios.post("/publication/imageUser", value);
+      await axios.post("/user/imageUser", value);
       return dispatch({
         type: ULPOAD_IMG_USER,
       });

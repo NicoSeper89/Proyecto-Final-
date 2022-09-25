@@ -30,20 +30,21 @@ export default function CardPerfil({ id, img, precio, ciudad, premium }) {
       h="200px"
       zIndex={"2"}
       className={style.container}
+      borderRadius={"0px"}
       m="0px"
       marginBottom={"15px"}
-      justifyContent={"flex-start"}
+      justifyContent={"space-between"}
       alignContent={"space-around"}
-      p={"5px"}
+      p={"10px"}
     >
-      <Image
-        h="180px"
-        w="150 "
-        src={img[0] ? img[0].url : imgNotAvailable}
-        alt="Img not found"
-        border={"1px solid"}
-        borderColor="black"
-      />
+      <Box h="180px" w="300px" overflow={"hidden"}>
+        <Image
+          src={img[0] ? img[0].url : imgNotAvailable}
+          alt="Img not found"
+          // border={"1px solid"}
+          // borderColor="black"
+        />
+      </Box>
       <Box display={"flex"} justifyContent={"flex-star"} position="absolute">
         {premium === true ? (
           <Badge

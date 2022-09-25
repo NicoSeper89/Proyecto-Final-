@@ -51,7 +51,6 @@ export default function EditPerfil(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("ACAAAA: ", input);
     dispatch(editUser(infoUser[0].id, input));
 
     let user = infoUser;
