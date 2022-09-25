@@ -54,7 +54,6 @@ export default function Detail(props, id) {
     setTimeout(()=>{
       setShowMap(true)
     }, 1000)
-  }, [dispatch, props.match.params.id]);
 
     if (!myUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
