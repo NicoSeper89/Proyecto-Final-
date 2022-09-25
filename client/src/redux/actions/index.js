@@ -175,7 +175,7 @@ export function setFav(id, pubId) {
   };
 }
 //Esto quita una publicacion en favoritos del usuario
-export function setFav(id, pubId) {
+export function removeFav(id, pubId) {
   return async function (dispatch) {
     try {
       await axios.put(`/user/removeFav?userId=${id}&pubId=${pubId}`, {});
