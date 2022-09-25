@@ -28,6 +28,7 @@ import {
   GET_PUBLICATION_USER,
   GET_FAVORITES_USER,
   SET_FAVORITE,
+  REMOVE_FAVORITE,
   RANK_USER
 } from "../actions";
 
@@ -246,6 +247,10 @@ export default function rootReducer(state = initialState, action) {
         favoritesUser: action.payload,
       };
     case SET_FAVORITE:
+      return {
+        ...state,
+      };
+      case REMOVE_FAVORITE:
       return {
         ...state,
       };
