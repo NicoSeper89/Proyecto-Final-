@@ -359,9 +359,10 @@ export function updatedProp(id, inputPropiedad) {
 export function editUser(id, input) {
   return async function (dispatch) {
     try {
-      await axios.put(`/user/editUser/${id}`, input);
+      let res = await axios.put(`/user/editUser/${id}`, input);
       return dispatch({
         type: EDIT_USER,
+        payload: res.data,
       });
     } catch (error) {
       console.log(error);
