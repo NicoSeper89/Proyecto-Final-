@@ -24,7 +24,7 @@ import {
   faCity,
   faLocationDot,
   faStar,
-  faMailBulk
+  faMailBulk,
   // faTelegram,
   // faFacebook,
 } from "@fortawesome/free-solid-svg-icons";
@@ -33,7 +33,7 @@ import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
-import { Box, Text, Flex, Button, Heading, Image, IdProvider } from "@chakra-ui/react";
+import { Box, Text, Flex, Button, Heading, Image, SimpleGrid } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
@@ -51,7 +51,7 @@ export default function Detail(props, id) {
   useEffect(() => {
 
     dispatch(getPublicationsDetail(props.match.params.id));
-    setTimeout(()=>{
+    setTimeout(() => {
       setShowMap(true)
     }, 1000)
 
@@ -85,7 +85,7 @@ export default function Detail(props, id) {
         position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
-          <Box w={"100%"} p={"1rem"}>
+          <Flex flexDirection={"column"} justifyContent={"flex-start"} alignItems={"flex-start"} w={"100%"} p={"1rem"} gap={"2rem"} >
             <Flex alignItems={"flex-start"} justifyContent={"flex-start"} >
               <Flex
                 flexDirection={"column"}
@@ -93,77 +93,39 @@ export default function Detail(props, id) {
                 alignItems={"flex-start"}
                 justifyContent={"space-between"}
                 p={"0rem .8rem"}
+                w={"45rem"}
                 position={"relative"}
               >
                 {miStateDetail.property.propertyImages.length > 0 ?
-                  <Box position={"relative"} width={"40rem"}>
+                  <Box w={"42rem"} position={"relative"} >
                     <ImageSlider slides={miStateDetail.property.propertyImages} />
                   </Box> :
-                  <Image src={imgNotAvailable} width={"40rem"} />
+                  <Image src={imgNotAvailable} />
                 }
               </Flex>
               <Flex
-                w={"100%"}
-                gap={"1rem"}
                 justifyContent="flex-start"
                 flexDirection={"column"}
                 alignItems={"center"}
+                gap={"15px"}
+                w={"500px"}
               >
-                {/* <Box fontSize={"2rem"}>{(miStateDetail.property.premium) ? <Text color={"yellowgreen"}>{"Usuario Premium"}</Text> : <Text color={"gray.400"}>{"Usuario Free"}</Text>}</Box> */}
-
-                <Flex
-                  w={"100%"}
-                  justifyContent="flex-start"
-                  flexDirection={"column"}
-                  alignItems={"center"}
-                >
-                  <Box
+                <Flex width={"100%"} justifyContent="flex-start" flexDirection={"column"} alignItems={"center"}>
+                  <Box width={"100%"}
                     borderRadius={"0.5rem 0.5rem 0rem 0rem"}
-                    width={"90%"}
+
                     p={".3rem 0rem"}
                     textAlign={"center"}
-                    bg={"facebook.300"}
-                  >
-                    <Heading color={"white"}>Descripción</Heading>
-                  </Box>
-
-                  <Box
-                    borderRadius={"0rem 0rem 0.5rem 0.5rem"}
-                    flexDirection={"column"}
-                    gap={".5rem"}
-                    color={"gray.600"}
-                    width={"90%"}
-                    display={"flex"}
-                    p={"1rem"}
-                    borderWidth="1px"
-                    borderColor="gray.200"
-                  >
-                    <Text>{miStateDetail.description}</Text>
-                  </Box>
-                </Flex>
-
-                <Flex
-                  w={"100%"}
-                  justifyContent="flex-start"
-                  flexDirection={"column"}
-                  alignItems={"center"}
-                >
-                  <Box
-                    borderRadius={"0.5rem 0.5rem 0rem 0rem"}
-                    width={"90%"}
-                    p={".3rem 0rem"}
-                    textAlign={"center"}
-                    bg={"facebook.300"}
+                    bg={"#F6AD55"}
                   >
                     <Heading color={"white"}>Detalles</Heading>
                   </Box>
-
                   <Box
                     borderRadius={"0rem 0rem 0.5rem 0.5rem"}
                     flexDirection={"column"}
                     gap={".5rem"}
                     color={"gray.600"}
-                    width={"90%"}
+                    width={"100%"}
                     display={"flex"}
                     p={"1rem"}
                     borderWidth="1px"
@@ -196,79 +158,69 @@ export default function Detail(props, id) {
                       <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faRulerCombined} />
-                      <Text>Superficie: {miStateDetail.property.surface}m²</Text>
-                    </Flex>
-
-                    <Flex alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faCalendar} />
-                      <Text>Antigüedad: {miStateDetail.property.age} Años</Text>
-                    </Flex>
-
-                    <Flex alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faPaw} />
-                      Mascotas:
-                      {miStateDetail.property.pets === true ? (
-                        <FontAwesomeIcon icon={faCheck} />
-                      ) : (
-                        <FontAwesomeIcon icon={faX} />
-                      )}
-                    </Flex>
-
                     <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
 
-                    <Flex alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faDoorOpen} />
-                      <Text>Ambientes: {miStateDetail.property.environments}</Text>
-                    </Flex>
-
-                    <Flex alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faBed} />
-                      <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
-                    </Flex>
-
-                    <Flex alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faToilet} />
-                      <Text>Baños: {miStateDetail.property.bathrooms}</Text>
-                    </Flex>
-
-                    <Flex alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faWarehouse} />
-                      <Text>Garage: {miStateDetail.property.garage}</Text>
-                    </Flex>
-
-                    <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
-
-                    {miStateDetail.property.services.map((e, i) => (
-                      <Flex key={i} alignItems={"center"} gap={".4rem"}>
-                        <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
+                    <SimpleGrid columns={2} flexWrap={"wrap"} rowGap={"2px"}>
+                      <Flex alignItems={"center"} gap={".4rem"}>
+                        <FontAwesomeIcon icon={faDoorOpen} />
+                        <Text>Ambientes: {miStateDetail.property.environments}</Text>
                       </Flex>
-                    ))}
+
+                      <Flex alignItems={"center"} gap={".4rem"}>
+                        <FontAwesomeIcon icon={faRulerCombined} />
+                        <Text>Superficie: {miStateDetail.property.surface}m²</Text>
+                      </Flex>
+
+                      <Flex alignItems={"center"} gap={".4rem"}>
+                        <FontAwesomeIcon icon={faBed} />
+                        <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
+                      </Flex>
+
+                      <Flex alignItems={"center"} gap={".4rem"}>
+                        <FontAwesomeIcon icon={faCalendar} />
+                        <Text>Antigüedad: {miStateDetail.property.age} {(miStateDetail.property.age === 1) ? "Año" : "Años"}</Text>
+                      </Flex>
+
+                      <Flex alignItems={"center"} gap={".4rem"}>
+                        <FontAwesomeIcon icon={faToilet} />
+                        <Text>Baños: {miStateDetail.property.bathrooms}</Text>
+                      </Flex>
+
+                      <Flex alignItems={"center"} gap={".4rem"}>
+                        <FontAwesomeIcon icon={faPaw} />
+                        Mascotas:
+                        {miStateDetail.property.pets === true ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : (
+                          <FontAwesomeIcon icon={faX} />
+                        )}
+                      </Flex>
+
+                      <Flex alignItems={"center"} gap={".4rem"}>
+                        <FontAwesomeIcon icon={faWarehouse} />
+                        <Text>Garage: {miStateDetail.property.garage}</Text>
+                      </Flex>
+
+                    </SimpleGrid>
+
+                    <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
+
+                    <Flex gap={"10px"}>
+                      {miStateDetail.property.services.map((e, i) => (
+                        <Flex key={i} alignItems={"center"} gap={".2rem"}>
+                          <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
+                        </Flex>
+                      ))}
+                    </Flex>
                   </Box>
                 </Flex>
-
-                {/* <Box>
-                DATOS PROPIETARIO
-                <FontAwesomeIcon icon={faUser} />
-                <FontAwesomeIcon icon={faCircleUser} />
-                <FontAwesomeIcon icon={faPhone} />
-                <FontAwesomeIcon icon={faComment} />
-                <Text>{miUseerState[0].name}</Text>
-                <Text>{miUseerState.mail}</Text>
-                <Text>{miUseerState[0].rating}</Text>
-                <Text>{miUseerState[0].description}</Text>
-                <Text>service: {miStateDetail.property.service.name}</Text>
-              </Box> */}
-          
-              </Flex>
-              <Box>
+                <Flex justifyContent="flex-start" flexDirection={"column"} alignItems={"center"}>
                   <Box
-                    borderRadius={"0.5rem 0.5rem 0rem 0rem"}
-                    width={"90%"}
+                    width={"100%"}
                     boxShadow='dark-lg' p='6' rounded='md'
                     textAlign={"center"}
-                    bg={"yellow.300"}
+                    bg={"#F6AD55"}
+                    borderRadius={"0.5rem 0.5rem 0rem 0rem"}
                   >
                     <Heading color={"white"}>Datos del Propietario</Heading>
                   </Box>
@@ -277,12 +229,12 @@ export default function Detail(props, id) {
                     flexDirection={"column"}
                     gap={".5rem"}
                     color={"gray.600"}
-                    width={"90%"}
+                    width={"100%"}
                     display={"flex"}
                     p={"1rem"}
                     borderWidth="1px"
                     borderColor="gray.200"
-                    bg={"yellow.100"}
+                    bg={"yellow.50"}
                   >
                     <Text><FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}</Text>
                     <Text><FontAwesomeIcon icon={faStar} /> {miStateDetail.user.rating}</Text>
@@ -307,7 +259,43 @@ export default function Detail(props, id) {
                       <Text> <FontAwesomeIcon icon={faComment} /> {miStateDetail.user.description}</Text>
                     </Box>
                   </Box>
-                </Box>
+                </Flex>
+              </Flex>
+            </Flex>
+            <Flex gap={"3rem"} justifyContent={"flex-start"} alignItems={"flex-start"} >
+              <Flex w={"45rem"}
+                  justifyContent="flex-start"
+                  flexDirection={"column"}
+                  alignItems={"center"}>
+
+                  <Box
+                    borderRadius={"0.5rem 0.5rem 0rem 0rem"}
+                    width={"100%"}
+                    p={".3rem 0rem"}
+                    textAlign={"center"}
+                    bg={"#F6AD55"}
+                  >
+                    <Heading color={"white"}>Descripción</Heading>
+                  </Box>
+
+                  <Box
+                    borderRadius={"0rem 0rem 0.5rem 0.5rem"}
+                    flexDirection={"column"}
+                    gap={".5rem"}
+                    color={"gray.600"}
+                    width={"100%"}
+                    display={"flex"}
+                    p={"1rem"}
+                    borderWidth="1px"
+                    borderColor="gray.200"
+                  >
+                    <Text>{miStateDetail.description}</Text>
+                  </Box>
+                </Flex>
+              {
+                showMap &&
+                <Maps position={miStateDetail} />
+              }
             </Flex>
             {(myUser[0].id === miStateDetail.userId) ?
               <Flex>
@@ -324,16 +312,12 @@ export default function Detail(props, id) {
                   Borrar publicación
                 </Button>
               </Flex> : null}
-          </Box>
+          </Flex>
         ) : (
           <Loading />
         )}
       </Flex>
-      <AlertDelete alertSubmit={alertSubmit}/>
-      {
-        showMap &&
-      <Maps position={miStateDetail}/>
-      }
+      <AlertDelete alertSubmit={alertSubmit} />
       <Footer />
     </>
   );
