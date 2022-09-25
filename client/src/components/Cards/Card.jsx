@@ -6,9 +6,12 @@ import { faHeart, faToilet, faBed, faDoorOpen, faPaw } from "@fortawesome/free-s
 import { Link } from "react-router-dom";
 import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFav } from "../../redux/actions";
+import { getFavsUser, setFav } from "../../redux/actions";
 import Select from "../SelectTypeUser/Select";
 import AlertCard from "./AlertCard";
+import { useEffect } from "react";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 export default function Card({
   id,
@@ -27,27 +30,47 @@ export default function Card({
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
   const publicationsUser = useSelector((state) => state.publicationsUser);
+  const favoritesUser = useSelector((state) => state.favoritesUser);
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
+
+  useEffect(() => {
+    dispatch(getFavsUser(infoUser[0].id));
+  }, [dispatch]);
 
   const handleClickFav = () => {
     dispatch(setFav(infoUser[1].userId, id));
   };
 
+  const isFav = favoritesUser.some((fav) => fav.id === id);
+
   return (
     <Box className={style.container} zIndex={"2"}>
-      <Box position="relative">
-        {/* <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}>
-        <Carousel thumbWidth={"13%"} infiniteLoop>
-        {img.map((s) => {
+      <Box position="relative" overflow={"hidden"} w={"100%"} h={"230px"}>
+        {/* <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}> */}
+        <Carousel
+          thumbWidth={"13%"}
+          h={"230px"}
+          infiniteLoop
+          borderBottom={"0.2px solid rgb(126, 125, 125)"}
+        >
+          {img.map((s) => {
             return (
               <Box>
-                <Image src={s.url ? s.url : imgNotAvailable} key={s.id} alt="Img not found" />
+                <Image
+                  src={s.url ? s.url : imgNotAvailable}
+                  key={s.id}
+                  alt="Img not found"
+                  h={"230px"}
+                  backgroundSize={"cover"}
+                  backgroundRepeat={"no-repeat"}
+                  backgroundPosition={"center"}
+                />
               </Box>
             );
           })}
-          </Carousel>
-        </Box> */}
+        </Carousel>
+        {/* </Box> */}
         <Box display={"flex"} justifyContent={"flex-end"}>
           {premium === true ? (
             <Badge
@@ -67,11 +90,12 @@ export default function Card({
             <></>
           )}
         </Box>
-        <Image
+        {/* <Image
           src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
           alt="Img not found"
-          className={style.img}
-        />
+          // className={style.img}
+          borderBottom={"0.2px solid rgb(126, 125, 125)"}
+        />  */}
       </Box>
       <Flex direction={"row"} justifyContent={"space-between"} p={"5px"} h={"30px"}>
         {/* que el corazon aparezca solo en las publicaciones que no son mias */}
@@ -79,8 +103,19 @@ export default function Card({
         {/* {idUser === infoUser[1].userId ? (
           <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
         ) : ( */}
+
         <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav}>
-          <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
+          {isFav ? (
+            <FontAwesomeIcon
+              className={style.containerFav}
+              h={"20px"}
+              icon={faHeart}
+              color={"orange"}
+            />
+          ) : (
+            <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
+          )}
+          {/* <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} /> */}
         </Button>
         {/* )} */}
         {/* </Link> */}

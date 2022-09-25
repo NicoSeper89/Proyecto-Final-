@@ -58,6 +58,7 @@ export default function NavBarForms() {
               onClick={(e) => {
                 handleClick(e);
               }}
+              mr={"10px"}
               transition="all 0.2s"
               borderColor={"#BEBCBC"}
               borderRadius="md"
