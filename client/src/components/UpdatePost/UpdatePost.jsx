@@ -146,10 +146,9 @@ const UpdatePost = (props) => {
         alignItems={"center"}
         justifyContent={"flex-start"}
         color={"gray.700"}
-        p={"1rem 0rem"}
         bg={"blackAlpha.200"}
       >
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"70%"} p={"1rem 0rem"}>
+        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"70%"} p={"1rem 0rem"} m={"1rem"}>
           <Heading
             color={"white"}
             textShadow={"gray .1rem .1rem .2rem"}
@@ -488,6 +487,23 @@ const UpdatePost = (props) => {
                 </CheckboxGroup>
               </FormLabel>
 
+              <FormLabel display={"flex"} flexDirection="column" p="0rem .9rem" gap={".7rem"} >
+                <Text fontWeight={"semiBold"} fontSize="1.15rem" color="gray.500">Permite</Text>
+                <CheckboxGroup colorScheme="green">
+                  <Stack display={"flex"} justifyContent={"flex-start"} gap={".6rem"} flexWrap={"wrap"} spacing={[1, 5]} direction={["column", "row"]} fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText">
+                      <Checkbox isChecked={inputPropiedad.pets} fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText" name={"pets"}
+                                                                                            onChange={(e) =>
+                                                                                              setInputPropiedad({ 
+                                                                                                ...inputPropiedad,
+                                                                                                [e.target.name]: e.target.checked === true,
+                                                                                              })
+                                                                                            }>
+                        Mascotas
+                      </Checkbox>
+                  </Stack>
+                </CheckboxGroup>
+              </FormLabel>
+
               <Box
                 display={"flex"}
                 flexDirection={"column"}
@@ -539,8 +555,9 @@ const UpdatePost = (props) => {
             </Box>
           </Box>
         </Flex>
-        
-          <AlertSubmitUpdate alertSubmit={alertSubmit} />
+        <Box position={"absolute"}display={!alertSubmit[0] ? "none" : "flex"} bg={"blackAlpha.100"} w={"full"} h={"full"}>
+          <AlertSubmitUpdate premium={publication.premium} alertSubmit={alertSubmit} />
+        </Box>
       </Box>
     </>
   );

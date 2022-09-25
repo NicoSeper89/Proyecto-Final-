@@ -96,10 +96,10 @@ export default function Detail(props, id) {
                 position={"relative"}
               >
                 {miStateDetail.property.propertyImages.length > 0 ?
-                  <Box position={"relative"} width={"50rem"}>
+                  <Box position={"relative"} width={"40rem"}>
                     <ImageSlider slides={miStateDetail.property.propertyImages} />
                   </Box> :
-                  <Image src={imgNotAvailable} />
+                  <Image src={imgNotAvailable} width={"40rem"} />
                 }
               </Flex>
               <Flex

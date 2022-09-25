@@ -40,12 +40,12 @@ export default function UpdateImgPub({ setInfoFormProp, infoFormProp }) {
       .then((resp) => {
         dispatch(imgUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id }))
         setInfoFormProp({ ...infoFormProp, propImg: [...infoFormProp.propImg, { url: resp.data.secure_url, cloudId: resp.data.public_id }] })
+        setSuccessMsg('Image uploaded successfully')
       })
       .catch((err) => console.log(err))
       .finally(
         setFileInput(''),
         setPreview(''),
-        setSuccessMsg('Image uploaded successfully'),
         setTimeout(() => { setSuccessMsg('') }, 2000),
       )
   }
