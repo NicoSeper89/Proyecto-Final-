@@ -41,50 +41,58 @@ export default function Card({
     if (infoUser) {
       dispatch(getFavsUser(infoUser[0].id));
     }
-    console.log('useEffect')
+    console.log("useEffect");
   }, [dispatch, boton]);
 
   const handleClickFav = () => {
     if (infoUser) {
       dispatch(setFav(infoUser[1].userId, id));
-      if (boton === false) { setBoton(true) }
-      else if (boton === true) { setBoton(false) }
+      if (boton === false) {
+        setBoton(true);
+      } else if (boton === true) {
+        setBoton(false);
+      }
     }
   };
   const handleClickRemoveFav = () => {
     dispatch(removeFav(infoUser[1].userId, id));
     /* dispatch(getFavsUser(infoUser[0].id)); */
-    if (boton === false) { setBoton(true) }
-    else if (boton === true) { setBoton(false) }
+    if (boton === false) {
+      setBoton(true);
+    } else if (boton === true) {
+      setBoton(false);
+    }
     /* window.location.reload() */
   };
   const favState = () => {
     let result = false;
     if (infoUser) {
-      if (!favoritesUser.filter(e => e.id === id).length > 0) {
-        result = true;/* devuelvo true puedo favear */
+      if (!favoritesUser.filter((e) => e.id === id).length > 0) {
+        result = true; /* devuelvo true puedo favear */
       }
     }
     if (!infoUser) {
-      result = true
+      result = true;
     }
-    return result
-  }
+    return result;
+  };
   /*   const isFav = favoritesUser.some((fav) => fav.id === id); */
 
   return (
     <Box className={style.container} zIndex={"2"}>
       <Box position="relative" overflow={"hidden"} w={"100%"} h={"230px"}>
         {/* <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}> */}
-        {!img[0] ? <Image
-          src={imgNotAvailable}
-          alt="Img not found"
-          h={"230px"}
-          backgroundSize={"cover"}
-          backgroundRepeat={"no-repeat"}
-          backgroundPosition={"center"}
-        />
-          : <Carousel
+        {!img[0] ? (
+          <Image
+            src={imgNotAvailable}
+            alt="Img not found"
+            h={"230px"}
+            backgroundSize={"cover"}
+            backgroundRepeat={"no-repeat"}
+            backgroundPosition={"center"}
+          />
+        ) : (
+          <Carousel
             thumbWidth={"13%"}
             h={"230px"}
             infiniteLoop
@@ -105,7 +113,8 @@ export default function Card({
                 </Box>
               );
             })}
-          </Carousel>}
+          </Carousel>
+        )}
         {/* </Box> */}
         <Box display={"flex"} justifyContent={"flex-end"}>
           {premium === true ? (
@@ -139,15 +148,26 @@ export default function Card({
         {/* que el corazon aparezca solo en las publicaciones que no son mias */}
         {/* <Link to={"/"} p={"0"}> */}
 
-        {(infoUser && idUser === infoUser[1].userId) ? (
+        {infoUser && idUser === infoUser[1].userId ? (
           <Tag size={"sm"} variant="solid" backgroundColor={"grey.300"} w={"5rem"}>
             Propietario
           </Tag>
-        ) : (favState() ?
-          <FontAwesomeIcon cursor={'pointer'} onClick={handleClickFav} className={style.containerFav} h={"20px"} icon={faHeart} />
-          :
-          <FontAwesomeIcon cursor={'pointer'} onClick={handleClickRemoveFav} className={style.containerFavRed} h={"20px"} icon={faHeart} />
-
+        ) : favState() ? (
+          <FontAwesomeIcon
+            cursor={"pointer"}
+            onClick={handleClickFav}
+            className={style.containerFav}
+            h={"20px"}
+            icon={faHeart}
+          />
+        ) : (
+          <FontAwesomeIcon
+            cursor={"pointer"}
+            onClick={handleClickRemoveFav}
+            className={style.containerFavRed}
+            h={"20px"}
+            icon={faHeart}
+          />
         )}
 
         {/* </Link> */}

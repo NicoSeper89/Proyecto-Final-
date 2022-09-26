@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -33,29 +33,34 @@ export default function PerfilPropietario() {
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.infoUser);
-  const allUserInfo = useSelector(state => state.allUserInfo)
+  const allUserInfo = useSelector((state) => state.allUserInfo);
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const favoritesUser = useSelector((state) => state.favoritesUser);
   const imageUser = useSelector((state) => state.imageUser);
   /* const [infoUser,setInfoUser] = useState(user) */
   const infoUser = JSON.parse(window.localStorage.getItem("User"));
 
-
   const handleEdit = () => {
     history.push("/updatePerfil/" + infoUser[0].id);
   };
 
   useEffect(() => {
-    console.log('soy',infoUser)
+    console.log("soy", infoUser);
     dispatch(getPubs(infoUser[0].id));
     dispatch(getFavsUser(infoUser[0].id));
     dispatch(getUserImage(infoUser[0].id));
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
-      dispatch(getUserInfo(infoUser[0].id))
+      dispatch(getUserInfo(infoUser[0].id));
     }
   }, [dispatch]);
+
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
 
   return (
     <Box>
@@ -85,7 +90,7 @@ export default function PerfilPropietario() {
             </Flex>
             <Avatar
               size={"2xl"}
-              src={imageUser? imageUser : foto}
+              src={imageUser ? imageUser : foto}
               alt={"Avatar Alt"}
               mb={4}
               pos={"relative"}

@@ -26,7 +26,7 @@ const AlertDelete = ({ alertSubmit, id }) => {
     history.push("/");
   };
   const onNo = () => {
-    history.push("/");
+    history.goBack();
   };
   /*  const onTest = async () => {
     history.push("/PaymentOk");
@@ -41,7 +41,7 @@ const AlertDelete = ({ alertSubmit, id }) => {
     <Alert
       position={"absolute"}
       display={!alertSubmit[0] ? "none" : "flex"}
-      status={!alertSubmit[1] ? "error" : "success"}
+      status={!alertSubmit[1] ? "error" : "info"}
       variant="subtle"
       flexDirection="column"
       alignItems="center"
@@ -61,7 +61,7 @@ const AlertDelete = ({ alertSubmit, id }) => {
         <Button mb={"10px"} onClick={(e) => onSi(e)}>
           Si
         </Button>
-        <Button onClick={(e) => onNo(e)}>No, volver a inicio</Button>
+        <Button onClick={(e) => onNo(e)}>No</Button>
       </Flex>
       <br />
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>

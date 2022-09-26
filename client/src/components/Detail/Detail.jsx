@@ -82,14 +82,21 @@ export default function Detail(props, id) {
     });
   }
 
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
+
   return (
-    <Box>
+    <Box zIndex={2}>
       <Box>
         <NavBarForms />
       </Box>
-
       <Flex
-        mt={"30px"}
+        backgroundColor={"#EDEDED"}
+        pt={"50px"}
+        pb={"50px"}
         direction={"column"}
         // alignItems={"center"}
         // alignContent={"center"}
@@ -148,43 +155,43 @@ export default function Detail(props, id) {
                     <FontAwesomeIcon icon={faX} />
                   }</ListItem> */}
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faEarthAmericas} />
                       <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faLocationDot} />
                       <Text>Dirección: {miStateDetail.property.address}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faLandmark} />
                       <Text>Precio: ${miStateDetail.property.price}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faHouse} />
                       <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
                     </Flex>
 
                     {/* <SimpleGrid columns={2} flexWrap={"wrap"} rowGap={"2px"}> */}
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faDoorOpen} />
                       <Text>Ambientes: {miStateDetail.property.environments}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faRulerCombined} />
                       <Text>Superficie: {miStateDetail.property.surface}m²</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faBed} />
                       <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faCalendar} />
                       <Text>
                         Antigüedad: {miStateDetail.property.age}{" "}
@@ -192,28 +199,30 @@ export default function Detail(props, id) {
                       </Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faToilet} />
                       <Text>Baños: {miStateDetail.property.bathrooms}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faPaw} />
-                      Mascotas:
-                      {miStateDetail.property.pets === true ? (
-                        <FontAwesomeIcon icon={faCheck} />
-                      ) : (
-                        <FontAwesomeIcon icon={faX} />
-                      )}
+                      <Flex>
+                        Mascotas:
+                        {miStateDetail.property.pets === true ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : (
+                          <FontAwesomeIcon icon={faX} />
+                        )}
+                      </Flex>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px">
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faWarehouse} />
                       <Text>Garage: {miStateDetail.property.garage}</Text>
                     </Flex>
                     {/* </SimpleGrid> */}
 
-                    <Flex m="10px" direction={"row"} justifyContent={"center"}>
+                    <Flex m="15px" direction={"row"} justifyContent={"center"}>
                       {miStateDetail.property.services.map((e, i) => (
                         <Flex key={i} alignItems={"center"} m="10px">
                           <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
