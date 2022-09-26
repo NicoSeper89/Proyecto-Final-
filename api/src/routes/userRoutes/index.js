@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+const cloudinary = require("../../utils/cloudinary")
 const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo, Publication } = require("../../db");
 const { getAllUsers, getPubs, getPublications, getOneUser } = require("./controllers");
 var Sequelize = require("sequelize");
@@ -145,6 +146,9 @@ router.post("/imageUser", async (req, res, next) => {
   const { url, cloudId, userId } = req.body;
   try {
     if (!url) return res.status(404).send("no image to upload");
+    let thisUser = await getOneUser(userId)
+    // cloudinary.uploader.destroy(thisUser.userImage.cloudId)
+    thisUser.userImage.destroy()
     let user = await User.findByPk(userId);
     let img = await UserImage.create({
       url,
