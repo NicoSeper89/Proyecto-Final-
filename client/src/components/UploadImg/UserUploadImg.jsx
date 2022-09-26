@@ -29,7 +29,7 @@ export default function UserUploadImg() {
     axios
       .post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
       .then((resp) => {
-        dispatch(imgUserUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id, userId: infoUser[0].id }))
+        dispatch(imgUserUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id, userId: infoUser[0].id }))  
       })
       .catch((err) => console.log(err))
     }

@@ -30,7 +30,9 @@ import {
   SET_FAVORITE,
   REMOVE_FAVORITE,
   RANK_USER,
-  GETUSER
+  GETUSER,
+  UPLOAD_IMG_USER,
+  GET_USER_IMAGE
 } from "../actions";
 
 const initialState = {
@@ -56,6 +58,7 @@ const initialState = {
   publicationP: "",
   publicationsUser: [], //publicaciones de cada usuario
   favoritesUser: [], //favoritos de cada usuario
+  imageUser: ''
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -258,7 +261,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         allUserInfo: action.payload
       }
-
+      case UPLOAD_IMG_USER:
+      return{
+        ...state,
+      }
+      case GET_USER_IMAGE:
+        let imagen=action.payload[0]?action.payload[0].url:null
+      return{
+        ...state,
+        imageUser:imagen
+      }
     default:
       return state;
   }

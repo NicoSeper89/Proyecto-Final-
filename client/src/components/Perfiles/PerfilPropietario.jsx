@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import {
   Avatar,
   Box,
@@ -6,6 +6,7 @@ import {
   Center,
   Flex,
   Heading,
+  Link,
   Stack,
   Tab,
   TabList,
@@ -26,27 +27,29 @@ import { useDispatch, useSelector } from "react-redux";
 import foto from "../../Image/Image_not_available.png";
 import CardPerfil from "../Cards/CardPerfil";
 import { useHistory } from "react-router-dom";
-import { getFavsUser, getInfoUser, getPubs, getUserInfo } from "../../redux/actions";
+import { getFavsUser, getInfoUser, getPubs, getUserImage, getUserInfo } from "../../redux/actions";
 
 export default function PerfilPropietario() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const infoUser = useSelector((state) => state.infoUser);
+  const user = useSelector((state) => state.infoUser);
   const allUserInfo = useSelector(state => state.allUserInfo)
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const favoritesUser = useSelector((state) => state.favoritesUser);
-  
-  // const user = window.localStorage.getItem("User");
-  // const user2 = JSON.parse(user);
+  const imageUser = useSelector((state) => state.imageUser);
+  /* const [infoUser,setInfoUser] = useState(user) */
+  const infoUser = JSON.parse(window.localStorage.getItem("User"));
+
 
   const handleEdit = () => {
     history.push("/updatePerfil/" + infoUser[0].id);
   };
 
   useEffect(() => {
-    console.log("hola");
+    console.log('soy',infoUser)
     dispatch(getPubs(infoUser[0].id));
     dispatch(getFavsUser(infoUser[0].id));
+    dispatch(getUserImage(infoUser[0].id));
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
@@ -82,7 +85,7 @@ export default function PerfilPropietario() {
             </Flex>
             <Avatar
               size={"2xl"}
-              src={infoUser.img ? infoUser.img : foto}
+              src={imageUser? imageUser : foto}
               alt={"Avatar Alt"}
               mb={4}
               pos={"relative"}
@@ -94,7 +97,7 @@ export default function PerfilPropietario() {
               @lindsey_jam3s
             </Text> */}
             <Flex justifyContent="center" alignContent="center">
-              {/* <Rating rating={infoUser[0].rating} numReviews={""} /> */}
+              <Rating rating={infoUser[0].rating} numReviews={""} />
             </Flex>
             <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
@@ -110,12 +113,12 @@ export default function PerfilPropietario() {
               Medios de Contacto:
             </Text>
             <Stack direction={"row"} justify={"center"} spacing={4}>
-              <Button label={"Gmail"} href={infoUser[1].mail} p={0}>
+              <Link href={`mailto:${infoUser[1].mail}`} p={0}>
                 <FontAwesomeIcon icon={faAt} fontSize="30px" />
-              </Button>
-              <Button label={"WhatsApp"} href={infoUser.whatsapp} p={0}>
+              </Link>
+              {/* <Button label={"WhatsApp"} href={infoUser.whatsapp} p={0}>
                 <FontAwesomeIcon icon={faWhatsapp} fontSize="30px" />
-              </Button>
+              </Button> */}
             </Stack>
           </Box>
         </Center>
