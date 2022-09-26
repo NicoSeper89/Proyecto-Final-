@@ -43,8 +43,10 @@ export default function PaymentOk() {
  
     createSuscription(userInfo);
   } */
+
     let pubID=window.localStorage.getItem('publicationID')
-    console.log('en payment',pubID)
+
+
     asignPremium(pubID);
   }, []);
 
@@ -72,6 +74,7 @@ export default function PaymentOk() {
       </AlertTitle>
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
       <Button onClick={onDown}>Volver al inicio</Button>
+
     </Alert>
   );
 }
