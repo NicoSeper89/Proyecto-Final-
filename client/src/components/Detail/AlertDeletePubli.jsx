@@ -1,17 +1,34 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Text,
+  Flex,
+} from "@chakra-ui/react";
+import { deletePublicaction } from "../../redux/actions";
 
-const AlertDelete = ({ alertSubmit }) => {
+const AlertDelete = ({ alertSubmit, id }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const onDown = () => {
     history.push("/");
   };
- /*  const onTest = async () => {
+  const onSi = () => {
+    dispatch(deletePublicaction(id));
+    history.push("/");
+  };
+  const onNo = () => {
+    history.push("/");
+  };
+  /*  const onTest = async () => {
     history.push("/PaymentOk");
   }; */
   /*  const handleDestacar = () => {
@@ -35,12 +52,20 @@ const AlertDelete = ({ alertSubmit }) => {
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
-        {!alertSubmit[1]
+        ¿Estás seguro de eliminar la publicación?
+        {/* {!alertSubmit[1]
           ? "La publicación no se pudo borrar, lo sentimos mucho!"
-          : "La publicación se borro correctamente"}
+          : "La publicación se borro correctamente"} */}
       </AlertTitle>
+      <Flex direction={"column"}>
+        <Button mb={"10px"} onClick={(e) => onSi(e)}>
+          Si
+        </Button>
+        <Button onClick={(e) => onNo(e)}>No, volver a inicio</Button>
+      </Flex>
+      <br />
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
-      <Button onClick={onDown}>Volver al inicio</Button>
+      {/* <Button onClick={onDown}>Volver al inicio</Button> */}
       {/* <Button onClick={onTest}>test mp</Button> */}
       {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>

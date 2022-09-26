@@ -29,20 +29,14 @@ export default function Card({
   // const property = {};
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
-  const publicationsUser = useSelector((state) => state.publicationsUser);
-  const favoritesUser = useSelector((state) => state.favoritesUser);
+  // const publicationsUser = useSelector((state) => state.publicationsUser);
+  // const favoritesUser = useSelector((state) => state.favoritesUser);
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
-
-  useEffect(() => {
-    dispatch(getFavsUser(infoUser[0].id));
-  }, [dispatch]);
 
   const handleClickFav = () => {
     dispatch(setFav(infoUser[1].userId, id));
   };
-
-  const isFav = favoritesUser.some((fav) => fav.id === id);
 
   return (
     <Box className={style.container} zIndex={"2"}>
@@ -54,9 +48,9 @@ export default function Card({
           infiniteLoop
           borderBottom={"0.2px solid rgb(126, 125, 125)"}
         >
-          {img.map((s) => {
+          {img.map((s, index) => {
             return (
-              <Box>
+              <Box key={index}>
                 <Image
                   src={s.url ? s.url : imgNotAvailable}
                   key={s.id}
@@ -105,7 +99,7 @@ export default function Card({
         ) : ( */}
 
         <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav}>
-          {isFav ? (
+          {/* {isFav ? (
             <FontAwesomeIcon
               className={style.containerFav}
               h={"20px"}
@@ -114,8 +108,8 @@ export default function Card({
             />
           ) : (
             <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
-          )}
-          {/* <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} /> */}
+          )} */}
+          <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
         </Button>
         {/* )} */}
         {/* </Link> */}

@@ -224,7 +224,7 @@ const NavBar = () => {
                 )}
               </MenuButton>
             </Box>
-            <MenuList>
+            <MenuList color={"black"}>
               {!user2 && <MenuItem onClick={() => loginWithRedirect()}>Iniciar Sesion</MenuItem>}
               {user2 && <MenuItem onClick={() => detallesUser()}>Informacion de Usuario</MenuItem>}
               {user2 && <MenuItem onClick={() => closeUser()}>Cerrar Sesion</MenuItem>}
