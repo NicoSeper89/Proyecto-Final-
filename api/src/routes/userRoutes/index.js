@@ -57,7 +57,6 @@ router.post("/login", async (req, res) => {
     let nUser = await User.findOne({
       where: { name: name },
     });
-    console.log();
     loginCrea.setUser(nUser);
 
     res.status(200).send("Login de usuario adicionado correctamente");
@@ -232,14 +231,14 @@ router.put("/setFav", async (req, res, next) => {
     next(error);
   }
 });
-router.get("/removeFav", async (req, res, next) => {
+router.put("/removeFav", async (req, res, next) => {
   try {
     let { userId, pubId } = req.query;
     const user = await User.findByPk(userId);
     let favoritos = user.favorites;
     let index = favoritos.indexOf(pubId);
     if (index > -1) {
-      favoritos = favoritos.splice(index, 1);
+      favoritos.splice(index, 1);
     }
     await User.upsert({
       id: userId,
@@ -261,7 +260,6 @@ router.get("/getFavs/:id", async (req, res, next) => {
     if (favoritos) {
       for (let i = 0; i < favoritos.length; i++) {
         favoritos2.push(await getPublications(favoritos[i]));
-        console.log("fav2", favoritos2);
       }
     }
     res.send(favoritos2);

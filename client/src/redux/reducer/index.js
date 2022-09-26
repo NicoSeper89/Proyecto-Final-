@@ -32,7 +32,8 @@ import {
   RANK_USER,
   GETUSER,
   UPLOAD_IMG_USER,
-  GET_USER_IMAGE
+  GET_USER_IMAGE,
+  FAV_ID_LIST
 } from "../actions";
 
 const initialState = {
@@ -58,6 +59,7 @@ const initialState = {
   publicationP: "",
   publicationsUser: [], //publicaciones de cada usuario
   favoritesUser: [], //favoritos de cada usuario
+  favoritesUserId: [],
   imageUser: ''
 };
 
