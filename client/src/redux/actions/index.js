@@ -35,6 +35,8 @@ export const SET_FAVORITE = "SET_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 export const GETUSER = "GETUSER"
 export const GET_USER_IMAGE = "GET_USER_IMAGE"
+
+
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -392,21 +394,23 @@ export function getInfoUser(user) {
   };
 }
 
-export function getUserInfo(id){
+export function getUserInfo(id) {
   return async function (dispatch) {
     const resp = await axios.get(`/user/userInfo/${id}`);
-      return dispatch({
-        type: GETUSER,
-        payload: resp.data
-      });
+    return dispatch({
+      type: GETUSER,
+      payload: resp.data
+    });
   }
 }
-export function getUserImage(id){
+export function getUserImage(id) {
   return async function (dispatch) {
     const resp = await axios.get(`/user/getImage/${id}`);
-      return dispatch({
-        type: GET_USER_IMAGE,
-        payload: resp.data
-      });
+    return dispatch({
+      type: GET_USER_IMAGE,
+      payload: resp.data
+    });
   }
 }
+
+
