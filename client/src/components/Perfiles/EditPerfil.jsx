@@ -131,7 +131,7 @@ export default function EditPerfil(props) {
               onChange={handleEdit}
             />
 
-            <FormLabel fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500" required>
+            {/* <FormLabel fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500" required>
               Whatsapp de contacto:{" "}
             </FormLabel>
             <Input
@@ -141,16 +141,23 @@ export default function EditPerfil(props) {
               onChange={handleEdit}
               color="gray.500"
               borderColor="gray.200"
-            />
+            /> */}
 
             <FormLabel fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500" required>
               Foto de perfil:{" "}
             </FormLabel>
             <Box w={"100%"}>
-              <UserUploadImg/>
+              <UserUploadImg />
             </Box>
           </Box>
-          <Button type="submit" value="enviar" onClick={handleSubmit} disabled={disabledButton}>
+          <Button
+            fontSize="xl"
+            colorScheme="blue"
+            type="submit"
+            value="enviar"
+            onClick={handleSubmit}
+            disabled={disabledButton}
+          >
             Confirmar cambios
           </Button>
           <Box

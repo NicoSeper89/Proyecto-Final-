@@ -5,6 +5,7 @@ import Loading from "../Loading/Loading";
 import Card from "./Card";
 import style from "./Cards.module.css";
 import { Box, List, ListItem } from "@chakra-ui/react";
+import { useState } from "react";
 
 export default function Cards() {
   const dispatch = useDispatch();

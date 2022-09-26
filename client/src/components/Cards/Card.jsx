@@ -31,8 +31,8 @@ export default function Card({
   const dispatch = useDispatch();
   /* const history = useHistory(); */
   const infoUser = useSelector((state) => state.infoUser);
-  const publicationsUser = useSelector((state) => state.publicationsUser);
-  const favoritesUser = useSelector((state) => state.favoritesUser);
+  // const publicationsUser = useSelector((state) => state.publicationsUser);
+  // const favoritesUser = useSelector((state) => state.favoritesUser);
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
   const [boton, setBoton] = useState(false);

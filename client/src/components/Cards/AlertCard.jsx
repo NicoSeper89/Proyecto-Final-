@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
 
 const AlertCard = ({ alertSubmit }) => {
   const history = useHistory();
@@ -32,12 +32,14 @@ const AlertCard = ({ alertSubmit }) => {
           ? "La publicación no se pudo Actualizar, lo sentimos mucho!"
           : "La publicación se Actualizo correctamente"}
       </AlertTitle> */}
-      <AlertDescription maxWidth="sm">
+      <AlertDescription maxWidth="sm" mb={"15px"}>
         Debes estar registrado para acceder al detalle.
       </AlertDescription>
-      <br />
-      <Button onClick={onDown}>Aceptar</Button>
+      <Button mb={"10px"} onClick={onDown}>
+        Aceptar
+      </Button>
       <Button onClick={() => loginWithRedirect()}>Iniciar Sesion</Button>
+      <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
     </Alert>
   );
 };
