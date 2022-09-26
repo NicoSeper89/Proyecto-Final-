@@ -76,6 +76,27 @@ export default function Card({
     <Box className={style.container} zIndex={"2"}>
       <Box position="relative" overflow={"hidden"} w={"100%"} h={"230px"}>
         {/* <Box position={"relative"} height={"230px"} width={"full"} overflow={"hidden"}> */}
+        <Box display={"flex"} justifyContent={"flex-end"}>
+          {premium === true ? (
+            <Badge
+              zIndex={4}
+              display={"flex"}
+              size={"sm"}
+              variant="solid"
+              borderRadius={"5px 0px 5px 5px"}
+              backgroundColor="rgba(216, 158, 26, 0.85)"
+              paddingRight={"15px"}
+              position="absolute"
+              w={"6rem"}
+            >
+              Destacado
+            </Badge>
+          ) : (
+            // <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
+            <></>
+          )}
+        </Box>
+
         {!img[0] ? <Image
           src={imgNotAvailable}
           alt="Img not found"
@@ -85,6 +106,7 @@ export default function Card({
           backgroundPosition={"center"}
         />
           : <Carousel
+            zIndex={2}
             thumbWidth={"13%"}
             h={"230px"}
             infiniteLoop
@@ -107,25 +129,7 @@ export default function Card({
             })}
           </Carousel>}
         {/* </Box> */}
-        <Box display={"flex"} justifyContent={"flex-end"}>
-          {premium === true ? (
-            <Badge
-              display={"flex"}
-              size={"sm"}
-              variant="solid"
-              borderRadius={"5px 0px 5px 5px"}
-              backgroundColor="rgba(216, 158, 26, 0.85)"
-              paddingRight={"15px"}
-              position="absolute"
-              w={"6rem"}
-            >
-              Destacado
-            </Badge>
-          ) : (
-            // <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
-            <></>
-          )}
-        </Box>
+
 
         {/* <Image
           src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
