@@ -55,6 +55,8 @@ function App() {
         <Route exact path="/updatePerfil/:id" component={EditPerfil} />
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/redirectRegister" component={AlertCard} />
+        <Route exact path="/PaymentOk" component={PaymentOk} />
+        <Route exact path="/PaymentFail" component={PaymentFail} />
         {/* //<Route
         //   exact
         //   path="/perfilPropietario"
@@ -68,13 +70,13 @@ function App() {
           <Redirect to="*"/>
         }} /> */}
 
-        <Route
+        /*<Route
           exact
           path="/PaymentOk"
           render={() => {
             return infoUser ? <PaymentOk /> : <Redirect to="*" />;
           }}
-        />
+        />*/
         <Route exact path="/select" component={Select} />
         <Route path="*" component={Error404} />
       </Switch>
