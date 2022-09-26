@@ -33,7 +33,7 @@ const AlertDelete = ({ alertSubmit, id }) => {
   }; */
   /*  const handleDestacar = () => {
     
-    let res = axios.post("http://localhost:3001/sell/premium", {});
+    let res = axios.post("/sell/premium", {});
     console.log('soy',res)
   }; */
 

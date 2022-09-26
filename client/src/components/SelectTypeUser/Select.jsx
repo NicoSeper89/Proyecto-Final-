@@ -26,7 +26,7 @@ const Select = () => {
   var [loguear, setLoguear] = useState();
 
   const buscarUser = async () => {
-    const user2 = await axios.post("http://localhost:3001/user/LoginOrCreate", {
+    const user2 = await axios.post("/user/LoginOrCreate", {
       name: user.nickname,
       password: user.sub,
       mail: user.email,
