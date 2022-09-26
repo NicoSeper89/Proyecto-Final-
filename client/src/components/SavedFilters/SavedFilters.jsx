@@ -47,12 +47,18 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
     }
-    let filter = localStorage.getItem(event.target.value);
-    let newFilter = JSON.parse(filter);
-    dispatch(saveFilter(newFilter[0]));
-    dispatch(saveSort(newFilter[1]));
-    dispatch(setCurrentPage(1));
-    dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
+    
+    if(event.target.value){
+      let filter = localStorage.getItem(event.target.value);
+      let newFilter = JSON.parse(filter);
+      dispatch(saveFilter(newFilter[0]));
+      dispatch(saveSort(newFilter[1]));
+      dispatch(setCurrentPage(1));
+      dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
+    }
+    else{
+      dispatch(clearFilters())
+    }
   };
 
   return (

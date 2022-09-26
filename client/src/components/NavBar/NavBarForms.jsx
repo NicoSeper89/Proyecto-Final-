@@ -30,7 +30,8 @@ export default function NavBarForms() {
     }
     if (rutaArr[1] === "details") {
       if (!infoUser) dispatch(getInfoUser());
-      return history.push(`/perfilPropietario`);
+      return history.goBack();
+    
     }
 
     history.push("/");
