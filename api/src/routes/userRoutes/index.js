@@ -163,20 +163,28 @@ router.put("/editUser/:id", async (req, res, next) => {
   const { id } = req.params;
   const { name, typUser, city, description } = req.body;
   try {
-    console.log("IDDDDD: ", id);
     await User.upsert({
       id: id,
       name,
       city,
       description,
     });
-    let res = await User.findByPk(id);
-    res.send(res);
+    res.send('editado');
   } catch (error) {
     next(error);
   }
 });
-
+router.get("/getImage/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    let result= await UserImage.findAll({
+      where:{ userId: id }
+    });
+    res.send(result);
+  } catch (error) {
+    next(error);
+  }
+});
 //este recibe el id de la persona rankeada, y el rating que se le va a poner
 router.put("/rate", async (req, res, next) => {
   const { id, rating } = req.query;

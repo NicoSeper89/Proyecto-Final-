@@ -34,9 +34,15 @@ export default function Card({
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
 
+  /* useEffect(() => {
+    dispatch(getFavsUser(infoUser[0].id));
+  }, [dispatch]); */
+
   const handleClickFav = () => {
     dispatch(setFav(infoUser[1].userId, id));
   };
+
+/*   const isFav = favoritesUser.some((fav) => fav.id === id); */
 
   return (
     <Box className={style.container} zIndex={"2"}>
@@ -84,8 +90,10 @@ export default function Card({
             <></>
           )}
         </Box>
+
         {/* <Image
           src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
+
           alt="Img not found"
           // className={style.img}
           borderBottom={"0.2px solid rgb(126, 125, 125)"}
@@ -94,24 +102,17 @@ export default function Card({
       <Flex direction={"row"} justifyContent={"space-between"} p={"5px"} h={"30px"}>
         {/* que el corazon aparezca solo en las publicaciones que no son mias */}
         {/* <Link to={"/"} p={"0"}> */}
-        {/* {idUser === infoUser[1].userId ? (
-          <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
-        ) : ( */}
 
-        <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav}>
-          {/* {isFav ? (
-            <FontAwesomeIcon
-              className={style.containerFav}
-              h={"20px"}
-              icon={faHeart}
-              color={"orange"}
-            />
-          ) : (
+       {/*  {idUser === infoUser[1].userId ? (
+          <Tag size={"sm"} variant="solid" backgroundColor={"grey.300"}  w={"5rem"}>
+            Propietario
+          </Tag>
+        ) : ( */}
+          <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav} colorScheme={"transparent"}>
             <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
-          )} */}
-          <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
-        </Button>
-        {/* )} */}
+          </Button>
+      {/*   )} */}
+
         {/* </Link> */}
 
         <Link to={infoUser ? `/details/${id}` : "/redirectRegister"} display={"flex"}>

@@ -8,7 +8,7 @@ export const GET_CITIES = "GET_CITIES";
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
-export const ULPOAD_IMG_USER = "ULPOAD_IMG_USER";
+export const UPLOAD_IMG_USER = "UPLOAD_IMG_USER";
 export const FILTER_PROP = "FILTER_PROP";
 export const FILTER_AMB = "FILTER_AMB";
 export const FILTER_PET = "FILTER_PET";
@@ -34,6 +34,7 @@ export const GET_FAVORITES_USER = "GET_FAVORITES_USER";
 export const SET_FAVORITE = "SET_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 export const GETUSER = "GETUSER"
+export const GET_USER_IMAGE = "GET_USER_IMAGE"
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -252,7 +253,7 @@ export function imgUserUpload(value) {
     try {
       await axios.post("/user/imageUser", value);
       return dispatch({
-        type: ULPOAD_IMG_USER,
+        type: UPLOAD_IMG_USER,
       });
     } catch (error) {
       if (error.response) {
@@ -396,6 +397,15 @@ export function getUserInfo(id){
     const resp = await axios.get(`/user/userInfo/${id}`);
       return dispatch({
         type: GETUSER,
+        payload: resp.data
+      });
+  }
+}
+export function getUserImage(id){
+  return async function (dispatch) {
+    const resp = await axios.get(`/user/getImage/${id}`);
+      return dispatch({
+        type: GET_USER_IMAGE,
         payload: resp.data
       });
   }
