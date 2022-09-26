@@ -75,7 +75,7 @@ const NavBar = () => {
         // backgroundColor={"gray.100"}
       >
         <Link to="/">
-          <Image h={"160px"} marginTop={"20px"} src={logoImg} alt="homeLogo" />
+          <Image h={"200px"} marginTop={"35px"} src={logoImg} alt="homeLogo" />
         </Link>
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
