@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicationsDetail, clean, deletePublicaction, } from "../../redux/actions";
+import { getPublicationsDetail, clean, deletePublicaction, getInfoUser } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import imgNotAvailable from "../../Image/Image_not_available.png";
+import imgNotAvailable from "../../Image/Image_not_available.png";
 import {
   /* faHeart, */
   faRulerCombined,
@@ -17,262 +17,384 @@ import {
   faCalendar,
   faCheck,
   faX,
-  // faCircleUser,
-  // faPhone,
-  // faComment,
-  // faCity,
+  faUser,
+  faCircleUser,
+  faPhone,
+  faComment,
+  faCity,
   faLocationDot,
+  faStar,
+  faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faAt } from "@fortawesome/free-solid-svg-icons";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
 import Loading from "../Loading/Loading";
-import { Link } from "react-router-dom";
+/* import { Link } from "react-router-dom"; */
 import {
   Box,
   Text,
   Flex,
+  Link,
   Button,
   Heading,
-  IdProvider,
+  Image,
+  SimpleGrid,
+  Tab,
+  TabList,
+  TabPanels,
+  TabPanel,
+  Tabs,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
-import {  useHistory } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
+import AlertDelete from "./AlertDeletePubli";
+import Maps from "../Maps/Maps";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
-  const miStateDetail = useSelector((state) => state.detail);
   const history = useHistory();
-  // const miUseerState = useSelector((state) => state.user)
+  const miStateDetail = useSelector((state) => state.detail);
+  const myUser = useSelector((state) => state.infoUser);
+  const [showMap, setShowMap] = useState(false);
+  const [alertSubmit, setAlertSubmit] = useState([false, false]);
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
+    setTimeout(() => {
+      setShowMap(true);
+    }, 1000);
+
+    if (!myUser) {
+      const user = JSON.parse(window.localStorage.getItem("User"));
+      dispatch(getInfoUser(user));
+    }
   }, [dispatch, props.match.params.id]);
 
-  // useEffect(() => {
-  //   dispatch(getPublicationsDetail(props.match.params.id));
-  // }, [dispatch, props.match.params.id]);
-
-  function handleDelete(){
-    dispatch(deletePublicaction(props.match.params.id))
-    console.log(props.match.params.id)
-    alert("LA PUBLICACION SE ELIMINO CORRECTAMENTE")
-    history.push("/");
+  function handleDelete() {
+    // dispatch(deletePublicaction(props.match.params.id));
+    setAlertSubmit([true, true]);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }
 
+  window.scroll({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
 
   return (
-    <>
-      <NavBarForms />
-
+    <Box zIndex={2}>
+      <Box>
+        <NavBarForms />
+      </Box>
       <Flex
-        w={"100%"}
-        flexDirection={"column"}
-        alignItems={"center"}
+        backgroundColor={"#EDEDED"}
+        pt={"50px"}
+        pb={"50px"}
+        direction={"column"}
+        // alignItems={"center"}
+        // alignContent={"center"}
         justifyContent={"flex-start"}
-        p={".5rem"}
-        position="relative"
+        // p={".5rem"}
+        // position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
-
-          <Flex
-            p={"1rem"}
-            w={"100%"}
-            alignItems={"flex-start"}
-            justifyContent={"flex-start"}
-          >
-
-            <Flex
-              flexDirection={"column"}
-              gap={".7rem"}
-              alignItems={"flex-start"}
-              justifyContent={"space-between"}
-              p={"0rem .8rem"}
-              position={"relative"}
+          <Box>
+            <Box
+            // flexDirection={"column"}
+            // justifyContent={"flex-start"}
+            // alignItems={"flex-start"}
+            // w={"100%"}
+            // p={"1rem"}
+            // gap={"2rem"}
             >
-              <Box>
-                <Button  onClick={()=> history.push("/updatePublicaction/" + props.match.params.id)}>update
-                </Button>
-              </Box>
-
-              <Box position={"relative"} width={"50rem"}>
-                <ImageSlider slides={miStateDetail.property.propertyImages} />
-              </Box>
-              <Button onClick={(e)=> {
-                handleDelete(e)
-              }}>BORRAR PUBLICACION</Button>
-            </Flex>
-            <Flex
-              w={"100%"}
-              gap={"1rem"}
-              justifyContent="flex-start"
-              flexDirection={"column"}
-              alignItems={"center"}
-            >
-              {/* <Box fontSize={"2rem"}>{(miStateDetail.property.premium) ? <Text color={"yellowgreen"}>{"Usuario Premium"}</Text> : <Text color={"gray.400"}>{"Usuario Free"}</Text>}</Box> */}
-
-              <Flex
-                w={"100%"}
-                justifyContent="flex-start"
-                flexDirection={"column"}
-                alignItems={"center"}
-              >
-                <Box
-                  borderRadius={"0.5rem 0.5rem 0rem 0rem"}
-                  width={"90%"}
-                  p={".3rem 0rem"}
-                  textAlign={"center"}
-                  bg={"facebook.300"}
+              <Box display={"flex"} justifyContent="space-evenly">
+                <Flex
+                  flexDirection={"row"}
+                  justifyContent={"center"}
+                  p={"0rem .8rem"}
+                  // position={"relative"}
                 >
-                  <Heading color={"white"}>Descripción</Heading>
-                </Box>
+                  {miStateDetail.property.propertyImages.length > 0 ? (
+                    <Box w={"42rem"} h={"42rem"}>
+                      <ImageSlider slides={miStateDetail.property.propertyImages} />
+                    </Box>
+                  ) : (
+                    <Image src={imgNotAvailable} />
+                  )}
+                </Flex>
 
-                <Box
-                  borderRadius={"0rem 0rem 0.5rem 0.5rem"}
-                  flexDirection={"column"}
-                  gap={".5rem"}
-                  color={"gray.600"}
-                  width={"90%"}
-                  display={"flex"}
-                  p={"1rem"}
-                  borderWidth="1px"
-                  borderColor="gray.200"
-                >
-                  <Text>{miStateDetail.description}</Text>
-                </Box>
-              </Flex>
-
-              <Flex
-                w={"100%"}
-                justifyContent="flex-start"
-                flexDirection={"column"}
-                alignItems={"center"}
-              >
-                <Box
-                  borderRadius={"0.5rem 0.5rem 0rem 0rem"}
-                  width={"90%"}
-                  p={".3rem 0rem"}
-                  textAlign={"center"}
-                  bg={"facebook.300"}
-                >
-                  <Heading color={"white"}>Detalles</Heading>
-                </Box>
-
-                <Box
-                  borderRadius={"0rem 0rem 0.5rem 0.5rem"}
-                  flexDirection={"column"}
-                  gap={".5rem"}
-                  color={"gray.600"}
-                  width={"90%"}
-                  display={"flex"}
-                  p={"1rem"}
-                  borderWidth="1px"
-                  borderColor="gray.200"
-                >
-                  {/* <FontAwesomeIcon icon={faHeart}  /> */}
-                  {/* <ListItem>premium: {miStateDetail.premium === true? (
+                {/* <Flex
+            justifyContent="flex-start"
+            flexDirection={"column"}
+            alignItems={"center"}
+            gap={"15px"}
+            w={"500px"}
+            > */}
+                <Flex direction={"column"}>
+                  <Box
+                    w={"350px"}
+                    borderRadius={"0.5rem"}
+                    p={".3rem 0rem"}
+                    textAlign={"center"}
+                    bg={"#F6AD55"}
+                  >
+                    <Heading color={"white"}>Detalles</Heading>
+                  </Box>
+                  <Box>
+                    {/* <FontAwesomeIcon icon={faHeart}  /> */}
+                    {/* <ListItem>premium: {miStateDetail.premium === true? (
                   <FontAwesomeIcon icon={faCheck} />
                   ) : (
                     <FontAwesomeIcon icon={faX} />
                   }</ListItem> */}
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faEarthAmericas} />
 
-                    <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faLocationDot} />
-                    <Text>Dirección: {miStateDetail.property.address}</Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faLandmark} />
-                    <Text>Precio: ${miStateDetail.property.price}</Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faHouse} />
-                    <Text>
-                      Tipo de propiedad:{" "}
-                      {miStateDetail.property.TypeOfProp.name}
-                    </Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faRulerCombined} />
-                    <Text>Superficie: {miStateDetail.property.surface}m²</Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faCalendar} />
-                    <Text>Antigüedad: {miStateDetail.property.age} Años</Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faPaw} />
-                    Mascotas:
-                    {miStateDetail.property.pets === true ? (
-                      <FontAwesomeIcon icon={faCheck} />
-                    ) : (
-                      <FontAwesomeIcon icon={faX} />
-                    )}
-                  </Flex>
-
-                  <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faDoorOpen} />
-                    <Text>
-                      Ambientes: {miStateDetail.property.environments}
-                    </Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faBed} />
-                    <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faToilet} />
-                    <Text>Baños: {miStateDetail.property.bathrooms}</Text>
-                  </Flex>
-
-                  <Flex alignItems={"center"} gap={".4rem"}>
-                    <FontAwesomeIcon icon={faWarehouse} />
-                    <Text>Garage: {miStateDetail.property.garage}</Text>
-                  </Flex>
-
-                  <Box bg={"gray.200"} h={"1px"} w={"100%"}></Box>
-
-                  {miStateDetail.property.services.map((e, i) => (
-                    <Flex key={i} alignItems={"center"} gap={".4rem"}>
-                      <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faEarthAmericas} />
+                      <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
                     </Flex>
-                  ))}
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faLocationDot} />
+                      <Text>Dirección: {miStateDetail.property.address}</Text>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faLandmark} />
+                      <Text>Precio: ${miStateDetail.property.price}</Text>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faHouse} />
+                      <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
+                    </Flex>
+
+                    {/* <SimpleGrid columns={2} flexWrap={"wrap"} rowGap={"2px"}> */}
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faDoorOpen} />
+                      <Text>Ambientes: {miStateDetail.property.environments}</Text>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faRulerCombined} />
+                      <Text>Superficie: {miStateDetail.property.surface}m²</Text>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faBed} />
+                      <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faCalendar} />
+                      <Text>
+                        Antigüedad: {miStateDetail.property.age}{" "}
+                        {miStateDetail.property.age === 1 ? "Año" : "Años"}
+                      </Text>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faToilet} />
+                      <Text>Baños: {miStateDetail.property.bathrooms}</Text>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faPaw} />
+                      <Flex>
+                        Mascotas:
+                        {miStateDetail.property.pets === true ? (
+                          <FontAwesomeIcon icon={faCheck} />
+                        ) : (
+                          <FontAwesomeIcon icon={faX} />
+                        )}
+                      </Flex>
+                    </Flex>
+
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                      <FontAwesomeIcon icon={faWarehouse} />
+                      <Text>Garage: {miStateDetail.property.garage}</Text>
+                    </Flex>
+                    {/* </SimpleGrid> */}
+
+                    <Flex m="15px" direction={"row"} justifyContent={"center"}>
+                      {miStateDetail.property.services.map((e, i) => (
+                        <Flex key={i} alignItems={"center"} m="10px">
+                          <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
+                        </Flex>
+                      ))}
+                    </Flex>
+                  </Box>
+                </Flex>
+              </Box>
+
+              <Flex direction={"row-reverse"} justifyContent="space-evenly">
+                <Flex direction={"column"} alignItems="center" justifyContent="space-evenly">
+                  <Box
+                    w={"350px"}
+                    h={"200px"}
+                    boxShadow="dark-lg"
+                    p="10px"
+                    border="1px solid grey.600"
+                    bg={"rgba(216, 158, 26, 0.35)"}
+                    borderRadius={"0.5rem"}
+                  >
+                    <Box textAlign={"center"} mb={"5px"}>
+                      <Text fontSize="xl" as="b">
+                        Datos del Propietario
+                      </Text>
+                    </Box>
+                    <Box alignItems="flex-start" p={"1rem"}>
+                      <Text fontSize="lg">
+                        <FontAwesomeIcon icon={faStar} /> {miStateDetail.user.rating}
+                      </Text>
+                      <Text fontSize="lg">
+                        <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                      </Text>
+
+                      <Box alignItems="center" fontSize="lg">
+                        <FontAwesomeIcon icon={faAt} />
+                        <Link href={`mailto:${miStateDetail.user.contactInfo.mail}`}>
+                          {" "}
+                          {miStateDetail.user.contactInfo.mail}
+                        </Link>
+                      </Box>
+                    </Box>
+                    {/* <Box
+                      borderRadius={"0rem 0rem 0.5rem 0.5rem"}
+                      flexDirection={"column"}
+                      gap={".5rem"}
+                      color={"gray.600"}
+                      width={"90%"}
+                      display={"flex"}
+                      p={"1rem"}
+                      borderWidth="1px"
+                      borderColor="gray.200"
+                      bg={"yellow.100"}
+                    >
+      
+                    <Text> <FontAwesomeIcon icon={faComment} /> </Text>
+                  </Box> */}
+                  </Box>
+                  <Box>
+                    {myUser[0].id === miStateDetail.userId ? (
+                      <Flex direction={"column"}>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={() =>
+                            history.push("/updatePublicaction/" + props.match.params.id)
+                          }
+                        >
+                          Actualizar datos
+                        </Button>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleDelete(e);
+                          }}
+                        >
+                          Borrar publicación
+                        </Button>
+                      </Flex>
+                    ) : null}
+                  </Box>
+                </Flex>
+
+                <Box>
+                  <Tabs
+                    variant="soft-rounded"
+                    colorScheme="green"
+                    w={"42rem"}
+                    h={"400px"}
+                    boxShadow="dark-lg"
+                    p="10px"
+                    border="1px solid grey.600"
+                    // bg={"rgba(216, 158, 26, 0.35)"}
+                    borderRadius={"0.5rem"}
+                  >
+                    <TabList>
+                      <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
+                        Mapa
+                      </Tab>
+                      <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
+                        Descripción
+                      </Tab>
+                    </TabList>
+                    <TabPanels display={"flex"} justifyContent="center">
+                      <TabPanel>
+                        <Flex
+                          w={"500px"}
+                          h={"250px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.600"
+                          borderRadius={"0.5rem"}
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          {showMap && <Maps position={miStateDetail} />}
+                        </Flex>
+                      </TabPanel>
+                      <TabPanel>
+                        <Box
+                          alignItems="flex-start"
+                          w={"500px"}
+                          h={"250px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.300"
+                          borderRadius={"0.5rem"}
+                        >
+                          <Text fontSize="lg">{miStateDetail.description}</Text>
+                        </Box>
+                      </TabPanel>
+                    </TabPanels>
+                    {/* <Box textAlign={"center"} mb={"5px"}>
+                    <Text fontSize="xl" as="b">
+                      Descripción
+                    </Text>
+                  </Box> */}
+                    {/* <Box alignItems="flex-start" p={"1rem"}>
+                    <Text fontSize="lg">{miStateDetail.description}</Text>
+                  </Box>
+                  <Box
+                    w={"350px"}
+                    h={"200px"}
+                    boxShadow="dark-lg"
+                    p="10px"
+                    border="1px solid grey.600"
+                    borderRadius={"0.5rem"}
+                    >
+                    {showMap && <Maps position={miStateDetail} />}
+                  </Box> */}
+                  </Tabs>
                 </Box>
               </Flex>
+            </Box>
 
-              {/* <Box>
-                DATOS PROPIETARIO
-                <FontAwesomeIcon icon={faUser} />
-                <FontAwesomeIcon icon={faCircleUser} />
-                <FontAwesomeIcon icon={faPhone} />
-                <FontAwesomeIcon icon={faComment} />
-                <Text>{miUseerState[0].name}</Text>
-                <Text>{miUseerState.mail}</Text>
-                <Text>{miUseerState[0].rating}</Text>
-                <Text>{miUseerState[0].description}</Text>
-                <Text>service: {miStateDetail.property.service.name}</Text>
-              </Box> */}
-            </Flex>
-          </Flex>
+            {/* ESTO ES BOTONES */}
+
+            {/* ESTO ES BOTONES */}
+          </Box>
         ) : (
           <Loading />
         )}
       </Flex>
-
+      <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} />
       <Footer />
-    </>
+    </Box>
   );
 }

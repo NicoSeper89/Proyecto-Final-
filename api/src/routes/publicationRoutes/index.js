@@ -8,6 +8,7 @@ const {
   City,
   PropertyImage,
   Report,
+  User
 } = require("../../db");
 const router = Router();
 const {
@@ -20,6 +21,7 @@ const {
   serviceTypes,
   getCity,
 } = require("./controllers");
+const { where } = require("sequelize");
 
 //para el home y para el searchbar get con query
 
@@ -34,8 +36,8 @@ router.post("/", async (req, res, next) => {
         services:[{name: "luz"},{name: "agua"}]
         } */
     /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
-    let publications = await getAll(); /// me trae todas las casas con sus propiedades
-
+    let allPublications = await getAll(); /// me trae todas las casas con sus propiedades
+    let publications = allPublications.filter(p => !p.deleted)
     publications = await getFiltered(publications, filters); // envia todas las casas y un filtro
 
     if (city) {
@@ -59,6 +61,16 @@ router.post("/", async (req, res, next) => {
     /*  res.status(404).send('No hay publicaciones') */
   }
 });
+
+router.get("/premium", async(req,res,next)=>{
+  try {
+    const publications = await getAll()
+    const premium = await publications.filter(p=> p.premium)
+    res.send(premium)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get("/city", async (req, res, next) => {
   try {
@@ -165,7 +177,6 @@ router.post("/createProperty", async (req, res, next) => {
     ) {
       return res.status(404).send("fill out data");
     }
-    if (!propImg) propImg = "https://res.cloudinary.com/lookhouse/image/upload/v1663619810/hiq8jpgr6wzmzgf5yjaq.png"
     let property = await Property.create({
       address,
       surface,
@@ -205,10 +216,9 @@ router.post("/createProperty", async (req, res, next) => {
 });
 
 router.post("/postProperty", async (req, res, next) => {
-  const { description, status, premium, report, id } = req.body;
+  const { description, status, premium, report, id, userId } = req.body;
   try {
     if (!description) res.status(404).send("fill out description");
-
     let post = await Publication.create({
       description,
       status,
@@ -223,6 +233,8 @@ router.post("/postProperty", async (req, res, next) => {
 
     let property = await Property.findByPk(id);
     post.setProperty(property);
+    let user = await User.findByPk(userId);
+    post.setUser(user);
 
     res.send(post.id);
   } catch (error) {
@@ -272,12 +284,17 @@ router.put("/editProperty/:id", async (req, res, next) => {
       pets,
       age,
     });
+    
+    let allServices = await Service.findAll()
+    let deleteSer = allServices.filter(s => s !== service)
+    updatedProp.removeService(deleteSer)
     if (service) {
       let ser = await Service.findAll({
         where: { name: service },
       });
       updatedProp.addService(ser);
     }
+
     let location = await City.findOne({
       where: { name: city },
     });
@@ -285,14 +302,14 @@ router.put("/editProperty/:id", async (req, res, next) => {
     let type = await TypeOfProp.findOne({
       where: { name: typProp },
     });
-    await PropertyImage.create({
-      url: propImg
-    });
     updatedProp.setTypeOfProp(type);
-    let img = await PropertyImage.findAll({
-      where: { url: propImg },
-    });
-    updatedProp.addPropertyImage(img);
+
+    propImg?.map( async(i) => {
+      let img = await PropertyImage.findAll({
+        where: { url: i.url },
+      });
+      updatedProp.addPropertyImage(img);
+    })
 
     res.send('post updated')
   } catch (error) {
@@ -349,6 +366,20 @@ router.delete("/delete/:id", async (req, res, next) => {
   }
 })
 
+
+router.put('/unavailable/:id', async (req, res, next)=>{
+  const {id} = req.params
+  try {
+    let publi = await Publication.findByPk(id)
+    await Publication.update(
+      { deleted: !publi.deleted },
+      { where: { id: id } }
+    )
+    res.send('publication availablity has changed')
+  } catch (error) {
+    next(error)
+  }
+})
 
 
 module.exports = router;

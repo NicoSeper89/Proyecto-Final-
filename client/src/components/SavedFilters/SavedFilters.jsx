@@ -19,7 +19,7 @@ import {
   clearFilters,
 } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 function SavedFilters({ filterToSave, savedSort, savedCity }) {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
   const [storedValues, setStoredValues] = useState([]);
 
   useEffect(() => {
-    setStoredValues(Object.keys(localStorage));
+    setStoredValues(Object.keys(localStorage).filter((k) => k !== "User" && k !== "publicationID"));
   }, [savedValue]);
 
   const handleLocalStorage = (keyValue) => {
@@ -47,12 +47,18 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
     }
-    let filter = localStorage.getItem(event.target.value);
-    let newFilter = JSON.parse(filter);
-    dispatch(saveFilter(newFilter[0]));
-    dispatch(saveSort(newFilter[1]));
-    dispatch(setCurrentPage(1));
-    dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
+    
+    if(event.target.value){
+      let filter = localStorage.getItem(event.target.value);
+      let newFilter = JSON.parse(filter);
+      dispatch(saveFilter(newFilter[0]));
+      dispatch(saveSort(newFilter[1]));
+      dispatch(setCurrentPage(1));
+      dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
+    }
+    else{
+      dispatch(clearFilters())
+    }
   };
 
   return (
@@ -73,7 +79,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
           />
           <InputRightElement
             onClick={() => handleLocalStorage(value)}
-            children={<FontAwesomeIcon icon={faMagnifyingGlass} color="gray.300" />}
+            children={<FontAwesomeIcon icon={faBookmark} color="gray.300" />}
             cursor={"pointer"}
           />
         </InputGroup>

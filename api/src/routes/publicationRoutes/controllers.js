@@ -7,6 +7,8 @@ const {
   City,
   PropertyImage,
   Report,
+  User,
+  ContactInfo,
 } = require("../../db");
 
 //habria que agregar FilterByParams que recibe publicaciones y filtros y devuelve las
@@ -78,6 +80,15 @@ const getDetail = async (id) => {
       },
       {
         model: Report,
+      },
+      {
+        model: User,
+        include: [
+          {
+            model: ContactInfo,
+            attributes: ["mail", "whatsapp", "telegram", "facebook"],
+          },
+        ],
       },
     ],
   });
@@ -153,8 +164,19 @@ const getCity = async () => {
 //   "salta",
 //   "san juan",
 // ];
-const propTypArr = ["house", "apartment", "flat", "castle", "mansion"];
-const serviceTypes = ["light", "water", "gas", "internet", "calefaction"];
+const propTypArr = [
+  "Casa",
+  "Departamento",
+  "Local",
+  "Estacionamiento",
+  "Quincho",
+  "Cabaña",
+  "Duplex",
+  "Oficina",
+  "Garage",
+  "Oficina",
+];
+const serviceTypes = ["Luz", "Agua", "Gas", "Internet", "Calefacción"];
 
 module.exports = {
   getAll,

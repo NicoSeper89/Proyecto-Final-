@@ -12,6 +12,7 @@ import {
   updateFilterPets,
   setCurrentPage,
   valueFilter,
+  updateSortingPrice
 } from "../../redux/actions";
 import { faFilterCircleXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
@@ -35,7 +36,7 @@ import { Box } from "@chakra-ui/react";
 // import { filter } from "../../redux/actions";
 // import { precio } from "../../redux/actions";
 
-// http://localhost:3001/publication/propertyTypes   ruta para traer los tipos de propiedades ya esta lista
+// http://publication/propertyTypes   ruta para traer los tipos de propiedades ya esta lista
 // pasar ciudad para que la pueda encontrar esta nos llega desde el input
 // para el sort by podemos ordenar por orden alfabetico
 
@@ -86,8 +87,9 @@ const SearchBar = () => {
 
     if (e.target.value === "Precio") orden = { name: "default", direccion: "minMax" };
     else orden = { name: "price", direccion: e.target.value };
+    dispatch(updateSortingPrice(orden))
     dispatch(setCurrentPage(1));
-    dispatch(getPublications(filters, orden, city));
+    dispatch(getPublications(filters, sorting, city));
   };
 
   //RESET FILTROS

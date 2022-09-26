@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "../UploadImg/UploadImg";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -50,6 +50,7 @@ const CreatePost = () => {
     pets: false,
     service: [],
   });
+  console.log(infoFormProp.propImg)
 
   const [infoFormPub, setInfoFormPub] = useState({
     description: "",
@@ -138,39 +139,43 @@ const CreatePost = () => {
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-
+      let user = JSON.parse(window.localStorage.getItem('User'));
       let res = await axios.post("/publication/createProperty", {
-        ...infoFormProp,
+        ...infoFormProp
       });
 
-      let idPub= await axios.post("/publication/postProperty", {
+      let idPub = await axios.post("/publication/postProperty", {
         ...infoFormPub,
-        id: res.data,
+        id: res.data, userId: user[0].id
       });
-      window.localStorage.setItem('publicationID',idPub.data)
+
+      window.localStorage.setItem('publicationID', idPub.data)
+
+
+
       setAlertSubmit([true, true]);
       window.scroll({
-        top: 0, 
-        left: 0, 
-        behavior: 'smooth' 
-       });
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
     } catch (error) {
       setAlertSubmit([true, false]);
       console.log(error);
       window.scroll({
-        top: 0, 
-        left: 0, 
-        behavior: 'smooth' 
-       });
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
     <>
       <NavBarForms />
-      <Box position={"relative"} display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"flex-start"} color={"gray.700"} p={"1rem 0rem"}>
+      <Box bg={"blackAlpha.200"} position={"relative"} display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"flex-start"} color={"gray.700"} >
 
-        <Box bg={"facebook.300"} borderRadius={".2rem"} w={"57.7%"} p={"1rem"} >
+        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"57.7%"} p={"1rem"} m={"1rem 0rem"} >
           <Heading color={"white"} textShadow={"gray .1rem .1rem .2rem"} textAlign={"center"} fontSize="2.5rem">
             Publicar Propiedad
           </Heading>
@@ -184,9 +189,10 @@ const CreatePost = () => {
           wrap="wrap"
           overflow="hidden"
           minWidth={"57.7%"}
+          
         >
           {(continueForm) ?
-            (<Box display={"flex"} flexDirection={"column"} p={"1rem"} w={"60%"} gap=".5rem" overflow="hidden">
+            (<Box bg={"white"} display={"flex"} flexDirection={"column"} p={"1rem"} w={"60%"} gap=".5rem" overflow="hidden">
               <Box display={"flex"} flexDirection="column" p=".9rem" border="1px" borderColor="gray.200" >
                 <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Provincia</Text>
                   <Select color="gray.500" placeholder=' ' borderColor="gray.200" name={"city"} onChange={onChangeInputProp}>
@@ -352,7 +358,7 @@ const CreatePost = () => {
               </Box>
 
               <Box display={"flex"} gap={"1rem"} p=".9rem" border="1px" borderColor="gray.200" >
-                <CheckboxGroup colorScheme="green">
+                {/* <CheckboxGroup colorScheme="green">
                   <Stack spacing={[1, 5]} direction={["column", "row"]}>
                     <Checkbox
                       name={"premium"}
@@ -366,7 +372,7 @@ const CreatePost = () => {
                       <Text fontWeight={"semiBold"} fontSize="1.08rem" color="GrayText">Premium</Text>
                     </Checkbox>
                   </Stack>
-                </CheckboxGroup>
+                </CheckboxGroup> */}
 
                 <CheckboxGroup colorScheme="green">
                   <Stack spacing={[1, 5]} direction={["column", "row"]}>
@@ -398,7 +404,7 @@ const CreatePost = () => {
 
             </Box>)
             :
-            (<Box display={"flex"} flexDirection={"column"} p={"1rem"} w={"100%"} alignItems={"center"} gap=".5rem" overflow="hidden">
+            (<Box bg={"white"} display={"flex"} flexDirection={"column"} p={"1rem"} w={"100%"} alignItems={"center"} gap=".5rem" overflow="hidden">
 
               <Box display={"flex"} flexDirection="column" p=".9rem" w={"100%"} border="1px" borderColor="gray.200" >
                 <FormLabel >
@@ -431,8 +437,9 @@ const CreatePost = () => {
             </Box>)
           }
         </Flex>
-
-        <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId}/>
+        <Box position={"absolute"}display={!alertSubmit[0] ? "none" : "flex"} bg={"blackAlpha.100"} w={"full"} h={"full"}>
+          <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId} />
+        </Box>
 
       </Box>
     </>

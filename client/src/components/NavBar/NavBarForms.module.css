@@ -1,3 +1,6 @@
+.container {
+  background-color: rgba(0, 0, 0, 0.548);
+}
 
 .buttonAnimation:hover {
   scale: 1.02;

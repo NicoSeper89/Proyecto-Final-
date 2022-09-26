@@ -17,13 +17,14 @@ export default function PaymentOk() {
   /*  const [loading, setLoading] = useState(false); */
   const history = useHistory();
   const busqueda = useLocation().search;
+
   const asignPremium = async (publicationInfo) => {
     const respuesta = {
       status: new URLSearchParams(busqueda).get("status"),
       collection_status: new URLSearchParams(busqueda).get("collection_status"),
       payment_id: new URLSearchParams(busqueda).get("payment_id"),
     };
-    if (true/* respuesta && respuesta.status === "approved" */) {
+    if (true /* respuesta && respuesta.status === "approved" */) {
       await axios.put("/publication/makePremium/" + publicationInfo, {
         /* description: publicationInfo.description,
           status: publicationInfo.status,
@@ -42,7 +43,10 @@ export default function PaymentOk() {
  
     createSuscription(userInfo);
   } */
-    let pubID =window.localStorage.getItem('publicationID')
+
+    let pubID=window.localStorage.getItem('publicationID')
+
+
     asignPremium(pubID);
   }, []);
 
@@ -55,6 +59,7 @@ export default function PaymentOk() {
       position={"absolute"}
       // display={!alertSubmit[0] ? "none" : "flex"}
       // status={!alertSubmit[1] ? "error" : "success"}
+      status="success"
       variant="subtle"
       flexDirection="column"
       alignItems="center"

@@ -14,6 +14,7 @@ import {
   CLEAR_FILTERS,
   LOADING,
   CURRENT_PAGE,
+  CURRENT_CARRUSEL,
   VALUE_FILTER,
   SAVEFILTER,
   SAVESORT,
@@ -21,10 +22,25 @@ import {
   DELETE_PUBLICACTION_IMAGE,
   SET_PUBLICATION,
   UPDATE_PROP,
+  GET_PUBLICATIONS_PREMIUM,
+  INFO_USER,
+  EDIT_USER,
+  GET_PUBLICATION_USER,
+  GET_FAVORITES_USER,
+  SET_FAVORITE,
+  REMOVE_FAVORITE,
+  RANK_USER,
+  GETUSER,
+  UPLOAD_IMG_USER,
+  GET_USER_IMAGE,
+  FAV_ID_LIST
 } from "../actions";
 
 const initialState = {
-  houses: [],
+  allUserInfo: [],
+  infoUser: null,
+  houses: [], //Todas las publicaciones
+  housePrem: [], //Publicación Premium
   services: [],
   typeOfProperties: [],
   cities: [],
@@ -37,9 +53,14 @@ const initialState = {
   },
   sorting: { name: "default", direccion: "minMax" }, // va el criterio de ordenamiento en name(de acuerdo al modelo), y en direccion minMax o maxMin
   loading: false,
-  currentPage: 1,
+  currentPage: 1, //Posición de página de todas las publicaciones
+  currentCarrusel: 1, //Posición de página de las destacadas
   valueFilter: "",
   publicationP: "",
+  publicationsUser: [], //publicaciones de cada usuario
+  favoritesUser: [], //favoritos de cada usuario
+  favoritesUserId: [],
+  imageUser: ''
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -134,17 +155,10 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case SORT_PRICE:
-      if (action.payload === "Precio") {
-        state.sorting = { name: "default", direccion: "minMax" };
         return {
           ...state,
+          sorting: {name: action.payload.name, direccion: action.payload.direccion}
         };
-      } else {
-        state.sorting = { name: "price", direccion: action.payload };
-        return {
-          ...state,
-        };
-      }
     case CLEAR_FILTERS:
       state.filters = {
         publication: [],
@@ -166,6 +180,16 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
         currentPage: action.payload,
+      };
+    case CURRENT_CARRUSEL:
+      return {
+        ...state,
+        currentCarrusel: action.payload,
+      };
+    case GET_PUBLICATIONS_PREMIUM:
+      return {
+        ...state,
+        housePrem: action.payload,
       };
     case VALUE_FILTER:
       return {
@@ -190,9 +214,8 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-
     case SET_PUBLICATION:
-      console.log('en setpub reducer',action.payload)
+      console.log("en setpub reducer", action.payload);
       return {
         ...state,
         publicationP: action.payload,
@@ -203,6 +226,53 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
 
+    case EDIT_USER:
+      return {
+        ...state,
+      };
+
+    case INFO_USER:
+      return {
+        ...state,
+        infoUser: action.payload,
+      };
+    case GET_PUBLICATION_USER:
+      return {
+        ...state,
+        publicationsUser: action.payload,
+      };
+    case GET_FAVORITES_USER:
+      return {
+        ...state,
+        favoritesUser: action.payload,
+      };
+    case SET_FAVORITE:
+      return {
+        ...state,
+      };
+      case REMOVE_FAVORITE:
+      return {
+        ...state,
+      };
+    case RANK_USER:
+      return {
+        ...state,
+      };
+    case GETUSER:
+      return{
+        ...state,
+        allUserInfo: action.payload
+      }
+      case UPLOAD_IMG_USER:
+      return{
+        ...state,
+      }
+      case GET_USER_IMAGE:
+        let imagen=action.payload[0]?action.payload[0].url:null
+      return{
+        ...state,
+        imageUser:imagen
+      }
     default:
       return state;
   }

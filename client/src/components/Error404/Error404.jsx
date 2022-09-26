@@ -27,7 +27,7 @@ export default function Error404() {
           bgGradient="linear(to-r, orange.400, orange.600)"
           backgroundClip="text"
         >
-          Oop! 404
+          Ops! 404
         </Heading>
         <Text fontSize="18px" mt={3} mb={2}>
           Page Not Found
