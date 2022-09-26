@@ -65,6 +65,7 @@ export default function PremiumCards() {
         <Box key={r.id}>
           <Card
             id={r.id}
+            idUser={r.userId}
             img={r.property.propertyImages}
             precio={r.property.price}
             ciudad={r.property.city.name}
