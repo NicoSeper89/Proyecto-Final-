@@ -52,7 +52,7 @@ export default function NavBarForms() {
           h={"60px"}
         >
           <Link to="/">
-            <Image src={logoImg} alt="homeLogo" h={"140px"} marginTop={"20px"} />
+            <Image src={logoImg} alt="homeLogo" h={"200px"} marginTop={"35px"} />
           </Link>
           <Box>
             <Button
