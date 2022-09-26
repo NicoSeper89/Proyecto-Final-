@@ -103,7 +103,7 @@ export default function PremiumCards() {
         </Text>
         <Flex direction={"row"} alignItems="center" w={"1500px"} justifyContent="space-between">
           {/* {currentCarrusel !== 1 ? <Button onClick={handlePrev}>Prev</Button> : null} */}
-          <Button m={"0px"} onClick={handlePrev} marginLeft={"50px"}>
+          <Button m={"0px"} color='black' colorScheme='transparent' onClick={handlePrev} marginLeft={"50px"}>
             <FontAwesomeIcon icon={faChevronLeft} fontSize="30px" />
           </Button>
           {/* <List className={style.paginadoBtn}>{renderPaginado}</List> */}
@@ -112,7 +112,7 @@ export default function PremiumCards() {
               return <Box key={index}>{a}</Box>;
             })}
           </Box>
-          <Button m={"0px"} onClick={handleNext} marginRight={"50px"}>
+          <Button m={"0px"} color='black' colorScheme='transparent' onClick={handleNext} marginRight={"50px"}>
             <FontAwesomeIcon icon={faChevronRight} fontSize="30px" />
           </Button>
           {/* {currentCarrusel !== pages.length ? <Button onClick={handleNext}>Next</Button> : null} */}

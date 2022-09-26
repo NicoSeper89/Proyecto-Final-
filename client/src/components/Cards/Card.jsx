@@ -111,6 +111,7 @@ export default function Card({
           backgroundSize={"cover"}
           backgroundRepeat={"no-repeat"}
           backgroundPosition={"center"}
+          borderBottom='1px solid grey'
         />
           : <Carousel
             zIndex={2}
@@ -136,7 +137,7 @@ export default function Card({
               );
             })}
           </Carousel>
-        )}
+        }
         {/* </Box> */}
 
 
@@ -158,7 +159,7 @@ export default function Card({
           </Tag>
         ) : favState() ? (
           <FontAwesomeIcon
-            cursor={"pointer"}
+            cursor={infoUser&&"pointer"}
             onClick={handleClickFav}
             className={style.containerFav}
             h={"20px"}
