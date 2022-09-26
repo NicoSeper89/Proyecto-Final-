@@ -34,7 +34,7 @@ function App() {
     dispatch(getCities());
     dispatch(getServices());
     dispatch(getTypesOfProperties());
-  });
+  },[dispatch]);
 
   console.log(infoUser, "desde rutas infoUser");
   return (
