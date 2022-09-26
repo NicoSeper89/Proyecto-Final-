@@ -36,7 +36,7 @@ export default function Card({
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
   const [boton, setBoton] = useState(false);
-
+//use effect
   useEffect(async () => {
     if (infoUser) {
       dispatch(getFavsUser(infoUser[0].id));
