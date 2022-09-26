@@ -34,15 +34,15 @@ export default function Card({
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
 
-  useEffect(() => {
+  /* useEffect(() => {
     dispatch(getFavsUser(infoUser[0].id));
-  }, [dispatch]);
+  }, [dispatch]); */
 
   const handleClickFav = () => {
     dispatch(setFav(infoUser[1].userId, id));
   };
 
-  const isFav = favoritesUser.some((fav) => fav.id === id);
+/*   const isFav = favoritesUser.some((fav) => fav.id === id); */
 
   return (
     <Box className={style.container} zIndex={"2"}>
@@ -103,15 +103,15 @@ export default function Card({
         {/* que el corazon aparezca solo en las publicaciones que no son mias */}
         {/* <Link to={"/"} p={"0"}> */}
 
-        {idUser === infoUser[1].userId ? (
+       {/*  {idUser === infoUser[1].userId ? (
           <Tag size={"sm"} variant="solid" backgroundColor={"grey.300"}  w={"5rem"}>
             Propietario
           </Tag>
-        ) : (
+        ) : ( */}
           <Button p={"0"} m={"0"} h={"30px"} onClick={handleClickFav} colorScheme={"transparent"}>
             <FontAwesomeIcon className={style.containerFav} h={"20px"} icon={faHeart} />
           </Button>
-        )}
+      {/*   )} */}
 
         {/* </Link> */}
 
