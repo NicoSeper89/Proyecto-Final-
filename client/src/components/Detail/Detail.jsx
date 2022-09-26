@@ -70,6 +70,7 @@ export default function Detail(props, id) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
     }
+     window.localStorage.setItem('publicationID', miStateDetail.id)
   }, [dispatch, props.match.params.id]);
 
   function handleDelete() {
