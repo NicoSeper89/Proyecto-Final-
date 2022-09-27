@@ -150,6 +150,23 @@ const getCity = async () => {
   });
   return names;
 };
+const findAllReports = async()=> {
+  return await Report.findAll({
+    include: [{
+      model:Publication,
+      include:[
+        
+      ]
+    },
+    {
+      model:User,
+      include:[
+
+      ]
+    }
+    ]
+  })
+}
 
 // const cityArr = [
 //   "buenos aires",
@@ -187,4 +204,5 @@ module.exports = {
   propTypArr,
   serviceTypes,
   getCity,
+  findAllReports
 };
