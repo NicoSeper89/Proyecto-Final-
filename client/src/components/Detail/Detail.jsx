@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicationsDetail, clean, deletePublicaction, getInfoUser } from "../../redux/actions";
+import {
+  getPublicationsDetail,
+  clean,
+  deletePublicaction,
+  getInfoUser,
+  getComment,
+  postComment
+} from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgNotAvailable from "../../Image/Image_not_available.png";
+import axios from "axios"
 import {
   /* faHeart, */
   faRulerCombined,
@@ -46,11 +54,16 @@ import {
   TabPanels,
   TabPanel,
   Tabs,
+  Textarea,
+  Input,
+  FormControl
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
 import Maps from "../Maps/Maps";
+// import Comentarios from "./Comentarios"
+// import { Carousel, } from "react-responsive-carousel";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -59,6 +72,8 @@ export default function Detail(props, id) {
   const myUser = useSelector((state) => state.infoUser);
   const [showMap, setShowMap] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const commentState = useSelector((state) => state.comments);
+  const [comentarios, setComments] = useState("");
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
@@ -70,6 +85,8 @@ export default function Detail(props, id) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
     }
+    dispatch(getComment(props.match.params.id));
+    console.log(commentState);
   }, [dispatch, props.match.params.id]);
 
   function handleDelete() {
@@ -91,6 +108,21 @@ export default function Detail(props, id) {
     left: 0,
     behavior: "smooth",
   });
+
+  const onChangeInputComment = (e) => {
+    e.preventDefault();
+    setComments(e.target.value);
+  };
+
+  const onSubmitComent = async (e) => {
+    e.preventDefault();
+    console.log(comentarios)
+    console.log(props.match.params.id)
+    console.log(e)
+   dispatch(postComment(comentarios ,props.match.params.id))
+   dispatch(getComment(props.match.params.id));
+
+  };
 
   return (
     <Box zIndex={2}>
@@ -127,7 +159,9 @@ export default function Detail(props, id) {
                 >
                   {miStateDetail.property.propertyImages.length > 0 ? (
                     <Box w={"42rem"} h={"42rem"}>
-                      <ImageSlider slides={miStateDetail.property.propertyImages} />
+                      <ImageSlider
+                        slides={miStateDetail.property.propertyImages}
+                      />
                     </Box>
                   ) : (
                     <Image src={imgNotAvailable} />
@@ -159,43 +193,84 @@ export default function Detail(props, id) {
                     <FontAwesomeIcon icon={faX} />
                   }</ListItem> */}
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faEarthAmericas} />
-                      <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
+                      <Text>
+                        Ubicación: {miStateDetail.property.city.name}, Argentina{" "}
+                      </Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faLocationDot} />
                       <Text>Dirección: {miStateDetail.property.address}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faLandmark} />
                       <Text>Precio: ${miStateDetail.property.price}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faHouse} />
-                      <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
+                      <Text>
+                        Tipo de propiedad:{" "}
+                        {miStateDetail.property.TypeOfProp.name}
+                      </Text>
                     </Flex>
 
                     {/* <SimpleGrid columns={2} flexWrap={"wrap"} rowGap={"2px"}> */}
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faDoorOpen} />
-                      <Text>Ambientes: {miStateDetail.property.environments}</Text>
+                      <Text>
+                        Ambientes: {miStateDetail.property.environments}
+                      </Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faRulerCombined} />
-                      <Text>Superficie: {miStateDetail.property.surface}m²</Text>
+                      <Text>
+                        Superficie: {miStateDetail.property.surface}m²
+                      </Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faBed} />
                       <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faCalendar} />
                       <Text>
                         Antigüedad: {miStateDetail.property.age}{" "}
@@ -203,12 +278,20 @@ export default function Detail(props, id) {
                       </Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faToilet} />
                       <Text>Baños: {miStateDetail.property.bathrooms}</Text>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faPaw} />
                       <Flex>
                         Mascotas:
@@ -220,7 +303,11 @@ export default function Detail(props, id) {
                       </Flex>
                     </Flex>
 
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                    <Flex
+                      alignItems={"center"}
+                      m="10px"
+                      justifyContent={"space-between"}
+                    >
                       <FontAwesomeIcon icon={faWarehouse} />
                       <Text>Garage: {miStateDetail.property.garage}</Text>
                     </Flex>
@@ -229,7 +316,8 @@ export default function Detail(props, id) {
                     <Flex m="15px" direction={"row"} justifyContent={"center"}>
                       {miStateDetail.property.services.map((e, i) => (
                         <Flex key={i} alignItems={"center"} m="10px">
-                          <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
+                          <FontAwesomeIcon icon={faCheck} />{" "}
+                          <Text>{e.name}</Text>
                         </Flex>
                       ))}
                     </Flex>
@@ -238,7 +326,11 @@ export default function Detail(props, id) {
               </Box>
 
               <Flex direction={"row-reverse"} justifyContent="space-evenly">
-                <Flex direction={"column"} alignItems="center" justifyContent="space-evenly">
+                <Flex
+                  direction={"column"}
+                  alignItems="center"
+                  justifyContent="space-evenly"
+                >
                   <Box
                     w={"350px"}
                     h={"200px"}
@@ -255,15 +347,19 @@ export default function Detail(props, id) {
                     </Box>
                     <Box alignItems="flex-start" p={"1rem"}>
                       <Text fontSize="lg">
-                        <FontAwesomeIcon icon={faStar} /> {miStateDetail.user.rating}
+                        <FontAwesomeIcon icon={faStar} />{" "}
+                        {miStateDetail.user.rating}
                       </Text>
                       <Text fontSize="lg">
-                        <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                        <FontAwesomeIcon icon={faCircleUser} />{" "}
+                        {miStateDetail.user.name}
                       </Text>
 
                       <Box alignItems="center" fontSize="lg">
                         <FontAwesomeIcon icon={faAt} />
-                        <Link href={`mailto:${miStateDetail.user.contactInfo.mail}`}>
+                        <Link
+                          href={`mailto:${miStateDetail.user.contactInfo.mail}`}
+                        >
                           {" "}
                           {miStateDetail.user.contactInfo.mail}
                         </Link>
@@ -295,7 +391,9 @@ export default function Detail(props, id) {
                           fontSize="xl"
                           as="b"
                           onClick={() =>
-                            history.push("/updatePublicaction/" + props.match.params.id)
+                            history.push(
+                              "/updatePublicaction/" + props.match.params.id
+                            )
                           }
                         >
                           Actualizar datos
@@ -414,6 +512,30 @@ export default function Detail(props, id) {
                   </Tabs>
                 </Box>
               </Flex>
+            </Box>
+
+            {/* ESTO ES BOTONES */}
+
+            {/* ESTO ES BOTONES */}
+            <Box>
+              <FormControl>
+              <Input onChange={onChangeInputComment} value={comentarios}/>
+              <Button onClick={onSubmitComent}>x</Button>
+              </FormControl>
+              { 
+              commentState.map((e)=><Text>{e.message}</Text>)}
+              {/* <Carousel>
+                {Object.entries(commentState).length > 0 ? (
+                  <Box>
+                    <Input
+                      onChange={onChangeInputComment}
+                      value={comentarios}
+                      name="message"
+                    ></Input>
+                    <Button onClick={onSubmitComent}>x</Button>
+                  </Box>
+                ) : null}
+              </Carousel> */}
             </Box>
           </Box>
         ) : (

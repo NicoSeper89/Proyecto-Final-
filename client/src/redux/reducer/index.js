@@ -34,6 +34,8 @@ import {
   UPLOAD_IMG_USER,
   GET_USER_IMAGE,
   FAV_ID_LIST,
+  GET_COMMENT,
+  POST_COMMENT
   REPORT_PUBLICATION,
 } from "../actions";
 
@@ -62,6 +64,7 @@ const initialState = {
   favoritesUser: [], //favoritos de cada usuario
   favoritesUserId: [],
   imageUser: "",
+  comments: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -277,8 +280,18 @@ export default function rootReducer(state = initialState, action) {
       let imagen = action.payload[0] ? action.payload[0].url : null;
       return {
         ...state,
-        imageUser: imagen,
-      };
+        imageUser:imagen
+      }
+      case GET_COMMENT: 
+      console.log(action.payload)
+      return {
+        ...state,
+        comments: action.payload,
+      }
+      case POST_COMMENT:
+        return {
+          ...state,
+        }
     default:
       return state;
   }
