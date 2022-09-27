@@ -37,6 +37,17 @@ function validation(input) {
   return errors;
 }
 
+const type = [
+  { name: "La imagen no se  corresponde con los detalles" },
+  { name: "La imagen no es original del dueño" },
+  { name: "La imagen contiene contenido explicito" },
+  { name: "La descripcion contiene vocabulario no apropiado" },
+  { name: "La imagen no es apropiada" },
+  { name: "El inmueble ya esta alquilado" },
+  { name: "Es un intento de estafa" },
+  { name: "Otros..." },
+];
+
 export default function FormReport(props) {
   // /publications/report/id ---> por params el id de la publicacion (props.match.params.id)
   //por body recibe type(el resultado del select), info(text del report)
@@ -53,12 +64,6 @@ export default function FormReport(props) {
     type: "",
     info: "",
   });
-
-  //   useEffect(() => {
-  //     !input.type || !input.info || input.info.length <= 2 || input.info.length >= 120
-  //       ? setDisableButtonSubmit(true)
-  //       : disableButtonSubmit(false);
-  //   }, [input.type, input.info]);
 
   const onChangeInput = (e) => {
     e.preventDefault();
@@ -88,12 +93,9 @@ export default function FormReport(props) {
     }
   };
 
-  const type = [1, 2, 3];
-
   return (
     <Box>
       <NavBarForms />
-
       <Box
         bg={"blackAlpha.200"}
         position={"relative"}
@@ -137,7 +139,12 @@ export default function FormReport(props) {
               <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                 Elija el motivo del reporte
               </Text>
-              <Select color="gray.500" placeholder=" " name={"type"} onChange={onChangeInput}>
+              <Select
+                color="gray.500"
+                placeholder="Motivo de report..."
+                name={"type"}
+                onChange={onChangeInput}
+              >
                 {type.map((t, i) => (
                   <option key={i} value={t.name}>
                     {t.name}
@@ -162,7 +169,7 @@ export default function FormReport(props) {
             <Button
               // disabled={disableButtonSubmit}
               alignSelf={"center"}
-              colorScheme="blue"
+              colorScheme="green"
               type="submit"
               value={"enviar"}
               onClick={onSubmitForm}
