@@ -33,7 +33,9 @@ import {
   GETUSER,
   UPLOAD_IMG_USER,
   GET_USER_IMAGE,
-  FAV_ID_LIST
+  FAV_ID_LIST,
+  GET_COMMENT,
+  POST_COMMENT
 } from "../actions";
 
 const initialState = {
@@ -60,7 +62,8 @@ const initialState = {
   publicationsUser: [], //publicaciones de cada usuario
   favoritesUser: [], //favoritos de cada usuario
   favoritesUserId: [],
-  imageUser: ''
+  imageUser: '',
+  comments: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -273,6 +276,16 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         imageUser:imagen
       }
+      case GET_COMMENT: 
+      console.log(action.payload)
+      return {
+        ...state,
+        comments: action.payload,
+      }
+      case POST_COMMENT:
+        return {
+          ...state,
+        }
     default:
       return state;
   }

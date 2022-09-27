@@ -8,7 +8,8 @@ const {
   City,
   PropertyImage,
   Report,
-  User
+  User,
+  PublicationComents
 } = require("../../db");
 const router = Router();
 const {
@@ -136,6 +137,8 @@ router.get("/:id", async (req, res, next) => {
         next(error)
     }
 }) */
+
+
 
 router.post("/postReport", async (req, res, next) => {
   try {
@@ -381,14 +384,41 @@ router.put('/unavailable/:id', async (req, res, next) => {
   const { id } = req.params
   try {
     let publi = await Publication.findByPk(id)
-    await Report.create(
 
-    )
-    res.send('publication availablity has changed')
-  } catch (error) {
-    next(error)
-  }
-})
+    await Publication.update(
+      { deleted: !publi.deleted },
+      { where: { id: id } }
+      )
+      res.send('publication availablity has changed')
+    } catch (error) {
+      next(error)
+    }
+  })
+  
+  router.get("/comment/:id", async (req, res, next)=>{
+    const { id } = req.params
+    try {
+      console.log("soy el id:",id)
+     const comments = await PublicationComents.findAll({where: {publicationId: id}})
+     console.log("soy comments:",comments)
+     res.status(200).send(comments)
+    } catch (error) {
+      next(error)
+    }
+  })
+  
+  router.post("/comment", async (req, res, next)=>{
+   const { message, publicationId,}=req.body
+    try {
+    let mensaje = await PublicationComents.create({
+      message,
+      publicationId
+      })
+      res.status(200).send(mensaje)
+    } catch (error) {
+    next(error)  
+    }
+  })
 // crea un reporte a la pblicacion por params, con la info de body
 router.post('/report/:id', async (req, res, next) => {
   const { id } = req.params
@@ -420,6 +450,7 @@ router.delete('/report/:id', async (req, res, next) => {
     next(error)
   }
 })
+
 
 
 module.exports = router;
