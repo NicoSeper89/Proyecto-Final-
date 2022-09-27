@@ -37,7 +37,7 @@ export const GETUSER = "GETUSER"
 export const GET_USER_IMAGE = "GET_USER_IMAGE"
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
-
+export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -401,18 +401,18 @@ export function getUserInfo(id) {
     const resp = await axios.get(`/user/userInfo/${id}`);
     return dispatch({
       type: GETUSER,
-      payload: resp.data
+      payload: resp.data,
     });
-  }
+  };
 }
 export function getUserImage(id) {
   return async function (dispatch) {
     const resp = await axios.get(`/user/getImage/${id}`);
     return dispatch({
       type: GET_USER_IMAGE,
-      payload: resp.data
+      payload: resp.data,
     });
-  }
+  };
 }
 
 export function getComment(publicationId) {
@@ -423,6 +423,16 @@ export function getComment(publicationId) {
       payload: comments.data,
     })
   }
+}
+// Esto es para reportar una publicación
+export function reportPublication(id, input) {
+  return async function (dispatch) {
+    const res = await axios.post(`/publications/report/${id}`, input);
+    return dispatch({
+      type: REPORT_PUBLICATION,
+      payload: res.data,
+    });
+  };
 }
 
 export function postComment(message, publicationId){

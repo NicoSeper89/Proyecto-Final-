@@ -20,6 +20,7 @@ import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
 import AlertCard from "./components/Cards/AlertCard";
+import FormReport from "./components/Detail/FormReport";
 
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
@@ -34,7 +35,7 @@ function App() {
     dispatch(getCities());
     dispatch(getServices());
     dispatch(getTypesOfProperties());
-  },[dispatch]);
+  }, [dispatch]);
 
   console.log(infoUser, "desde rutas infoUser");
   return (
@@ -55,6 +56,7 @@ function App() {
         <Route exact path="/updatePerfil/:id" component={EditPerfil} />
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/redirectRegister" component={AlertCard} />
+        <Route exact path="/reportPublication" component={FormReport} />
         {/* //<Route
         //   exact
         //   path="/perfilPropietario"
