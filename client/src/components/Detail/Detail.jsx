@@ -82,6 +82,10 @@ export default function Detail(props, id) {
     });
   }
 
+  function handleReport() {
+    history.push("/reportPublication");
+  }
+
   window.scroll({
     top: 0,
     left: 0,
@@ -308,8 +312,35 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleReport(e);
+                          }}
+                        >
+                          Reportar publicación
+                        </Button>
                       </Flex>
-                    ) : null}
+                    ) : (
+                      <Flex>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleReport(e);
+                          }}
+                        >
+                          Reportar publicación
+                        </Button>
+                      </Flex>
+                    )}
                   </Box>
                 </Flex>
 
@@ -384,10 +415,6 @@ export default function Detail(props, id) {
                 </Box>
               </Flex>
             </Box>
-
-            {/* ESTO ES BOTONES */}
-
-            {/* ESTO ES BOTONES */}
           </Box>
         ) : (
           <Loading />
