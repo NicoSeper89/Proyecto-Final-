@@ -20,6 +20,7 @@ const {
   propTypArr,
   serviceTypes,
   getCity,
+  findAllReports
 } = require("./controllers");
 const { where } = require("sequelize");
 
@@ -62,10 +63,10 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/premium", async(req,res,next)=>{
+router.get("/premium", async (req, res, next) => {
   try {
     const publications = await getAll()
-    const premium = await publications.filter(p=> p.premium)
+    const premium = await publications.filter(p => p.premium)
     res.send(premium)
   } catch (error) {
     next(error)
@@ -102,7 +103,16 @@ router.get("/propertyTypes", async (req, res, next) => {
     next(error);
   }
 });
-
+//trae todos los reportes que existen
+router.get('/reportList', async (req, res, next) => {
+  
+  try {
+    let reportList = await findAllReports()
+    res.send(reportList)
+  } catch (error) {
+    next(error)
+  }
+})
 
 //para el detail
 router.get("/:id", async (req, res, next) => {
@@ -284,7 +294,7 @@ router.put("/editProperty/:id", async (req, res, next) => {
       pets,
       age,
     });
-    
+
     let allServices = await Service.findAll()
     let deleteSer = allServices.filter(s => s !== service)
     updatedProp.removeService(deleteSer)
@@ -304,7 +314,7 @@ router.put("/editProperty/:id", async (req, res, next) => {
     });
     updatedProp.setTypeOfProp(type);
 
-    propImg?.map( async(i) => {
+    propImg?.map(async (i) => {
       let img = await PropertyImage.findAll({
         where: { url: i.url },
       });
@@ -323,9 +333,9 @@ router.put("/makePremium/:id", async (req, res, next) => {
     let updatedPub = await Publication.findByPk(id)
     await Publication.upsert({
       id: id,
-      description:updatedPub.description,
-      status:updatedPub.status,
-      premium:true,
+      description: updatedPub.description,
+      status: updatedPub.status,
+      premium: true,
     });
     res.send('premium')
   } catch (error) {
@@ -352,13 +362,13 @@ router.delete("/delete/:id", async (req, res, next) => {
   try {
     const post = await Publication.findByPk(id)
 
-    const deleteImg = await PropertyImage.findAll({where: {propertyId: post.propertyId}})
+    const deleteImg = await PropertyImage.findAll({ where: { propertyId: post.propertyId } })
     await deleteImg.map(img => {
       cloudinary.uploader.destroy(img.cloudId)
       img.destroy()
     })
-    await Property.destroy({where: {id: post.propertyId}})
-    await Publication.destroy({where: {id: id}})
+    await Property.destroy({ where: { id: post.propertyId } })
+    await Publication.destroy({ where: { id: id } })
 
     res.send(`id ${id} was deleted`)
   } catch (error) {
@@ -367,15 +377,45 @@ router.delete("/delete/:id", async (req, res, next) => {
 })
 
 
-router.put('/unavailable/:id', async (req, res, next)=>{
-  const {id} = req.params
+router.put('/unavailable/:id', async (req, res, next) => {
+  const { id } = req.params
   try {
     let publi = await Publication.findByPk(id)
-    await Publication.update(
-      { deleted: !publi.deleted },
-      { where: { id: id } }
+    await Report.create(
+
     )
     res.send('publication availablity has changed')
+  } catch (error) {
+    next(error)
+  }
+})
+// crea un reporte a la pblicacion por params, con la info de body
+router.post('/report/:id', async (req, res, next) => {
+  const { id } = req.params
+  const { type, info, userId } = req.body
+  try {
+    let user = await User.findByPk(userId)
+    let publi = await Publication.findByPk(id)
+    if (type) {
+      let report = await Report.create({
+          type: type,
+          info: info,
+      });s
+      report.setUser(user)
+      publi.addReport(report);
+    }
+    res.send('Se reporto la publicacion')
+  } catch (error) {
+    next(error)
+  }
+})
+
+// borra un reporte a la pblicacion por params, con la info de body
+router.delete('/report/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    await Report.destroy({ where: { id : id } });
+    res.send('Se borro el reporte')
   } catch (error) {
     next(error)
   }

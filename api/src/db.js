@@ -83,7 +83,8 @@ UserImage.belongsTo(User); // 1 a 1
 User.belongsTo(TypeOfUser); // N a 1
 TypeOfUser.hasMany(User); // 1 a N
 User.hasMany(Publication); //1 a N
-
+User.hasMany(Report);
+Report.belongsTo(User); 
 // //Relaciones publicación
 Publication.belongsTo(User); // N a 1
 Publication.belongsToMany(Report, { through: "reportsPublications" }); // N a N
