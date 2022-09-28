@@ -38,7 +38,12 @@ import {
   POST_COMMENT,
   REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
-  GET_PUBLICATIONS_NAVAILABLE  
+  GET_PUBLICATIONS_NAVAILABLE,
+  GET_REPORTS,
+  GET_REPORTS_ID,
+  GET_FOR_APPROVAL,
+  APPROVE_POST_USER
+
 } from "../actions";
 
 const initialState = {
@@ -67,6 +72,9 @@ const initialState = {
   favoritesUserId: [],
   imageUser: "",
   comments: [],
+  reports:[],
+  reportsId:[],
+  forApproval:[]
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -294,19 +302,40 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case GET_ALL_PUBLICATIONS:
-        return{
-          ...state,
-          houses: action.payload
-        }
+    case GET_ALL_PUBLICATIONS:
+      return {
+        ...state,
+        houses: action.payload
+      }
 
-      case GET_PUBLICATIONS_NAVAILABLE:
-        const noAvailable=action.payload.filter(p=> p.deleted)
-        return{
-          ...state,
-          houses: noAvailable 
-        }  
+    case GET_PUBLICATIONS_NAVAILABLE:
+      const noAvailable = action.payload.filter(p => p.deleted)
+      return {
+        ...state,
+        houses: noAvailable
+      }
+    case GET_REPORTS:
 
+      return {
+        ...state,
+        reports:action.payload
+      };
+    case GET_REPORTS_ID:
+
+      return {
+        ...state,
+        reportsId:action.payload
+      };
+    case GET_FOR_APPROVAL
+      :
+      return {
+        ...state,
+        forApproval:action.payload
+      };
+    case APPROVE_POST_USER:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
