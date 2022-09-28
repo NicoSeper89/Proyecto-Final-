@@ -1,10 +1,16 @@
+const { Router } = require("express");
+const router = Router();
+const cloudinary = require("../../utils/cloudinary")
+const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo, Publication } = require("../../db");
+const { getAllUsers, getPubs, getPublications, getOneUser } = require("./controllers");
+var Sequelize = require("sequelize");
 
 // esta ruta recibe por query un nombre de usuario, hace un filtro y trae a ese usuario. si no encuentra 
 //uno devuelve todos los usuarios 
 
 router.get("/users", async (req, res) => {
   const name = req.query.name;
-  //const {name}=req.params
+  //const {name}=req.params 
   const usersTotal = await getAllUsers();
   if (name) {
     let userName = await usersTotal.filter((elem) =>
@@ -13,7 +19,7 @@ router.get("/users", async (req, res) => {
     userName.length ? res.status(200).send(userName) : res.status(404).send("User not found");
   } else {
     res.status(200).send(usersTotal);
-  }
+  } 
 });
 
 router.get("/userInfo/:id", async(req,res,next)=>{
@@ -23,7 +29,7 @@ router.get("/userInfo/:id", async(req,res,next)=>{
     res.send(user)
   } catch (error) {
     next(error)
-  }
+  } 
 })
 
 // router.post("/typeofusers", async (req, res) => {

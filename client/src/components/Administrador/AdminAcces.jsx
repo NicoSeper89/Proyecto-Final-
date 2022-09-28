@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import style from "./AdminAcces.module.css"
 
 const AdminAcces = () => {
-  const{logout} = useAuth0()
+  const{logout, loginWithRedirect} = useAuth0()
   
  const [password ,setPassword] = useState("")
   // const user = useSelector(state => state.infoUser)
@@ -26,6 +26,7 @@ const user =  JSON.parse(dataUser)
 
     window.localStorage.removeItem("User")
     logout()
+    loginWithRedirect()
   }else(
     alert("Contraseña incorrecta")
   )
