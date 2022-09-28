@@ -61,13 +61,11 @@ import {
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
-import Maps from "../Maps/Maps";
-
-import Datos from '../Maps/Datos'
-
+// import Maps from "../Maps/Maps";
+import FormReport from "./FormReport";
+import Datos from "../Maps/Datos";
 // import Comentarios from "./Comentarios"
 // import { Carousel, } from "react-responsive-carousel";
-
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -104,6 +102,7 @@ export default function Detail(props, id) {
   }
 
   function handleReport() {
+    window.localStorage.setItem("id", `${props.match.params.id}`);
     history.push("/reportPublication");
   }
 
@@ -347,7 +346,7 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
-                        <Button
+                        {/* <Button
                           w={"350px"}
                           colorScheme="green"
                           m="8px"
@@ -358,7 +357,7 @@ export default function Detail(props, id) {
                           }}
                         >
                           Reportar publicación
-                        </Button>
+                        </Button> */}
                       </Flex>
                     ) : (
                       <Flex>
@@ -398,6 +397,13 @@ export default function Detail(props, id) {
                       <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
                         Descripción
                       </Tab>
+                      {myUser[0].id === miStateDetail.userId ? (
+                        <Tab fontWeight={600} color={"red"} mb={"5px"}>
+                          Reportar
+                        </Tab>
+                      ) : (
+                        <></>
+                      )}
                     </TabList>
                     <TabPanels display={"flex"} justifyContent="center">
                       <TabPanel>
@@ -412,7 +418,6 @@ export default function Detail(props, id) {
                           alignItems="center"
                         >
                           {/* {showMap && <Maps position={miStateDetail} />} */}
-                         
                         </Flex>
                       </TabPanel>
                       <TabPanel>
@@ -427,6 +432,20 @@ export default function Detail(props, id) {
                         >
                           <Text fontSize="lg">{miStateDetail.description}</Text>
                         </Box>
+                      </TabPanel>
+                      <TabPanel>
+                        <Flex
+                          alignItems="flex-start"
+                          w={"500px"}
+                          h={"250px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.300"
+                          borderRadius={"0.5rem"}
+                          justifyContent={"center"}
+                        >
+                          <FormReport id={props.match.params.id} userId={myUser[0].id} />
+                        </Flex>
                       </TabPanel>
                     </TabPanels>
                     {/* <Box textAlign={"center"} mb={"5px"}>
@@ -455,7 +474,17 @@ export default function Detail(props, id) {
             {/* ESTO ES BOTONES */}
 
             {/* ESTO ES BOTONES */}
-            <Box>
+            <Box
+              variant="soft-rounded"
+              colorScheme="green"
+              w={"42rem"}
+              h={"400px"}
+              boxShadow="dark-lg"
+              p="10px"
+              border="1px solid grey.600"
+              // bg={"rgba(216, 158, 26, 0.35)"}
+              borderRadius={"0.5rem"}
+            >
               <FormControl>
                 <Input onChange={onChangeInputComment} value={comentarios} />
                 <Button onClick={onSubmitComent}>x</Button>
@@ -483,7 +512,7 @@ export default function Detail(props, id) {
       </Flex>
       <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} />
       <Footer />
-       {showMap && <Datos position={miStateDetail}/>}
+      {showMap && <Datos position={miStateDetail} />}
     </Box>
   );
 }

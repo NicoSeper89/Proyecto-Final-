@@ -38,7 +38,7 @@ import {
   POST_COMMENT,
   REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
-  GET_PUBLICATIONS_NAVAILABLE  
+  GET_PUBLICATIONS_NAVAILABLE,
 } from "../actions";
 
 const initialState = {
@@ -294,18 +294,18 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case GET_ALL_PUBLICATIONS:
-        return{
-          ...state,
-          houses: action.payload
-        }
+    case GET_ALL_PUBLICATIONS:
+      return {
+        ...state,
+        houses: action.payload,
+      };
 
-      case GET_PUBLICATIONS_NAVAILABLE:
-        const noAvailable=action.payload.filter(p=> p.deleted)
-        return{
-          ...state,
-          houses: noAvailable 
-        }  
+    case GET_PUBLICATIONS_NAVAILABLE:
+      const noAvailable = action.payload.filter((p) => p.deleted);
+      return {
+        ...state,
+        houses: noAvailable,
+      };
 
     default:
       return state;
