@@ -27,6 +27,7 @@ import Admin from "./components/Administrador/Admin.jsx";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
 
 
+
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
   const dispatch = useDispatch();

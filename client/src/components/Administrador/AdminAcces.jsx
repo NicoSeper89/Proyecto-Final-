@@ -1,9 +1,6 @@
 import { Box, InputGroup, Input, InputRightElement, Button } from "@chakra-ui/react";
 import React from "react";
-import { useEffect } from "react";
-import { useState, } from "react";
-import { useSelector, useDispatch } from "react-redux"
-import { getInfoUser } from "../../redux/actions";
+import { useState , } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 
