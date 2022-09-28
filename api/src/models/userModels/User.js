@@ -26,5 +26,9 @@ module.exports = (sequelize) => {
     favorites: {
       type: DataTypes.ARRAY(DataTypes.STRING),
     },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   });
 };

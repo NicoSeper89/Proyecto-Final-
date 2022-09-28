@@ -20,8 +20,11 @@ import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
 import AlertCard from "./components/Cards/AlertCard";
+
+import AdminAcces from "./components/Administrador/AdminAcces";
 import FormReport from "./components/Detail/FormReport";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd"
+
 
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
@@ -82,6 +85,10 @@ function App() {
           }}
         />
         <Route exact path="/select" component={Select} />
+
+        <Route exact path="/adminAcces" component={AdminAcces} />
+
+
         <Route path="*" component={Error404} />
       </Switch>
     </>
