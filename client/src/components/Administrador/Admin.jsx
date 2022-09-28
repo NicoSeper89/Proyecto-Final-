@@ -21,7 +21,14 @@ import {
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAll } from "../../redux/actions";
+import {
+  getAll,
+  getForApproval,
+  getInfoUser,
+  getPubliNoAvail,
+  getReports,
+  getUserInfo,
+} from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
 
@@ -29,10 +36,29 @@ export default function Admin() {
   const dispatch = useDispatch();
   const houses = useSelector((state) => state.houses);
   const myUser = useSelector((state) => state.infoUser);
+  const forApproval = useSelector((state) => state.forApproval);
+  const reports = useSelector((state) => state.reports);
+  const housesEliminadas = useSelector((state) => state.housesEliminadas);
+  const totalUsers = useSelector((state) => state.totalUsers);
+
   console.log("HOUSEE: ", houses);
   console.log("USEER: ", myUser);
+  console.log("APROBAR: ", forApproval);
+  console.log("REPORTS: ", reports);
+  console.log("ELIMINADAS: ", housesEliminadas);
+  console.log("USUARIOSS: ", totalUsers);
+
+  const infoUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
     dispatch(getAll());
+    dispatch(getForApproval());
+    dispatch(getReports());
+    dispatch(getPubliNoAvail());
+    if (!infoUser) {
+      const user = JSON.parse(window.localStorage.getItem("User"));
+      dispatch(getInfoUser(user));
+      dispatch(getUserInfo(infoUser[0].id));
+    }
   }, [dispatch]);
 
   return (
@@ -46,7 +72,7 @@ export default function Admin() {
         textAlign={"start"}
         bg={"rgba(216, 158, 26, 0.35)"}
       >
-        <Heading>Bienvenido Administrador {myUser[0].name}!</Heading>
+        <Heading>Bienvenido Administrador {infoUser[0].name}!</Heading>
       </Box>
       <Box>
         <Text>Acá se va a ver la lista de los usuarios</Text>
@@ -91,16 +117,22 @@ export default function Admin() {
                     <Thead w={"100%"}>
                       <Th>Fecha de creación</Th>
                       <Th>Usuario</Th>
-                      <Th>Ranking</Th>
-                      <Th>Ver Publicaciones</Th>
-                      <Th>Ver Reportes</Th>
+                      <Th>Rating</Th>
+                      <Th>Perfil</Th>
                     </Thead>
                     <Tbody>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
+                      {totalUsers[0]?.map((p, i) => {
+                        return (
+                          <Tr key={i}>
+                            <Td>{p.createdAt}</Td>
+                            <Td>{p.name}</Td>
+                            <Td>{p.rating}</Td>
+                            <Td>
+                              <Link to={`/perfilPropietario/${p.userId}`}>Ir a perfil</Link>
+                            </Td>
+                          </Tr>
+                        );
+                      })}
                     </Tbody>
                   </Table>
                 </TableContainer>
@@ -120,13 +152,11 @@ export default function Admin() {
                     </Tr>
                   </Thead>
                   <Tbody>
-                    {houses.map((p, i) => {
+                    {houses?.map((p, i) => {
                       return (
                         <Tr key={i}>
                           <Td>{p.createdAt}</Td>
-                          <Td>
-                            {p.property.address}, {p.property.city.name}, Argentina
-                          </Td>
+                          <Td>{p.property.address}</Td>
                           <Td>
                             <Link to={`/details/${p.id}`}>Ir a propiedad</Link>
                           </Td>
@@ -153,10 +183,20 @@ export default function Admin() {
                       <Th>Ver perfil de Propietario</Th>
                     </Thead>
                     <Tbody>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
+                      {forApproval?.map((p, i) => {
+                        return (
+                          <Tr key={i}>
+                            <Td>{p.createdAt}</Td>
+                            <Td>{p.property.address}</Td>
+                            <Td>
+                              <Link to={`/details/${p.id}`}>Ir a propiedad</Link>
+                            </Td>
+                            <Td>
+                              <Link to={p.userId}>Ir a perfil</Link>
+                            </Td>
+                          </Tr>
+                        );
+                      })}
                     </Tbody>
                   </Table>
                 </TableContainer>
@@ -175,11 +215,21 @@ export default function Admin() {
                       <Th>Ver Usuario que reportó</Th>
                     </Thead>
                     <Tbody>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
+                      {reports?.map((p, i) => {
+                        return (
+                          <Tr key={i}>
+                            <Td>{p.createdAt}</Td>
+                            <Td>{p.type}</Td>
+                            <Td>{p.info}</Td>
+                            <Td>
+                              <Link to={`/details/${p.publications[0].id}`}>Ir a propiedad</Link>
+                            </Td>
+                            <Td>
+                              <Link to={p.userId}>Ir a perfil</Link>
+                            </Td>
+                          </Tr>
+                        );
+                      })}
                     </Tbody>
                   </Table>
                 </TableContainer>
@@ -197,10 +247,18 @@ export default function Admin() {
                       <Th>Ver Propiedad</Th>
                     </Thead>
                     <Tbody>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
-                      <Tr></Tr>
+                      {housesEliminadas?.map((p, i) => {
+                        return (
+                          <Tr key={i}>
+                            <Td>{p.createdAt}</Td>
+                            <Td>fecha?</Td>
+                            <Td>motivo?</Td>
+                            <Td>
+                              <Link to={`/details/${p.id}`}>Ir a propiedad</Link>
+                            </Td>
+                          </Tr>
+                        );
+                      })}
                     </Tbody>
                   </Table>
                 </TableContainer>

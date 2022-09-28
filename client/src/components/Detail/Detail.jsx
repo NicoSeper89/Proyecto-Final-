@@ -64,7 +64,7 @@ import AlertDelete from "./AlertDeletePubli";
 // import Maps from "../Maps/Maps";
 import FormReport from "./FormReport";
 import Datos from "../Maps/Datos";
-import RequestScore from "./requestScore"
+import RequestScore from "./requestScore";
 // import Comentarios from "./Comentarios"
 // import { Carousel, } from "react-responsive-carousel";
 
@@ -90,7 +90,6 @@ export default function Detail(props, id) {
     }
     dispatch(getComment(props.match.params.id));
     console.log(commentState);
-
   }, [dispatch, props.match.params.id]);
 
   function handleDelete() {
@@ -107,12 +106,6 @@ export default function Detail(props, id) {
     window.localStorage.setItem("id", `${props.match.params.id}`);
     history.push("/reportPublication");
   }
-
-  // window.scroll({
-  //   top: 0,
-  //   left: 0,
-  //   behavior: "smooth",
-  // });
 
   const onChangeInputComment = (e) => {
     e.preventDefault();
@@ -515,7 +508,7 @@ export default function Detail(props, id) {
       </Flex>
       <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} />
       <Footer />
-      {showMap && <Datos position={miStateDetail} />}
+      {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>
   );
 }
