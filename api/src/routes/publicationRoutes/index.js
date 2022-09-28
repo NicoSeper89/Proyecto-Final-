@@ -258,15 +258,16 @@ router.post("/postProperty", async (req, res, next) => {
   try {
     if (!description) res.status(404).send("fill out description");
     let user = await User.findByPk(userId);
+    let post;
     if (user.approved) {
-      let post = await Publication.create({
+       post = await Publication.create({
         description,
         status,
         premium,
         approved: true
       });
     } else {
-      let post = await Publication.create({
+       post = await Publication.create({
         description,
         status,
         premium,
