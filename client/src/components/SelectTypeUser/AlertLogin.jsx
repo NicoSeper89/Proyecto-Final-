@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
     Button,
     Alert,
@@ -11,12 +11,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 
 const AlertLogin= ({loguear}) => {
+    
     const{isAuthenticated , user, loginWithRedirect,logout ,isLoading} = useAuth0() 
     const history = useHistory()
 
     const onDown = () => {
     if(loguear){
-        history.push("/")
+        history.push("/") 
     } else{
         logout()
         
@@ -48,7 +49,7 @@ const AlertLogin= ({loguear}) => {
                    { loguear !== false? "Muchas gracias por utilizar nuestra web!":
                    "Si iniciaste sesion anteriormente con Google por favor elige esa opcion"}
                 </AlertDescription>
-                { loguear !== undefined? <Button padding="20px" marginTop="10px" onClick={onDown}>Volver al inicio</Button>: null}
+                { loguear !== undefined? <Button padding="20px" marginTop="10px" onClick={onDown}>Volver</Button>: null}
             </Alert>
     )
 }

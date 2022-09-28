@@ -30,6 +30,9 @@ module.exports = (sequelize) => {
     admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    userRank: {
+      type: DataTypes.ARRAY(DataTypes.STRING)
     }
   });
 };

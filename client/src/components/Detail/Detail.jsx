@@ -479,7 +479,7 @@ export default function Detail(props, id) {
             {/* ESTO ES BOTONES */}
             <Box
               variant="soft-rounded"
-              colorScheme="green"
+              /* colorScheme="green" */
               w={"42rem"}
               h={"400px"}
               boxShadow="dark-lg"
