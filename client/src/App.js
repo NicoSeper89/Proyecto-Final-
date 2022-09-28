@@ -20,6 +20,7 @@ import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
 import AlertCard from "./components/Cards/AlertCard";
+import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd"
 
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
@@ -55,6 +56,7 @@ function App() {
         <Route exact path="/updatePerfil/:id" component={EditPerfil} />
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/redirectRegister" component={AlertCard} />
+        <Route exact path="/deletedLogicUAd"  component={deletedLogicUAd}/>
         {/* //<Route
         //   exact
         //   path="/perfilPropietario"

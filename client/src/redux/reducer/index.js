@@ -33,7 +33,9 @@ import {
   GETUSER,
   UPLOAD_IMG_USER,
   GET_USER_IMAGE,
-  FAV_ID_LIST
+  FAV_ID_LIST,
+  GET_ALL_PUBLICATIONS,
+  GET_PUBLICATIONS_NAVAILABLE  
 } from "../actions";
 
 const initialState = {
@@ -273,6 +275,19 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         imageUser:imagen
       }
+      case GET_ALL_PUBLICATIONS:
+        return{
+          ...state,
+          houses: action.payload
+        }
+
+      case GET_PUBLICATIONS_NAVAILABLE:
+        const noAvailable=action.payload.filter(p=> p.deleted)
+        return{
+          ...state,
+          houses: noAvailable 
+        }  
+
     default:
       return state;
   }
