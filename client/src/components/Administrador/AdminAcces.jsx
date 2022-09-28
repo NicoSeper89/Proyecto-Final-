@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import { useState , } from "react";
 import {useSelector,useDispatch} from "react-redux"
 import { getInfoUser } from "../../redux/actions";
+import axios from "axios";
+
 const AdminAcces = () => {
   const dispatch = useDispatch()
 
@@ -19,11 +21,15 @@ const AdminAcces = () => {
   }, []);
 
 
-   const acces = () => {
-    console.log(user, password)
+   const acces = async () => {
+    await axios.put(`http://localhost:3001/admin/acces?id=${user[0].id}`)
+    console.log(user[0].id)
     setPassword("")
    }
-  return (
+    var si_no
+   password === "12345"? si_no = false: si_no = true
+
+   if(user) return (
     <Box maxWidth="400px" textAlign="center" >
 
       <h1>Password Admin</h1>
@@ -43,9 +49,10 @@ const AdminAcces = () => {
       </InputRightElement>
     </InputGroup>
     </Box>
-    <Button colorScheme='teal' variant='solid' onClick={() => acces()}>Enviar</Button>
+    <Button colorScheme='teal' variant='solid' disabled={si_no} onClick={() => acces()}>Enviar</Button>
    </Box>
   )
+  else return(<h1>no exite user </h1>)
 }
 
 export default AdminAcces
