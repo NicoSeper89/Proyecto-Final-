@@ -64,6 +64,7 @@ import AlertDelete from "./AlertDeletePubli";
 // import Maps from "../Maps/Maps";
 import FormReport from "./FormReport";
 import Datos from "../Maps/Datos";
+import RequestScore from "./requestScore"
 // import Comentarios from "./Comentarios"
 // import { Carousel, } from "react-responsive-carousel";
 
@@ -89,6 +90,7 @@ export default function Detail(props, id) {
     }
     dispatch(getComment(props.match.params.id));
     console.log(commentState);
+
   }, [dispatch, props.match.params.id]);
 
   function handleDelete() {
@@ -358,6 +360,7 @@ export default function Detail(props, id) {
                         >
                           Reportar publicación
                         </Button> */}
+                        <RequestScore myUser={myUser} />
                       </Flex>
                     ) : (
                       <Flex>
