@@ -24,6 +24,7 @@ import AlertCard from "./components/Cards/AlertCard";
 import AdminAcces from "./components/Administrador/AdminAcces";
 import FormReport from "./components/Detail/FormReport";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd"
+import Rank from "./components/Rank/Rank.jsx"
 
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
 
         <Route exact path="/adminAcces" component={AdminAcces} />
 
+        <Route exact path="/details/:id/rank" component={Rank}/>
 
         <Route path="*" component={Error404} />
       </Switch>

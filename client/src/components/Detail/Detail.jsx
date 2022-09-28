@@ -62,7 +62,7 @@ import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
 import Maps from "../Maps/Maps";
-
+import RequestScore from "./requestScore"
 import Datos from '../Maps/Datos'
 
 // import Comentarios from "./Comentarios"
@@ -91,6 +91,7 @@ export default function Detail(props, id) {
     }
     dispatch(getComment(props.match.params.id));
     console.log(commentState);
+
   }, [dispatch, props.match.params.id]);
 
   function handleDelete() {
@@ -358,7 +359,8 @@ export default function Detail(props, id) {
                           }}
                         >
                           Reportar publicación
-                        </Button>
+                        </Button> 
+                        <RequestScore myUser={myUser} />
                       </Flex>
                     ) : (
                       <Flex>
