@@ -38,8 +38,12 @@ export const GET_USER_IMAGE = "GET_USER_IMAGE";
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
 export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
-export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS";
-export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE";
+export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS"
+export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE"
+export const GET_REPORTS = "GET_REPORTS";
+export const GET_REPORTS_ID = "GET_REPORTS_ID";
+export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
+export const APPROVE_POST_USER = "APPROVE_POST_USER"
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -400,70 +404,181 @@ export function getInfoUser(user) {
 
 export function getUserInfo(id) {
   return async function (dispatch) {
+    try{
     const resp = await axios.get(`/user/userInfo/${id}`);
     return dispatch({
       type: GETUSER,
       payload: resp.data,
-    });
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
   };
 }
 export function getUserImage(id) {
   return async function (dispatch) {
+    try{
     const resp = await axios.get(`/user/getImage/${id}`);
     return dispatch({
       type: GET_USER_IMAGE,
       payload: resp.data,
-    });
+    }); 
+  } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
   };
 }
 
 export function getComment(publicationId) {
   return async function (dispatch) {
-    const comments = await axios.get(`/publication/comment/${publicationId}`);
+
+    try{
+    const comments = await axios.get(`/publication/comment/${publicationId}`)
     return dispatch({
       type: GET_COMMENT,
       payload: comments.data,
-    });
-  };
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
+  }
+
 }
 // Esto es para reportar una publicación
 export function reportPublication(id, input) {
   return async function (dispatch) {
+    try{
     const res = await axios.post(`/publication/report/${id}`, input);
     return dispatch({
       type: REPORT_PUBLICATION,
       payload: res.data,
-    });
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
   };
 }
-
-//trae todas las publicaciones para el usaurio administrador ok
-export function getAll() {
-  return async function (dispatch) {
+//trae todas las publis
+export function getAll(){
+  return async function (dispatch){
+    try{
     const respuesta = await axios.get("/publication/allpublications");
     return dispatch({
       type: GET_ALL_PUBLICATIONS,
-      payload: respuesta.data,
-    });
-  };
+      payload: respuesta.data
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
+  }
 }
 
-//trae todas las publicaciones disponibles para el usuario administrador
-export function getPubliNoAvail() {
-  return async function (dispatch) {
+//trae publis borradas
+export function getPubliNoAvail(){
+  return async function (dispatch){
+    try{
     const respuesta = await axios.get("/publication/allpublications");
     return dispatch({
       type: GET_PUBLICATIONS_NAVAILABLE,
-      payload: respuesta.data,
-    });
-  };
+      payload: respuesta.data
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
+  }
 }
 
-export function postComment(message, publicationId) {
-  return async function (dispatch) {
-    await axios.post(`/publication/comment`, { message, publicationId });
+
+export function postComment(message, publicationId){
+ return async function (dispatch) {
+  try{
+  await axios.post(`/publication/comment`, {message, publicationId})
+  return dispatch({
+    type: POST_COMMENT
+  })
+} catch (error) {
+  if (error.response) {
+    alert(error.response.data);
+  }
+}
+ }
+
+}
+
+//todos los reportes
+export function getReports(){
+  return async function (dispatch){
+    try{
+    const respuesta = await axios.get("/publication/reportList");
     return dispatch({
-      type: POST_COMMENT,
-    });
-  };
+      type: GET_REPORTS,
+      payload: respuesta.data
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
+  }
+}
+//todos los reportes de una publciacion
+export function getReportsId(id){
+  return async function (dispatch){
+    try{
+    const respuesta = await axios.get("/publication/reportList/"+id);
+    return dispatch({
+      type: GET_REPORTS_ID,
+      payload: respuesta.data
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
+  }
+}
+//todas las pubis a aprobar
+export function getForApproval(){
+  return async function (dispatch){
+    try{
+    const respuesta = await axios.get("/publication/forApproval");
+    return dispatch({
+      type: GET_FOR_APPROVAL,
+      payload: respuesta.data
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
+  }
+}
+//aprobar publicacion
+export function approvePostUser(pubId,userId){
+  return async function (dispatch){
+    try{
+    const respuesta = await axios.get("/publication/approvePost/"+pubId);
+    const respuesta2 = await axios.get("/publication/approveUser/"+userId);
+    return dispatch({
+      type: APPROVE_POST_USER,
+/*       payload: respuesta.data */
+    })
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data);
+    }
+  }
+  }
 }

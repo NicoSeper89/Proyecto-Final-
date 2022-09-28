@@ -27,9 +27,8 @@ const { where } = require("sequelize");
 
 //para el home y para el searchbar get con query
 router.get("/allPublications", async (req, res, next) => {
-  const allPubli = await getAll();
-  res.send(allPubli);
-});
+  const allPubli = await getAll()
+  res.send(allPubli)
 
 router.post("/", async (req, res, next) => {
   try {
@@ -68,6 +67,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+
 router.get("/premium", async (req, res, next) => {
   try {
     const publications = await getAll();
@@ -76,7 +76,17 @@ router.get("/premium", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+})
+//apps a aprobar
+router.get("/forApproval", async (req, res, next) => {
+  try {
+    const publications = await getAll()
+    const notApproved = await publications.filter(p => !(p.approved))
+    res.send(notApproved)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get("/city", async (req, res, next) => {
   try {
@@ -109,7 +119,8 @@ router.get("/propertyTypes", async (req, res, next) => {
   }
 });
 //trae todos los reportes que existen
-router.get("/reportList", async (req, res, next) => {
+router.get('/reportList', async (req, res, next) => {
+
   try {
     let reportList = await findAllReports();
     res.send(reportList);
@@ -242,23 +253,30 @@ router.post("/postProperty", async (req, res, next) => {
   const { description, status, premium, report, id, userId } = req.body;
   try {
     if (!description) res.status(404).send("fill out description");
-    let post = await Publication.create({
-      description,
-      status,
-      premium,
-    });
+    let user = await User.findByPk(userId);
+    if (user.approved) {
+      let post = await Publication.create({
+        description,
+        status,
+        premium,
+        approved: true
+      });
+    } else {
+      let post = await Publication.create({
+        description,
+        status,
+        premium,
+      });
+    }
     if (report) {
       let rep = await Report.findAll({
         where: { name: report },
       });
       post.addReport(rep);
     }
-
     let property = await Property.findByPk(id);
     post.setProperty(property);
-    let user = await User.findByPk(userId);
     post.setUser(user);
-
     res.send(post.id);
   } catch (error) {
     next(error);
@@ -408,18 +426,40 @@ router.get("/comment/:id", async (req, res, next) => {
   }
 });
 
+    await Publication.update(
+      { deleted: !publi.deleted },
+      { where: { id: id } }
+    )
+    res.send('publication availablity has changed')
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get("/comment/:id", async (req, res, next) => {
+  const { id } = req.params
+  try {
+    console.log("soy el id:", id)
+    const comments = await PublicationComents.findAll({ where: { publicationId: id } })
+    console.log("soy comments:", comments)
+    res.status(200).send(comments)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.post("/comment", async (req, res, next) => {
-  const { message, publicationId } = req.body;
+  const { message, publicationId, } = req.body
   try {
     let mensaje = await PublicationComents.create({
       message,
-      publicationId,
-    });
-    res.status(200).send(mensaje);
+      publicationId
+    })
+    res.status(200).send(mensaje)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 // crea un reporte a la pblicacion por params, con la info de body
 router.post("/report/:id", async (req, res, next) => {
   const { id } = req.params;
@@ -451,5 +491,32 @@ router.delete("/report/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put('/approvePost/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    await Publication.update(
+      { approved: true },
+      { where: { id: id } }
+    )
+    res.send('Se aprobo la publicacion')
+  } catch (error) {
+    next(error)
+  }
+})
+router.put('/approveUser/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    await User.update(
+      { approved: true },
+      { where: { id: id } }
+    )
+    res.send('Se aprobo al usuario')
+  } catch (error) {
+    next(error)
+  }
+})
+
+
 
 module.exports = router;
