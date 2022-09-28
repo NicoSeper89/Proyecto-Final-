@@ -27,6 +27,7 @@ import {
 } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
+import Places from "./Places";
 
 const CreatePost = () => {
   const dispatch = useDispatch();
@@ -204,13 +205,14 @@ const CreatePost = () => {
                 </FormLabel>
 
                 <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Dirección</Text>
-                  <Input color="gray.500"
+                  {/* <Input color="gray.500"
                     autoComplete={"true"}
                     type="text"
                     name={"address"}
                     value={infoFormProp.address}
                     onChange={onChangeInputProp}
-                  />
+                  /> */}
+                  <Places infoFormProp={infoFormProp} setInfoFormProp={setInfoFormProp} />
                 </FormLabel>
 
                 <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Tipo De Inmueble</Text>
