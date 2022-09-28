@@ -38,6 +38,8 @@ export const GET_USER_IMAGE = "GET_USER_IMAGE";
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
 export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
+export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS"
+export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE"
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -136,6 +138,7 @@ export function getPublicationsPremium() {
     }
   };
 }
+
 
 //Esto trae las publicaciones del mismo usuario
 export function getPubs(id) {
@@ -434,6 +437,30 @@ export function reportPublication(id, input) {
     });
   };
 }
+//trae todas las publicaciones para el usaurio administrador ok
+export function getAll(){
+  return async function (dispatch){
+    const respuesta = await axios.get("/publication/allpublications");
+    return dispatch({
+      type: GET_ALL_PUBLICATIONS,
+      payload: respuesta.data
+    })
+  }
+
+}
+
+//trae todas las publicaciones disponibles para el usuario administrador
+export function getPubliNoAvail(){
+  return async function (dispatch){
+    const respuesta = await axios.get("/publication/allpublications");
+    return dispatch({
+      type: GET_PUBLICATIONS_NAVAILABLE,
+      payload: respuesta.data
+    })
+  }
+
+}
+
 
 export function postComment(message, publicationId) {
   return async function (dispatch) {

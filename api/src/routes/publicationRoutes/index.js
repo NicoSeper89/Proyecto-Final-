@@ -26,6 +26,11 @@ const {
 const { where } = require("sequelize");
 
 //para el home y para el searchbar get con query
+router.get("/allPublications", async(req,res,next)=>{
+   const allPubli = await getAll()
+   res.send(allPubli)
+
+})
 
 router.post("/", async (req, res, next) => {
   try {
