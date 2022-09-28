@@ -4,7 +4,7 @@ import React from "react";
 const DashBoard = () => {
     return (
         <Box>
-
+      <h1>Holaaaaaaaaa soy admin</h1> H
         </Box>
     )
 }

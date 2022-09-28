@@ -5,29 +5,36 @@ import { useState, } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { getInfoUser } from "../../redux/actions";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const AdminAcces = () => {
   const dispatch = useDispatch()
+  const{logout} = useAuth0()
 
-  const [password, setPassword] = useState("")
-  const user = useSelector(state => state.infoUser)
+
+ const [password ,setPassword] = useState("")
+  // const user = useSelector(state => state.infoUser)
+
 
   const [show, setShow] = React.useState(false)
   const handleClick = () => setShow(!show)
 
-  useEffect(() => {
-    const dataUser = window.localStorage.getItem("User");
-    dataUser && dispatch(getInfoUser(JSON.parse(dataUser)))
-  }, []);
 
+const dataUser = window.localStorage.getItem("User");
+const user =  JSON.parse(dataUser)
+  
+   const acces = async () => {
 
-  const acces = async () => {
     await axios.put(`http://localhost:3001/admin/acces?id=${user[0].id}`)
-    console.log(user[0].id)
     setPassword("")
-  }
-  let si_no
-  password === "12345" ? si_no = false : si_no = true
+
+    window.localStorage.removeItem("User")
+    logout()
+  
+   }
+    let si_no
+   password === "12345"? si_no = false: si_no = true
+
 
   if (user) return (
     <Box maxWidth="400px" textAlign="center" >

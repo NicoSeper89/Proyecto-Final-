@@ -39,6 +39,7 @@ import {
   REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
   GET_PUBLICATIONS_NAVAILABLE,
+
   GET_REPORTS,
   GET_REPORTS_ID,
   GET_FOR_APPROVAL,
@@ -305,6 +306,7 @@ export default function rootReducer(state = initialState, action) {
     case GET_ALL_PUBLICATIONS:
       return {
         ...state,
+
         houses: action.payload
       }
 
@@ -315,6 +317,7 @@ export default function rootReducer(state = initialState, action) {
         houses: noAvailable
       }
     case GET_REPORTS:
+
 
       return {
         ...state,
