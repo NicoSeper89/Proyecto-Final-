@@ -35,6 +35,9 @@ export const SET_FAVORITE = "SET_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 export const GETUSER = "GETUSER"
 export const GET_USER_IMAGE = "GET_USER_IMAGE"
+export const GET_COMMENT = "GET_COMMENT";
+export const POST_COMMENT = "POST_COMMENT";
+export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
 export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS"
 export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE"
 
@@ -401,20 +404,39 @@ export function getUserInfo(id) {
     const resp = await axios.get(`/user/userInfo/${id}`);
     return dispatch({
       type: GETUSER,
-      payload: resp.data
+      payload: resp.data,
     });
-  }
+  };
 }
 export function getUserImage(id) {
   return async function (dispatch) {
     const resp = await axios.get(`/user/getImage/${id}`);
     return dispatch({
       type: GET_USER_IMAGE,
-      payload: resp.data
+      payload: resp.data,
     });
-  }
+  };
 }
 
+export function getComment(publicationId) {
+  return async function (dispatch) {
+    const comments = await axios.get(`/publication/comment/${publicationId}`)
+    return dispatch({
+      type: GET_COMMENT,
+      payload: comments.data,
+    })
+  }
+}
+// Esto es para reportar una publicación
+export function reportPublication(id, input) {
+  return async function (dispatch) {
+    const res = await axios.post(`/publications/report/${id}`, input);
+    return dispatch({
+      type: REPORT_PUBLICATION,
+      payload: res.data,
+    });
+  };
+}
 //trae todas las publicaciones para el usaurio administrador
 export function getAll(){
   return async function (dispatch){
@@ -440,3 +462,11 @@ export function getPubliNoAvail(){
 }
 
 
+export function postComment(message, publicationId){
+ return async function (dispatch) {
+  await axios.post(`/publication/comment`, {message, publicationId})
+  return dispatch({
+    type: POST_COMMENT
+  })
+ }
+}

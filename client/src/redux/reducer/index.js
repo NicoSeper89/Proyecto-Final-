@@ -34,6 +34,9 @@ import {
   UPLOAD_IMG_USER,
   GET_USER_IMAGE,
   FAV_ID_LIST,
+  GET_COMMENT,
+  POST_COMMENT,
+  REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
   GET_PUBLICATIONS_NAVAILABLE  
 } from "../actions";
@@ -62,7 +65,8 @@ const initialState = {
   publicationsUser: [], //publicaciones de cada usuario
   favoritesUser: [], //favoritos de cada usuario
   favoritesUserId: [],
-  imageUser: ''
+  imageUser: "",
+  comments: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -157,10 +161,10 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case SORT_PRICE:
-        return {
-          ...state,
-          sorting: {name: action.payload.name, direccion: action.payload.direccion}
-        };
+      return {
+        ...state,
+        sorting: { name: action.payload.name, direccion: action.payload.direccion },
+      };
     case CLEAR_FILTERS:
       state.filters = {
         publication: [],
@@ -233,6 +237,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
 
+    case REPORT_PUBLICATION:
+      return {
+        ...state,
+      };
+
     case INFO_USER:
       return {
         ...state,
@@ -252,7 +261,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case REMOVE_FAVORITE:
+    case REMOVE_FAVORITE:
       return {
         ...state,
       };
@@ -261,20 +270,30 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case GETUSER:
-      return{
+      return {
         ...state,
-        allUserInfo: action.payload
-      }
-      case UPLOAD_IMG_USER:
-      return{
+        allUserInfo: action.payload,
+      };
+    case UPLOAD_IMG_USER:
+      return {
         ...state,
-      }
-      case GET_USER_IMAGE:
-        let imagen=action.payload[0]?action.payload[0].url:null
-      return{
+      };
+    case GET_USER_IMAGE:
+      let imagen = action.payload[0] ? action.payload[0].url : null;
+      return {
         ...state,
-        imageUser:imagen
-      }
+        imageUser: imagen,
+      };
+    case GET_COMMENT:
+      console.log(action.payload);
+      return {
+        ...state,
+        comments: action.payload,
+      };
+    case POST_COMMENT:
+      return {
+        ...state,
+      };
       case GET_ALL_PUBLICATIONS:
         return{
           ...state,

@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPublicationsDetail, clean, deletePublicaction, getInfoUser } from "../../redux/actions";
+import {
+  getPublicationsDetail,
+  clean,
+  deletePublicaction,
+  getInfoUser,
+  getComment,
+  postComment,
+} from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgNotAvailable from "../../Image/Image_not_available.png";
+import axios from "axios";
 import {
   /* faHeart, */
   faRulerCombined,
@@ -46,11 +54,16 @@ import {
   TabPanels,
   TabPanel,
   Tabs,
+  Textarea,
+  Input,
+  FormControl,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
 import Maps from "../Maps/Maps";
+// import Comentarios from "./Comentarios"
+// import { Carousel, } from "react-responsive-carousel";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -59,6 +72,8 @@ export default function Detail(props, id) {
   const myUser = useSelector((state) => state.infoUser);
   const [showMap, setShowMap] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const commentState = useSelector((state) => state.comments);
+  const [comentarios, setComments] = useState("");
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
@@ -70,6 +85,8 @@ export default function Detail(props, id) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
     }
+    dispatch(getComment(props.match.params.id));
+    console.log(commentState);
   }, [dispatch, props.match.params.id]);
 
   function handleDelete() {
@@ -82,11 +99,29 @@ export default function Detail(props, id) {
     });
   }
 
+  function handleReport() {
+    history.push("/reportPublication");
+  }
+
   window.scroll({
     top: 0,
     left: 0,
     behavior: "smooth",
   });
+
+  const onChangeInputComment = (e) => {
+    e.preventDefault();
+    setComments(e.target.value);
+  };
+
+  const onSubmitComent = async (e) => {
+    e.preventDefault();
+    console.log(comentarios);
+    console.log(props.match.params.id);
+    console.log(e);
+    dispatch(postComment(comentarios, props.match.params.id));
+    dispatch(getComment(props.match.params.id));
+  };
 
   return (
     <Box zIndex={2}>
@@ -308,8 +343,35 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleReport(e);
+                          }}
+                        >
+                          Reportar publicación
+                        </Button>
                       </Flex>
-                    ) : null}
+                    ) : (
+                      <Flex>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleReport(e);
+                          }}
+                        >
+                          Reportar publicación
+                        </Button>
+                      </Flex>
+                    )}
                   </Box>
                 </Flex>
 
@@ -388,6 +450,27 @@ export default function Detail(props, id) {
             {/* ESTO ES BOTONES */}
 
             {/* ESTO ES BOTONES */}
+            <Box>
+              <FormControl>
+                <Input onChange={onChangeInputComment} value={comentarios} />
+                <Button onClick={onSubmitComent}>x</Button>
+              </FormControl>
+              {commentState.map((e) => (
+                <Text>{e.message}</Text>
+              ))}
+              {/* <Carousel>
+                {Object.entries(commentState).length > 0 ? (
+                  <Box>
+                    <Input
+                      onChange={onChangeInputComment}
+                      value={comentarios}
+                      name="message"
+                    ></Input>
+                    <Button onClick={onSubmitComent}>x</Button>
+                  </Box>
+                ) : null}
+              </Carousel> */}
+            </Box>
           </Box>
         ) : (
           <Loading />

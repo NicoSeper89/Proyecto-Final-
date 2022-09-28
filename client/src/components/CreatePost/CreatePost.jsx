@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "../UploadImg/UploadImg";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {
-  setPublication,
-} from "../../redux/actions";
+import { setPublication } from "../../redux/actions";
 import {
   Stack,
   Input,
@@ -23,7 +21,7 @@ import {
   Select,
   Button,
   FormLabel,
-  Box
+  Box,
 } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
@@ -50,7 +48,7 @@ const CreatePost = () => {
     pets: false,
     service: [],
   });
-  console.log(infoFormProp.propImg)
+  console.log(infoFormProp.propImg);
 
   const [infoFormPub, setInfoFormPub] = useState({
     description: "",
@@ -63,11 +61,23 @@ const CreatePost = () => {
   const [disableButtonSubmit, setDisableButtonSubmit] = useState(true);
   const [disableButtonContinue, setDisableButtonContinue] = useState(true);
   const [continueForm, setContinueForm] = useState(true);
-  const [alertSubmit, setAlertSubmit] = useState([false, false])
-  const [propertyId, setPropertyId] = useState('');
+  const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const [propertyId, setPropertyId] = useState("");
+
   useEffect(() => {
-    const { city, address, surface, price, environments, bathrooms, rooms, garage, yard, age, typProp } =
-      infoFormProp;
+    const {
+      city,
+      address,
+      surface,
+      price,
+      environments,
+      bathrooms,
+      rooms,
+      garage,
+      yard,
+      age,
+      typProp,
+    } = infoFormProp;
 
     if (
       !city ||
@@ -91,12 +101,13 @@ const CreatePost = () => {
     } else {
       setDisableButtonContinue(false);
     }
-
   }, [infoFormProp]);
 
   useEffect(() => {
-    ((/^[\s]+$/i.test(infoFormPub.description)) || !infoFormPub.description) ? setDisableButtonSubmit(true) : setDisableButtonSubmit(false)
-  }, [infoFormPub.description])
+    /^[\s]+$/i.test(infoFormPub.description) || !infoFormPub.description
+      ? setDisableButtonSubmit(true)
+      : setDisableButtonSubmit(false);
+  }, [infoFormPub.description]);
 
   const onChangeInputProp = (e) => {
     e.preventDefault();
@@ -131,31 +142,30 @@ const CreatePost = () => {
   };
 
   const onContinueForm = () => {
-
-    setContinueForm(false)
-
-  }
+    setContinueForm(false);
+  };
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
-      let user = JSON.parse(window.localStorage.getItem('User'));
+      let user = JSON.parse(window.localStorage.getItem("User"));
       let res = await axios.post("/publication/createProperty", {
-        ...infoFormProp
+        ...infoFormProp,
       });
 
       let idPub = await axios.post("/publication/postProperty", {
         ...infoFormPub,
-        id: res.data, userId: user[0].id
+        id: res.data,
+        userId: user[0].id,
       });
-      window.localStorage.setItem('publicationID', idPub.data)
-      console.log('en create', idPub.data)
+      window.localStorage.setItem("publicationID", idPub.data);
+      console.log("en create", idPub.data);
       /*  dispatch(setPublication(idPub.data)); */
       setAlertSubmit([true, true]);
       window.scroll({
         top: 0,
         left: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     } catch (error) {
       setAlertSubmit([true, false]);
@@ -163,7 +173,7 @@ const CreatePost = () => {
       window.scroll({
         top: 0,
         left: 0,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -171,10 +181,22 @@ const CreatePost = () => {
   return (
     <>
       <NavBarForms />
-      <Box bg={"blackAlpha.200"} position={"relative"} display={"flex"} flexDirection={"column"} alignItems={"center"} justifyContent={"flex-start"} color={"gray.700"} >
-
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"57.7%"} p={"1rem"} m={"1rem 0rem"} >
-          <Heading color={"white"} textShadow={"gray .1rem .1rem .2rem"} textAlign={"center"} fontSize="2.5rem">
+      <Box
+        bg={"blackAlpha.200"}
+        position={"relative"}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
+        justifyContent={"flex-start"}
+        color={"gray.700"}
+      >
+        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"57.7%"} p={"1rem"} m={"1rem 0rem"}>
+          <Heading
+            color={"white"}
+            textShadow={"gray .1rem .1rem .2rem"}
+            textAlign={"center"}
+            fontSize="2.5rem"
+          >
             Publicar Propiedad
           </Heading>
         </Box>
@@ -187,13 +209,35 @@ const CreatePost = () => {
           wrap="wrap"
           overflow="hidden"
           minWidth={"57.7%"}
-          
         >
-          {(continueForm) ?
-            (<Box bg={"white"} display={"flex"} flexDirection={"column"} p={"1rem"} w={"60%"} gap=".5rem" overflow="hidden">
-              <Box display={"flex"} flexDirection="column" p=".9rem" border="1px" borderColor="gray.200" >
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Provincia</Text>
-                  <Select color="gray.500" placeholder=' ' borderColor="gray.200" name={"city"} onChange={onChangeInputProp}>
+          {continueForm ? (
+            <Box
+              bg={"white"}
+              display={"flex"}
+              flexDirection={"column"}
+              p={"1rem"}
+              w={"60%"}
+              gap=".5rem"
+              overflow="hidden"
+            >
+              <Box
+                display={"flex"}
+                flexDirection="column"
+                p=".9rem"
+                border="1px"
+                borderColor="gray.200"
+              >
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    Provincia
+                  </Text>
+                  <Select
+                    color="gray.500"
+                    placeholder=" "
+                    borderColor="gray.200"
+                    name={"city"}
+                    onChange={onChangeInputProp}
+                  >
                     {/* <option value="default" >Default</option> */}
                     {cities.map((type, i) => (
                       <option key={i} value={type.name}>
@@ -203,8 +247,12 @@ const CreatePost = () => {
                   </Select>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Dirección</Text>
-                  <Input color="gray.500"
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    Dirección
+                  </Text>
+                  <Input
+                    color="gray.500"
                     autoComplete={"true"}
                     type="text"
                     name={"address"}
@@ -213,8 +261,16 @@ const CreatePost = () => {
                   />
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Tipo De Inmueble</Text>
-                  <Select color="gray.500" placeholder=' ' name={"typProp"} onChange={onChangeInputProp}>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    Tipo De Inmueble
+                  </Text>
+                  <Select
+                    color="gray.500"
+                    placeholder=" "
+                    name={"typProp"}
+                    onChange={onChangeInputProp}
+                  >
                     {/* <option value="default" >Default</option> */}
                     {propertys.map((type, i) => (
                       <option key={i} value={type.name}>
@@ -225,11 +281,26 @@ const CreatePost = () => {
                 </FormLabel>
               </Box>
 
-              <Box display={"flex"} justifyContent={"space-around"} flexWrap={"wrap"} p=".5rem" border="1px" borderColor="gray.200" >
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Precio</Text>
-                  <NumberInput color="gray.500"
+              <Box
+                display={"flex"}
+                justifyContent={"space-around"}
+                flexWrap={"wrap"}
+                p=".5rem"
+                border="1px"
+                borderColor="gray.200"
+              >
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                    Precio
+                  </Text>
+                  <NumberInput
+                    color="gray.500"
                     value={infoFormProp.price}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, price: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, price: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -240,10 +311,17 @@ const CreatePost = () => {
                   </NumberInput>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Antigüedad</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                    Antigüedad
+                  </Text>
                   <NumberInput
                     value={infoFormProp.age}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, age: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, age: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -255,12 +333,25 @@ const CreatePost = () => {
                 </FormLabel>
               </Box>
 
-              <Box display={"flex"} justifyContent={"space-around"} flexWrap={"wrap"} p=".5rem" border="1px" borderColor="gray.200" >
-
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Superficie</Text>
+              <Box
+                display={"flex"}
+                justifyContent={"space-around"}
+                flexWrap={"wrap"}
+                p=".5rem"
+                border="1px"
+                borderColor="gray.200"
+              >
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                    Superficie
+                  </Text>
                   <NumberInput
                     value={infoFormProp.surface}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, surface: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, surface: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -271,10 +362,17 @@ const CreatePost = () => {
                   </NumberInput>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Ambientes</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                    Ambientes
+                  </Text>
                   <NumberInput
                     value={infoFormProp.environments}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, environments: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, environments: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -285,10 +383,17 @@ const CreatePost = () => {
                   </NumberInput>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Baños</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                    Baños
+                  </Text>
                   <NumberInput
                     value={infoFormProp.bathrooms}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, bathrooms: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, bathrooms: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -299,10 +404,17 @@ const CreatePost = () => {
                   </NumberInput>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="GrayText">Habitaciones</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="GrayText">
+                    Habitaciones
+                  </Text>
                   <NumberInput
                     value={infoFormProp.rooms}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, rooms: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, rooms: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -313,10 +425,17 @@ const CreatePost = () => {
                   </NumberInput>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Garage</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                    Garage
+                  </Text>
                   <NumberInput
                     value={infoFormProp.garage}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, garage: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, garage: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -327,10 +446,17 @@ const CreatePost = () => {
                   </NumberInput>
                 </FormLabel>
 
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">Patios</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
+                    Patios
+                  </Text>
                   <NumberInput
                     value={infoFormProp.yard}
-                    onChange={(value) => (((/^[0-9]+$/i.test(value)) || (value === "")) ? setInfoFormProp({ ...infoFormProp, yard: value }) : null)}
+                    onChange={(value) =>
+                      /^[0-9]+$/i.test(value) || value === ""
+                        ? setInfoFormProp({ ...infoFormProp, yard: value })
+                        : null
+                    }
                     min={0}
                   >
                     <NumberInputField />
@@ -342,12 +468,36 @@ const CreatePost = () => {
                 </FormLabel>
               </Box>
 
-              <Box display={"flex"} flexDirection="column" p=".9rem" gap={".7rem"} border="1px" borderColor="gray.200">
-                <Text fontWeight={"semiBold"} fontSize="1.15rem" color="gray.500">Servicios</Text>
+              <Box
+                display={"flex"}
+                flexDirection="column"
+                p=".9rem"
+                gap={".7rem"}
+                border="1px"
+                borderColor="gray.200"
+              >
+                <Text fontWeight={"semiBold"} fontSize="1.15rem" color="gray.500">
+                  Servicios
+                </Text>
                 <CheckboxGroup colorScheme="green">
-                  <Stack display={"flex"} justifyContent={"flex-start"} gap={".6rem"} flexWrap={"wrap"} spacing={[1, 5]} direction={["column", "row"]}>
+                  <Stack
+                    display={"flex"}
+                    justifyContent={"flex-start"}
+                    gap={".6rem"}
+                    flexWrap={"wrap"}
+                    spacing={[1, 5]}
+                    direction={["column", "row"]}
+                  >
                     {services.map((s, i) => (
-                      <Checkbox fontWeight={"semiBold"} fontSize="1.15rem" color="GrayText" key={i} name={s.name} value={s.name} onChange={selectCheckBoxService}>
+                      <Checkbox
+                        fontWeight={"semiBold"}
+                        fontSize="1.15rem"
+                        color="GrayText"
+                        key={i}
+                        name={s.name}
+                        value={s.name}
+                        onChange={selectCheckBoxService}
+                      >
                         {s.name[0].toUpperCase() + s.name.substring(1)}
                       </Checkbox>
                     ))}
@@ -355,7 +505,7 @@ const CreatePost = () => {
                 </CheckboxGroup>
               </Box>
 
-              <Box display={"flex"} gap={"1rem"} p=".9rem" border="1px" borderColor="gray.200" >
+              <Box display={"flex"} gap={"1rem"} p=".9rem" border="1px" borderColor="gray.200">
                 {/* <CheckboxGroup colorScheme="green">
                   <Stack spacing={[1, 5]} direction={["column", "row"]}>
                     <Checkbox
@@ -383,7 +533,9 @@ const CreatePost = () => {
                         })
                       }
                     >
-                      <Text fontWeight={"semiBold"} fontSize="1.08rem" color="GrayText">Mascotas</Text>
+                      <Text fontWeight={"semiBold"} fontSize="1.08rem" color="GrayText">
+                        Mascotas
+                      </Text>
                     </Checkbox>
                   </Stack>
                 </CheckboxGroup>
@@ -399,14 +551,30 @@ const CreatePost = () => {
               >
                 Continuar
               </Button>
-
-            </Box>)
-            :
-            (<Box bg={"white"} display={"flex"} flexDirection={"column"} p={"1rem"} w={"100%"} alignItems={"center"} gap=".5rem" overflow="hidden">
-
-              <Box display={"flex"} flexDirection="column" p=".9rem" w={"100%"} border="1px" borderColor="gray.200" >
-                <FormLabel >
-                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Descripcion</Text>
+            </Box>
+          ) : (
+            <Box
+              bg={"white"}
+              display={"flex"}
+              flexDirection={"column"}
+              p={"1rem"}
+              w={"100%"}
+              alignItems={"center"}
+              gap=".5rem"
+              overflow="hidden"
+            >
+              <Box
+                display={"flex"}
+                flexDirection="column"
+                p=".9rem"
+                w={"100%"}
+                border="1px"
+                borderColor="gray.200"
+              >
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    Descripcion
+                  </Text>
                   <Textarea
                     name={"description"}
                     value={infoFormPub.description}
@@ -431,14 +599,18 @@ const CreatePost = () => {
               >
                 Enviar
               </Button>
-
-            </Box>)
-          }
+            </Box>
+          )}
         </Flex>
-        <Box position={"absolute"}display={!alertSubmit[0] ? "none" : "flex"} bg={"blackAlpha.100"} w={"full"} h={"full"}>
+        <Box
+          position={"absolute"}
+          display={!alertSubmit[0] ? "none" : "flex"}
+          bg={"blackAlpha.100"}
+          w={"full"}
+          h={"full"}
+        >
           <AlertSubmit alertSubmit={alertSubmit} propertyId={propertyId} />
         </Box>
-
       </Box>
     </>
   );

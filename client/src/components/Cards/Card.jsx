@@ -104,26 +104,27 @@ export default function Card({
           )}
         </Box>
 
-        {!img[0] ? <Image
-          src={imgNotAvailable}
-          alt="Img not found"
-          h={"230px"}
-          backgroundSize={"cover"}
-          backgroundRepeat={"no-repeat"}
-          backgroundPosition={"center"}
-          borderBottom='1px solid grey'
-        />
-          : <Carousel
+        {!img[0] ? (
+          <Image
+            src={imgNotAvailable}
+            alt="Img not found"
+            h={"230px"}
+            backgroundSize={"cover"}
+            backgroundRepeat={"no-repeat"}
+            backgroundPosition={"center"}
+            borderBottom="1px solid grey"
+          />
+        ) : (
+          <Carousel
             zIndex={2}
-
             thumbWidth={"13%"}
             h={"230px"}
             infiniteLoop
             borderBottom={"0.2px solid rgb(126, 125, 125)"}
           >
-            {img.map((s) => {
+            {img.map((s, i) => {
               return (
-                <Box>
+                <Box key={i}>
                   <Image
                     src={s.url ? s.url : imgNotAvailable}
                     key={s.id}
@@ -137,9 +138,8 @@ export default function Card({
               );
             })}
           </Carousel>
-        }
+        )}
         {/* </Box> */}
-
 
         {/* <Image
           src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
@@ -159,7 +159,7 @@ export default function Card({
           </Tag>
         ) : favState() ? (
           <FontAwesomeIcon
-            cursor={infoUser&&"pointer"}
+            cursor={infoUser && "pointer"}
             onClick={handleClickFav}
             className={style.containerFav}
             h={"20px"}
