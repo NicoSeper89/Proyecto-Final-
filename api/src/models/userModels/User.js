@@ -33,6 +33,10 @@ module.exports = (sequelize) => {
     },
     userRank: {
       type: DataTypes.ARRAY(DataTypes.STRING)
+    },
+    approved: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
 };
