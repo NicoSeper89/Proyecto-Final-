@@ -22,15 +22,15 @@ router.get("/users", async (req, res) => {
   }
 });
 
-// router.get("/userInfo/:id", async(req,res,next)=>{
-//   const {id} = req.params
-//   try {
-//     let user = await getOneUser(id)
-//     res.send(user)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+router.get("/userInfo/:id", async(req,res,next)=>{
+  const {id} = req.params
+  try {
+    let user = await getOneUser(id)
+    res.send(user)
+  } catch (error) {
+    next(error)
+  }
+})
 
 // router.post("/typeofusers", async (req, res) => {
 //   try {
