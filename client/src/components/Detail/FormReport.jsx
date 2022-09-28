@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { reportPublication } from "../../redux/actions";
+import { getInfoUser, reportPublication } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
 
@@ -45,13 +45,15 @@ const type = [
   { name: "La imagen no es apropiada" },
   { name: "El inmueble ya esta alquilado" },
   { name: "Es un intento de estafa" },
+  { name: "Problemas con el propietario" },
   { name: "Otros..." },
 ];
 
-export default function FormReport(props) {
+export default function FormReport({ id, userId }) {
   // /publications/report/id ---> por params el id de la publicacion (props.match.params.id)
   //por body recibe type(el resultado del select), info(text del report)
   //y userId(el id del usuario que realiza el report)
+  //useeffect si existe el detail que no lo traiga, sino si
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -60,6 +62,15 @@ export default function FormReport(props) {
   //   const [disableButtonSubmit, setDisableButtonSubmit] = useState(true);
   //   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [errors, setErrors] = useState({});
+
+  //   const dataUser = window.localStorage.getItem("User");
+  //   const infooo = JSON.parse(dataUser);
+  //   const dataDetail = window.localStorage.getItem("id");
+
+  //   useEffect(() => {
+  //     dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
+  //   }, []);
+
   const [input, setInput] = useState({
     userId: infoUser.userId,
     type: "",
@@ -96,23 +107,24 @@ export default function FormReport(props) {
 
   return (
     <Box>
-      <NavBarForms />
+      {/* <NavBarForms /> */}
       <Box
         bg={"blackAlpha.200"}
         position={"relative"}
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        justifyContent={"flex-start"}
+        justifyContent={"center"}
         color={"gray.700"}
-        p={"100px"}
+        w={"500px"}
+        h={"250px"}
       >
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"70%"} p={"1rem 0rem"} m={"1rem"}>
+        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"100%"}>
           <Heading
             color={"white"}
             textShadow={"gray .1rem .1rem .2rem"}
             textAlign={"center"}
-            fontSize="2.0rem"
+            fontSize="1.2rem"
           >
             REPORTAR PUBLICACIÓN
           </Heading>
@@ -124,20 +136,19 @@ export default function FormReport(props) {
           alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          minWidth={"57.7%"}
+          // minWidth={"57.7%"}
           width={"100%"}
         >
           <FormControl
             bg={"white"}
             display={"flex"}
             flexDirection={"column"}
-            p={"1rem"}
-            w={"60%"}
-            gap=".5rem"
+            w={"100%"}
             overflow="hidden"
+            p="10px"
           >
             <FormLabel>
-              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+              <Text fontWeight={"semiBold"} fontSize="1.0rem" color="gray.500">
                 Elija el motivo del reporte
               </Text>
               <Select
@@ -155,7 +166,7 @@ export default function FormReport(props) {
               {errors.type && <span>{errors.type}</span>}
             </FormLabel>
             <FormLabel>
-              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+              <Text fontWeight={"semiBold"} fontSize="1.0rem" color="gray.500">
                 Describa el motivo
               </Text>
               <Textarea
@@ -180,7 +191,7 @@ export default function FormReport(props) {
           </FormControl>
         </Flex>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 }
