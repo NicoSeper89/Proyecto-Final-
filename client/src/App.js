@@ -20,7 +20,11 @@ import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
 import AlertCard from "./components/Cards/AlertCard";
+
 import AdminAcces from "./components/Administrador/AdminAcces";
+import FormReport from "./components/Detail/FormReport";
+import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd"
+
 
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
@@ -35,7 +39,7 @@ function App() {
     dispatch(getCities());
     dispatch(getServices());
     dispatch(getTypesOfProperties());
-  },[dispatch]);
+  }, [dispatch]);
 
   console.log(infoUser, "desde rutas infoUser");
   return (
@@ -56,6 +60,8 @@ function App() {
         <Route exact path="/updatePerfil/:id" component={EditPerfil} />
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/redirectRegister" component={AlertCard} />
+        <Route exact path="/reportPublication" component={FormReport} />
+        <Route exact path="/deletedLogicUAd"  component={deletedLogicUAd}/>
         {/* //<Route
         //   exact
         //   path="/perfilPropietario"
@@ -63,11 +69,13 @@ function App() {
         //     return infoUser ? <PerfilPropietario /> : <Redirect to="*" />;
         //   }}
         // /> */}
-
+        
         {/* <Route exact path="/perfilInquilino" render={() => {
+          return
           return user2 && user2[0].typeOfUserId === 2? <PerfilInquilino/> :
           <Redirect to="*"/>
         }} /> */}
+        
 
         <Route
           exact
