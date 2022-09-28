@@ -24,7 +24,7 @@ import AlertCard from "./components/Cards/AlertCard";
 import AdminAcces from "./components/Administrador/AdminAcces";
 import FormReport from "./components/Detail/FormReport";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd"
-import DashBoard from "./components/Administrador/DashBoard";
+
 
 
 function App() {
@@ -89,7 +89,7 @@ function App() {
 
         <Route exact path="/adminAcces" component={AdminAcces} />
 
-        <Route exact path="/dashBoard" component={DashBoard} />
+        {/* <Route exact path="/dashBoard" component={DashBoard} /> */}
 
 
         <Route path="*" component={Error404} />
