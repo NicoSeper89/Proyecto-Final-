@@ -47,11 +47,6 @@ const NavBar = () => {
   };
   window.addEventListener("scroll", cambioColor);
 
-  const buttonCreatePost = (e) => {
-    e.preventDefault();
-    history.push("/createPost");
-  };
-
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
 
@@ -80,11 +75,19 @@ const NavBar = () => {
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
           {/* me oculta el boton si no esta logueado o es propietario */}
+          {user2 && user2[0].admin && (
+            <Button colorScheme="orange" bg="orange" variant="outline" onClick={null} marginRight="20px">
+              Administrador
+            </Button>
+          )}
+
           {user2 && (
-            <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
+            <Button colorScheme="orange" bg="orange" variant="outline" 
+            onClick={() => history.push("/createPost")}>
               Publicar
             </Button>
           )}
+          
 
           {/* <Box direction={"row"} spacing={6}> */}
           {/* <Box

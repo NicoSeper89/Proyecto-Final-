@@ -1,9 +1,3 @@
-const { Router } = require("express");
-const router = Router();
-const cloudinary = require("../../utils/cloudinary")
-const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo, Publication } = require("../../db");
-const { getAllUsers, getPubs, getPublications, getOneUser } = require("./controllers");
-var Sequelize = require("sequelize");
 
 // esta ruta recibe por query un nombre de usuario, hace un filtro y trae a ese usuario. si no encuentra 
 //uno devuelve todos los usuarios 
