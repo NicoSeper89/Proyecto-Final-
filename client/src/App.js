@@ -23,6 +23,7 @@ import AlertCard from "./components/Cards/AlertCard";
 import FormReport from "./components/Detail/FormReport";
 import AdminAcces from "./components/Administrador/AdminAcces";
 import Admin from "./components/Administrador/Admin.jsx";
+import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
 
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
