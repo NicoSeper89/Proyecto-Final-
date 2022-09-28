@@ -6,13 +6,15 @@ import { useAuth0 } from "@auth0/auth0-react";
 import style from "./AdminAcces.module.css"
 
 const AdminAcces = () => {
-  const{logout} = useAuth0()
+  const{logout, loginWithRedirect} = useAuth0()
   
  const [password ,setPassword] = useState("")
   // const user = useSelector(state => state.infoUser)
 
-    const [show, setShow] = React.useState(false)
+
+  const [show, setShow] = React.useState(false)
   const handleClick = () => setShow(!show)
+
 
 const dataUser = window.localStorage.getItem("User");
 const user =  JSON.parse(dataUser)
@@ -21,8 +23,10 @@ const user =  JSON.parse(dataUser)
     if(password === "12345"){
     await axios.put(`http://localhost:3001/admin/acces?id=${user[0].id}`)
     setPassword("")
+
     window.localStorage.removeItem("User")
     logout()
+    loginWithRedirect()
   }else(
     alert("Contraseña incorrecta")
   )

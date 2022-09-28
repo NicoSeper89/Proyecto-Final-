@@ -26,9 +26,9 @@ const {
 const { where } = require("sequelize");
 
 //para el home y para el searchbar get con query
-router.get("/allPublications", async(req,res,next)=>{
-   const allPubli = await getAll()
-   res.send(allPubli)
+router.get("/allPublications", async (req, res, next) => {
+  const allPubli = await getAll()
+  res.send(allPubli)
 
 })
 
@@ -69,11 +69,22 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+
 router.get("/premium", async (req, res, next) => {
   try {
     const publications = await getAll()
     const premium = await publications.filter(p => p.premium)
     res.send(premium)
+  } catch (error) {
+    next(error)
+  }
+})
+//apps a aprobar
+router.get("/forApproval", async (req, res, next) => {
+  try {
+    const publications = await getAll()
+    const notApproved = await publications.filter(p => !(p.approved))
+    res.send(notApproved)
   } catch (error) {
     next(error)
   }
@@ -111,7 +122,7 @@ router.get("/propertyTypes", async (req, res, next) => {
 });
 //trae todos los reportes que existen
 router.get('/reportList', async (req, res, next) => {
-  
+
   try {
     let reportList = await findAllReports()
     res.send(reportList)
@@ -120,7 +131,7 @@ router.get('/reportList', async (req, res, next) => {
   }
 })
 router.get('/reportList/:id', async (req, res, next) => {
-  const{id}=req.params;
+  const { id } = req.params;
   try {
     let reportList = await findReportById(id)
     res.send(reportList)
@@ -246,23 +257,31 @@ router.post("/postProperty", async (req, res, next) => {
   const { description, status, premium, report, id, userId } = req.body;
   try {
     if (!description) res.status(404).send("fill out description");
-    let post = await Publication.create({
-      description,
-      status,
-      premium,
-    });
+    let user = await User.findByPk(userId);
+    let post;
+    if (user.approved) {
+       post = await Publication.create({
+        description,
+        status,
+        premium,
+        approved: true
+      });
+    } else {
+       post = await Publication.create({
+        description,
+        status,
+        premium,
+      });
+    }
     if (report) {
       let rep = await Report.findAll({
         where: { name: report },
       });
       post.addReport(rep);
     }
-
     let property = await Property.findByPk(id);
     post.setProperty(property);
-    let user = await User.findByPk(userId);
     post.setUser(user);
-
     res.send(post.id);
   } catch (error) {
     next(error);
@@ -402,37 +421,37 @@ router.put('/unavailable/:id', async (req, res, next) => {
     await Publication.update(
       { deleted: !publi.deleted },
       { where: { id: id } }
-      )
-      res.send('publication availablity has changed')
-    } catch (error) {
-      next(error)
-    }
-  })
-  
-  router.get("/comment/:id", async (req, res, next)=>{
-    const { id } = req.params
-    try {
-      console.log("soy el id:",id)
-     const comments = await PublicationComents.findAll({where: {publicationId: id}})
-     console.log("soy comments:",comments)
-     res.status(200).send(comments)
-    } catch (error) {
-      next(error)
-    }
-  })
-  
-  router.post("/comment", async (req, res, next)=>{
-   const { message, publicationId,}=req.body
-    try {
+    )
+    res.send('publication availablity has changed')
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get("/comment/:id", async (req, res, next) => {
+  const { id } = req.params
+  try {
+    console.log("soy el id:", id)
+    const comments = await PublicationComents.findAll({ where: { publicationId: id } })
+    console.log("soy comments:", comments)
+    res.status(200).send(comments)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post("/comment", async (req, res, next) => {
+  const { message, publicationId, } = req.body
+  try {
     let mensaje = await PublicationComents.create({
       message,
       publicationId
-      })
-      res.status(200).send(mensaje)
-    } catch (error) {
-    next(error)  
-    }
-  })
+    })
+    res.status(200).send(mensaje)
+  } catch (error) {
+    next(error)
+  }
+})
 // crea un reporte a la pblicacion por params, con la info de body
 router.post('/report/:id', async (req, res, next) => {
   const { id } = req.params
@@ -442,8 +461,8 @@ router.post('/report/:id', async (req, res, next) => {
     let publi = await Publication.findByPk(id)
     if (type) {
       let report = await Report.create({
-          type: type,
-          info: info,
+        type: type,
+        info: info,
       });
       report.setUser(user)
       publi.addReport(report);
@@ -458,8 +477,33 @@ router.post('/report/:id', async (req, res, next) => {
 router.delete('/report/:id', async (req, res, next) => {
   const { id } = req.params
   try {
-    await Report.destroy({ where: { id : id } });
+    await Report.destroy({ where: { id: id } });
     res.send('Se borro el reporte')
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/approvePost/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    await Publication.update(
+      { approved: true },
+      { where: { id: id } }
+    )
+    res.send('Se aprobo la publicacion')
+  } catch (error) {
+    next(error)
+  }
+})
+router.put('/approveUser/:id', async (req, res, next) => {
+  const { id } = req.params
+  try {
+    await User.update(
+      { approved: true },
+      { where: { id: id } }
+    )
+    res.send('Se aprobo al usuario')
   } catch (error) {
     next(error)
   }
