@@ -427,7 +427,7 @@ export function getComment(publicationId) {
 // Esto es para reportar una publicación
 export function reportPublication(id, input) {
   return async function (dispatch) {
-    const res = await axios.post(`/publications/report/${id}`, input);
+    const res = await axios.post(`/publication/report/${id}`, input);
     return dispatch({
       type: REPORT_PUBLICATION,
       payload: res.data,
