@@ -30,6 +30,10 @@ module.exports = (sequelize) => {
     admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    approved: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   });
 };
