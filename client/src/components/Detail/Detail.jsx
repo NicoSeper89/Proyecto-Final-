@@ -62,8 +62,12 @@ import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
 import Maps from "../Maps/Maps";
+
+import Datos from '../Maps/Datos'
+
 // import Comentarios from "./Comentarios"
 // import { Carousel, } from "react-responsive-carousel";
+
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -407,7 +411,8 @@ export default function Detail(props, id) {
                           justifyContent="center"
                           alignItems="center"
                         >
-                          {showMap && <Maps position={miStateDetail} />}
+                          {/* {showMap && <Maps position={miStateDetail} />} */}
+                         
                         </Flex>
                       </TabPanel>
                       <TabPanel>
@@ -478,6 +483,7 @@ export default function Detail(props, id) {
       </Flex>
       <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} />
       <Footer />
+       {showMap && <Datos position={miStateDetail}/>}
     </Box>
   );
 }
