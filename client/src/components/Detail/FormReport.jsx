@@ -59,7 +59,6 @@ export default function FormReport({ id, userId }) {
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
   const infoDetail = useSelector((state) => state.detail);
-  console.log("INFO DETAIL: ", infoDetail);
   //   const [disableButtonSubmit, setDisableButtonSubmit] = useState(true);
   //   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [errors, setErrors] = useState({});
@@ -73,7 +72,7 @@ export default function FormReport({ id, userId }) {
   //   }, []);
 
   const [input, setInput] = useState({
-    id: userId,
+    userId: infoUser.userId,
     type: "",
     info: "",
   });
@@ -94,7 +93,7 @@ export default function FormReport({ id, userId }) {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (input.type && input.info) {
-      dispatch(reportPublication(id, input));
+      dispatch(reportPublication(infoDetail.id, input));
       alert("Su reporte fue enviado correctamente");
       setInput({
         type: "",
