@@ -33,8 +33,8 @@ export const GET_PUBLICATION_USER = "GET_PUBLICATION_USER";
 export const GET_FAVORITES_USER = "GET_FAVORITES_USER";
 export const SET_FAVORITE = "SET_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
-export const GETUSER = "GETUSER"
-export const GET_USER_IMAGE = "GET_USER_IMAGE"
+export const GETUSER = "GETUSER";
+export const GET_USER_IMAGE = "GET_USER_IMAGE";
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
 export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
@@ -417,17 +417,17 @@ export function getUserImage(id) {
 
 export function getComment(publicationId) {
   return async function (dispatch) {
-    const comments = await axios.get(`/publication/comment/${publicationId}`)
+    const comments = await axios.get(`/publication/comment/${publicationId}`);
     return dispatch({
       type: GET_COMMENT,
       payload: comments.data,
-    })
-  }
+    });
+  };
 }
 // Esto es para reportar una publicación
 export function reportPublication(id, input) {
   return async function (dispatch) {
-    const res = await axios.post(`/publications/report/${id}`, input);
+    const res = await axios.post(`/publication/report/${id}`, input);
     return dispatch({
       type: REPORT_PUBLICATION,
       payload: res.data,
@@ -435,11 +435,11 @@ export function reportPublication(id, input) {
   };
 }
 
-export function postComment(message, publicationId){
- return async function (dispatch) {
-  await axios.post(`/publication/comment`, {message, publicationId})
-  return dispatch({
-    type: POST_COMMENT
-  })
- }
+export function postComment(message, publicationId) {
+  return async function (dispatch) {
+    await axios.post(`/publication/comment`, { message, publicationId });
+    return dispatch({
+      type: POST_COMMENT,
+    });
+  };
 }

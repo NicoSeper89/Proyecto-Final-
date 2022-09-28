@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { reportPublication } from "../../redux/actions";
+import { getInfoUser, reportPublication } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
 
@@ -45,22 +45,35 @@ const type = [
   { name: "La imagen no es apropiada" },
   { name: "El inmueble ya esta alquilado" },
   { name: "Es un intento de estafa" },
+  { name: "Problemas con el propietario" },
   { name: "Otros..." },
 ];
 
-export default function FormReport(props) {
+export default function FormReport() {
   // /publications/report/id ---> por params el id de la publicacion (props.match.params.id)
   //por body recibe type(el resultado del select), info(text del report)
   //y userId(el id del usuario que realiza el report)
+  //useeffect si existe el detail que no lo traiga, sino si
 
   const history = useHistory();
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
+  const infoDetail = useSelector((state) => state.detail);
+  console.log("INFO DETAIL: ", infoDetail);
   //   const [disableButtonSubmit, setDisableButtonSubmit] = useState(true);
   //   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [errors, setErrors] = useState({});
+
+  const dataUser = window.localStorage.getItem("User");
+  const infooo = JSON.parse(dataUser);
+  const dataDetail = window.localStorage.getItem("id");
+
+  useEffect(() => {
+    dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
+  }, []);
+
   const [input, setInput] = useState({
-    id: infoUser.userId,
+    id: infooo[0].userId,
     type: "",
     info: "",
   });
@@ -81,7 +94,7 @@ export default function FormReport(props) {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (input.type && input.info) {
-      dispatch(reportPublication(props.match.params.id, input));
+      dispatch(reportPublication(infoDetail, input));
       alert("Su reporte fue enviado correctamente");
       setInput({
         type: "",
@@ -95,7 +108,7 @@ export default function FormReport(props) {
 
   return (
     <Box>
-      <NavBarForms />
+      {/* <NavBarForms /> */}
       <Box
         bg={"blackAlpha.200"}
         position={"relative"}
@@ -104,14 +117,13 @@ export default function FormReport(props) {
         alignItems={"center"}
         justifyContent={"flex-start"}
         color={"gray.700"}
-        p={"100px"}
       >
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"70%"} p={"1rem 0rem"} m={"1rem"}>
+        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"100%"}>
           <Heading
             color={"white"}
             textShadow={"gray .1rem .1rem .2rem"}
             textAlign={"center"}
-            fontSize="2.0rem"
+            fontSize="1.5rem"
           >
             REPORTAR PUBLICACIÓN
           </Heading>
@@ -130,9 +142,7 @@ export default function FormReport(props) {
             bg={"white"}
             display={"flex"}
             flexDirection={"column"}
-            p={"1rem"}
-            w={"60%"}
-            gap=".5rem"
+            w={"100%"}
             overflow="hidden"
           >
             <FormLabel>
@@ -179,7 +189,7 @@ export default function FormReport(props) {
           </FormControl>
         </Flex>
       </Box>
-      <Footer />
+      {/* <Footer /> */}
     </Box>
   );
 }

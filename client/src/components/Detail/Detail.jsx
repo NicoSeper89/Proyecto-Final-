@@ -62,6 +62,7 @@ import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
 import Maps from "../Maps/Maps";
+import FormReport from "./FormReport";
 // import Comentarios from "./Comentarios"
 // import { Carousel, } from "react-responsive-carousel";
 
@@ -100,6 +101,7 @@ export default function Detail(props, id) {
   }
 
   function handleReport() {
+    window.localStorage.setItem("id", `${props.match.params.id}`);
     history.push("/reportPublication");
   }
 
@@ -394,6 +396,9 @@ export default function Detail(props, id) {
                       <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
                         Descripción
                       </Tab>
+                      <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
+                        Reportar
+                      </Tab>
                     </TabList>
                     <TabPanels display={"flex"} justifyContent="center">
                       <TabPanel>
@@ -423,6 +428,19 @@ export default function Detail(props, id) {
                           <Text fontSize="lg">{miStateDetail.description}</Text>
                         </Box>
                       </TabPanel>
+                      <TabPanel>
+                        <Box
+                          alignItems="flex-start"
+                          w={"500px"}
+                          h={"250px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.300"
+                          borderRadius={"0.5rem"}
+                        >
+                          <FormReport fontSize="lg" />
+                        </Box>
+                      </TabPanel>
                     </TabPanels>
                     {/* <Box textAlign={"center"} mb={"5px"}>
                     <Text fontSize="xl" as="b">
@@ -450,7 +468,17 @@ export default function Detail(props, id) {
             {/* ESTO ES BOTONES */}
 
             {/* ESTO ES BOTONES */}
-            <Box>
+            <Box
+              variant="soft-rounded"
+              colorScheme="green"
+              w={"42rem"}
+              h={"400px"}
+              boxShadow="dark-lg"
+              p="10px"
+              border="1px solid grey.600"
+              // bg={"rgba(216, 158, 26, 0.35)"}
+              borderRadius={"0.5rem"}
+            >
               <FormControl>
                 <Input onChange={onChangeInputComment} value={comentarios} />
                 <Button onClick={onSubmitComent}>x</Button>
