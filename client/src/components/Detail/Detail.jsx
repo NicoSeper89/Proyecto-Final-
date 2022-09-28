@@ -345,7 +345,7 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
-                        <Button
+                        {/* <Button
                           w={"350px"}
                           colorScheme="green"
                           m="8px"
@@ -356,7 +356,7 @@ export default function Detail(props, id) {
                           }}
                         >
                           Reportar publicación
-                        </Button>
+                        </Button> */}
                       </Flex>
                     ) : (
                       <Flex>
@@ -396,9 +396,13 @@ export default function Detail(props, id) {
                       <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
                         Descripción
                       </Tab>
-                      <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
-                        Reportar
-                      </Tab>
+                      {myUser[0].id === miStateDetail.userId ? (
+                        <Tab fontWeight={600} color={"red"} mb={"5px"}>
+                          Reportar
+                        </Tab>
+                      ) : (
+                        <></>
+                      )}
                     </TabList>
                     <TabPanels display={"flex"} justifyContent="center">
                       <TabPanel>
@@ -429,7 +433,7 @@ export default function Detail(props, id) {
                         </Box>
                       </TabPanel>
                       <TabPanel>
-                        <Box
+                        <Flex
                           alignItems="flex-start"
                           w={"500px"}
                           h={"250px"}
@@ -437,9 +441,10 @@ export default function Detail(props, id) {
                           p="10px"
                           border="1px solid grey.300"
                           borderRadius={"0.5rem"}
+                          justifyContent={"center"}
                         >
-                          <FormReport fontSize="lg" />
-                        </Box>
+                          <FormReport id={props.match.params.id} userId={myUser[0].id} />
+                        </Flex>
                       </TabPanel>
                     </TabPanels>
                     {/* <Box textAlign={"center"} mb={"5px"}>

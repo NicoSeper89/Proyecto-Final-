@@ -49,7 +49,7 @@ const type = [
   { name: "Otros..." },
 ];
 
-export default function FormReport() {
+export default function FormReport({ id, userId }) {
   // /publications/report/id ---> por params el id de la publicacion (props.match.params.id)
   //por body recibe type(el resultado del select), info(text del report)
   //y userId(el id del usuario que realiza el report)
@@ -64,16 +64,16 @@ export default function FormReport() {
   //   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [errors, setErrors] = useState({});
 
-  const dataUser = window.localStorage.getItem("User");
-  const infooo = JSON.parse(dataUser);
-  const dataDetail = window.localStorage.getItem("id");
+  //   const dataUser = window.localStorage.getItem("User");
+  //   const infooo = JSON.parse(dataUser);
+  //   const dataDetail = window.localStorage.getItem("id");
 
-  useEffect(() => {
-    dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
-  }, []);
+  //   useEffect(() => {
+  //     dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
+  //   }, []);
 
   const [input, setInput] = useState({
-    id: infooo[0].userId,
+    id: userId,
     type: "",
     info: "",
   });
@@ -94,7 +94,7 @@ export default function FormReport() {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (input.type && input.info) {
-      dispatch(reportPublication(infoDetail, input));
+      dispatch(reportPublication(id, input));
       alert("Su reporte fue enviado correctamente");
       setInput({
         type: "",
@@ -115,15 +115,17 @@ export default function FormReport() {
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        justifyContent={"flex-start"}
+        justifyContent={"center"}
         color={"gray.700"}
+        w={"500px"}
+        h={"250px"}
       >
         <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"100%"}>
           <Heading
             color={"white"}
             textShadow={"gray .1rem .1rem .2rem"}
             textAlign={"center"}
-            fontSize="1.5rem"
+            fontSize="1.2rem"
           >
             REPORTAR PUBLICACIÓN
           </Heading>
@@ -135,7 +137,7 @@ export default function FormReport() {
           alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          minWidth={"57.7%"}
+          // minWidth={"57.7%"}
           width={"100%"}
         >
           <FormControl
@@ -144,9 +146,10 @@ export default function FormReport() {
             flexDirection={"column"}
             w={"100%"}
             overflow="hidden"
+            p="10px"
           >
             <FormLabel>
-              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+              <Text fontWeight={"semiBold"} fontSize="1.0rem" color="gray.500">
                 Elija el motivo del reporte
               </Text>
               <Select
@@ -164,7 +167,7 @@ export default function FormReport() {
               {errors.type && <span>{errors.type}</span>}
             </FormLabel>
             <FormLabel>
-              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+              <Text fontWeight={"semiBold"} fontSize="1.0rem" color="gray.500">
                 Describa el motivo
               </Text>
               <Textarea
