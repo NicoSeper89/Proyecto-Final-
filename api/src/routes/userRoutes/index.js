@@ -196,9 +196,25 @@ router.put("/rate", async (req, res, next) => {
 
   try {
     const { id, rating } = req.query;
+    const {userId} = req.body;
 
     const publication = await Publication.findByPk(id);
     const user = await User.findByPk(publication.userId);
+
+    const rankedUser = await User.findByPk(userId);
+
+    if (rankedUser.userRank){if (rankedUser.userRank.includes(id)) return res.send("ya rankeo esta publicación")}
+
+    await User.update(
+      {
+        userRank: Sequelize.fn("array_append", Sequelize.col("favorites"), publication.id),
+      },
+      {
+        where: {
+          id: userId,
+        },
+      }
+    )
 
     let currentRating = (parseFloat(rating) + user.rating * user.ratingAmount);
     let currentAmount = user.ratingAmount + 1;
@@ -210,8 +226,10 @@ router.put("/rate", async (req, res, next) => {
       ratingAmount: currentAmount,
     });
 
-  } catch (error) {
     return res.send("updated rating");
+
+  } catch (error) {
+    next(error);
   }
 
 });

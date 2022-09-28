@@ -87,7 +87,9 @@ function App() {
         />
         <Route exact path="/select" component={Select} />
         <Route exact path="/adminAcces" component={AdminAcces} />
-        <Route exact path="/details/:id/rank" component={Rank}/>
+        <Route exact path="/details/:id/rank" render={({match}) => {
+            return user2? <Rank match={match} user2={user2}/> : loginWithRedirect();
+          }}/>
         <Route exact path="/admin" component={Admin} />
         <Route path="*" component={Error404} />
       </Switch>
