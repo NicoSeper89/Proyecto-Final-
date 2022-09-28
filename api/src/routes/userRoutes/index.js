@@ -5,6 +5,9 @@ const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo, Publication } = req
 const { getAllUsers, getPubs, getPublications, getOneUser } = require("./controllers");
 var Sequelize = require("sequelize");
 
+// esta ruta recibe por query un nombre de usuario, hace un filtro y trae a ese usuario. si no encuentra 
+//uno devuelve todos los usuarios 
+
 router.get("/users", async (req, res) => {
   const name = req.query.name;
   //const {name}=req.params
@@ -19,52 +22,52 @@ router.get("/users", async (req, res) => {
   }
 });
 
-router.get("/userInfo/:id", async(req,res,next)=>{
-  const {id} = req.params
-  try {
-    let user = await getOneUser(id)
-    res.send(user)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.get("/userInfo/:id", async(req,res,next)=>{
+//   const {id} = req.params
+//   try {
+//     let user = await getOneUser(id)
+//     res.send(user)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
-router.post("/typeofusers", async (req, res) => {
-  try {
-    const { name } = req.body;
-    await TypeOfUser.create({
-      name,
-    });
+// router.post("/typeofusers", async (req, res) => {
+//   try {
+//     const { name } = req.body;
+//     await TypeOfUser.create({
+//       name,
+//     });
 
-    res.status(200).send("Usuario adicionado con exito");
-  } catch (error) {
-    res.status(404).send("error al crear tipo de usuario");
-  }
-});
+//     res.status(200).send("Usuario adicionado con exito");
+//   } catch (error) {
+//     res.status(404).send("error al crear tipo de usuario");
+//   }
+// });
 
-router.post("/login", async (req, res) => {
-  const {
-    mail,
-    password,
-    name,
-    // typeOfUserId,
-  } = req.body;
+// router.post("/login", async (req, res) => {
+//   const {
+//     mail,
+//     password,
+//     name,
+//     // typeOfUserId,
+//   } = req.body;
 
-  try {
-    let loginCrea = await LoginInfo.create({
-      mail,
-      password,
-    });
-    let nUser = await User.findOne({
-      where: { name: name },
-    });
-    loginCrea.setUser(nUser);
+//   try {
+//     let loginCrea = await LoginInfo.create({
+//       mail,
+//       password,
+//     });
+//     let nUser = await User.findOne({
+//       where: { name: name },
+//     });
+//     loginCrea.setUser(nUser);
 
-    res.status(200).send("Login de usuario adicionado correctamente");
-  } catch (error) {
-    res.status(400).send("error al crear login de usuario ");
-  }
-});
+//     res.status(200).send("Login de usuario adicionado correctamente");
+//   } catch (error) {
+//     res.status(400).send("error al crear login de usuario ");
+//   }
+// });
 
 ////////// rutas agregadas \\\\\\\\\\
 //me verifica si mi usuario existe y si la contraseña es la de ese usuario
@@ -180,8 +183,8 @@ router.put("/editUser/:id", async (req, res, next) => {
 router.get("/getImage/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    let result= await UserImage.findAll({
-      where:{ userId: id }
+    let result = await UserImage.findAll({
+      where: { userId: id }
     });
     res.send(result);
   } catch (error) {
@@ -190,17 +193,27 @@ router.get("/getImage/:id", async (req, res, next) => {
 });
 //este recibe el id de la persona rankeada, y el rating que se le va a poner
 router.put("/rate", async (req, res, next) => {
-  const { id, rating } = req.query;
-  const user = await User.findByPk(id);
-  let currentRating = rating + user.rating * user.ratingAmount;
-  let currentAmount = user.ratingAmount + 1;
-  let futureRating = (currentRating / currentAmount).toFixed(2);
-  await User.upsert({
-    id: id,
-    rating: rating,
-    ratingAmount: futureRating,
-  });
-  return res.send("updated rating");
+
+  try {
+    const { id, rating } = req.query;
+
+    const publication = await Publication.findByPk(id);
+    const user = await User.findByPk(publication.userId);
+
+    let currentRating = (parseFloat(rating) + user.rating * user.ratingAmount);
+    let currentAmount = user.ratingAmount + 1;
+    let futureRating = (currentRating / currentAmount).toFixed(2);
+
+    await User.upsert({
+      id: user.id,
+      rating: futureRating,
+      ratingAmount: currentAmount,
+    });
+
+  } catch (error) {
+    return res.send("updated rating");
+  }
+
 });
 
 //Esta ruta es para ver las publicaciones que hizo el mismo usuario
