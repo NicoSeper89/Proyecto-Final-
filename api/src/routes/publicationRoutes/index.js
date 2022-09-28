@@ -17,11 +17,11 @@ const {
   getDetail,
   getFiltered,
   sortBy,
-  //   cityArr,
   propTypArr,
   serviceTypes,
   getCity,
-  findAllReports
+  findAllReports,
+  findReportById
 } = require("./controllers");
 const { where } = require("sequelize");
 
@@ -109,6 +109,15 @@ router.get('/reportList', async (req, res, next) => {
   
   try {
     let reportList = await findAllReports()
+    res.send(reportList)
+  } catch (error) {
+    next(error)
+  }
+})
+router.get('/reportList/:id', async (req, res, next) => {
+  const{id}=req.params;
+  try {
+    let reportList = await findReportById(id)
     res.send(reportList)
   } catch (error) {
     next(error)
@@ -430,7 +439,7 @@ router.post('/report/:id', async (req, res, next) => {
       let report = await Report.create({
           type: type,
           info: info,
-      });s
+      });
       report.setUser(user)
       publi.addReport(report);
     }
