@@ -122,7 +122,7 @@ export default function rootReducer(state = initialState, action) {
       };
     case FILTER_AMB:
       if (action.payload === "") {
-        //default action entonces limpia el filtro
+        //default action entonces limpia el filtro ok
         let index = state.filters.property.findIndex((i) => i.name === "environments");
         if (index > -1) {
           state.filters.property.splice(index, 1);

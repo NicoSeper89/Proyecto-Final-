@@ -66,11 +66,13 @@ function App() {
         //     return infoUser ? <PerfilPropietario /> : <Redirect to="*" />;
         //   }}
         // /> */}
-
+        
         {/* <Route exact path="/perfilInquilino" render={() => {
+          return
           return user2 && user2[0].typeOfUserId === 2? <PerfilInquilino/> :
           <Redirect to="*"/>
         }} /> */}
+        
 
         <Route
           exact

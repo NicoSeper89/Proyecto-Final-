@@ -437,7 +437,7 @@ export function reportPublication(id, input) {
     });
   };
 }
-//trae todas las publicaciones para el usaurio administrador
+//trae todas las publicaciones para el usaurio administrador ok
 export function getAll(){
   return async function (dispatch){
     const respuesta = await axios.get("/publication/allpublications");
