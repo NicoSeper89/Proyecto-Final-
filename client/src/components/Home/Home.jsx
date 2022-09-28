@@ -24,7 +24,7 @@ const Home = () => {
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
   const cities = useSelector((state) => state.cities);
-  // const infoUser = useSelector((state) => state.infoUser);
+  // const infoUser = useSelector((state) => state.infoUser);;
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
   useEffect(() => {
