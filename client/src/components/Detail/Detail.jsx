@@ -106,11 +106,11 @@ export default function Detail(props, id) {
     history.push("/reportPublication");
   }
 
-  window.scroll({
-    top: 0,
-    left: 0,
-    behavior: "smooth",
-  });
+  // window.scroll({
+  //   top: 0,
+  //   left: 0,
+  //   behavior: "smooth",
+  // });
 
   const onChangeInputComment = (e) => {
     e.preventDefault();
