@@ -21,7 +21,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
 import AlertCard from "./components/Cards/AlertCard";
 import FormReport from "./components/Detail/FormReport";
-import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd";
 import AdminAcces from "./components/Administrador/AdminAcces";
 import Admin from "./components/Administrador/Admin.jsx";
 

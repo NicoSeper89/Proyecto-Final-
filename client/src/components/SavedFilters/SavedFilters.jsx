@@ -10,30 +10,39 @@ import {
   Select,
   Stack,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   saveFilter,
   getPublications,
   setCurrentPage,
   saveSort,
   clearFilters,
+  getUserInfo
 } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 function SavedFilters({ filterToSave, savedSort, savedCity }) {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.allUserInfo)
   const [value, setValue] = useState("");
   const [savedValue, setSavedValue] = useState([]);
   const [storedValues, setStoredValues] = useState([]);
 
   useEffect(() => {
-    setStoredValues(Object.keys(localStorage).filter((k) => k !== "User" && k !== "publicationID"));
+    const loginUser = JSON.parse(window.localStorage.getItem('User'))
+    if(loginUser){
+      dispatch(getUserInfo(loginUser[0].id))
+      setTimeout(()=>{
+        console.log(loginUser[1].mail);
+        setStoredValues(Object.keys(localStorage).filter((k) => k.includes(loginUser[1].mail)));
+      },100)
+    }
   }, [savedValue]);
 
   const handleLocalStorage = (keyValue) => {
     if (keyValue) {
-      window.localStorage.setItem(keyValue, JSON.stringify([filterToSave, savedSort, savedCity]));
+      window.localStorage.setItem(keyValue + " " + user.loginInfo.mail, JSON.stringify([filterToSave, savedSort, savedCity]));
       setSavedValue([...savedValue, keyValue]);
       setValue("");
     }
@@ -49,7 +58,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
     }
     
     if(event.target.value){
-      let filter = localStorage.getItem(event.target.value);
+      let filter = localStorage.getItem(event.target.value + " " + user.loginInfo.mail);
       let newFilter = JSON.parse(filter);
       dispatch(saveFilter(newFilter[0]));
       dispatch(saveSort(newFilter[1]));
@@ -108,7 +117,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
             placeholder="Mis Filtros"
           >
             {storedValues?.map((v, i) => (
-              <option key={i}>{v}</option>
+              <option key={i}>{v.split(' ')[0]}</option>
             ))}
           </Select>
         </Menu>
