@@ -22,6 +22,7 @@ import {
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   getAll,
   getForApproval,
@@ -29,11 +30,13 @@ import {
   getPubliNoAvail,
   getReports,
   getUserInfo,
+  getTotalUsers
 } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
 
 export default function Admin() {
+  const history = useHistory()
   const dispatch = useDispatch();
   const houses = useSelector((state) => state.houses);
   const myUser = useSelector((state) => state.infoUser);
@@ -55,13 +58,14 @@ export default function Admin() {
     dispatch(getForApproval());
     dispatch(getReports());
     dispatch(getPubliNoAvail());
+    dispatch(getTotalUsers)
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
       dispatch(getUserInfo(infoUser[0].id));
     }
   }, [dispatch]);
-
+ console.log(totalUsers,"USERSSSSSSSSSSSS")
   return (
     <Box>
       <NavBarForms />
@@ -132,14 +136,21 @@ export default function Admin() {
                       <Th>Perfil</Th>
                     </Thead>
                     <Tbody>
-                      {totalUsers[0]?.map((p, i) => {
+                      {totalUsers.length && totalUsers.map((p, i) => {
+                        console.log(p,"PEEEEEEEEE")
                         return (
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.name}</Td>
                             <Td>{p.rating}</Td>
                             <Td>
-                              <Link to={`/perfilPropietario/${p.userId}`}>Ir a perfil</Link>
+                            <Button h='1.75rem' size='sm' onClick={() => {
+                              window.localStorage.setItem("adminId", `${p.id}`)
+                              history.push(`/perfilPropietario`)
+                              }}>
+                            Ir a perfil
+                                </Button>
+                              {/* <Link to={`/perfilPropietario/${p.userId}`}>Ir a perfil</Link> */}
                             </Td>
                           </Tr>
                         );

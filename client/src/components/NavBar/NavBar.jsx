@@ -85,16 +85,14 @@ const NavBar = () => {
         </Link>
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
-          <Button colorScheme="orange" variant="outline" onClick={buttonAdmin} marginRight={"10px"}>
-            Admin
-          </Button>
+          
 
           {/* me oculta el boton si no esta logueado o es propietario */}
-          {user2 && user2[0].admin && (
-            <Button colorScheme="orange" bg="orange" variant="outline" onClick={null} marginRight="20px">
-              Administrador
-            </Button>
-          )}
+          {user2 && user2[0].admin && 
+            <Button colorScheme="orange" variant="outline" onClick={buttonAdmin} marginRight={"10px"}>
+            Admin
+          </Button>
+          }
 
           {user2 && (
             <Button colorScheme="orange" bg="orange" variant="outline" 
