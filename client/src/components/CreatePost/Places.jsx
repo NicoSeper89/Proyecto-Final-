@@ -63,6 +63,7 @@ const PlacesAutocomplete = ({ setSelected, infoFormProp, setInfoFormProp }) => {
   return (
     <Combobox onSelect={handleSelect}>
       <ComboboxInput
+        style={ {width: "100%", height: 40} }
         value={value}
         onChange={(e) => {
           setValue(e.target.value);
