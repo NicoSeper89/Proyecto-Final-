@@ -82,8 +82,8 @@
   height: 20px;
   margin-left: 15px;
 }
-.buttonA:focus{
-outline:none;
+.buttonA:focus {
+  outline: none;
 }
 
 .containerIcon {

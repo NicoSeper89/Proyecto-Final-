@@ -40,6 +40,7 @@ export default function Admin() {
   const dispatch = useDispatch();
   const houses = useSelector((state) => state.houses);
   const myUser = useSelector((state) => state.infoUser);
+  const imageUser = useSelector((state) => state.imageUser);
   const forApproval = useSelector((state) => state.forApproval);
   const reports = useSelector((state) => state.reports);
   const housesEliminadas = useSelector((state) => state.housesEliminadas);
@@ -77,7 +78,7 @@ export default function Admin() {
         textAlign={"start"}
         bg={"rgba(216, 158, 26, 0.35)"}
       >
-        <Avatar />
+        <Avatar src={imageUser} alt={"Avatar Alt"} />
         <Heading ml={"1rem"}>Bienvenido Administrador {infoUser[0].name}!</Heading>
       </Flex>
       <Box
@@ -273,7 +274,7 @@ export default function Admin() {
                         return (
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
-                            <Td>fecha?</Td>
+                            <Td>{p.updatedAt}</Td>
                             <Td>motivo?</Td>
                             <Td>
                               <Link to={`/details/${p.id}`}>Ir a propiedad</Link>

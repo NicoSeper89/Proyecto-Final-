@@ -38,6 +38,7 @@ export const GET_USER_IMAGE = "GET_USER_IMAGE";
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
 export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
+export const DELETE_COMMENT = "DELETE_COMMENT"
 export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS";
 export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE";
 export const GET_REPORTS = "GET_REPORTS";
@@ -150,13 +151,13 @@ export function getPubs(id) {
     try {
       let info = await axios.get(`/user/getPubs/${id}`);
       let infoDeleted = await axios.get(`/user/getPubsDeleted/${id}`);
-      let response={
-        pubs:info.data,
-        pubsBorradas:infoDeleted.data
-      }
+      let response = {
+        pubs: info.data,
+        pubsBorradas: infoDeleted.data,
+      };
       return dispatch({
         type: GET_PUBLICATION_USER,
-        payload:response,
+        payload: response,
       });
     } catch (error) {
       alert(error.response.data);
@@ -334,7 +335,7 @@ export function deletePublicaction(id) {
   console.log(id, "id");
   return async function (dispatch) {
     try {
-      await axios.delete(`/publication/delete/${id}`);
+      await axios.put(`/publication/unavailable/${id}`);
       return dispatch({
         type: DELETE_PUBLICACTION,
       });
@@ -600,3 +601,20 @@ export function approvePostUser(pubId, userId) {
     }
   };
 }
+}
+
+export function deleteComment(id) {
+  console.log("soy id",id)
+  // console.log("soy publicationID", idComment)
+  try {
+    return async function (dispatch) {
+       await axios.delete(`/publication/comment/${id}`)
+      return dispatch({
+        type: DELETE_COMMENT,
+      })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
