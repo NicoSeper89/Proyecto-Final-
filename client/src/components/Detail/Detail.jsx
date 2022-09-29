@@ -97,7 +97,7 @@ export default function Detail(props, id) {
   }, [dispatch, props.match.params.id, borradoComent]);
 
   function handleDelete() {
-    dispatch(deletePublicaction(props.match.params.id));
+    /* dispatch(deletePublicaction(props.match.params.id)); */
     setAlertSubmit([true, true]);
     window.scroll({
       top: 0,
@@ -373,13 +373,13 @@ export default function Detail(props, id) {
                         {miStateDetail.user.name}
                       </Text>
 
-                      {/* <Box alignItems="center" fontSize="lg">
+                      <Box alignItems="center" fontSize="lg">
                         <FontAwesomeIcon icon={faAt} />
                         <Link href={`mailto:${miStateDetail.user.contactInfo.mail}`}>
                           {" "}
                           {miStateDetail.user.contactInfo.mail}
                         </Link>
-                      </Box> */}
+                      </Box>
                     </Box>
                     {/* <Box
                       borderRadius={"0rem 0rem 0.5rem 0.5rem"}
@@ -398,7 +398,7 @@ export default function Detail(props, id) {
                   </Box> */}
                   </Box>
                   <Box>
-                    {myUser[0].id === miStateDetail.userId ? (
+                    {myUser[0].id === miStateDetail.userId&& !miStateDetail.deleted ? (
                       <Flex direction={"column"}>
                         <Button
                           w={"350px"}
@@ -426,21 +426,10 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
-                        {/* <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={(e) => {
-                            handleReport(e);
-                          }}
-                        >
-                          Reportar publicación
-                        </Button> */}
                         <RequestScore publicationsId={props.match.params.id} />
                       </Flex>
                     ) : (
+                      miStateDetail.deleted ?
                       <Flex>
                         <Button
                           w={"350px"}
@@ -449,11 +438,14 @@ export default function Detail(props, id) {
                           fontSize="xl"
                           as="b"
                           onClick={(e) => {
-                            handleReport(e);
+                            handleDelete(e);
                           }}
                         >
-                          Reportar publicación
+                          Restaurar publicación
                         </Button>
+                      </Flex>:
+                      <Flex>
+                        
                       </Flex>
                     )}
                   </Box>
@@ -478,7 +470,7 @@ export default function Detail(props, id) {
                       <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
                         Descripción
                       </Tab>
-                      {myUser[0].id === miStateDetail.userId ? (
+                      {myUser[0].id !== miStateDetail.userId ? (
                         <Tab fontWeight={600} color={"red"} mb={"5px"}>
                           Reportar
                         </Tab>
@@ -631,7 +623,7 @@ export default function Detail(props, id) {
           <Loading />
         )}
       </Flex>
-      <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} />
+      <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} deleted={miStateDetail.deleted} />
      <AlertDeleteComent alertComent={alertComent} id={id}/>
       <Footer />
       {/* {showMap && <Datos position={miStateDetail} />} */}
