@@ -412,9 +412,7 @@ router.put('/unavailable/:id', async (req, res, next) => {
   router.get("/comment/:id", async (req, res, next)=>{
     const { id } = req.params
     try {
-      console.log("soy el id:",id)
      const comments = await PublicationComents.findAll({where: {publicationId: id}})
-     console.log("soy comments:",comments)
      res.status(200).send(comments)
     } catch (error) {
       next(error)
@@ -465,6 +463,16 @@ router.delete('/report/:id', async (req, res, next) => {
   }
 })
 
+//ELIMINAR COMENTARIO
+router.delete("/comment/:id", async (req, res, next)=> {
+  const { id } = req.params
+  try {
+      await PublicationComents.destroy({ where: { id : id}})
+      res.send("borraste el comentario")
+    } catch (error) {
+    next(error)
+  }
+})
 
 
 module.exports = router;
