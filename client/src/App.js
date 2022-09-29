@@ -27,6 +27,7 @@ import Admin from "./components/Administrador/Admin.jsx";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
 
 
+
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
   const dispatch = useDispatch();
@@ -86,10 +87,15 @@ function App() {
         />
         <Route exact path="/select" component={Select} />
         <Route exact path="/adminAcces" component={AdminAcces} />
+
         <Route exact path="/details/:id/rank" render={({match}) => {
             return user2? <Rank match={match} user2={user2}/> : loginWithRedirect();
           }}/>
-        <Route exact path="/admin" component={Admin} />
+      
+        <Route exact path="/admin" render={() => {
+        return user2 && user2[0].admin ? <Admin/> : <Redirect to="*"/>
+        }} />
+
         <Route path="*" component={Error404} />
       </Switch>
     </>
