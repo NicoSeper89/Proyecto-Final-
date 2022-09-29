@@ -70,6 +70,7 @@ const initialState = {
   valueFilter: "",
   publicationP: "",
   publicationsUser: [], //publicaciones de cada usuario
+  publicationsUserDeleted: [],
   favoritesUser: [], //favoritos de cada usuario
   favoritesUserId: [],
   imageUser: "",
@@ -260,7 +261,8 @@ export default function rootReducer(state = initialState, action) {
     case GET_PUBLICATION_USER:
       return {
         ...state,
-        publicationsUser: action.payload,
+        publicationsUser: action.payload.pubs,
+        publicationsUserDeleted: action.payload.pubsBorradas,
       };
     case GET_FAVORITES_USER:
       return {
