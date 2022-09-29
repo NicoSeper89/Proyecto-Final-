@@ -24,6 +24,7 @@ import {
   FormLabel,
   Box,
 } from "@chakra-ui/react";
+import Places from "../CreatePost/Places";
 /* import { faArrowTrendUp } from "@fortawesome/free-solid-svg-icons"; */
 
 const UpdatePost = (props) => {
@@ -213,6 +214,8 @@ const UpdatePost = (props) => {
                 >
                   Dirección
                 </Text>
+                {!inputPropiedad.address ?
+                <Places infoFormProp={inputPropiedad} setInfoFormProp={setInputPropiedad} /> :
                 <Input 
                   color="gray.500"
                   autoComplete={"true"}
@@ -222,6 +225,7 @@ const UpdatePost = (props) => {
                   onChange={HandleChangePropiedad}
                   required
                 />
+                }
               </FormLabel>
 
               <FormLabel>
