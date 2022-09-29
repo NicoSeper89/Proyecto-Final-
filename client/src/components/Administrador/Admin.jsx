@@ -263,7 +263,7 @@ export default function Admin() {
                         return (
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
-                            <Td>fecha?</Td>
+                            <Td>{p.updatedAt}</Td>
                             <Td>motivo?</Td>
                             <Td>
                               <Link to={`/details/${p.id}`}>Ir a propiedad</Link>

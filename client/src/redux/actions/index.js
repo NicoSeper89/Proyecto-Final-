@@ -150,13 +150,13 @@ export function getPubs(id) {
     try {
       let info = await axios.get(`/user/getPubs/${id}`);
       let infoDeleted = await axios.get(`/user/getPubsDeleted/${id}`);
-      let response={
-        pubs:info.data,
-        pubsBorradas:infoDeleted.data
-      }
+      let response = {
+        pubs: info.data,
+        pubsBorradas: infoDeleted.data,
+      };
       return dispatch({
         type: GET_PUBLICATION_USER,
-        payload:response,
+        payload: response,
       });
     } catch (error) {
       alert(error.response.data);
@@ -334,7 +334,7 @@ export function deletePublicaction(id) {
   console.log(id, "id");
   return async function (dispatch) {
     try {
-      await axios.delete(`/publication/delete/${id}`);
+      await axios.put(`/publication/unavailable/${id}`);
       return dispatch({
         type: DELETE_PUBLICACTION,
       });
