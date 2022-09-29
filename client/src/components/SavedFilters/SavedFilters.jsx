@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Button,
   Flex,
   Input,
   InputGroup,
@@ -34,14 +33,17 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
     if(loginUser){
       dispatch(getUserInfo(loginUser[0].id))
       setTimeout(()=>{
-        console.log(loginUser[1].mail);
         setStoredValues(Object.keys(localStorage).filter((k) => k.includes(loginUser[1].mail)));
       },100)
     }
   }, [savedValue]);
 
   const handleLocalStorage = (keyValue) => {
-    if (keyValue) {
+    if(user.length === 0){
+      alert('Debe inciar session para poder guardar un filtro de busqueda!!!')
+      setValue("")
+    }
+    else if (keyValue) {
       window.localStorage.setItem(keyValue + " " + user.loginInfo.mail, JSON.stringify([filterToSave, savedSort, savedCity]));
       setSavedValue([...savedValue, keyValue]);
       setValue("");
@@ -56,17 +58,13 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
     }
-    
-    if(event.target.value){
+    else if(event.target.value){
       let filter = localStorage.getItem(event.target.value + " " + user.loginInfo.mail);
       let newFilter = JSON.parse(filter);
       dispatch(saveFilter(newFilter[0]));
       dispatch(saveSort(newFilter[1]));
       dispatch(setCurrentPage(1));
       dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
-    }
-    else{
-      dispatch(clearFilters())
     }
   };
 
@@ -92,9 +90,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
             cursor={"pointer"}
           />
         </InputGroup>
-        {/* <Button marginRight={"10px"} onClick={() => handleLocalStorage(value)}>
-          Guardar Filtros
-        </Button> */}
+        
       </Stack>
       <Box width={"8rem"}>
         <Menu
