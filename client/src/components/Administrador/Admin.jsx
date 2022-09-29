@@ -286,7 +286,12 @@ export default function Admin() {
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.type}</Td>
-                            <Td>{p.info}</Td>
+                            <Td padding="20px"
+                             maxWidth="100px"
+                             overflowY="hidden"
+                             overflowX="scroll"
+                        
+                            >{p.info}</Td>
                             <Td>
                               <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.publications[0].id}`)}>
                                 Ir a publicación
