@@ -1,0 +1,14 @@
+.btn{
+    margin-top: 20px;
+}
+.continer{
+    max-width: 400px;
+    text-align: center;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 20px 3px rgba(0, 0, 0, 0.45);
+}
+.title{
+    margin-bottom: 20px;
+    font-size: 20px;
+}

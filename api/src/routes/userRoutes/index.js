@@ -10,7 +10,7 @@ var Sequelize = require("sequelize");
 
 router.get("/users", async (req, res) => {
   const name = req.query.name;
-  //const {name}=req.params
+  //const {name}=req.params 
   const usersTotal = await getAllUsers();
   if (name) {
     let userName = await usersTotal.filter((elem) =>
@@ -19,7 +19,7 @@ router.get("/users", async (req, res) => {
     userName.length ? res.status(200).send(userName) : res.status(404).send("User not found");
   } else {
     res.status(200).send(usersTotal);
-  }
+  } 
 });
 
 router.get("/userInfo/:id", async (req, res, next) => {

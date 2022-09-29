@@ -424,17 +424,20 @@ export function getUserInfo(id) {
   };
 }
 
-export function getTotalUsers() {
-  return async function (dispatch) {
-    try {
-      const res = await axios.get("/admin/totalUsers");
+export async function getTotalUsers (dispatch) {
+
+  try {
+    const res = await axios.get("/admin/totalUsers");
       return dispatch({
         type: TOTAL_USERS,
         payload: res.data,
       });
-    } catch (error) {}
-  };
-}
+    
+  } catch (error) {}
+      
+  }
+  
+
 
 export function getUserImage(id) {
   return async function (dispatch) {
