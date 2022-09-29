@@ -350,7 +350,9 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         totalUsers: action.payload,
       };
+      
     default:
       return state;
+      
   }
 }
