@@ -315,6 +315,7 @@ export default function rootReducer(state = initialState, action) {
       const noAvailable = action.payload.filter((p) => p.deleted);
       return {
         ...state,
+        houses: noAvailable,
         housesEliminadas: noAvailable,
       };
     case GET_REPORTS:
