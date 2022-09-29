@@ -40,6 +40,7 @@ export const POST_COMMENT = "POST_COMMENT";
 export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
 export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS"
 export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE"
+export const DELETE_COMMENT = "DELETE_COMMENT"
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -463,10 +464,26 @@ export function getPubliNoAvail(){
 
 
 export function postComment(message, publicationId){
- return async function (dispatch) {
-  await axios.post(`/publication/comment`, {message, publicationId})
-  return dispatch({
-    type: POST_COMMENT
+  return async function (dispatch) {
+    await axios.post(`/publication/comment`, {message, publicationId})
+    return dispatch({
+      type: POST_COMMENT
   })
- }
 }
+}
+
+export function deleteComment(id) {
+  console.log("soy id",id)
+  // console.log("soy publicationID", idComment)
+  try {
+    return async function (dispatch) {
+       await axios.delete(`/publication/comment/${id}`)
+      return dispatch({
+        type: DELETE_COMMENT,
+      })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+

@@ -38,7 +38,9 @@ import {
   POST_COMMENT,
   REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
-  GET_PUBLICATIONS_NAVAILABLE  
+  GET_PUBLICATIONS_NAVAILABLE,
+  DELETE_COMMENT  
+
 } from "../actions";
 
 const initialState = {
@@ -285,7 +287,7 @@ export default function rootReducer(state = initialState, action) {
         imageUser: imagen,
       };
     case GET_COMMENT:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         comments: action.payload,
@@ -306,6 +308,11 @@ export default function rootReducer(state = initialState, action) {
           ...state,
           houses: noAvailable 
         }  
+
+        case DELETE_COMMENT:
+          return {
+            ...state,
+          }
 
     default:
       return state;
