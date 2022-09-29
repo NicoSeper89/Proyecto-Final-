@@ -27,6 +27,7 @@ import Admin from "./components/Administrador/Admin.jsx";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
 
 
+
 function App() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
   const dispatch = useDispatch();
@@ -89,16 +90,13 @@ function App() {
            let userRank = window.localStorage.getItem("User");
            userRank = JSON.parse(userRank);
 
-           if (userRank){
-
-              return <Rank match={match} userRank={userRank}/>
-
-            } 
-            else {window.localStorage.setItem("Rank_Publications", match.params.id);
-                  return loginWithRedirect()}
-
+           if (userRank){return <Rank match={match} userRank={userRank}/>} 
+           else {window.localStorage.setItem("Rank_Publications", match.params.id);
+                 return loginWithRedirect()}
          }}/>
-        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/admin" render={() => {
+          return user2 && user2[0].admin ? <Admin/> : <Redirect to="*"/>
+        }} />
         <Route path="*" component={Error404} />
       </Switch>
     </>

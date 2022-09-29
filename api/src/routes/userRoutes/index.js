@@ -10,7 +10,7 @@ var Sequelize = require("sequelize");
 
 router.get("/users", async (req, res) => {
   const name = req.query.name;
-  //const {name}=req.params
+  //const {name}=req.params 
   const usersTotal = await getAllUsers();
   if (name) {
     let userName = await usersTotal.filter((elem) =>
@@ -19,7 +19,7 @@ router.get("/users", async (req, res) => {
     userName.length ? res.status(200).send(userName) : res.status(404).send("User not found");
   } else {
     res.status(200).send(usersTotal);
-  }
+  } 
 });
 
 router.get("/userInfo/:id", async(req,res,next)=>{
@@ -29,7 +29,7 @@ router.get("/userInfo/:id", async(req,res,next)=>{
     res.send(user)
   } catch (error) {
     next(error)
-  }
+  } 
 })
 
 // router.post("/typeofusers", async (req, res) => {
@@ -238,7 +238,19 @@ router.put("/rate", async (req, res, next) => {
 router.get("/getPubs/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const publications = await getPubs(id);
+    const allPublications = await getPubs(id);
+    let publications = allPublications.filter((p) => !p.deleted);
+    res.send(publications);
+  } catch (error) {
+    next(error);
+  }
+});
+//Esta ruta es para ver las publicaciones que hizo el mismo usuario
+router.get("/getPubsDeleted/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const allPublications = await getPubs(id);
+    let publications = allPublications.filter((p) => p.deleted);
     res.send(publications);
   } catch (error) {
     next(error);
