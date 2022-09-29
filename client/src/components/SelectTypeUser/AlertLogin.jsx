@@ -8,24 +8,37 @@ import {
     AlertDescription
   } from "@chakra-ui/react";
 import { useAuth0 } from "@auth0/auth0-react";
-
+import { useEffect } from "react";
+import { useState } from "react";
 
 const AlertLogin= ({loguear}) => {
     
     const{isAuthenticated , user, loginWithRedirect,logout ,isLoading} = useAuth0() 
     const history = useHistory()
+    const rankURL = window.localStorage.getItem("Rank_Publications");
+    const [state, setState] = useState(false)
+
+    useEffect(() => {
+
+       if (state) { const idUrl = rankURL;
+                    window.localStorage.removeItem("Rank_Publications");
+                    history.push(`/details/${idUrl}/rank`)};
+
+    }, [history, state, rankURL])
 
     const onDown = () => {
     if(loguear){
-        history.push("/") 
+
+       if (!rankURL) {history.push("/")}
+       else {setState(true)
+            }
+        
     } else{
         logout()
-        
         
     }
        
     }
-    console.log(loguear)
      return (
             <Alert position={"absolute"}
                 display={ "flex"}
