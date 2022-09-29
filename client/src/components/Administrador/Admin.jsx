@@ -47,13 +47,6 @@ export default function Admin() {
   const housesEliminadas = useSelector((state) => state.housesEliminadas);
   const totalUsers = useSelector((state) => state.totalUsers);
 
-  console.log("HOUSEE: ", houses);
-  console.log("USEER: ", myUser);
-  console.log("APROBAR: ", forApproval);
-  console.log("REPORTS: ", reports);
-  console.log("ELIMINADAS: ", housesEliminadas);
-  console.log("USUARIOSS: ", totalUsers);
-
   const infoUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
     dispatch(getAll());
@@ -67,12 +60,12 @@ export default function Admin() {
       dispatch(getUserInfo(infoUser[0].id));
     }
   }, [dispatch]);
- console.log(totalUsers,"USERSSSSSSSSSSSS")
+  console.log(totalUsers, "USERSSSSSSSSSSSS")
 
   const viewUser = (id) => {
     const userAdmin = totalUsers.filter(e => e.id === id)
-    window.localStorage.setItem("ViewUser",JSON.stringify(userAdmin))
-    
+    window.localStorage.setItem("ViewUser", JSON.stringify(userAdmin))
+
     // window.localStorage.setItem("adminId", `${p.id}`)
     history.push(`/viewUser`)
   }
@@ -128,10 +121,10 @@ export default function Admin() {
               Publicaciones para Aprobar
             </Tab>
             <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
-              Publicaciones Reportadas
+              Publicaciones eliminadas
             </Tab>
             <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
-              Publicaciones eliminadas
+              Reportes
             </Tab>
           </TabList>
           <TabPanels>
@@ -155,9 +148,9 @@ export default function Admin() {
                             <Td>{p.name}</Td>
                             <Td>{p.rating}</Td>
                             <Td>
-                            <Button h='1.75rem' size='sm' onClick={() => viewUser(p.id)}>
-                            Ir a perfil
-                            </Button>
+                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.id)}>
+                                Ir a perfil
+                              </Button>
                               {/* <Link to={`/perfilPropietario/${p.userId}`}>Ir a perfil</Link> */}
                             </Td>
                           </Tr>
@@ -177,25 +170,24 @@ export default function Admin() {
                     <Tr>
                       <Th>Fecha de creación</Th>
                       <Th>Publicación</Th>
-                      <Th>Ver Propiedad</Th>
-                      <Th>Ver perfil de Propietario</Th>
+                      <Th>Propiedad</Th>
+                      <Th>Perfil de Propietario</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
                     {houses?.map((p, i) => {
-                      console.log(p,"PEEEEEEEEE")
                       return (
                         <Tr key={i}>
                           <Td>{p.createdAt}</Td>
                           <Td>{p.property.address}</Td>
                           <Td>
-                          <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
-                            Ir a perfil
-                             </Button>
+                            <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
+                              Ir a publicación
+                            </Button>
                           </Td>
                           <Td>
-                          <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
-                            Ir a perfil
+                            <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
+                              Ir a perfil
                             </Button>
                           </Td>
                         </Tr>
@@ -224,10 +216,14 @@ export default function Admin() {
                             <Td>{p.createdAt}</Td>
                             <Td>{p.property.address}</Td>
                             <Td>
-                              <Link to={`/details/${p.id}`}>Ir a propiedad</Link>
+                              <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
+                                Ir a publicación
+                              </Button>
                             </Td>
                             <Td>
-                              <Link to={p.userId}>Ir a perfil</Link>
+                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
+                                Ir a perfil
+                              </Button>
                             </Td>
                           </Tr>
                         );
@@ -238,7 +234,42 @@ export default function Admin() {
               </Flex>
             </TabPanel>
             <TabPanel>
-              <Box>Todas las publicaciones reportadas</Box>
+              <Box>Todas las publicaciones eliminadas</Box>
+              <Flex>
+                <TableContainer w={"100%"}>
+                  <Table variant="striped" colorScheme="teal" w={"100%"}>
+                    <Thead w={"100%"}>
+                      <Th>Fecha de creación</Th>
+                      <Th>Fecha de eliminación?</Th>
+                      <Th>Ver Propiedad</Th>
+                      <Th>Ver Perfil del propietario</Th>
+                    </Thead>
+                    <Tbody>
+                      {housesEliminadas?.map((p, i) => {
+                        return (
+                          <Tr key={i}>
+                            <Td>{p.createdAt}</Td>
+                            <Td>{p.updatedAt}</Td>
+                            <Td>
+                              <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
+                                Ir a publicación
+                              </Button>
+                            </Td>
+                            <Td>
+                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
+                                Ir a perfil
+                              </Button>
+                            </Td>
+                          </Tr>
+                        );
+                      })}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+              <Box>Todos los reportes</Box>
               <Flex>
                 <TableContainer w={"100%"}>
                   <Table variant="striped" colorScheme="teal" w={"100%"}>
@@ -257,39 +288,14 @@ export default function Admin() {
                             <Td>{p.type}</Td>
                             <Td>{p.info}</Td>
                             <Td>
-                              <Link to={`/details/${p.publications[0].id}`}>Ir a propiedad</Link>
+                              <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.publications[0].id}`)}>
+                                Ir a publicación
+                              </Button>
                             </Td>
                             <Td>
-                              <Link to={p.userId}>Ir a perfil</Link>
-                            </Td>
-                          </Tr>
-                        );
-                      })}
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </Flex>
-            </TabPanel>
-            <TabPanel>
-              <Box>Todas las publicaciones eliminadas</Box>
-              <Flex>
-                <TableContainer w={"100%"}>
-                  <Table variant="striped" colorScheme="teal" w={"100%"}>
-                    <Thead w={"100%"}>
-                      <Th>Fecha de creación</Th>
-                      <Th>Fecha de eliminación?</Th>
-                      <Th>Motivo de eliminación</Th>
-                      <Th>Ver Propiedad</Th>
-                    </Thead>
-                    <Tbody>
-                      {housesEliminadas?.map((p, i) => {
-                        return (
-                          <Tr key={i}>
-                            <Td>{p.createdAt}</Td>
-                            <Td>{p.updatedAt}</Td>
-                            <Td>motivo?</Td>
-                            <Td>
-                              <Link to={`/details/${p.id}`}>Ir a propiedad</Link>
+                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
+                                Ir a perfil
+                              </Button>
                             </Td>
                           </Tr>
                         );
