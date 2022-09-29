@@ -4,6 +4,7 @@ import { useState , } from "react";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import style from "./AdminAcces.module.css"
+import swal from 'sweetalert';
 
 const AdminAcces = () => {
   const{logout, loginWithRedirect} = useAuth0()
@@ -25,10 +26,11 @@ const user =  JSON.parse(dataUser)
     setPassword("")
 
     window.localStorage.removeItem("User")
+    ;
     logout()
     loginWithRedirect()
   }else(
-    alert("Contraseña incorrecta")
+    swal("Contraseña incorrecta", "Por favor vuelve a intentarlo", "error")
   )
 
   
