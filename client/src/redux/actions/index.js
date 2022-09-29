@@ -38,6 +38,7 @@ export const GET_USER_IMAGE = "GET_USER_IMAGE";
 export const GET_COMMENT = "GET_COMMENT";
 export const POST_COMMENT = "POST_COMMENT";
 export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
+export const DELETE_COMMENT = "DELETE_COMMENT"
 export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS";
 export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE";
 export const GET_REPORTS = "GET_REPORTS";
@@ -600,3 +601,20 @@ export function approvePostUser(pubId, userId) {
     }
   };
 }
+}
+
+export function deleteComment(id) {
+  console.log("soy id",id)
+  // console.log("soy publicationID", idComment)
+  try {
+    return async function (dispatch) {
+       await axios.delete(`/publication/comment/${id}`)
+      return dispatch({
+        type: DELETE_COMMENT,
+      })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+

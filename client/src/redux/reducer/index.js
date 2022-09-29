@@ -39,11 +39,13 @@ import {
   REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
   GET_PUBLICATIONS_NAVAILABLE,
+  DELETE_COMMENT  
   GET_REPORTS,
   GET_REPORTS_ID,
   GET_FOR_APPROVAL,
   APPROVE_POST_USER,
   TOTAL_USERS,
+
 } from "../actions";
 
 const initialState = {
@@ -297,7 +299,7 @@ export default function rootReducer(state = initialState, action) {
         imageUser: imagen,
       };
     case GET_COMMENT:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         comments: action.payload,
@@ -313,6 +315,10 @@ export default function rootReducer(state = initialState, action) {
         houses: action.payload,
       };
 
+        case DELETE_COMMENT:
+          return {
+            ...state,
+          }
     case GET_PUBLICATIONS_NAVAILABLE:
       const noAvailable = action.payload.filter((p) => p.deleted);
       return {

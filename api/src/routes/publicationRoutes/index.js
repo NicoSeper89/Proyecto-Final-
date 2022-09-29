@@ -480,7 +480,18 @@ router.delete("/report/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+})
+
+//ELIMINAR COMENTARIO
+router.delete("/comment/:id", async (req, res, next)=> {
+  const { id } = req.params
+  try {
+      await PublicationComents.destroy({ where: { id : id}})
+      res.send("borraste el comentario")
+    } catch (error) {
+    next(error)
+  }
+})
 
 router.put("/approvePost/:id", async (req, res, next) => {
   const { id } = req.params;

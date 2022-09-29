@@ -8,7 +8,7 @@ module.exports = (sequelize) => {
      }, 
      publicationId: {
       type: DataTypes.UUID,
-      // primaryKey: true,
+
   },
   });
 };
