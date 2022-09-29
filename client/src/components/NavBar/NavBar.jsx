@@ -78,6 +78,7 @@ const NavBar = () => {
         w={"100%"}
         h={"60px"}
         // backgroundColor={"gray.100"}
+        overflow={"hidden"}
       >
         <Link to="/">
           <Image h={"200px"} marginTop={"35px"} src={logoImg} alt="homeLogo" />

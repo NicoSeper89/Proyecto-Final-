@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -64,32 +65,42 @@ export default function Admin() {
   return (
     <Box>
       <NavBarForms />
-      <Box
-        m={"20px 0px"}
+      <Flex
+        direction={"row"}
+        m={"40px 0px"}
         w={"100%"}
-        borderRadius={"0.5rem"}
-        p={".3rem 0rem"}
+        p={".3rem 1rem"}
         textAlign={"start"}
         bg={"rgba(216, 158, 26, 0.35)"}
       >
-        <Heading>Bienvenido Administrador {infoUser[0].name}!</Heading>
+        <Avatar />
+        <Heading ml={"1rem"}>Bienvenido Administrador {infoUser[0].name}!</Heading>
+      </Flex>
+      <Box
+        w={"100%"}
+        p={".3rem .5rem"}
+        textAlign={"start"}
+        borderBottom={"1px solid #C3C3C3"}
+        m={"30px 3rem"}
+      >
+        <Text ml={"1rem"} as={"b"} fontSize="2xl">
+          INFORMACIÓN
+        </Text>
       </Box>
-      <Box>
-        <Text>Acá se va a ver la lista de los usuarios</Text>
-      </Box>
-      <br />
-      <Box m={"30px"}>
+
+      <Box m={"0px 30px"}>
         {/* <Text>Tablas Administradoras</Text> */}
         <Tabs
           variant="soft-rounded"
           colorScheme="green"
           w={"100%"}
-          h={"100%"}
+          h={"500px"}
           boxShadow="dark-lg"
           p="10px"
           border="1px solid grey.600"
           // bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
+          overflow={"scroll"}
         >
           <TabList>
             <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
@@ -267,6 +278,44 @@ export default function Admin() {
           </TabPanels>
         </Tabs>
       </Box>
+      <br />
+      <Box
+        w={"100%"}
+        p={".3rem .5rem"}
+        textAlign={"start"}
+        borderBottom={"1px solid #C3C3C3"}
+        m={"30px 3rem"}
+      >
+        <Text ml={"1rem"} as={"b"} fontSize="2xl">
+          ESTADISTICAS
+        </Text>
+      </Box>
+      <Flex direction={"row"} justifyContent={"space-evenly"} m={"30px"}>
+        <Box
+          w={"500px"}
+          h={"400px"}
+          boxShadow="dark-lg"
+          p="10px"
+          border="1px solid grey.600"
+          bg={"rgba(216, 158, 26, 0.35)"}
+          borderRadius={"0.5rem"}
+        >
+          ACA PUEDE IR UNA GRAFICA = De cantidad de publicaciones realizadas el ultimo trimestre o
+          algo asi
+        </Box>
+        <Box
+          w={"500px"}
+          h={"400px"}
+          boxShadow="dark-lg"
+          p="10px"
+          border="1px solid grey.600"
+          bg={"rgba(216, 158, 26, 0.35)"}
+          borderRadius={"0.5rem"}
+        >
+          ACA PUEDE IR OTRA GRAFICA = De cantidad de usuarios registrados realizadas el ultimo
+          trimestre o algo asi
+        </Box>
+      </Flex>
       <Footer />
     </Box>
   );
