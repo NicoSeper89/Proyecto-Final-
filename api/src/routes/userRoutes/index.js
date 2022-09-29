@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const router = Router();
-const cloudinary = require("../../utils/cloudinary")
+const cloudinary = require("../../utils/cloudinary");
 const { TypeOfUser, User, LoginInfo, UserImage, ContactInfo, Publication } = require("../../db");
 const { getAllUsers, getPubs, getPublications, getOneUser } = require("./controllers");
 var Sequelize = require("sequelize");
 
-// esta ruta recibe por query un nombre de usuario, hace un filtro y trae a ese usuario. si no encuentra 
-//uno devuelve todos los usuarios 
+// esta ruta recibe por query un nombre de usuario, hace un filtro y trae a ese usuario. si no encuentra
+//uno devuelve todos los usuarios
 
 router.get("/users", async (req, res) => {
   const name = req.query.name;
@@ -22,15 +22,15 @@ router.get("/users", async (req, res) => {
   }
 });
 
-router.get("/userInfo/:id", async(req,res,next)=>{
-  const {id} = req.params
+router.get("/userInfo/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    let user = await getOneUser(id)
-    res.send(user)
+    let user = await getOneUser(id);
+    res.send(user);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // router.post("/typeofusers", async (req, res) => {
 //   try {
@@ -149,9 +149,9 @@ router.post("/imageUser", async (req, res, next) => {
   const { url, cloudId, userId } = req.body;
   try {
     if (!url) return res.status(404).send("no image to upload");
-    let thisUser = await getOneUser(userId)
+    let thisUser = await getOneUser(userId);
     // cloudinary.uploader.destroy(thisUser.userImage.cloudId)
-    thisUser.userImage.destroy()
+    thisUser.userImage.destroy();
     let user = await User.findByPk(userId);
     let img = await UserImage.create({
       url,
@@ -175,7 +175,7 @@ router.put("/editUser/:id", async (req, res, next) => {
       city,
       description,
     });
-    res.send('editado');
+    res.send("editado");
   } catch (error) {
     next(error);
   }
@@ -184,7 +184,7 @@ router.get("/getImage/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
     let result = await UserImage.findAll({
-      where: { userId: id }
+      where: { userId: id },
     });
     res.send(result);
   } catch (error) {
@@ -193,17 +193,18 @@ router.get("/getImage/:id", async (req, res, next) => {
 });
 //este recibe el id de la persona rankeada, y el rating que se le va a poner
 router.put("/rate", async (req, res, next) => {
-
   try {
     const { id, rating } = req.query;
-    const {userId} = req.body;
+    const { userId } = req.body;
 
     const publication = await Publication.findByPk(id);
     const user = await User.findByPk(publication.userId);
 
     const rankedUser = await User.findByPk(userId);
 
-    if (rankedUser.userRank){if (rankedUser.userRank.includes(id)) return res.send("ya rankeo esta publicación")}
+    if (rankedUser.userRank) {
+      if (rankedUser.userRank.includes(id)) return res.send("ya rankeo esta publicación");
+    }
 
     await User.update(
       {
@@ -214,9 +215,9 @@ router.put("/rate", async (req, res, next) => {
           id: userId,
         },
       }
-    )
+    );
 
-    let currentRating = (parseFloat(rating) + user.rating * user.ratingAmount);
+    let currentRating = parseFloat(rating) + user.rating * user.ratingAmount;
     let currentAmount = user.ratingAmount + 1;
     let futureRating = (currentRating / currentAmount).toFixed(2);
 
@@ -227,11 +228,9 @@ router.put("/rate", async (req, res, next) => {
     });
 
     return res.send("updated rating");
-
   } catch (error) {
     next(error);
   }
-
 });
 
 //Esta ruta es para ver las publicaciones que hizo el mismo usuario
