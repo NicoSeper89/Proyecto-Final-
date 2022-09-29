@@ -44,7 +44,6 @@ function App() {
     dispatch(getTypesOfProperties());
   }, [dispatch]);
 
-  console.log(infoUser, "desde rutas infoUser");
   return (
     <>
       <Switch>
@@ -88,13 +87,16 @@ function App() {
         />
         <Route exact path="/select" component={Select} />
         <Route exact path="/adminAcces" component={AdminAcces} />
-
         <Route exact path="/details/:id/rank" render={({match}) => {
-            return user2? <Rank match={match} user2={user2}/> : loginWithRedirect();
-          }}/>
-      
+           let userRank = window.localStorage.getItem("User");
+           userRank = JSON.parse(userRank);
+
+           if (userRank){return <Rank match={match} userRank={userRank}/>} 
+           else {window.localStorage.setItem("Rank_Publications", match.params.id);
+                 return loginWithRedirect()}
+         }}/>
         <Route exact path="/admin" render={() => {
-        return user2 && user2[0].admin ? <Admin/> : <Redirect to="*"/>
+          return user2 && user2[0].admin ? <Admin/> : <Redirect to="*"/>
         }} />
          
          <Route exact path="/viewUser" render={() => {
