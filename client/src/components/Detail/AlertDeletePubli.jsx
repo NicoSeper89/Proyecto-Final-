@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { deletePublicaction } from "../../redux/actions";
 
-const AlertDelete = ({ alertSubmit, id }) => {
+const AlertDelete = ({ alertSubmit, id, deleted }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -52,7 +52,9 @@ const AlertDelete = ({ alertSubmit, id }) => {
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
-        ¿Estás seguro de eliminar la publicación?
+       {deleted
+       ? " ¿Estás seguro de que queres restaurar la publicación?"
+          : " ¿Estás seguro de que queres eliminar la publicación?"}
         {/* {!alertSubmit[1]
           ? "La publicación no se pudo borrar, lo sentimos mucho!"
           : "La publicación se borro correctamente"} */}

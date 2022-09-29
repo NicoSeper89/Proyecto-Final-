@@ -39,13 +39,12 @@ import {
   REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
   GET_PUBLICATIONS_NAVAILABLE,
-  DELETE_COMMENT  
+  DELETE_COMMENT,
   GET_REPORTS,
   GET_REPORTS_ID,
   GET_FOR_APPROVAL,
   APPROVE_POST_USER,
   TOTAL_USERS,
-
 } from "../actions";
 
 const initialState = {
@@ -311,19 +310,17 @@ export default function rootReducer(state = initialState, action) {
     case GET_ALL_PUBLICATIONS:
       return {
         ...state,
-
         houses: action.payload,
       };
 
-        case DELETE_COMMENT:
-          return {
-            ...state,
-          }
+    case DELETE_COMMENT:
+      return {
+        ...state,
+      };
     case GET_PUBLICATIONS_NAVAILABLE:
       const noAvailable = action.payload.filter((p) => p.deleted);
       return {
         ...state,
-        houses: noAvailable,
         housesEliminadas: noAvailable,
       };
     case GET_REPORTS:
