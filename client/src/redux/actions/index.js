@@ -149,9 +149,14 @@ export function getPubs(id) {
   return async function (dispatch) {
     try {
       let info = await axios.get(`/user/getPubs/${id}`);
+      let infoDeleted = await axios.get(`/user/getPubsDeleted/${id}`);
+      let response={
+        pubs:info.data,
+        pubsBorradas:infoDeleted.data
+      }
       return dispatch({
         type: GET_PUBLICATION_USER,
-        payload: info.data,
+        payload:response,
       });
     } catch (error) {
       alert(error.response.data);
