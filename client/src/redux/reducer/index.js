@@ -77,7 +77,7 @@ const initialState = {
   imageUser: "",
   comments: [],
   reports: [],
-  reportsId: [],
+  reportsId: [], 
   forApproval: [],
 };
 

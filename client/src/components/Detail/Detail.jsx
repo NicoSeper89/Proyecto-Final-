@@ -4,7 +4,7 @@ import {
   getPublicationsDetail,
   clean,
   deletePublicaction,
-  getInfoUser,
+  getInfoUser, 
   getComment,
   postComment,
   deleteComment,
