@@ -20,10 +20,12 @@ import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
 import AlertCard from "./components/Cards/AlertCard";
-
-import AdminAcces from "./components/Administrador/AdminAcces";
 import FormReport from "./components/Detail/FormReport";
-import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd"
+import Rank from "./components/Rank/Rank.jsx"
+import AdminAcces from "./components/Administrador/AdminAcces";
+import Admin from "./components/Administrador/Admin.jsx";
+import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
+
 
 
 function App() {
@@ -41,7 +43,6 @@ function App() {
     dispatch(getTypesOfProperties());
   }, [dispatch]);
 
-  console.log(infoUser, "desde rutas infoUser");
   return (
     <>
       <Switch>
@@ -61,7 +62,7 @@ function App() {
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
         <Route exact path="/redirectRegister" component={AlertCard} />
         <Route exact path="/reportPublication" component={FormReport} />
-        <Route exact path="/deletedLogicUAd"  component={deletedLogicUAd}/>
+        <Route exact path="/deletedLogicUAd" component={deletedLogicUAd} />
         {/* //<Route
         //   exact
         //   path="/perfilPropietario"
@@ -69,13 +70,12 @@ function App() {
         //     return infoUser ? <PerfilPropietario /> : <Redirect to="*" />;
         //   }}
         // /> */}
-        
+
         {/* <Route exact path="/perfilInquilino" render={() => {
           return
           return user2 && user2[0].typeOfUserId === 2? <PerfilInquilino/> :
           <Redirect to="*"/>
         }} /> */}
-        
 
         <Route
           exact
@@ -85,10 +85,18 @@ function App() {
           }}
         />
         <Route exact path="/select" component={Select} />
-
         <Route exact path="/adminAcces" component={AdminAcces} />
+        <Route exact path="/details/:id/rank" render={({match}) => {
+           let userRank = window.localStorage.getItem("User");
+           userRank = JSON.parse(userRank);
 
-
+           if (userRank){return <Rank match={match} userRank={userRank}/>} 
+           else {window.localStorage.setItem("Rank_Publications", match.params.id);
+                 return loginWithRedirect()}
+         }}/>
+        <Route exact path="/admin" render={() => {
+          return user2 && user2[0].admin ? <Admin/> : <Redirect to="*"/>
+        }} />
         <Route path="*" component={Error404} />
       </Switch>
     </>

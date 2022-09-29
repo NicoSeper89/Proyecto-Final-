@@ -62,9 +62,12 @@ import {
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
-import Maps from "../Maps/Maps";
 import AlertDeleteComent from "./AlertDeletComent"
+// import Maps from "../Maps/Maps";
+import FormReport from "./FormReport";
 import Datos from "../Maps/Datos";
+import RequestScore from "./requestScore";
+// import Comentarios from "./Comentarios"
 
 // import { Carousel, } from "react-responsive-carousel";
 
@@ -104,14 +107,9 @@ export default function Detail(props, id) {
   }
 
   function handleReport() {
+    window.localStorage.setItem("id", `${props.match.params.id}`);
     history.push("/reportPublication");
   }
-
-  // window.scroll({
-  //   top: 0,
-  //   left: 0,
-  //   behavior: "smooth",
-  // });
 
   const onChangeInputComment = (e) => {
     e.preventDefault();
@@ -428,7 +426,7 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
-                        <Button
+                        {/* <Button
                           w={"350px"}
                           colorScheme="green"
                           m="8px"
@@ -439,7 +437,8 @@ export default function Detail(props, id) {
                           }}
                         >
                           Reportar publicación
-                        </Button>
+                        </Button> */}
+                        <RequestScore myUser={myUser} />
                       </Flex>
                     ) : (
                       <Flex>
@@ -479,6 +478,13 @@ export default function Detail(props, id) {
                       <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
                         Descripción
                       </Tab>
+                      {myUser[0].id === miStateDetail.userId ? (
+                        <Tab fontWeight={600} color={"red"} mb={"5px"}>
+                          Reportar
+                        </Tab>
+                      ) : (
+                        <></>
+                      )}
                     </TabList>
                     <TabPanels display={"flex"} justifyContent="center">
                       <TabPanel>
@@ -508,6 +514,20 @@ export default function Detail(props, id) {
                           <Text fontSize="lg">{miStateDetail.description}</Text>
                         </Box>
                       </TabPanel>
+                      <TabPanel>
+                        <Flex
+                          alignItems="flex-start"
+                          w={"500px"}
+                          h={"250px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.300"
+                          borderRadius={"0.5rem"}
+                          justifyContent={"center"}
+                        >
+                          <FormReport id={props.match.params.id} userId={myUser[0].id} />
+                        </Flex>
+                      </TabPanel>
                     </TabPanels>
                     {/* <Box textAlign={"center"} mb={"5px"}>
                     <Text fontSize="xl" as="b">
@@ -535,7 +555,17 @@ export default function Detail(props, id) {
             {/* ESTO ES BOTONES */}
 
             {/* ESTO ES BOTONES */}
-            <Box>
+            <Box
+              variant="soft-rounded"
+              /* colorScheme="green" */
+              w={"42rem"}
+              h={"400px"}
+              boxShadow="dark-lg"
+              p="10px"
+              border="1px solid grey.600"
+              // bg={"rgba(216, 158, 26, 0.35)"}
+              borderRadius={"0.5rem"}
+            >
               <FormControl>
               {
               myUser[0].admin? 
@@ -604,7 +634,7 @@ export default function Detail(props, id) {
       <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} />
      <AlertDeleteComent alertComent={alertComent} id={id}/>
       <Footer />
-      {/* {showMap && <Datos position={miStateDetail}/>} */}
+      {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>
   );
 }

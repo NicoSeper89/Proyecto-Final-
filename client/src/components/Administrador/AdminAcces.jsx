@@ -1,38 +1,46 @@
-import { Box, InputGroup, Input, InputRightElement, Button } from "@chakra-ui/react";
+import { Box, InputGroup, Input, InputRightElement, Button, Center } from "@chakra-ui/react";
 import React from "react";
-import { useEffect } from "react";
 import { useState , } from "react";
-import {useSelector,useDispatch} from "react-redux"
-import { getInfoUser } from "../../redux/actions";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
+import style from "./AdminAcces.module.css"
 
 const AdminAcces = () => {
-  const dispatch = useDispatch()
-
+  const{logout, loginWithRedirect} = useAuth0()
+  
  const [password ,setPassword] = useState("")
-  const user = useSelector(state => state.infoUser)
+  // const user = useSelector(state => state.infoUser)
 
-    const [show, setShow] = React.useState(false)
+
+  const [show, setShow] = React.useState(false)
   const handleClick = () => setShow(!show)
 
-  useEffect(() => {
-    const dataUser = window.localStorage.getItem("User");
-    dataUser && dispatch(getInfoUser(JSON.parse(dataUser))) 
-  }, []);
 
-
+const dataUser = window.localStorage.getItem("User");
+const user =  JSON.parse(dataUser)
+  
    const acces = async () => {
+    if(password === "12345"){
     await axios.put(`http://localhost:3001/admin/acces?id=${user[0].id}`)
-    console.log(user[0].id)
     setPassword("")
+
+    window.localStorage.removeItem("User")
+    logout()
+    loginWithRedirect()
+  }else(
+    alert("Contraseña incorrecta")
+  )
+
+  
    }
-    var si_no
-   password === "12345"? si_no = false: si_no = true
+   
 
-   if(user) return (
-    <Box maxWidth="400px" textAlign="center" >
-
-      <h1>Password Admin</h1>
+   if(user) return (<Center h="500px">
+    <Box className={style.continer}  >
+      <Box className={style.title}>
+        <h1>Password Admin:</h1>
+      </Box>
+      
       <Box>  
     <InputGroup size='md'>
       <Input
@@ -49,10 +57,13 @@ const AdminAcces = () => {
       </InputRightElement>
     </InputGroup>
     </Box>
-    <Button colorScheme='teal' variant='solid' disabled={si_no} onClick={() => acces()}>Enviar</Button>
+    <Box className={style.btn}>
+    <Button colorScheme='teal' variant='solid'  onClick={() => acces()}>Enviar</Button>
+    </Box>
    </Box>
+   </Center>
   )
-  else return(<h1>no exite user </h1>)
+  else return(<h1>no existe user </h1>)
 }
 
 export default AdminAcces

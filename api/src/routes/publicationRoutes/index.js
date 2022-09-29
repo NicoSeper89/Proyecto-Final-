@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const cloudinary = require("../../utils/cloudinary")
+const cloudinary = require("../../utils/cloudinary");
 const {
   Publication,
   Property,
@@ -9,7 +9,7 @@ const {
   PropertyImage,
   Report,
   User,
-  PublicationComents
+  PublicationComents,
 } = require("../../db");
 const router = Router();
 const {
@@ -21,16 +21,15 @@ const {
   serviceTypes,
   getCity,
   findAllReports,
-  findReportById
+  findReportById,
 } = require("./controllers");
 const { where } = require("sequelize");
 
 //para el home y para el searchbar get con query
-router.get("/allPublications", async(req,res,next)=>{
-   const allPubli = await getAll()
-   res.send(allPubli)
-
-})
+router.get("/allPublications", async (req, res, next) => {
+  const allPubli = await getAll();
+  res.send(allPubli);
+});
 
 router.post("/", async (req, res, next) => {
   try {
@@ -44,7 +43,7 @@ router.post("/", async (req, res, next) => {
         } */
     /*  let sorting ={ name: 'default', direccion: 'minMax' }; */
     let allPublications = await getAll(); /// me trae todas las casas con sus propiedades
-    let publications = allPublications.filter(p => !p.deleted)
+    let publications = allPublications.filter((p) => !p.deleted);
     publications = await getFiltered(publications, filters); // envia todas las casas y un filtro
 
     if (city) {
@@ -71,13 +70,23 @@ router.post("/", async (req, res, next) => {
 
 router.get("/premium", async (req, res, next) => {
   try {
-    const publications = await getAll()
-    const premium = await publications.filter(p => p.premium)
-    res.send(premium)
+    const publications = await getAll();
+    const premium = await publications.filter((p) => p.premium);
+    res.send(premium);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
+//apps a aprobar
+router.get("/forApproval", async (req, res, next) => {
+  try {
+    const publications = await getAll();
+    const notApproved = await publications.filter((p) => !p.approved);
+    res.send(notApproved);
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get("/city", async (req, res, next) => {
   try {
@@ -110,24 +119,24 @@ router.get("/propertyTypes", async (req, res, next) => {
   }
 });
 //trae todos los reportes que existen
-router.get('/reportList', async (req, res, next) => {
-  
+router.get("/reportList", async (req, res, next) => {
   try {
-    let reportList = await findAllReports()
-    res.send(reportList)
+    let reportList = await findAllReports();
+    res.send(reportList);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
-router.get('/reportList/:id', async (req, res, next) => {
-  const{id}=req.params;
+});
+//trae todos los reportes de una publicacion
+router.get("/reportList/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    let reportList = await findReportById(id)
-    res.send(reportList)
+    let reportList = await findReportById(id);
+    res.send(reportList);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 //para el detail
 router.get("/:id", async (req, res, next) => {
@@ -152,8 +161,6 @@ router.get("/:id", async (req, res, next) => {
     }
 }) */
 
-
-
 router.post("/postReport", async (req, res, next) => {
   try {
     if (!req.body.name) res.status(404).send("no reports");
@@ -166,14 +173,13 @@ router.post("/postReport", async (req, res, next) => {
   }
 });
 
-
 router.post("/image", async (req, res, next) => {
   const { url, cloudId } = req.body;
   try {
     if (!url) return res.status(404).send("no image to upload");
     await PropertyImage.create({
       url,
-      cloudId
+      cloudId,
     });
     res.send("image upload successful");
   } catch (error) {
@@ -246,33 +252,39 @@ router.post("/postProperty", async (req, res, next) => {
   const { description, status, premium, report, id, userId } = req.body;
   try {
     if (!description) res.status(404).send("fill out description");
-    let post = await Publication.create({
-      description,
-      status,
-      premium,
-    });
+    let user = await User.findByPk(userId);
+    let post;
+    if (user.approved) {
+       post = await Publication.create({
+        description,
+        status,
+        premium,
+        approved: true,
+      });
+    } else {
+       post = await Publication.create({
+        description,
+        status,
+        premium,
+      });
+    }
     if (report) {
       let rep = await Report.findAll({
         where: { name: report },
       });
       post.addReport(rep);
     }
-
     let property = await Property.findByPk(id);
     post.setProperty(property);
-    let user = await User.findByPk(userId);
     post.setUser(user);
-
     res.send(post.id);
   } catch (error) {
     next(error);
   }
 });
 
-
-
 router.put("/editProperty/:id", async (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
   const {
     address,
     surface,
@@ -287,7 +299,7 @@ router.put("/editProperty/:id", async (req, res, next) => {
     city,
     service,
     typProp,
-    propImg
+    propImg,
   } = req.body;
   const { description, status, premium, propertyId } = req.body;
   try {
@@ -297,7 +309,7 @@ router.put("/editProperty/:id", async (req, res, next) => {
       status,
       premium,
     });
-    let updatedProp = await Property.findByPk(propertyId)
+    let updatedProp = await Property.findByPk(propertyId);
     await Property.upsert({
       id: propertyId,
       address,
@@ -312,9 +324,9 @@ router.put("/editProperty/:id", async (req, res, next) => {
       age,
     });
 
-    let allServices = await Service.findAll()
-    let deleteSer = allServices.filter(s => s !== service)
-    updatedProp.removeService(deleteSer)
+    let allServices = await Service.findAll();
+    let deleteSer = allServices.filter((s) => s !== service);
+    updatedProp.removeService(deleteSer);
     if (service) {
       let ser = await Service.findAll({
         where: { name: service },
@@ -336,30 +348,29 @@ router.put("/editProperty/:id", async (req, res, next) => {
         where: { url: i.url },
       });
       updatedProp.addPropertyImage(img);
-    })
+    });
 
-    res.send('post updated')
+    res.send("post updated");
   } catch (error) {
     next(error);
   }
 });
 router.put("/makePremium/:id", async (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
   /* const { description, status, premium } = req.body; */
   try {
-    let updatedPub = await Publication.findByPk(id)
+    let updatedPub = await Publication.findByPk(id);
     await Publication.upsert({
       id: id,
       description: updatedPub.description,
       status: updatedPub.status,
       premium: true,
     });
-    res.send('premium')
+    res.send("premium");
   } catch (error) {
     next(error);
   }
 });
-
 
 router.post("/image/delete", async (req, res, next) => {
   const { id } = req.body;
@@ -372,94 +383,102 @@ router.post("/image/delete", async (req, res, next) => {
   }
 });
 
-
-
 router.delete("/delete/:id", async (req, res, next) => {
-  const { id } = req.params
+  const { id } = req.params;
   try {
-    const post = await Publication.findByPk(id)
+    const post = await Publication.findByPk(id);
 
-    const deleteImg = await PropertyImage.findAll({ where: { propertyId: post.propertyId } })
-    await deleteImg.map(img => {
-      cloudinary.uploader.destroy(img.cloudId)
-      img.destroy()
-    })
-    await Property.destroy({ where: { id: post.propertyId } })
-    await Publication.destroy({ where: { id: id } })
+    const deleteImg = await PropertyImage.findAll({ where: { propertyId: post.propertyId } });
+    await deleteImg.map((img) => {
+      cloudinary.uploader.destroy(img.cloudId);
+      img.destroy();
+    });
+    await Property.destroy({ where: { id: post.propertyId } });
+    await Publication.destroy({ where: { id: id } });
 
-    res.send(`id ${id} was deleted`)
+    res.send(`id ${id} was deleted`);
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
-
-router.put('/unavailable/:id', async (req, res, next) => {
-  const { id } = req.params
+router.put("/unavailable/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    let publi = await Publication.findByPk(id)
+    let publi = await Publication.findByPk(id);
 
-    await Publication.update(
-      { deleted: !publi.deleted },
-      { where: { id: id } }
-      )
-      res.send('publication availablity has changed')
-    } catch (error) {
-      next(error)
-    }
-  })
-  
-  router.get("/comment/:id", async (req, res, next)=>{
-    const { id } = req.params
-    try {
-     const comments = await PublicationComents.findAll({where: {publicationId: id}})
-     res.status(200).send(comments)
-    } catch (error) {
-      next(error)
-    }
-  })
-  
-  router.post("/comment", async (req, res, next)=>{
-   const { message, publicationId,}=req.body
-    try {
+    await Publication.update({ deleted: !publi.deleted }, { where: { id: id } });
+    res.send("publication availablity has changed");
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/comment/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    console.log("soy el id:", id);
+    const comments = await PublicationComents.findAll({ where: { publicationId: id } });
+    console.log("soy comments:", comments);
+    res.status(200).send(comments);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/comment/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    console.log("soy el id:", id);
+    const comments = await PublicationComents.findAll({ where: { publicationId: id } });
+    console.log("soy comments:", comments);
+    res.status(200).send(comments);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/comment", async (req, res, next) => {
+  const { message, publicationId } = req.body;
+  try {
     let mensaje = await PublicationComents.create({
       message,
-      publicationId
-      })
-      res.status(200).send(mensaje)
-    } catch (error) {
-    next(error)  
-    }
-  })
+      publicationId,
+    });
+    res.status(200).send(mensaje);
+  } catch (error) {
+    next(error);
+  }
+});
 // crea un reporte a la pblicacion por params, con la info de body
-router.post('/report/:id', async (req, res, next) => {
-  const { id } = req.params
-  const { type, info, userId } = req.body
+router.post("/report/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const { type, info, userId } = req.body;
   try {
-    let user = await User.findByPk(userId)
-    let publi = await Publication.findByPk(id)
+    let user = await User.findByPk(userId);
+    let publi = await Publication.findByPk(id);
     if (type) {
       let report = await Report.create({
-          type: type,
-          info: info,
+        type: type,
+        info: info,
       });
-      report.setUser(user)
+      report.setUser(user);
       publi.addReport(report);
     }
-    res.send('Se reporto la publicacion')
+    res.send("Se reporto la publicacion");
   } catch (error) {
-    next(error)
+    next(error);
   }
-})
+});
 
 // borra un reporte a la pblicacion por params, con la info de body
-router.delete('/report/:id', async (req, res, next) => {
-  const { id } = req.params
+router.delete("/report/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-    await Report.destroy({ where: { id : id } });
-    res.send('Se borro el reporte')
+    await Report.destroy({ where: { id: id } });
+    res.send("Se borro el reporte");
   } catch (error) {
-    next(error)
+    next(error);
   }
 })
 
@@ -474,5 +493,23 @@ router.delete("/comment/:id", async (req, res, next)=> {
   }
 })
 
+router.put("/approvePost/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await Publication.update({ approved: true }, { where: { id: id } });
+    res.send("Se aprobo la publicacion");
+  } catch (error) {
+    next(error);
+  }
+});
+router.put("/approveUser/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await User.update({ approved: true }, { where: { id: id } });
+    res.send("Se aprobo al usuario");
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

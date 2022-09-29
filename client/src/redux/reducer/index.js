@@ -40,14 +40,21 @@ import {
   GET_ALL_PUBLICATIONS,
   GET_PUBLICATIONS_NAVAILABLE,
   DELETE_COMMENT  
+  GET_REPORTS,
+  GET_REPORTS_ID,
+  GET_FOR_APPROVAL,
+  APPROVE_POST_USER,
+  TOTAL_USERS,
 
 } from "../actions";
 
 const initialState = {
+  totalUsers: [], //Total de usuarios
   allUserInfo: [],
   infoUser: null,
   houses: [], //Todas las publicaciones
   housePrem: [], //Publicación Premium
+  housesEliminadas: [], //publicaciones eliminadas
   services: [],
   typeOfProperties: [],
   cities: [],
@@ -65,10 +72,14 @@ const initialState = {
   valueFilter: "",
   publicationP: "",
   publicationsUser: [], //publicaciones de cada usuario
+  publicationsUserDeleted: [],
   favoritesUser: [], //favoritos de cada usuario
   favoritesUserId: [],
   imageUser: "",
   comments: [],
+  reports: [],
+  reportsId: [],
+  forApproval: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -252,7 +263,8 @@ export default function rootReducer(state = initialState, action) {
     case GET_PUBLICATION_USER:
       return {
         ...state,
-        publicationsUser: action.payload,
+        publicationsUser: action.payload.pubs,
+        publicationsUserDeleted: action.payload.pubsBorradas,
       };
     case GET_FAVORITES_USER:
       return {
@@ -296,24 +308,48 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case GET_ALL_PUBLICATIONS:
-        return{
-          ...state,
-          houses: action.payload
-        }
+    case GET_ALL_PUBLICATIONS:
+      return {
+        ...state,
 
-      case GET_PUBLICATIONS_NAVAILABLE:
-        const noAvailable=action.payload.filter(p=> p.deleted)
-        return{
-          ...state,
-          houses: noAvailable 
-        }  
+        houses: action.payload,
+      };
 
         case DELETE_COMMENT:
           return {
             ...state,
           }
-
+    case GET_PUBLICATIONS_NAVAILABLE:
+      const noAvailable = action.payload.filter((p) => p.deleted);
+      return {
+        ...state,
+        houses: noAvailable,
+        housesEliminadas: noAvailable,
+      };
+    case GET_REPORTS:
+      return {
+        ...state,
+        reports: action.payload,
+      };
+    case GET_REPORTS_ID:
+      return {
+        ...state,
+        reportsId: action.payload,
+      };
+    case GET_FOR_APPROVAL:
+      return {
+        ...state,
+        forApproval: action.payload,
+      };
+    case APPROVE_POST_USER:
+      return {
+        ...state,
+      };
+    case TOTAL_USERS:
+      return {
+        ...state,
+        totalUsers: action.payload,
+      };
     default:
       return state;
   }
