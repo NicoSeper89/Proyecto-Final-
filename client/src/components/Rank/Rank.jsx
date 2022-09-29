@@ -28,7 +28,7 @@ export default function Rank(prop) {
     const onClickButton = async () => {
 
         try {
-            const res = await axios.put(`/user/rate?id=${prop.match.params.id}&rating=${start}`, { userId: prop.userRank[0].id })
+            const res = await axios.put(`/user/rate?publicationId=${prop.match.params.id}&rating=${start}`, { userIdRequired: prop.userRank[0].id })
             history.push("/")
         } catch (error) {
             console.log(error)

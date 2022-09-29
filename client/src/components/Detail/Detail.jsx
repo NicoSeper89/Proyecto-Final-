@@ -426,8 +426,7 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
-                        
-                        <RequestScore myUser={myUser} />
+                        <RequestScore publicationsId={props.match.params.id} />
                       </Flex>
                     ) : (
                       miStateDetail.deleted ?
