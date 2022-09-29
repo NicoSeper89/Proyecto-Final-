@@ -438,7 +438,7 @@ export default function Detail(props, id) {
                         >
                           Reportar publicación
                         </Button> */}
-                        <RequestScore myUser={myUser} />
+                        <RequestScore publicationsId={props.match.params.id} />
                       </Flex>
                     ) : (
                       <Flex>
