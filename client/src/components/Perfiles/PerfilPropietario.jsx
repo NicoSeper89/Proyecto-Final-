@@ -35,6 +35,7 @@ export default function PerfilPropietario() {
   const user = useSelector((state) => state.infoUser);
   const allUserInfo = useSelector((state) => state.allUserInfo);
   const publicationsUser = useSelector((state) => state.publicationsUser);
+  const publicationsUserDeleted = useSelector((state) => state.publicationsUserDeleted);
   const favoritesUser = useSelector((state) => state.favoritesUser);
   const imageUser = useSelector((state) => state.imageUser);
   /* const [infoUser,setInfoUser] = useState(user) */
@@ -45,7 +46,6 @@ export default function PerfilPropietario() {
   };
 
   useEffect(() => {
-    console.log("soy", infoUser);
     dispatch(getPubs(infoUser[0].id));
     dispatch(getFavsUser(infoUser[0].id));
     dispatch(getUserImage(infoUser[0].id));
@@ -146,6 +146,9 @@ export default function PerfilPropietario() {
               <Tab fontWeight={600} color={"gray.500"} mb={4}>
                 Mis Favoritos
               </Tab>
+              <Tab fontWeight={600} color={"gray.500"} mb={4}>
+                Borrados
+              </Tab>
             </TabList>
             <TabPanels display={"flex"} justifyContent="center">
               <TabPanel>
@@ -165,6 +168,21 @@ export default function PerfilPropietario() {
               </TabPanel>
               <TabPanel>
                 {favoritesUser?.map((f, index) => {
+                  return (
+                    <Box key={index}>
+                      <CardPerfil
+                        id={f.id}
+                        img={f.property.propertyImages}
+                        precio={f.property.price}
+                        ciudad={f.property.city.name}
+                        premium={f.premium}
+                      />
+                    </Box>
+                  );
+                })}
+              </TabPanel>
+              <TabPanel>
+                {publicationsUserDeleted?.map((f, index) => {
                   return (
                     <Box key={index}>
                       <CardPerfil

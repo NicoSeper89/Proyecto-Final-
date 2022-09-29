@@ -332,16 +332,13 @@ export function setPublication(payload) {
 
 //ELIMINAR UNA PUBLICACION
 export function deletePublicaction(id) {
-  console.log(id, "id");
   return async function (dispatch) {
-    try {
-      await axios.put(`/publication/unavailable/${id}`);
+      console.log(id, "id a borrar");
+      let respuesta=await axios.put(`/publication/unavailable/${id}`);
+      console.log(respuesta,'response')
       return dispatch({
         type: DELETE_PUBLICACTION,
       });
-    } catch (error) {
-      console.log(error);
-    }
   };
 }
 
