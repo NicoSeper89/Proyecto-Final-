@@ -30,7 +30,8 @@ import {
   getPubliNoAvail,
   getReports,
   getUserInfo,
-  getTotalUsers
+  getTotalUsers,
+  viewUser2
 } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
@@ -66,6 +67,15 @@ export default function Admin() {
     }
   }, [dispatch]);
  console.log(totalUsers,"USERSSSSSSSSSSSS")
+
+  const viewUser = (id) => {
+    const userAdmin = totalUsers.filter(e => e.id === id)
+    window.localStorage.setItem("ViewUser",JSON.stringify(userAdmin))
+    
+    // window.localStorage.setItem("adminId", `${p.id}`)
+    history.push(`/viewUser`)
+  }
+
   return (
     <Box>
       <NavBarForms />
@@ -137,19 +147,16 @@ export default function Admin() {
                     </Thead>
                     <Tbody>
                       {totalUsers.length && totalUsers.map((p, i) => {
-                        console.log(p,"PEEEEEEEEE")
+                        console.log(totalUsers)
                         return (
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.name}</Td>
                             <Td>{p.rating}</Td>
                             <Td>
-                            <Button h='1.75rem' size='sm' onClick={() => {
-                              window.localStorage.setItem("adminId", `${p.id}`)
-                              history.push(`/perfilPropietario`)
-                              }}>
+                            <Button h='1.75rem' size='sm' onClick={() => viewUser(p.id)}>
                             Ir a perfil
-                                </Button>
+                            </Button>
                               {/* <Link to={`/perfilPropietario/${p.userId}`}>Ir a perfil</Link> */}
                             </Td>
                           </Tr>
@@ -175,15 +182,20 @@ export default function Admin() {
                   </Thead>
                   <Tbody>
                     {houses?.map((p, i) => {
+                      console.log(p,"PEEEEEEEEE")
                       return (
                         <Tr key={i}>
                           <Td>{p.createdAt}</Td>
                           <Td>{p.property.address}</Td>
                           <Td>
-                            <Link to={`/details/${p.id}`}>Ir a propiedad</Link>
+                          <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
+                            Ir a perfil
+                             </Button>
                           </Td>
                           <Td>
-                            <Link to={p.userId}>Ir a perfil</Link>
+                          <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
+                            Ir a perfil
+                            </Button>
                           </Td>
                         </Tr>
                       );

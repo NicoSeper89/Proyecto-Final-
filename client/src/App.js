@@ -25,6 +25,7 @@ import Rank from "./components/Rank/Rank.jsx"
 import AdminAcces from "./components/Administrador/AdminAcces";
 import Admin from "./components/Administrador/Admin.jsx";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
+import UsersAdmin from "./components/Perfiles/UsersAdmin";
 
 
 
@@ -95,6 +96,10 @@ function App() {
         <Route exact path="/admin" render={() => {
         return user2 && user2[0].admin ? <Admin/> : <Redirect to="*"/>
         }} />
+         
+         <Route exact path="/viewUser" render={() => {
+          return user2 && user2[0].admin ? <UsersAdmin/> : <Redirect to="*"/>
+         }} />
 
         <Route path="*" component={Error404} />
       </Switch>
