@@ -47,6 +47,16 @@ const NavBar = () => {
   };
   window.addEventListener("scroll", cambioColor);
 
+  const buttonCreatePost = (e) => {
+    e.preventDefault();
+    history.push("/createPost");
+  };
+
+  const buttonAdmin = (e) => {
+    e.preventDefault();
+    history.push("/admin");
+  };
+
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
 
@@ -68,12 +78,17 @@ const NavBar = () => {
         w={"100%"}
         h={"60px"}
         // backgroundColor={"gray.100"}
+        overflow={"hidden"}
       >
         <Link to="/">
           <Image h={"200px"} marginTop={"35px"} src={logoImg} alt="homeLogo" />
         </Link>
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
+          <Button colorScheme="orange" variant="outline" onClick={buttonAdmin} marginRight={"10px"}>
+            Admin
+          </Button>
+
           {/* me oculta el boton si no esta logueado o es propietario */}
           {user2 && user2[0].admin && (
             <Button colorScheme="orange" bg="orange" variant="outline" onClick={null} marginRight="20px">

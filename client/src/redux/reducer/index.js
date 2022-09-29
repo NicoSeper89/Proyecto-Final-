@@ -39,19 +39,20 @@ import {
   REPORT_PUBLICATION,
   GET_ALL_PUBLICATIONS,
   GET_PUBLICATIONS_NAVAILABLE,
-
   GET_REPORTS,
   GET_REPORTS_ID,
   GET_FOR_APPROVAL,
-  APPROVE_POST_USER
-
+  APPROVE_POST_USER,
+  TOTAL_USERS,
 } from "../actions";
 
 const initialState = {
+  totalUsers: [], //Total de usuarios
   allUserInfo: [],
   infoUser: null,
   houses: [], //Todas las publicaciones
   housePrem: [], //Publicación Premium
+  housesEliminadas: [], //publicaciones eliminadas
   services: [],
   typeOfProperties: [],
   cities: [],
@@ -73,9 +74,9 @@ const initialState = {
   favoritesUserId: [],
   imageUser: "",
   comments: [],
-  reports:[],
-  reportsId:[],
-  forApproval:[]
+  reports: [],
+  reportsId: [],
+  forApproval: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -307,37 +308,38 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
 
-        houses: action.payload
-      }
+        houses: action.payload,
+      };
 
     case GET_PUBLICATIONS_NAVAILABLE:
-      const noAvailable = action.payload.filter(p => p.deleted)
+      const noAvailable = action.payload.filter((p) => p.deleted);
       return {
         ...state,
-        houses: noAvailable
-      }
+        housesEliminadas: noAvailable,
+      };
     case GET_REPORTS:
-
-
       return {
         ...state,
-        reports:action.payload
+        reports: action.payload,
       };
     case GET_REPORTS_ID:
-
       return {
         ...state,
-        reportsId:action.payload
+        reportsId: action.payload,
       };
-    case GET_FOR_APPROVAL
-      :
+    case GET_FOR_APPROVAL:
       return {
         ...state,
-        forApproval:action.payload
+        forApproval: action.payload,
       };
     case APPROVE_POST_USER:
       return {
         ...state,
+      };
+    case TOTAL_USERS:
+      return {
+        ...state,
+        totalUsers: action.payload,
       };
     default:
       return state;
