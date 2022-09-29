@@ -238,7 +238,19 @@ router.put("/rate", async (req, res, next) => {
 router.get("/getPubs/:id", async (req, res, next) => {
   try {
     const { id } = req.params;
-    const publications = await getPubs(id);
+    const allPublications = await getPubs(id);
+    let publications = allPublications.filter((p) => !p.deleted);
+    res.send(publications);
+  } catch (error) {
+    next(error);
+  }
+});
+//Esta ruta es para ver las publicaciones que hizo el mismo usuario
+router.get("/getPubsDeleted/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const allPublications = await getPubs(id);
+    let publications = allPublications.filter((p) => p.deleted);
     res.send(publications);
   } catch (error) {
     next(error);
