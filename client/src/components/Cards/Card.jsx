@@ -37,7 +37,7 @@ export default function Card({
   const user2 = JSON.parse(user);
   const [boton, setBoton] = useState(false);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (infoUser) {
       dispatch(getFavsUser(infoUser[0].id));
     }
@@ -47,21 +47,23 @@ export default function Card({
   const handleClickFav = () => {
     if (infoUser) {
       dispatch(setFav(infoUser[1].userId, id));
-      if (boton === false) {
-        setBoton(true);
-      } else if (boton === true) {
-        setBoton(false);
-      }
+      setBoton(true);
+      // if (boton === false) {
+      //   setBoton(true);
+      // } else if (boton === true) {
+      //   setBoton(false);
+      // }
     }
   };
   const handleClickRemoveFav = () => {
     dispatch(removeFav(infoUser[1].userId, id));
     /* dispatch(getFavsUser(infoUser[0].id)); */
-    if (boton === false) {
-      setBoton(true);
-    } else if (boton === true) {
-      setBoton(false);
-    }
+    setBoton(false);
+    // if (boton === false) {
+    //   setBoton(true);
+    // } else if (boton === true) {
+    //   setBoton(false);
+    // }
     /* window.location.reload() */
   };
   const favState = () => {
@@ -161,7 +163,7 @@ export default function Card({
           <FontAwesomeIcon
             cursor={infoUser && "pointer"}
             onClick={handleClickFav}
-            className={style.containerFav}
+            className={`${boton ? style.containerFavRed : style.containerFav}`}
             h={"20px"}
             icon={faHeart}
           />
@@ -169,10 +171,18 @@ export default function Card({
           <FontAwesomeIcon
             cursor={"pointer"}
             onClick={handleClickRemoveFav}
-            className={style.containerFavRed}
+            className={`${boton ? style.containerFav : style.containerFavRed}`}
             h={"20px"}
             icon={faHeart}
           />
+          // ) : (
+          //   <FontAwesomeIcon
+          //     cursor={infoUser && "pointer"}
+          //     onClick={favState() ? handleClickFav : handleClickRemoveFav}
+          //     className={`${boton ? style.containerFavRed : style.containerFav}`}
+          //     h={"20px"}
+          //     icon={faHeart}
+          //   />
         )}
 
         {/* </Link> */}
