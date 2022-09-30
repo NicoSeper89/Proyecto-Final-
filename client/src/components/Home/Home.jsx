@@ -12,7 +12,7 @@ import {
   getInfoUser,
   getFavsUser,
   allDates,
-  allUserDates
+  allUserDates,
 } from "../../redux/actions/index.js";
 import { Box } from "@chakra-ui/react";
 // import Loading from "../Loading/Loading.jsx";
@@ -40,8 +40,8 @@ const Home = () => {
   useEffect(() => {
     dispatch(getPublications(filters, sorting, ""));
     dispatch(getPublicationsPremium());
-    dispatch(allDates())
-    dispatch(allUserDates())
+    dispatch(allDates());
+    dispatch(allUserDates());
   }, [dispatch, filters, sorting, cities]);
 
   return (
