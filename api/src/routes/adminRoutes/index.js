@@ -26,7 +26,7 @@ router.get("/totalUsers", async (req, res) => {
 router.get("/pubDates", async(req,res,next)=>{
   try {
     let pub = await Publication.findAll()
-    let allDates = pub.map(a => a.createdAt.getMonth()+'-'+a.createdAt.getFullYear())
+    let allDates = pub.map(a => a.createdAt.getMonth()+1+'-'+a.createdAt.getFullYear())
     res.send(allDates)
   } catch (error) {
     next(error)
@@ -36,7 +36,7 @@ router.get("/pubDates", async(req,res,next)=>{
 router.get("/userDates", async(req,res,next)=>{
   try {
     let user = await User.findAll()
-    let allDates = user.map(a => a.createdAt.getMonth()+'-'+a.createdAt.getFullYear())
+    let allDates = user.map(a => a.createdAt.getMonth()+1+'-'+a.createdAt.getFullYear())
     res.send(allDates)
   } catch (error) {
     next(error)
