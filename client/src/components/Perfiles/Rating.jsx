@@ -3,7 +3,7 @@ import React from "react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import ReactStars from "react-rating-stars-component";
 
-export default function Rating({ allUserInfo }) {
+export default function Rating(allUserInfo) {
   /* const rating = 0;
   const numReviews = 0; */
 

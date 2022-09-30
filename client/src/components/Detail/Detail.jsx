@@ -99,6 +99,9 @@ export default function Detail(props, id) {
       dispatch(getInfoUser(user));
     }
     dispatch(getComment(props.match.params.id));
+    return () => {
+      dispatch(clean())
+    }
   }, [dispatch, props.match.params.id, borradoComent]);
 
   function handleDelete() {
