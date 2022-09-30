@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { User, UserImage, LoginInfo } = require("../../db");
+const { User, UserImage, LoginInfo, Publication } = require("../../db");
 const { getAllUsers } = require("../userRoutes/controllers");
 
 const router = Router();
@@ -22,5 +22,25 @@ router.get("/totalUsers", async (req, res) => {
   const user = await getAllUsers();
   res.send(user);
 });
+
+router.get("/pubDates", async(req,res,next)=>{
+  try {
+    let pub = await Publication.findAll()
+    let allDates = pub.map(a => a.createdAt.getMonth()+'-'+a.createdAt.getFullYear())
+    res.send(allDates)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get("/userDates", async(req,res,next)=>{
+  try {
+    let user = await User.findAll()
+    let allDates = user.map(a => a.createdAt.getMonth()+'-'+a.createdAt.getFullYear())
+    res.send(allDates)
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router;

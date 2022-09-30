@@ -194,44 +194,74 @@ router.get("/getImage/:id", async (req, res, next) => {
 //este recibe el id de la persona rankeada, y el rating que se le va a poner
 router.put("/rate", async (req, res, next) => {
   try {
-    const { id, rating } = req.query;
-    const { userId } = req.body;
+    const { publicationId, rating } = req.query;
+    const { userIdRequired } = req.body;
 
-    const publication = await Publication.findByPk(id);
-    const user = await User.findByPk(publication.userId);
+    /* const user = await User.findByPk(userId); */
+    //Busco usuario dueño de la publicación para otorgarle puntos
+    const publication = await Publication.findByPk(publicationId);
+    const userIdRanked = await User.findByPk(publication.userId);
 
-    const rankedUser = await User.findByPk(userId);
-
-    if (rankedUser.userRank) {
-      if (rankedUser.userRank.includes(id)) return res.send("ya rankeo esta publicación");
-    }
-
-    await User.update(
-      {
-        userRank: Sequelize.fn("array_append", Sequelize.col("favorites"), publication.id),
-      },
-      {
-        where: {
-          id: userId,
-        },
-      }
-    );
-
-    let currentRating = parseFloat(rating) + user.rating * user.ratingAmount;
-    let currentAmount = user.ratingAmount + 1;
+    //Operaciones de promedio de rank del usuario dueño
+    let currentRating = parseFloat(rating) + userIdRanked.rating * userIdRanked.ratingAmount;
+    let currentAmount = userIdRanked.ratingAmount + 1;
     let futureRating = (currentRating / currentAmount).toFixed(2);
-
+    
+    //Actualizar ranking del usuario dueño
     await User.upsert({
-      id: user.id,
+      id: userIdRanked.id,
       rating: futureRating,
       ratingAmount: currentAmount,
     });
 
+    //Borra referencia de publicacion para rankear del usuario requerido 
+    await User.update(
+      {
+        userRank: Sequelize.fn("array_remove", Sequelize.col("userRank"), publicationId),
+      },
+      {
+        where: {
+          id: userIdRequired,
+        },
+      }
+    );
+
     return res.send("updated rating");
+
   } catch (error) {
     next(error);
   }
 });
+
+router.put("/requestScore/:publicationId", async (req, res, next) => {
+  try {
+    const { publicationId } = req.params;
+    const { userEmail } = req.body
+    
+    let requestedUser = await LoginInfo.findOne({where:{mail: userEmail}});
+    requestedUser = await User.findByPk(requestedUser.userId);
+
+    if (requestedUser.userRank) {
+      if(requestedUser.userRank.includes(publicationId)) return res.send("ya esta agregada")
+    }
+
+    await User.update(
+            {
+              userRank: Sequelize.fn("array_append", Sequelize.col("userRank"), publicationId),
+            },
+            {
+              where: {
+                id: requestedUser.id,
+              }
+            })
+        
+    return res.send("solicitud ranking agregada");
+
+  } 
+  catch (error) {
+      next(error);
+  }
+})
 
 //Esta ruta es para ver las publicaciones que hizo el mismo usuario
 router.get("/getPubs/:id", async (req, res, next) => {

@@ -11,6 +11,8 @@ import {
   getPublicationsPremium,
   getInfoUser,
   getFavsUser,
+  allDates,
+  allUserDates
 } from "../../redux/actions/index.js";
 import { Box } from "@chakra-ui/react";
 // import Loading from "../Loading/Loading.jsx";
@@ -30,7 +32,6 @@ const Home = () => {
   useEffect(() => {
     const dataUser = window.localStorage.getItem("User");
     dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
-    console.log(JSON.parse(dataUser)); //si tengo un usuario iniciado me lo setea en el global
     // if (dataUser) {
     //   dispatch(getFavsUser(infoUser[0].id));
     // }
@@ -39,6 +40,8 @@ const Home = () => {
   useEffect(() => {
     dispatch(getPublications(filters, sorting, ""));
     dispatch(getPublicationsPremium());
+    dispatch(allDates())
+    dispatch(allUserDates())
   }, [dispatch, filters, sorting, cities]);
 
   return (

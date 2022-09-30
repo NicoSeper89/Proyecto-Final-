@@ -47,7 +47,8 @@ export const GET_REPORTS_ID = "GET_REPORTS_ID";
 export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
 export const APPROVE_POST_USER = "APPROVE_POST_USER";
 export const TOTAL_USERS = "TOTAL_USERS";
-
+export const TOTAL_DATES = "TOTAL_DATES"
+export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -617,5 +618,25 @@ export function deleteComment(id) {
     };
   } catch (error) {
     console.log(error);
+  }
+}
+
+export function allDates(){
+  return async(dispatch)=>{
+   const resp = await axios.get('/admin/pubDates')
+   return dispatch({
+    type: TOTAL_DATES,
+    payload: resp.data
+   })
+  }
+}
+
+export function allUserDates(){
+  return async(dispatch)=>{
+   const resp = await axios.get('/admin/userDates')
+   return dispatch({
+    type: TOTAL_USER_DATES,
+    payload: resp.data
+   })
   }
 }

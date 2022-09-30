@@ -4,7 +4,7 @@ import {
   getPublicationsDetail,
   clean,
   deletePublicaction,
-  getInfoUser,
+  getInfoUser, 
   getComment,
   postComment,
   deleteComment,
@@ -425,7 +425,8 @@ export default function Detail(props, id) {
                           Borrar publicación
                         </Button>
 
-                        <RequestScore myUser={myUser} />
+                        <RequestScore publicationsId={props.match.params.id} />
+
                       </Flex>
                     ) : (
                       myUser[0].id === miStateDetail.userId && miStateDetail.deleted ?
