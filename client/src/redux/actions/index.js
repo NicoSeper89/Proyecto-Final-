@@ -11,8 +11,9 @@ export const ULPOAD_IMG = "ULPOAD_IMG";
 export const UPLOAD_IMG_USER = "UPLOAD_IMG_USER";
 export const FILTER_PROP = "FILTER_PROP";
 export const FILTER_AMB = "FILTER_AMB";
+export const FILTER_GAR = "FILTER_GAR";
 export const FILTER_PET = "FILTER_PET";
-export const SORT_PRICE = "SORT_PRICE";
+export const SORT = "SORT";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
 export const SET_PUBLICATION = "SET_PUBLICATION";
 export const SAVEFILTER = "SAVEFILTER";
@@ -223,15 +224,22 @@ export function updateFilterAmbient(value) {
     payload: value,
   };
 }
+export function updateFilterGarage(value) {
+  return {
+    type: FILTER_GAR,
+    payload: value,
+  };
+}
+
 export function updateFilterPets(value) {
   return {
     type: FILTER_PET,
     payload: value,
   };
 }
-export function updateSortingPrice(value) {
+export function updateSorting(value) {
   return {
-    type: SORT_PRICE,
+    type: SORT,
     payload: value,
   };
 }
