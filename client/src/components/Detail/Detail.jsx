@@ -70,6 +70,7 @@ import FormReport from "./FormReport";
 import Datos from "../Maps/Datos";
 import RequestScore from "./requestScore";
 // import Comentarios from "./Comentarios"
+import ReactStars from "react-rating-stars-component";
 
 // import { Carousel, } from "react-responsive-carousel";
 
@@ -377,10 +378,14 @@ export default function Detail(props, id) {
                       </Text>
                     </Box>
                     <Box alignItems="flex-start" p={"1rem"}>
-                      <Text fontSize="lg">
-                        <FontAwesomeIcon icon={faStar} />{" "}
-                        {miStateDetail.user.rating}
-                      </Text>
+                      <ReactStars
+                        count={5}
+                        size={34}
+                        activeColor="#F6AD55"
+                        edit={false}
+                        value={miStateDetail.user.rating}
+                        isHalf={true}
+                    />
                       <Text fontSize="lg">
                         <FontAwesomeIcon icon={faCircleUser} />{" "}
                         {miStateDetail.user.name}

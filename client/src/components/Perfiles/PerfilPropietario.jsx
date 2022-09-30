@@ -102,7 +102,7 @@ export default function PerfilPropietario() {
               @lindsey_jam3s
             </Text> */}
             <Flex justifyContent="center" alignContent="center">
-              <Rating rating={infoUser[0].rating} numReviews={""} />
+              <Rating allUserInfo={allUserInfo}/>
             </Flex>
             <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
