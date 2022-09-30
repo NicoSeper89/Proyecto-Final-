@@ -14,12 +14,18 @@ import {
     Image
 } from '@chakra-ui/react';
 import logoImg from "../../Image/Logo LookHouse.png";
+import { useEffect } from "react";
 
 export default function Rank(prop) {
 
     const history = useHistory()
     
     const [start, setStart] = useState(0);
+
+    useEffect(()=>{
+        axios.get(`/user/requestScore?idUserRank=${prop.userRank[0].id}&idPublication=${prop.match.params.id}`)
+        .then((res) => (!res.data)? history.push("/*"): null)
+    })
 
     const ratingChanged = (e) => {
         setStart(e);
