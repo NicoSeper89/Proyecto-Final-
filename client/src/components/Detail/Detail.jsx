@@ -63,11 +63,14 @@ import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
 import AlertDeleteComent from "./AlertDeletComent"
+import AlertAdminApprove from "./AlertAdminApprove"
+import AlertAdminDelete from "./AlertAdminDelete"
 // import Maps from "../Maps/Maps";
 import FormReport from "./FormReport";
 import Datos from "../Maps/Datos";
 import RequestScore from "./requestScore";
 // import Comentarios from "./Comentarios"
+import ReactStars from "react-rating-stars-component";
 
 // import { Carousel, } from "react-responsive-carousel";
 
@@ -78,6 +81,8 @@ export default function Detail(props, id) {
   const myUser = useSelector((state) => state.infoUser);
   const [showMap, setShowMap] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const [alertAdminApprove, setAlertAdminApprove] = useState([false, false]);
+  const [alertAdminDelete, setAlertAdminDelete] = useState([false, false]);
   const commentState = useSelector((state) => state.comments);
   const [comentarios, setComments] = useState("");
   const [borradoComent, setBorrado] = useState(false);
@@ -105,34 +110,43 @@ export default function Detail(props, id) {
       behavior: "smooth",
     });
   }
-
-  function handleReport() {
-    window.localStorage.setItem("id", `${props.match.params.id}`);
-    history.push("/reportPublication");
+  function handleReclaim() {
+    console.log('mail')
   }
-
+  function handleApprove() {
+    setAlertAdminApprove([true, true]);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
+  function handleDeleteAdmin() {
+    setAlertAdminDelete([true, true]);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
   const onChangeInputComment = (e) => {
     e.preventDefault();
     setComments(e.target.value);
   };
 
   function deleteComments(id) {
-    console.log(id);
     dispatch(deleteComment(id));
     setAlertCommet([true, true]);
-      window.scroll({
-        top: 0,
-        left: 0,
-        behavior: "smooth",
-      });
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
     setBorrado(!borradoComent);
   }
 
   const onSubmitComent = async (e) => {
     e.preventDefault();
-    console.log(comentarios);
-    console.log(props.match.params.id);
-    console.log(e);
     if (comentarios !== "") {
       dispatch(postComment(comentarios, props.match.params.id));
       dispatch(getComment(props.match.params.id));
@@ -155,8 +169,8 @@ export default function Detail(props, id) {
         // alignItems={"center"}
         // alignContent={"center"}
         justifyContent={"flex-start"}
-        // p={".5rem"}
-        // position="relative"
+      // p={".5rem"}
+      // position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
           <Box>
@@ -173,7 +187,7 @@ export default function Detail(props, id) {
                   flexDirection={"row"}
                   justifyContent={"center"}
                   p={"0rem .8rem"}
-                  // position={"relative"}
+                // position={"relative"}
                 >
                   {miStateDetail.property.propertyImages.length > 0 ? (
                     <Box w={"42rem"} h={"42rem"}>
@@ -364,10 +378,14 @@ export default function Detail(props, id) {
                       </Text>
                     </Box>
                     <Box alignItems="flex-start" p={"1rem"}>
-                      <Text fontSize="lg">
-                        <FontAwesomeIcon icon={faStar} />{" "}
-                        {miStateDetail.user.rating}
-                      </Text>
+                      <ReactStars
+                        count={5}
+                        size={34}
+                        activeColor="#F6AD55"
+                        edit={false}
+                        value={miStateDetail.user.rating}
+                        isHalf={true}
+                    />
                       <Text fontSize="lg">
                         <FontAwesomeIcon icon={faCircleUser} />{" "}
                         {miStateDetail.user.name}
@@ -381,24 +399,9 @@ export default function Detail(props, id) {
                         </Link>
                       </Box>
                     </Box>
-                    {/* <Box
-                      borderRadius={"0rem 0rem 0.5rem 0.5rem"}
-                      flexDirection={"column"}
-                      gap={".5rem"}
-                      color={"gray.600"}
-                      width={"90%"}
-                      display={"flex"}
-                      p={"1rem"}
-                      borderWidth="1px"
-                      borderColor="gray.200"
-                      bg={"yellow.100"}
-                    >
-      
-                    <Text> <FontAwesomeIcon icon={faComment} /> </Text>
-                  </Box> */}
                   </Box>
                   <Box>
-                    {myUser[0].id === miStateDetail.userId&& !miStateDetail.deleted ? (
+                    {myUser[0].id === miStateDetail.userId && !miStateDetail.deleted ? (
                       <Flex direction={"column"}>
                         <Button
                           w={"350px"}
@@ -426,28 +429,71 @@ export default function Detail(props, id) {
                         >
                           Borrar publicación
                         </Button>
-                        
-                        <RequestScore myUser={myUser} />
+
+                        <RequestScore publicationsId={props.match.params.id} />
+
                       </Flex>
                     ) : (
-                      miStateDetail.deleted ?
-                      <Flex>
-                        <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={(e) => {
-                            handleDelete(e);
-                          }}
-                        >
-                          Restaurar publicación
-                        </Button>
-                      </Flex>:
-                      <Flex>
-                        
-                      </Flex>
+                      myUser[0].id === miStateDetail.userId && miStateDetail.deleted ?
+                        <Flex>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={(e) => {
+                              handleReclaim(e);
+                            }}
+                          >
+                            Pedir restauración
+                          </Button>
+                        </Flex> : (
+                          myUser[0].admin && !miStateDetail.approved ?
+                            <Flex>
+                              <Button
+                                w={"350px"}
+                                colorScheme="green"
+                                m="8px"
+                                fontSize="xl"
+                                as="b"
+                                onClick={(e) => {
+                                  handleApprove(e);
+                                }}
+                              >
+                                Aprobar publicación
+                              </Button>
+                              <Button
+                                w={"350px"}
+                                colorScheme="green"
+                                m="8px"
+                                fontSize="xl"
+                                as="b"
+                                onClick={(e) => {
+                                  handleDeleteAdmin(e);
+                                }}
+                              >
+                                Borrar publicación
+                              </Button>
+                            </Flex> : (
+                              myUser[0].admin && miStateDetail.approved  ?
+                                <Flex>
+                                  <Button
+                                    w={"350px"}
+                                    colorScheme="green"
+                                    m="8px"
+                                    fontSize="xl"
+                                    as="b"
+                                    onClick={(e) => {
+                                      handleDeleteAdmin(e);
+                                    }}
+                                  >
+                                    {!miStateDetail.deleted?"Borrar publicación":"Restaurar publicación"}
+                                  </Button>
+                                </Flex> :
+                                <Flex>   
+                                </Flex>)
+                        )
                     )}
                   </Box>
                 </Flex>
@@ -544,9 +590,6 @@ export default function Detail(props, id) {
                 </Box>
               </Flex>
             </Box>
-
-            {/* ESTO ES BOTONES */}
-
             {/* ESTO ES BOTONES */}
             <Box
               variant="soft-rounded"
@@ -560,49 +603,49 @@ export default function Detail(props, id) {
               borderRadius={"0.5rem"}
             >
               <FormControl>
-              {
-              myUser[0].admin? 
-              commentState.map((e) => (
-                  <Text  fontWeight={"semiBold"}
-                  fontSize="1.2rem"
-                  color="gray.500"
-                  border="gray.500">
-                    {miStateDetail.user.name} :
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.2rem"
-                      color="gray.500"
-                      border="gray.500"
-                    >
-                      {e.message}{" "}
-                      <Button
-                        onClick={() => {
-                          deleteComments(e.id);
-                        }}
-                      >
-                        borrar
-                      </Button>
-                    </Text>{" "}
-                  </Text>
-                ))
-                :
-                commentState.map((e) => (
-                  <Text  fontWeight={"semiBold"}
-                  fontSize="1.2rem"
-                  color="gray.500"
-                  border="gray.500">
-                    {miStateDetail.user.name} :
-                    <Text
-                      fontWeight={"semiBold"}
-                      fontSize="1.2rem"
-                      color="gray.500"
-                      border="gray.500"
-                    >
-                      {e.message}{" "}
-                    
-                    </Text>{" "}
-                  </Text>
-                ))}
+                {
+                  myUser[0].admin ?
+                    commentState.map((e) => (
+                      <Text fontWeight={"semiBold"}
+                        fontSize="1.2rem"
+                        color="gray.500"
+                        border="gray.500">
+                        {miStateDetail.user.name} :
+                        <Text
+                          fontWeight={"semiBold"}
+                          fontSize="1.2rem"
+                          color="gray.500"
+                          border="gray.500"
+                        >
+                          {e.message}{" "}
+                          <Button
+                            onClick={() => {
+                              deleteComments(e.id);
+                            }}
+                          >
+                            borrar
+                          </Button>
+                        </Text>{" "}
+                      </Text>
+                    ))
+                    :
+                    commentState.map((e) => (
+                      <Text fontWeight={"semiBold"}
+                        fontSize="1.2rem"
+                        color="gray.500"
+                        border="gray.500">
+                        {miStateDetail.user.name} :
+                        <Text
+                          fontWeight={"semiBold"}
+                          fontSize="1.2rem"
+                          color="gray.500"
+                          border="gray.500"
+                        >
+                          {e.message}{" "}
+
+                        </Text>{" "}
+                      </Text>
+                    ))}
                 <Input placeholder="deja tu comentario aqui..." onChange={onChangeInputComment} value={comentarios} />
                 <Button onClick={onSubmitComent}>enviar</Button>
               </FormControl>
@@ -625,7 +668,9 @@ export default function Detail(props, id) {
         )}
       </Flex>
       <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} deleted={miStateDetail.deleted} />
-     <AlertDeleteComent alertComent={alertComent} id={id}/>
+      <AlertDeleteComent alertComent={alertComent} id={id} />
+      <AlertAdminApprove alertSubmit={alertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} />
+      <AlertAdminDelete alertSubmit={alertAdminDelete} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
       <Footer />
       {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>

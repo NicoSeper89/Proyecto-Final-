@@ -102,7 +102,7 @@ export default function PerfilPropietario() {
               @lindsey_jam3s
             </Text> */}
             <Flex justifyContent="center" alignContent="center">
-              <Rating rating={infoUser[0].rating} numReviews={""} />
+              <Rating allUserInfo={allUserInfo}/>
             </Flex>
             <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
@@ -168,6 +168,7 @@ export default function PerfilPropietario() {
               </TabPanel>
               <TabPanel>
                 {favoritesUser?.map((f, index) => {
+                  if(!f.deleted){
                   return (
                     <Box key={index}>
                       <CardPerfil
@@ -178,7 +179,7 @@ export default function PerfilPropietario() {
                         premium={f.premium}
                       />
                     </Box>
-                  );
+                  )}
                 })}
               </TabPanel>
               <TabPanel>

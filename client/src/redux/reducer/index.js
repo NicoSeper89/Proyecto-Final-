@@ -45,6 +45,12 @@ import {
   GET_FOR_APPROVAL,
   APPROVE_POST_USER,
   TOTAL_USERS,
+
+  DELETE_PUBLICACTION_PERMANENT,
+
+  TOTAL_DATES,
+  TOTAL_USER_DATES
+
 } from "../actions";
 
 const initialState = {
@@ -79,6 +85,8 @@ const initialState = {
   reports: [],
   reportsId: [], 
   forApproval: [],
+  dates: [],
+  userDates: []
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -228,6 +236,11 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+      case DELETE_PUBLICACTION_PERMANENT:
+      return {
+        ...state,
+      };
+
     case DELETE_PUBLICACTION_IMAGE:
       return {
         ...state,
@@ -347,9 +360,20 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         totalUsers: action.payload,
       };
-      
+
+    case TOTAL_DATES:
+      return {
+        ...state,
+        dates: action.payload
+      }
+    case TOTAL_USER_DATES:
+      return {
+        ...state,
+        userDates: action.payload
+      }
+
     default:
       return state;
-      
+
   }
 }

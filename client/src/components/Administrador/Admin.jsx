@@ -20,7 +20,7 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -31,10 +31,12 @@ import {
   getReports,
   getUserInfo,
   getTotalUsers,
+  allDates,
   viewUser2
 } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
+import BarChart from "../BarChart/Barchart.jsx";
 
 export default function Admin() {
   const history = useHistory()
@@ -46,21 +48,22 @@ export default function Admin() {
   const reports = useSelector((state) => state.reports);
   const housesEliminadas = useSelector((state) => state.housesEliminadas);
   const totalUsers = useSelector((state) => state.totalUsers);
-
   const infoUser = JSON.parse(window.localStorage.getItem("User"));
+  const dates = useSelector(state => state.dates)
+  const userDates = useSelector(state => state.userDates)
   useEffect(() => {
     dispatch(getAll());
     dispatch(getForApproval());
     dispatch(getReports());
     dispatch(getPubliNoAvail());
     dispatch(getTotalUsers)
+    dispatch(allDates())
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
       dispatch(getUserInfo(infoUser[0].id));
     }
-  }, [dispatch]);
-  console.log(totalUsers, "USERSSSSSSSSSSSS")
+  }, [dispatch, data]);
 
   const viewUser = (id) => {
     const userAdmin = totalUsers.filter(e => e.id === id)
@@ -69,6 +72,46 @@ export default function Admin() {
     // window.localStorage.setItem("adminId", `${p.id}`)
     history.push(`/viewUser`)
   }
+
+  function amount(array,value){
+    var n = 0;
+    for(let i = 0; i < array.length; i++){
+        if(array[i] == value){n++}
+    }
+    return n;
+  }
+  let labels = [...new Set(dates)]
+
+  const [data, setData] = useState({
+    labels: labels,
+    datasets: [{
+      label: "Cantidad de Publicaciones p/mes",
+      data: labels.map(a => amount(dates, a)),
+      backgroundColor: [
+        "red",
+        "blue",
+        "green",
+        "orange",
+        "yellow",
+      ],
+    }]
+  })
+  let userLabels = [...new Set(userDates)]
+
+  const [userData, setUserData] = useState({
+    labels: userLabels,
+    datasets: [{
+      label: "Cantidad de Usuarios p/mes",
+      data: userLabels.map(a => amount(userDates, a)),
+      backgroundColor: [
+        "red",
+        "blue",
+        "green",
+        "orange",
+        "yellow",
+      ],
+    }]
+  })
 
   return (
     <Box>
@@ -335,8 +378,7 @@ export default function Admin() {
           bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
         >
-          ACA PUEDE IR UNA GRAFICA = De cantidad de publicaciones realizadas el ultimo trimestre o
-          algo asi
+          <BarChart chartData={data} />
         </Box>
         <Box
           w={"500px"}
@@ -347,8 +389,7 @@ export default function Admin() {
           bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
         >
-          ACA PUEDE IR OTRA GRAFICA = De cantidad de usuarios registrados realizadas el ultimo
-          trimestre o algo asi
+         <BarChart chartData={userData} />
         </Box>
       </Flex>
       <Footer />

@@ -15,8 +15,9 @@ import {
 import { useState } from "react";
 import emailjs from "emailjs-com";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
-export default function RequestScore() {
+export default function RequestScore(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const history = useHistory();
 
@@ -28,16 +29,17 @@ export default function RequestScore() {
   const sendEmail = async (e) => {
     e.preventDefault();
 
-    await emailjs
-      .sendForm("service_0za37f4", "template_3aag90l", e.target, "E_nOOl9VRDZAxSlhF")
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+    try {
+
+      await axios.put(`user/requestScore/${props.publicationsId}`, {userEmail: email})
+
+      await emailjs.sendForm("service_0za37f4", "template_3aag90l", e.target, "E_nOOl9VRDZAxSlhF")
+
+      history.push("/")
+
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   return (
@@ -70,7 +72,7 @@ export default function RequestScore() {
                 />
                 <Input
                   display={"none"}
-                  value={`http://localhost:3000${history.location.pathname}/rank`}
+                  value={`http://localhost:3000/details/${props.publicationsId}/rank`}
                   name="url_publication"
                   readOnly
                 />
