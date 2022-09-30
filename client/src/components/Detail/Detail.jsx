@@ -78,7 +78,7 @@ export default function Detail(props, id) {
   const dispatch = useDispatch();
   const history = useHistory();
   const miStateDetail = useSelector((state) => state.detail);
-  const myUser = useSelector((state) => state.infoUser);
+  
   const [showMap, setShowMap] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [alertAdminApprove, setAlertAdminApprove] = useState([false, false]);
@@ -88,16 +88,15 @@ export default function Detail(props, id) {
   const [borradoComent, setBorrado] = useState(false);
   const [alertComent, setAlertCommet] = useState([false, false])
 
+   const myUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
     setTimeout(() => {
       setShowMap(true);
     }, 1000);
 
-    if (!myUser) {
-      const user = JSON.parse(window.localStorage.getItem("User"));
-      dispatch(getInfoUser(user));
-    }
+      dispatch(getInfoUser(myUser));
+    
     dispatch(getComment(props.match.params.id));
     return () => {
       dispatch(clean())
