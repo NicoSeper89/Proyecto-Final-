@@ -41,7 +41,6 @@ export default function Card({
     if (infoUser) {
       dispatch(getFavsUser(infoUser[0].id));
     }
-    console.log("useEffect");
   }, [dispatch, boton]);
 
   const handleClickFav = () => {
