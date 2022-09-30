@@ -26,6 +26,9 @@ const Home = () => {
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
   const cities = useSelector((state) => state.cities);
+  const dates = useSelector(state => state.dates)
+  const userDates = useSelector(state => state.userDates)
+  sessionStorage.setItem('dates', JSON.stringify([dates, userDates]))
   // const infoUser = useSelector((state) => state.infoUser);;
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
