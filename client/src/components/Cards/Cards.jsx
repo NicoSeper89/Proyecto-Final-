@@ -71,6 +71,7 @@ export default function Cards() {
           </List>
           <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"30px"}>
             {currentHouse?.map((r) => {
+              if (r.approved) {
               return (
                 <Box key={r.id}>
                   <Card
@@ -87,7 +88,7 @@ export default function Cards() {
                     premium={r.premium}
                   />
                 </Box>
-              );
+              )};
             })}
           </Box>
         </Box>

@@ -24,6 +24,7 @@ export const VALUE_FILTER = "VALUE_FILTER";
 export const SAVESORT = "SAVESORT";
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
+export const DELETE_PUBLICACTION_PERMANENT = "DELETE_PUBLICACTION_PERMANENT";
 export const UPDATE_PROP = "UPDATE_PROP";
 export const GET_PUBLICATIONS_PREMIUM = "GET_PUBLICATIONS_PREMIUM";
 export const INFO_USER = "INFO_USER";
@@ -330,14 +331,22 @@ export function setPublication(payload) {
   };
 }
 
-//ELIMINAR UNA PUBLICACION
+//ELIMINAR UNA PUBLICACION TEMPORALMENTE
 export function deletePublicaction(id) {
   return async function (dispatch) {
-      console.log(id, "id a borrar");
       let respuesta=await axios.put(`/publication/unavailable/${id}`);
       console.log(respuesta,'response')
       return dispatch({
         type: DELETE_PUBLICACTION,
+      });
+  };
+}
+//ELIMINAR UNA PUBLICACION
+export function deletePublicactionPermanent(id) {
+  return async function (dispatch) {
+      let respuesta=await axios.delete(`/publication/delete/${id}`);
+      return dispatch({
+        type: DELETE_PUBLICACTION_PERMANENT,
       });
   };
 }
@@ -582,8 +591,8 @@ export function getForApproval() {
 export function approvePostUser(pubId, userId) {
   return async function (dispatch) {
     try {
-      const respuesta = await axios.get("/publication/approvePost/" + pubId);
-      const respuesta2 = await axios.get("/publication/approveUser/" + userId);
+      const respuesta = await axios.put("/publication/approvePost/" + pubId);
+      const respuesta2 = await axios.put("/publication/approveUser/" + userId);
       return dispatch({
         type: APPROVE_POST_USER,
         /*       payload: respuesta.data */
