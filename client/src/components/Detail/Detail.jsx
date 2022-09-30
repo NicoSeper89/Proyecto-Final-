@@ -340,7 +340,7 @@ export default function Detail(props, id) {
                       justifyContent={"space-between"}
                     >
                       <FontAwesomeIcon icon={faWarehouse} />
-                      <Text>Garage: {miStateDetail.property.garage}</Text>
+                      <Text> Tamaño del garage: {miStateDetail.property.garage} autos</Text>
                     </Flex>
                     {/* </SimpleGrid> */}
 
