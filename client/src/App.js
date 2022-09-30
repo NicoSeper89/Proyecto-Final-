@@ -52,7 +52,7 @@ function App() {
           exact
           path="/createPost"
           render={() => {
-            return infoUser ? <CreatePost /> : <Redirect to="*" />;
+            return user2 ? <CreatePost /> : <Redirect to="*" />;
           }}
         />
         <Route exact path="/about" component={About} />
