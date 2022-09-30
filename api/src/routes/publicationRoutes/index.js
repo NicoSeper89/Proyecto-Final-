@@ -50,7 +50,7 @@ router.post("/", async (req, res, next) => {
       //aca filtra por searchbar(revisar si se quiere hacer independiente)
       city = city.toLowerCase(); //revisar como se guarda city en publications
       let cityFiltered = await publications.filter((el) =>
-        el.property.city.dataValues.name.toLowerCase().includes(city)
+        el.property.address.toLowerCase().includes(city)
       );
       cityFiltered.length
         ? (publications = cityFiltered)

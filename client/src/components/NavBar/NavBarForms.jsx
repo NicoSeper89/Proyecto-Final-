@@ -33,7 +33,7 @@ export default function NavBarForms() {
       return history.goBack();
     }
 
-    history.push("/");
+    window.history.back();
   }
 
   return (

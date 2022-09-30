@@ -70,7 +70,7 @@ export default function PremiumCards() {
   // });
 
   const slides = currentHouse?.map((r) => {
-    if (r.premium) {
+    if (r.premium && r.approved) {
       return (
         <Box key={r.id}>
           <Card

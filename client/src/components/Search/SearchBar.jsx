@@ -124,7 +124,7 @@ const SearchBar = () => {
               _expanded={{ bg: "white" }}
               _focus={{ bg: "#D9D9D9" }}
               type="text"
-              placeholder="Buscar Ciudad..."
+              placeholder="Buscar por ubicación..."
               color={"black"}
               onChange={changes}
               value={city}
