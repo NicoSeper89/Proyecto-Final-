@@ -263,6 +263,22 @@ router.put("/requestScore/:publicationId", async (req, res, next) => {
   }
 })
 
+router.get("/requestScore", async (req, res, next) => {
+
+  try {
+
+    const {idUserRank, idPublication} = req.query;
+    const user = await getOneUser(idUserRank);
+
+    if (!user.userRank) return res.json(false);
+
+    return res.json(user.userRank.includes(idPublication));
+
+  } catch (error) {
+    next(error);
+  }
+})
+
 //Esta ruta es para ver las publicaciones que hizo el mismo usuario
 router.get("/getPubs/:id", async (req, res, next) => {
   try {
