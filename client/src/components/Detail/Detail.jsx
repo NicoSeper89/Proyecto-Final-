@@ -662,6 +662,7 @@ export default function Detail(props, id) {
                 ) : null}
               </Carousel> */}
             </Box>
+            <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
           </Box>
         ) : (
           <Loading />
@@ -670,7 +671,6 @@ export default function Detail(props, id) {
       <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} deleted={miStateDetail.deleted} />
       <AlertDeleteComent alertComent={alertComent} id={id} />
       <AlertAdminApprove alertSubmit={alertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} />
-      <AlertAdminDelete alertSubmit={alertAdminDelete} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
       <Footer />
       {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>
