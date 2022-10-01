@@ -53,6 +53,8 @@ export const TOTAL_DATES = "TOTAL_DATES"
 export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
 export const BLOCK_USER = "BLOCK_USER"
 export const RESTORE_USER = "RESTORE_USER"
+export const DELETE_REPORT = "DELETE_REPORT"
+
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -494,6 +496,22 @@ export function reportPublication(id, input) {
       const res = await axios.post(`/publication/report/${id}`, input);
       return dispatch({
         type: REPORT_PUBLICATION,
+        payload: res.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+// Esto es para reportar una publicación
+export function deleteReport(id) {
+  return async function (dispatch) {
+    try {
+      const res = await axios.delete(`/publication/report/${id}`);
+      return dispatch({
+        type: DELETE_REPORT,
         payload: res.data,
       });
     } catch (error) {

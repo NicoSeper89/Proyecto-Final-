@@ -1,4 +1,6 @@
-import React, { useEffect,useState } from "react";
+
+import React, { useEffect,useState  } from "react";
+
 import {
   Avatar,
   Box,
@@ -187,7 +189,6 @@ export default function UsersAdmin() {
         </Box>
       </Stack>
       <AlertBRUser  alertBRUser={alertBRUser} setAlertBRUser={setAlertBRUser} userId={infoUser[0].id} banned={infoUser[0].banned} />
-
       <Footer />
     </Box>
   );

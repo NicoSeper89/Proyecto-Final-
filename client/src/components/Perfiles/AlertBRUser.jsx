@@ -47,7 +47,8 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
     };
 
     return (
-        <Alert
+        <Alert 
+            zIndex={5}
             position={"absolute"}
             display={!alertBRUser[0] ? "none" : "flex"}
             status={!alertBRUser[1] ? "error" : "info"}
