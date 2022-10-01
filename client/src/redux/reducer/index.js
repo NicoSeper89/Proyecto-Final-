@@ -48,6 +48,10 @@ import {
   DELETE_PUBLICACTION_PERMANENT,
   TOTAL_DATES,
   TOTAL_USER_DATES,
+
+  RESTORE_USER,
+  BLOCK_USER
+
 } from "../actions";
 
 const initialState = {
@@ -155,7 +159,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case FILTER_GAR:
+    case FILTER_GAR:
       if (action.payload === "") {
         //default action entonces limpia el filtro ok
         let index = state.filters.property.findIndex((i) => i.name === "garage");
@@ -173,7 +177,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      
+
     case FILTER_PET:
       let value = true;
       if (action.payload === "Mascotas") {
@@ -202,7 +206,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         sorting: { name: action.payload.name, direccion: action.payload.direccion },
       };
-      
+
     case CLEAR_FILTERS:
       state.filters = {
         publication: [],
@@ -387,9 +391,19 @@ export default function rootReducer(state = initialState, action) {
     case TOTAL_USER_DATES:
       return {
         ...state,
-        userDates: action.payload,
-      };
+         userDates: action.payload,
+      }; 
 
+        userDates: action.payload
+      }
+    case BLOCK_USER:
+      return {
+        ...state,
+      };
+    case RESTORE_USER:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

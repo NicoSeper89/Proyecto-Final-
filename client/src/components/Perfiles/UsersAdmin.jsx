@@ -18,14 +18,18 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPen } from "@fortawesome/free-solid-svg-icons";
+
+import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faAt, faUserPen } from "@fortawesome/free-solid-svg-icons";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
+
 import Rating from "./Rating";
 import { useDispatch, useSelector } from "react-redux";
 import foto from "../../Image/Image_not_available.png";
 import CardPerfil from "../Cards/CardPerfil";
 import { useHistory } from "react-router-dom";
-import { getFavsUser, getInfoUser, getPubs, getUserImage, getUserInfo } from "../../redux/actions";
-
+import { getFavsUser, getInfoUser, getPubs, getUserImage, getUserInfo, blockUser, restoreUser } from "../../redux/actions";
+import AlertBRUser from "./AlertBRUser";
 export default function UsersAdmin() {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,15 +38,20 @@ export default function UsersAdmin() {
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const favoritesUser = useSelector((state) => state.favoritesUser);
   const imageUser = useSelector((state) => state.imageUser);
+  const [alertBRUser, setAlertBRUser] = useState([false, false]);
   /* const [infoUser,setInfoUser] = useState(user) */
   const infoUser = JSON.parse(window.localStorage.getItem("ViewUser"));
 
-  const handleEdit = () => {
-    history.push("/updatePerfil/" + infoUser[0].id);
+  const handleBlock = () => {
+    setAlertBRUser([true, true]);
+  };
+
+  const handleRestore = () => {
+    setAlertBRUser([true, true]);
   };
 
   useEffect(() => {
-    console.log("soy", infoUser);
+
     dispatch(getPubs(infoUser[0].id));
     dispatch(getFavsUser(infoUser[0].id));
     dispatch(getUserImage(infoUser[0].id));
@@ -81,9 +90,17 @@ export default function UsersAdmin() {
             textAlign={"center"}
           >
             <Flex>
-              <Button onClick={() => handleEdit()}>
-                <FontAwesomeIcon icon={faUserPen} fontSize="30px" p={"0"} />
-              </Button>
+
+              {infoUser[0].banned ?
+                <Button onClick={() => handleRestore()}>
+                  {/* <FontAwesomeIcon icon="fa-regular fa-ban" /> */}
+                  <FontAwesomeIcon icon={faBan} color='black' fontSize="30px" p={"0"} />
+                </Button> :
+                <Button onClick={() => handleBlock()}>
+                  <FontAwesomeIcon icon={faBan} color='red' fontSize="30px" p={"0"} />
+                </Button>
+              }
+
             </Flex>
             <Avatar
               size={"2xl"}
@@ -169,6 +186,8 @@ export default function UsersAdmin() {
           </Tabs>
         </Box>
       </Stack>
+      <AlertBRUser  alertBRUser={alertBRUser} setAlertBRUser={setAlertBRUser} userId={infoUser[0].id} banned={infoUser[0].banned} />
+
       <Footer />
     </Box>
   );

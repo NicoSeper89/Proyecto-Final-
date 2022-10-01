@@ -48,8 +48,12 @@ export const GET_REPORTS_ID = "GET_REPORTS_ID";
 export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
 export const APPROVE_POST_USER = "APPROVE_POST_USER";
 export const TOTAL_USERS = "TOTAL_USERS";
-export const TOTAL_DATES = "TOTAL_DATES";
-export const TOTAL_USER_DATES = "TOTAL_USER_DATES";
+
+export const TOTAL_DATES = "TOTAL_DATES"
+export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
+export const BLOCK_USER = "BLOCK_USER"
+export const RESTORE_USER = "RESTORE_USER"
+
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -343,11 +347,11 @@ export function setPublication(payload) {
 //ELIMINAR UNA PUBLICACION TEMPORALMENTE
 export function deletePublicaction(id) {
   return async function (dispatch) {
-    let respuesta = await axios.put(`/publication/unavailable/${id}`);
-    console.log(respuesta, "response");
-    return dispatch({
-      type: DELETE_PUBLICACTION,
-    });
+
+      let respuesta=await axios.put(`/publication/unavailable/${id}`);
+      return dispatch({
+        type: DELETE_PUBLICACTION,
+      });
   };
 }
 //ELIMINAR UNA PUBLICACION
@@ -647,4 +651,29 @@ export function allUserDates() {
       payload: resp.data,
     });
   };
+}
+
+export function blockUser(id) {
+  try {
+    return async function (dispatch) {
+      await axios.put(`/user/deleteUser/${id}`);
+      return dispatch({
+        type: BLOCK_USER,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function restoreUser(id) {
+  try {
+    return async function (dispatch) {
+      await axios.put(`/user/restoreUser/${id}`);
+      return dispatch({
+        type: RESTORE_USER,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
 }
