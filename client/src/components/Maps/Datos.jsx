@@ -13,18 +13,18 @@ const Success = ({ position }) => {
   //   if (!isLoaded) return <div>Loading...</div>;
   //   return <Map />;
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShow(true);
-    }, 1000);
-  }, []);
-  const [show, setShow] = useState(false);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShow(true);
+  //   }, 1000);
+  // }, []);
+  // const [show, setShow] = useState(false);
   const location = useMaps(position.property.address);
 
   return (
-    <Box>
-      <Box>{show && <GoogleMaps data={location} />}</Box>
-    </Box>
+    <>
+      <GoogleMaps data={location} />
+    </>
   );
 };
 
