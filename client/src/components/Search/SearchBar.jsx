@@ -11,7 +11,9 @@ import {
   updateFilterAmbient,
   updateFilterPets,
   setCurrentPage,
-  updateSortingPrice,
+  valueFilter,
+  updateFilterGarage,
+  updateSorting
 } from "../../redux/actions";
 import { faFilterCircleXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
@@ -72,6 +74,12 @@ const SearchBar = () => {
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
   };
+  //SELECT GARAGE
+  const selectGarageSize = (e) => {
+    dispatch(updateFilterGarage(e));
+    dispatch(setCurrentPage(1));
+    dispatch(getPublications(filters, sorting, city));
+  };
 
   //SELECT MASCOTAS
   const selectPets = (e) => {
@@ -83,10 +91,10 @@ const SearchBar = () => {
   //SORT PLATA
   const orderByPrice = (e) => {
     let orden;
-
-    if (e.target.value === "Precio") orden = { name: "default", direccion: "minMax" };
-    else orden = { name: "price", direccion: e.target.value };
-    dispatch(updateSortingPrice(orden));
+    let values= e.target.value.split('/')
+    if (values[0] === "Ordenar por") orden = { name: "default", direccion: "minMax" };
+    else orden = { name: values[0], direccion: values[1] };
+    dispatch(updateSorting(orden))
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
   };
@@ -149,6 +157,27 @@ const SearchBar = () => {
           _expanded={{ bg: "white" }}
           _focus={{ bg: "#D9D9D9" }}
           placeholder="Amb"
+        />
+        <NumberInputStepper borderColor={"black"}>
+          <NumberIncrementStepper borderColor={"black"} />
+          <NumberDecrementStepper borderColor={"black"} />
+        </NumberInputStepper>
+      </NumberInput>
+      <NumberInput
+        marginRight={"10px"}
+        transition="all 0.2s"
+        borderColor={"black"}
+        width="80px"
+        defaultValue={""}
+        min={1}
+        max={20}
+        onChange={selectGarageSize}
+      >
+        <NumberInputField
+          _hover={{ bg: "#D9D9D9" }}
+          _expanded={{ bg: "white" }}
+          _focus={{ bg: "#D9D9D9" }}
+          placeholder="Garage"
         />
         <NumberInputStepper borderColor={"black"}>
           <NumberIncrementStepper borderColor={"black"} />
@@ -232,9 +261,13 @@ const SearchBar = () => {
             _hover={{ bg: "#D9D9D9" }}
             _focus={{ bg: "#D9D9D9" }}
           >
-            <option value="Precio">Precio</option>
-            <option value="maxMin">Mayor Precio</option>
-            <option value="minMax">Menor Precio</option>
+            <option value="Ordenar por/nada">Ordenar Por</option>
+            <option value="price/maxMin">Mayor Precio</option>
+            <option value="price/minMax">Menor Precio</option>
+            <option value="age/minMax">Mas Nuevo</option>
+            <option value="age/maxMin">Mas Viejo</option>
+            <option value="surface/maxMin">Mayor superficie</option>
+            <option value="surface/minMax">Menos superficie</option>
           </Select>
         </Menu>
       </Box>

@@ -426,7 +426,7 @@ const CreatePost = () => {
 
                 <FormLabel>
                   <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
-                    Garage
+                    Tamaño del garage( n° autos)
                   </Text>
                   <NumberInput
                     value={infoFormProp.garage}

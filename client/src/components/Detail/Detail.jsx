@@ -65,7 +65,7 @@ export default function Detail(props, id) {
   const dispatch = useDispatch();
   const history = useHistory();
   const miStateDetail = useSelector((state) => state.detail);
-  const myUser = useSelector((state) => state.infoUser);
+  
   const [showMap, setShowMap] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [alertAdminApprove, setAlertAdminApprove] = useState([false, false]);
@@ -75,18 +75,20 @@ export default function Detail(props, id) {
   const [borradoComent, setBorrado] = useState(false);
   const [alertComent, setAlertCommet] = useState([false, false]);
 
+   const myUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
     setTimeout(() => {
       setShowMap(true);
     }, 1000);
 
-    if (!myUser) {
-      const user = JSON.parse(window.localStorage.getItem("User"));
-      dispatch(getInfoUser(user));
-    }
+      dispatch(getInfoUser(myUser));
+    
     dispatch(getComment(props.match.params.id));
-  }, [dispatch, props.match.params.id, borradoComent, myUser]);
+    return () => {
+      dispatch(clean())
+    }
+  }, [dispatch, props.match.params.id, borradoComent]);
 
   function handleDelete() {
     setAlertSubmit([true, true]);
@@ -259,7 +261,7 @@ export default function Detail(props, id) {
 
                     <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faWarehouse} />
-                      <Text>Garage: {miStateDetail.property.garage}</Text>
+                      <Text> Tamaño del garage: {miStateDetail.property.garage} autos</Text>
                     </Flex>
 
                     <Flex m="15px" direction={"row"} justifyContent={"center"}>
@@ -543,6 +545,7 @@ export default function Detail(props, id) {
                 <Button onClick={onSubmitComent}>enviar</Button>
               </FormControl>
             </Box>
+            <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
           </Box>
         ) : (
           <Loading />
@@ -554,16 +557,7 @@ export default function Detail(props, id) {
         deleted={miStateDetail.deleted}
       />
       <AlertDeleteComent alertComent={alertComent} id={id} />
-      <AlertAdminApprove
-        alertSubmit={alertAdminApprove}
-        pubId={props.match.params.id}
-        userId={miStateDetail.userId}
-      />
-      <AlertAdminDelete
-        alertSubmit={alertAdminDelete}
-        pubId={props.match.params.id}
-        deleted={miStateDetail.deleted}
-      />
+      <AlertAdminApprove alertSubmit={alertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} />
       <Footer />
       {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>

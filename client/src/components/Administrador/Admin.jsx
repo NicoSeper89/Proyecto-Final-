@@ -67,6 +67,7 @@ export default function Admin() {
       dispatch(getInfoUser(user));
       dispatch(getUserInfo(infoUser[0].id));
     }
+    return ()=> sessionStorage.removeItem('dates')
   }, [dispatch, data]);
 
   const viewUser = (id) => {
@@ -74,10 +75,14 @@ export default function Admin() {
     window.localStorage.setItem("ViewUser", JSON.stringify(userAdmin));
 
     // window.localStorage.setItem("adminId", `${p.id}`)
-    history.push(`/viewUser`);
-  };
-
-  function amount(array, value) {
+    history.push(`/viewUser`)
+  }
+  let sessionDates = JSON.parse(sessionStorage.getItem('dates'))
+  if(sessionDates){
+    dates = sessionDates[0]
+    userDates = sessionDates[1]
+  }
+  function amount(array,value){
     var n = 0;
     for (let i = 0; i < array.length; i++) {
       if (array[i] == value) {
@@ -184,7 +189,6 @@ export default function Admin() {
                     </Thead>
                     <Tbody>
                       {totalUsers?.map((p, i) => {
-                        console.log(totalUsers);
                         return (
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>

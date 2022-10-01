@@ -52,11 +52,12 @@ export default function FormReport({ id, userId }) {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const infoUser = useSelector((state) => state.infoUser);
   const infoDetail = useSelector((state) => state.detail);
   //   const [disableButtonSubmit, setDisableButtonSubmit] = useState(true);
   //   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [errors, setErrors] = useState({});
+
+  const infoUser = JSON.parse(window.localStorage.getItem("User"));
 
   //   const dataUser = window.localStorage.getItem("User");
   //   const infooo = JSON.parse(dataUser);

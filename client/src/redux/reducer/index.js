@@ -10,7 +10,8 @@ import {
   FILTER_PROP,
   FILTER_AMB,
   FILTER_PET,
-  SORT_PRICE,
+  FILTER_GAR,
+  SORT,
   CLEAR_FILTERS,
   LOADING,
   CURRENT_PAGE,
@@ -154,6 +155,25 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+      case FILTER_GAR:
+      if (action.payload === "") {
+        //default action entonces limpia el filtro ok
+        let index = state.filters.property.findIndex((i) => i.name === "garage");
+        if (index > -1) {
+          state.filters.property.splice(index, 1);
+        }
+      } else {
+        // primero limpia el filtro anterior y despues pushea el actual que queremos usar
+        let index = state.filters.property.findIndex((i) => i.name === "garage");
+        if (index > -1) {
+          state.filters.property.splice(index, 1);
+        }
+        state.filters.property.push({ name: "garage", value: parseInt(action.payload) });
+      }
+      return {
+        ...state,
+      };
+      
     case FILTER_PET:
       let value = true;
       if (action.payload === "Mascotas") {
@@ -176,11 +196,13 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-    case SORT_PRICE:
+
+    case SORT:
       return {
         ...state,
         sorting: { name: action.payload.name, direccion: action.payload.direccion },
       };
+      
     case CLEAR_FILTERS:
       state.filters = {
         publication: [],
