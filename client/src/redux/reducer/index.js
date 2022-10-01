@@ -50,7 +50,8 @@ import {
   TOTAL_USER_DATES,
 
   RESTORE_USER,
-  BLOCK_USER
+  BLOCK_USER,
+  DELETE_REPORT
 
 } from "../actions";
 
@@ -393,9 +394,6 @@ export default function rootReducer(state = initialState, action) {
         ...state,
          userDates: action.payload,
       }; 
-
-        userDates: action.payload
-      }
     case BLOCK_USER:
       return {
         ...state,
@@ -404,6 +402,10 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+      case DELETE_REPORT:
+        return {
+          ...state,
+        };
     default:
       return state;
   }

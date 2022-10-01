@@ -32,6 +32,7 @@ import {
   getTotalUsers,
   viewUser2,
   getUserImage,
+  deleteReport
 } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
@@ -72,7 +73,12 @@ export default function Admin() {
     // window.localStorage.setItem("adminId", `${p.id}`)
     history.push(`/viewUser`);
   };
-
+  const delReport = (id) => {
+    dispatch(deleteReport(id))
+    // window.localStorage.setItem("adminId", `${p.id}`)
+    window.location.reload()
+  };
+  
   let sessionDates = JSON.parse(sessionStorage.getItem("dates"));
   const dates = sessionDates[0];
   const userDates = sessionDates[1];
@@ -340,6 +346,7 @@ export default function Admin() {
                         <Th>Descripción</Th>
                         <Th>Propiedad</Th>
                         <Th>Usuario que reportó</Th>
+                        <Th>Borrar reporte</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -367,6 +374,11 @@ export default function Admin() {
                             </Td>
                             <Td>
                               <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
+                                <FontAwesomeIcon icon={faUser} />
+                              </Button>
+                            </Td>
+                            <Td>
+                              <Button h="1.75rem" size="sm" onClick={() => delReport(p.id)}>
                                 <FontAwesomeIcon icon={faUser} />
                               </Button>
                             </Td>

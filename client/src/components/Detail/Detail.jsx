@@ -247,7 +247,7 @@ export default function Detail(props, id) {
                           justifyContent="center"
                           alignItems="center"
                         >
-                        {/* <Datos position={miStateDetail} /> */}
+                          {/* <Datos position={miStateDetail} /> */}
                         </Flex>
                       </TabPanel>
                       <TabPanel>
@@ -277,48 +277,48 @@ export default function Detail(props, id) {
                           <FormControl>
                             {myUser[0].admin
                               ? commentState.map((e) => (
+                                <Text
+                                  fontWeight={"semiBold"}
+                                  fontSize="1.2rem"
+                                  color="gray.500"
+                                  border="gray.500"
+                                >
+                                  {miStateDetail.user.name} :
                                   <Text
                                     fontWeight={"semiBold"}
                                     fontSize="1.2rem"
                                     color="gray.500"
                                     border="gray.500"
                                   >
-                                    {miStateDetail.user.name} :
-                                    <Text
-                                      fontWeight={"semiBold"}
-                                      fontSize="1.2rem"
-                                      color="gray.500"
-                                      border="gray.500"
+                                    {e.message}{" "}
+                                    <Button
+                                      onClick={() => {
+                                        deleteComments(e.id);
+                                      }}
                                     >
-                                      {e.message}{" "}
-                                      <Button
-                                        onClick={() => {
-                                          deleteComments(e.id);
-                                        }}
-                                      >
-                                        borrar
-                                      </Button>
-                                    </Text>{" "}
-                                  </Text>
-                                ))
+                                      borrar
+                                    </Button>
+                                  </Text>{" "}
+                                </Text>
+                              ))
                               : commentState.map((e) => (
+                                <Text
+                                  fontWeight={"semiBold"}
+                                  fontSize="1.2rem"
+                                  color="gray.500"
+                                  border="gray.500"
+                                >
+                                  {miStateDetail.user.name} :
                                   <Text
                                     fontWeight={"semiBold"}
                                     fontSize="1.2rem"
                                     color="gray.500"
                                     border="gray.500"
                                   >
-                                    {miStateDetail.user.name} :
-                                    <Text
-                                      fontWeight={"semiBold"}
-                                      fontSize="1.2rem"
-                                      color="gray.500"
-                                      border="gray.500"
-                                    >
-                                      {e.message}{" "}
-                                    </Text>{" "}
-                                  </Text>
-                                ))}
+                                    {e.message}{" "}
+                                  </Text>{" "}
+                                </Text>
+                              ))}
                             <Input
                               placeholder="deja tu comentario aqui..."
                               onChange={onChangeInputComment}
@@ -755,7 +755,7 @@ export default function Detail(props, id) {
                 </Box>  */}
               </Flex>
             </Box>
-            <Box
+           {/*  <Box
               variant="soft-rounded"
               w={"42rem"}
               h={"400px"}
@@ -766,47 +766,36 @@ export default function Detail(props, id) {
             >
               <Box>
                 {commentState.map((element, i) => (
-                      <Flex key={i}
-                        fontWeight={"semiBold"}
-                        fontSize="1.2rem"
-                        color="gray.500"
-                        border="gray.500"
-                        gap={"1rem"}>
-                        {miStateDetail.user.name}
-                        <Text>
-                          {element.message}
-                        </Text>
-                        {myUser[0].admin? 
-                          <Button 
-                            onClick={(e) => {deleteComments(e, element.id);}}
-                            >X</Button>
-                          : 
-                          null
-                          }
-                      </Flex>
-                    ))}
-                    <form onSubmit={onSubmitComent}>
-                      <Input placeholder="deja tu comentario aqui..." onChange={onChangeInputComment} value={comentarios} name={"coment_publication"} />
-                      <Input display={"none"} value={miStateDetail.user.contactInfo.mail} name={"user_owner"} readOnly/>
-                      <Input display={"none"} value={`http://localhost:3000/details/${props.match.params.id}`} name={"url_publication"} readOnly/>
-                      <Button type="submit" >enviar</Button>
-                    </form>
+                  <Flex key={i}
+                    fontWeight={"semiBold"}
+                    fontSize="1.2rem"
+                    color="gray.500"
+                    border="gray.500"
+                    gap={"1rem"}>
+                    {miStateDetail.user.name}
+                    <Text>
+                      {element.message}
+                    </Text>
+                    {myUser[0].admin ?
+                      <Button
+                        onClick={(e) => { deleteComments(e, element.id); }}
+                      >X</Button>
+                      :
+                      null
+                    }
+                  </Flex>
+                ))}
+                <form onSubmit={onSubmitComent}>
+                  <Input placeholder="deja tu comentario aqui..." onChange={onChangeInputComment} value={comentarios} name={"coment_publication"} />
+                  <Input display={"none"} value={miStateDetail.user.contactInfo.mail} name={"user_owner"} readOnly />
+                  <Input display={"none"} value={`http://localhost:3000/details/${props.match.params.id}`} name={"url_publication"} readOnly />
+                  <Button type="submit" >enviar</Button>
+                </form>
               </Box>
-              {/* <Carousel>
-                {Object.entries(commentState).length > 0 ? (
-                  <Box>
-                    <Input
-                      onChange={onChangeInputComment}
-                      value={comentarios}
-                      name="message"
-                    ></Input>
-                    <Button onClick={onSubmitComent}>x</Button>
-                  </Box>
-                ) : null}
-              </Carousel> */}
-            </Box>
+
+            </Box> */}
             <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
-            <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail}/>
+            <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail} />
           </Box>
         ) : (
           <Loading />
