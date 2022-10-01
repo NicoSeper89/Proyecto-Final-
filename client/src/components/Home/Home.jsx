@@ -10,14 +10,13 @@ import {
   getPublications,
   getPublicationsPremium,
   getInfoUser,
-  getFavsUser,
+  // getFavsUser,
   allDates,
-  allUserDates
+  allUserDates,
 } from "../../redux/actions/index.js";
 import { Box } from "@chakra-ui/react";
 // import Loading from "../Loading/Loading.jsx";
 // import gif from "../../Image/1490.gif";
-import Maps from "../Maps/Maps.jsx";
 import PremiumCards from "../Cards/PremiumCards.jsx";
 import SearchBar from "../Search/SearchBar.jsx";
 
@@ -43,8 +42,8 @@ const Home = () => {
   useEffect(() => {
     dispatch(getPublications(filters, sorting, ""));
     dispatch(getPublicationsPremium());
-    dispatch(allDates())
-    dispatch(allUserDates())
+    dispatch(allDates());
+    dispatch(allUserDates());
   }, [dispatch, filters, sorting, cities]);
 
   return (
@@ -57,7 +56,6 @@ const Home = () => {
         <Cards />
         <Footer />
       </Box>
-      {/* <Maps/> */}
     </Box>
   );
 };

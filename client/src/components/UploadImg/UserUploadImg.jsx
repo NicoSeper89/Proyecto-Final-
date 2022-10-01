@@ -1,6 +1,6 @@
-import { Box, Button, Flex, FormLabel, Image, Input, Text } from "@chakra-ui/react";
+import { Flex, FormLabel, Image, Input, Text } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { imgUserUpload } from "../../redux/actions";
 
@@ -8,7 +8,7 @@ export default function UserUploadImg() {
   const dispatch = useDispatch();
   const infoUser = useSelector((state) => state.infoUser);
   const [preview, setPreview] = useState("");
-  const [successMsg, setSuccessMsg] = useState("");
+  // const [successMsg, setSuccessMsg] = useState("");
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -23,15 +23,21 @@ export default function UserUploadImg() {
     if (file) {
       previewFile(file);
       const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "czwgzdiw");
+      formData.append("file", file);
+      formData.append("upload_preset", "czwgzdiw");
 
-    axios
-      .post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
-      .then((resp) => {
-        dispatch(imgUserUpload({ url: resp.data.secure_url, cloudId: resp.data.public_id, userId: infoUser[0].id }))  
-      })
-      .catch((err) => console.log(err))
+      axios
+        .post("https://api.cloudinary.com/v1_1/lookhouse/image/upload", formData)
+        .then((resp) => {
+          dispatch(
+            imgUserUpload({
+              url: resp.data.secure_url,
+              cloudId: resp.data.public_id,
+              userId: infoUser[0].id,
+            })
+          );
+        })
+        .catch((err) => console.log(err));
     }
   };
 

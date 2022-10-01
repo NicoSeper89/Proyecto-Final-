@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -6,7 +6,6 @@ import {
   Center,
   Flex,
   Heading,
-  Link,
   Stack,
   Tab,
   TabList,
@@ -15,13 +14,11 @@ import {
   Tabs,
   Text,
   useColorModeValue,
-  useDisclosure,
 } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { faAt, faUserPen } from "@fortawesome/free-solid-svg-icons";
+import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
 import { useDispatch, useSelector } from "react-redux";
 import foto from "../../Image/Image_not_available.png";
@@ -32,8 +29,8 @@ import { getFavsUser, getInfoUser, getPubs, getUserImage, getUserInfo } from "..
 export default function UsersAdmin() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.infoUserAdmin);
-  const allUserInfo = useSelector((state) => state.allUserInfo);
+  // const user = useSelector((state) => state.infoUserAdmin);
+  // const allUserInfo = useSelector((state) => state.allUserInfo);
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const favoritesUser = useSelector((state) => state.favoritesUser);
   const imageUser = useSelector((state) => state.imageUser);
@@ -83,7 +80,11 @@ export default function UsersAdmin() {
             p={6}
             textAlign={"center"}
           >
-            
+            <Flex>
+              <Button onClick={() => handleEdit()}>
+                <FontAwesomeIcon icon={faUserPen} fontSize="30px" p={"0"} />
+              </Button>
+            </Flex>
             <Avatar
               size={"2xl"}
               src={imageUser ? imageUser : foto}
@@ -94,9 +95,9 @@ export default function UsersAdmin() {
             <Heading fontSize={"2xl"} fontFamily={"body"}>
               {infoUser[0].name}
             </Heading>
-            {/* <Text fontWeight={600} color={"gray.500"} mb={4}>
-              @lindsey_jam3s
-            </Text> */}
+            <Text fontWeight={600} color={"gray.500"} mb={4}>
+              {infoUser[0].loginInfo.mail}
+            </Text>
             <Flex justifyContent="center" alignContent="center">
               <Rating rating={infoUser[0].rating} numReviews={""} />
             </Flex>
@@ -105,22 +106,12 @@ export default function UsersAdmin() {
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Ciudad: {infoUser[0].city}
               </Text>
+              <br />
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Descripción: {infoUser[0].description}
               </Text>
             </Flex>
             <br />
-            <Text fontWeight={600} color={"gray.500"} mb={4}>
-              Medios de Contacto:
-            </Text>
-            <Stack direction={"row"} justify={"center"} spacing={4}>
-              <Link href={`mail to:${infoUser[0].loginInfo.mail}`} p={0}>
-                <FontAwesomeIcon icon={faAt} fontSize="30px" />
-              </Link>
-              {/* <Button label={"WhatsApp"} href={infoUser.whatsapp} p={0}>
-                <FontAwesomeIcon icon={faWhatsapp} fontSize="30px" />
-              </Button> */}
-            </Stack>
           </Box>
         </Center>
         <Box
