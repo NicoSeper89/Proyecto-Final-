@@ -3,7 +3,7 @@ import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 const Map = ({ data }) => {
   const mapStyles = {
-    height: "50vh",
+    height: "100%",
     width: "100%",
   };
 

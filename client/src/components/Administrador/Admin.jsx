@@ -30,7 +30,6 @@ import {
   getReports,
   getUserInfo,
   getTotalUsers,
-  allDates,
   viewUser2,
   getUserImage,
 } from "../../redux/actions";
@@ -51,23 +50,20 @@ export default function Admin() {
   const housesEliminadas = useSelector((state) => state.housesEliminadas);
   const totalUsers = useSelector((state) => state.totalUsers);
   const infoUser = JSON.parse(window.localStorage.getItem("User"));
-  const dates = useSelector((state) => state.dates);
-  const userDates = useSelector((state) => state.userDates);
+
   useEffect(() => {
     dispatch(getAll());
     dispatch(getForApproval());
     dispatch(getReports());
     dispatch(getPubliNoAvail());
     dispatch(getTotalUsers);
-    dispatch(allDates());
     dispatch(getUserImage(infoUser[0].id));
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
       dispatch(getUserInfo(infoUser[0].id));
     }
-    return () => sessionStorage.removeItem("dates");
-  }, [dispatch, data]);
+  }, [dispatch]);
 
   const viewUser = (id) => {
     const userAdmin = totalUsers.filter((e) => e.id === id);
@@ -78,12 +74,8 @@ export default function Admin() {
   };
 
   let sessionDates = JSON.parse(sessionStorage.getItem("dates"));
-
-  //COMENTE ESTO PORQUE ME TIRABA ERROR Y NO RENDERIZABA EL COMPONENTE
-  // if (sessionDates) {
-  //   dates = sessionDates[0];
-  //   userDates = sessionDates[1];
-  // }
+  const dates = sessionDates[0];
+  const userDates = sessionDates[1];
 
   function amount(array, value) {
     var n = 0;

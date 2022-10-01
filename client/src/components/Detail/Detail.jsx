@@ -69,8 +69,6 @@ export default function Detail(props, id) {
   const dispatch = useDispatch();
   const history = useHistory();
   const miStateDetail = useSelector((state) => state.detail);
-
-  const [showMap, setShowMap] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [alertAdminApprove, setAlertAdminApprove] = useState([false, false]);
   const [alertAdminDelete, setAlertAdminDelete] = useState([false, false]);
@@ -84,12 +82,7 @@ export default function Detail(props, id) {
   const myUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
-    setTimeout(() => {
-      setShowMap(true);
-    }, 1000);
-
     dispatch(getInfoUser(myUser));
-
     dispatch(getComment(props.match.params.id));
     return () => {
       dispatch(clean());
@@ -248,13 +241,13 @@ export default function Detail(props, id) {
                           w={"550px"}
                           h={"300px"}
                           boxShadow="dark-lg"
-                          p="10px"
+                          p="7px"
                           border="1px solid grey.600"
                           borderRadius={"0.5rem"}
                           justifyContent="center"
                           alignItems="center"
                         >
-                          {/* {showMap && <Datos position={miStateDetail} />} */}
+                        {/* <Datos position={miStateDetail} /> */}
                         </Flex>
                       </TabPanel>
                       <TabPanel>
@@ -831,7 +824,6 @@ export default function Detail(props, id) {
         userId={miStateDetail.userId}
       />
       <Footer />
-      {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>
   );
 }
