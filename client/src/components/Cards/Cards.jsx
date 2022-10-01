@@ -5,7 +5,6 @@ import Loading from "../Loading/Loading";
 import Card from "./Card";
 import style from "./Cards.module.css";
 import { Box, List, ListItem } from "@chakra-ui/react";
-import { useState } from "react";
 
 export default function Cards() {
   const dispatch = useDispatch();
@@ -72,23 +71,24 @@ export default function Cards() {
           <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"30px"}>
             {currentHouse?.map((r) => {
               if (r.approved) {
-              return (
-                <Box key={r.id}>
-                  <Card
-                    id={r.id}
-                    idUser={r.userId}
-                    img={r.property.propertyImages}
-                    precio={r.property.price}
-                    ciudad={r.property.city.name}
-                    metros={r.property.surface}
-                    baño={r.property.bathrooms}
-                    dormitorio={r.property.rooms}
-                    ambientes={r.property.environments}
-                    mascota={r.property.pets}
-                    premium={r.premium}
-                  />
-                </Box>
-              )};
+                return (
+                  <Box key={r.id}>
+                    <Card
+                      id={r.id}
+                      idUser={r.userId}
+                      img={r.property.propertyImages}
+                      precio={r.property.price}
+                      ciudad={r.property.city.name}
+                      metros={r.property.surface}
+                      baño={r.property.bathrooms}
+                      dormitorio={r.property.rooms}
+                      ambientes={r.property.environments}
+                      mascota={r.property.pets}
+                      premium={r.premium}
+                    />
+                  </Box>
+                );
+              }
             })}
           </Box>
         </Box>

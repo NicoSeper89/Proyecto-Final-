@@ -32,14 +32,17 @@ import {
   getUserInfo,
   getTotalUsers,
   allDates,
-  viewUser2
+  viewUser2,
+  getUserImage,
 } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
 import BarChart from "../BarChart/Barchart.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Admin() {
-  const history = useHistory()
+  const history = useHistory();
   const dispatch = useDispatch();
   const houses = useSelector((state) => state.houses);
   const myUser = useSelector((state) => state.infoUser);
@@ -49,15 +52,16 @@ export default function Admin() {
   const housesEliminadas = useSelector((state) => state.housesEliminadas);
   const totalUsers = useSelector((state) => state.totalUsers);
   const infoUser = JSON.parse(window.localStorage.getItem("User"));
-  const dates = useSelector(state => state.dates)
-  const userDates = useSelector(state => state.userDates)
+  const dates = useSelector((state) => state.dates);
+  const userDates = useSelector((state) => state.userDates);
   useEffect(() => {
     dispatch(getAll());
     dispatch(getForApproval());
     dispatch(getReports());
     dispatch(getPubliNoAvail());
-    dispatch(getTotalUsers)
-    dispatch(allDates())
+    dispatch(getTotalUsers);
+    dispatch(allDates());
+    dispatch(getUserImage(infoUser[0].id));
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
@@ -66,55 +70,49 @@ export default function Admin() {
   }, [dispatch, data]);
 
   const viewUser = (id) => {
-    const userAdmin = totalUsers.filter(e => e.id === id)
-    window.localStorage.setItem("ViewUser", JSON.stringify(userAdmin))
+    const userAdmin = totalUsers.filter((e) => e.id === id);
+    window.localStorage.setItem("ViewUser", JSON.stringify(userAdmin));
 
     // window.localStorage.setItem("adminId", `${p.id}`)
-    history.push(`/viewUser`)
-  }
+    history.push(`/viewUser`);
+  };
 
-  function amount(array,value){
+  function amount(array, value) {
     var n = 0;
-    for(let i = 0; i < array.length; i++){
-        if(array[i] == value){n++}
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] == value) {
+        n++;
+      }
     }
     return n;
   }
-  let labels = [...new Set(dates)]
+  let labels = [...new Set(dates)];
 
   const [data, setData] = useState({
     labels: labels,
-    datasets: [{
-      label: "Cantidad de Publicaciones p/mes",
-      data: labels.map(a => amount(dates, a)),
-      backgroundColor: [
-        "red",
-        "blue",
-        "green",
-        "orange",
-        "yellow",
-      ],
-    }]
-  })
-  let userLabels = [...new Set(userDates)]
+    datasets: [
+      {
+        label: "Cantidad de Publicaciones p/mes",
+        data: labels.map((a) => amount(dates, a)),
+        backgroundColor: ["red", "blue", "green", "orange", "yellow"],
+      },
+    ],
+  });
+  let userLabels = [...new Set(userDates)];
 
   const [userData, setUserData] = useState({
     labels: userLabels,
-    datasets: [{
-      label: "Cantidad de Usuarios p/mes",
-      data: userLabels.map(a => amount(userDates, a)),
-      backgroundColor: [
-        "red",
-        "blue",
-        "green",
-        "orange",
-        "yellow",
-      ],
-    }]
-  })
+    datasets: [
+      {
+        label: "Cantidad de Usuarios p/mes",
+        data: userLabels.map((a) => amount(userDates, a)),
+        backgroundColor: ["red", "blue", "green", "orange", "yellow"],
+      },
+    ],
+  });
 
   return (
-    <Box>
+    <Box backgroundColor={"#EDEDED"}>
       <NavBarForms />
       <Flex
         direction={"row"}
@@ -177,22 +175,24 @@ export default function Admin() {
                 <TableContainer w={"100%"}>
                   <Table variant="striped" colorScheme="teal" w={"100%"}>
                     <Thead w={"100%"}>
-                      <Th>Fecha de creación</Th>
-                      <Th>Usuario</Th>
-                      <Th>Rating</Th>
-                      <Th>Perfil</Th>
+                      <Tr>
+                        <Th>Fecha de creación</Th>
+                        <Th>Usuario</Th>
+                        <Th>Rating</Th>
+                        <Th>Perfil</Th>
+                      </Tr>
                     </Thead>
                     <Tbody>
-                      {totalUsers.length && totalUsers.map((p, i) => {
-                        console.log(totalUsers)
+                      {totalUsers?.map((p, i) => {
+                        console.log(totalUsers);
                         return (
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.name}</Td>
                             <Td>{p.rating}</Td>
                             <Td>
-                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.id)}>
-                                Ir a perfil
+                              <Button h="1.75rem" size="sm" onClick={() => viewUser(p.id)}>
+                                <FontAwesomeIcon icon={faUser} />
                               </Button>
                               {/* <Link to={`/perfilPropietario/${p.userId}`}>Ir a perfil</Link> */}
                             </Td>
@@ -224,13 +224,17 @@ export default function Admin() {
                           <Td>{p.createdAt}</Td>
                           <Td>{p.property.address}</Td>
                           <Td>
-                            <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
-                              Ir a publicación
+                            <Button
+                              h="1.75rem"
+                              size="sm"
+                              onClick={() => history.push(`/details/${p.id}`)}
+                            >
+                              <FontAwesomeIcon icon={faEye} />
                             </Button>
                           </Td>
                           <Td>
-                            <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
-                              Ir a perfil
+                            <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
+                              <FontAwesomeIcon icon={faUser} />
                             </Button>
                           </Td>
                         </Tr>
@@ -247,10 +251,12 @@ export default function Admin() {
                 <TableContainer w={"100%"}>
                   <Table variant="striped" colorScheme="teal" w={"100%"}>
                     <Thead w={"100%"}>
-                      <Th>Fecha de creación</Th>
-                      <Th>Publicación</Th>
-                      <Th>Ver Propiedad</Th>
-                      <Th>Ver perfil de Propietario</Th>
+                      <Tr>
+                        <Th>Fecha de creación</Th>
+                        <Th>Publicación</Th>
+                        <Th>Propiedad</Th>
+                        <Th>Perfil de Propietario</Th>
+                      </Tr>
                     </Thead>
                     <Tbody>
                       {forApproval?.map((p, i) => {
@@ -259,13 +265,17 @@ export default function Admin() {
                             <Td>{p.createdAt}</Td>
                             <Td>{p.property.address}</Td>
                             <Td>
-                              <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
-                                Ir a publicación
+                              <Button
+                                h="1.75rem"
+                                size="sm"
+                                onClick={() => history.push(`/details/${p.id}`)}
+                              >
+                                <FontAwesomeIcon icon={faEye} />
                               </Button>
                             </Td>
                             <Td>
-                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
-                                Ir a perfil
+                              <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
+                                <FontAwesomeIcon icon={faUser} />
                               </Button>
                             </Td>
                           </Tr>
@@ -282,10 +292,12 @@ export default function Admin() {
                 <TableContainer w={"100%"}>
                   <Table variant="striped" colorScheme="teal" w={"100%"}>
                     <Thead w={"100%"}>
-                      <Th>Fecha de creación</Th>
-                      <Th>Fecha de eliminación?</Th>
-                      <Th>Ver Propiedad</Th>
-                      <Th>Ver Perfil del propietario</Th>
+                      <Tr>
+                        <Th>Fecha de creación</Th>
+                        <Th>Fecha de eliminación</Th>
+                        <Th>Propiedad</Th>
+                        <Th>Perfil del propietario</Th>
+                      </Tr>
                     </Thead>
                     <Tbody>
                       {housesEliminadas?.map((p, i) => {
@@ -294,13 +306,17 @@ export default function Admin() {
                             <Td>{p.createdAt}</Td>
                             <Td>{p.updatedAt}</Td>
                             <Td>
-                              <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.id}`)}>
-                                Ir a publicación
+                              <Button
+                                h="1.75rem"
+                                size="sm"
+                                onClick={() => history.push(`/details/${p.id}`)}
+                              >
+                                <FontAwesomeIcon icon={faEye} />
                               </Button>
                             </Td>
                             <Td>
-                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
-                                Ir a perfil
+                              <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
+                                <FontAwesomeIcon icon={faUser} />
                               </Button>
                             </Td>
                           </Tr>
@@ -312,16 +328,18 @@ export default function Admin() {
               </Flex>
             </TabPanel>
             <TabPanel>
-              <Box>Todos los reportes</Box>
+              <Box>Todos los reportes realizados a las publicaciones.</Box>
               <Flex>
                 <TableContainer w={"100%"}>
                   <Table variant="striped" colorScheme="teal" w={"100%"}>
                     <Thead w={"100%"}>
-                      <Th>Fecha de creación</Th>
-                      <Th>Tipo de Reporte</Th>
-                      <Th>Descripción</Th>
-                      <Th>Ver Propiedad</Th>
-                      <Th>Ver Usuario que reportó</Th>
+                      <Tr>
+                        <Th>Fecha de creación</Th>
+                        <Th>Tipo de Reporte</Th>
+                        <Th>Descripción</Th>
+                        <Th>Propiedad</Th>
+                        <Th>Usuario que reportó</Th>
+                      </Tr>
                     </Thead>
                     <Tbody>
                       {reports?.map((p, i) => {
@@ -329,20 +347,26 @@ export default function Admin() {
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.type}</Td>
-                            <Td padding="20px"
-                             maxWidth="100px"
-                             overflowY="hidden"
-                             overflowX="scroll"
-                        
-                            >{p.info}</Td>
+                            <Td
+                              padding="20px"
+                              maxWidth="100px"
+                              overflowY="hidden"
+                              overflowX="scroll"
+                            >
+                              {p.info}
+                            </Td>
                             <Td>
-                              <Button h='1.75rem' size='sm' onClick={() => history.push(`/details/${p.publications[0].id}`)}>
-                                Ir a publicación
+                              <Button
+                                h="1.75rem"
+                                size="sm"
+                                onClick={() => history.push(`/details/${p.publications[0].id}`)}
+                              >
+                                <FontAwesomeIcon icon={faEye} />
                               </Button>
                             </Td>
                             <Td>
-                              <Button h='1.75rem' size='sm' onClick={() => viewUser(p.userId)}>
-                                Ir a perfil
+                              <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
+                                <FontAwesomeIcon icon={faUser} />
                               </Button>
                             </Td>
                           </Tr>
@@ -371,25 +395,31 @@ export default function Admin() {
       <Flex direction={"row"} justifyContent={"space-evenly"} m={"30px"}>
         <Box
           w={"500px"}
-          h={"400px"}
+          h={"350px"}
           boxShadow="dark-lg"
           p="10px"
           border="1px solid grey.600"
           bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
+          textAlign={"center"}
         >
+          <Text fontSize="xl">Cantidad de Publicaciones realizadas en el último mes</Text>
+          <br />
           <BarChart chartData={data} />
         </Box>
         <Box
           w={"500px"}
-          h={"400px"}
+          h={"350px"}
           boxShadow="dark-lg"
           p="10px"
           border="1px solid grey.600"
           bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
+          textAlign={"center"}
         >
-         <BarChart chartData={userData} />
+          <Text fontSize="xl">Cantidad de Registros realizados en el último mes</Text>
+          <br />
+          <BarChart chartData={userData} />
         </Box>
       </Flex>
       <Footer />

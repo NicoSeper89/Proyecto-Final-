@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   Box,
@@ -6,7 +6,6 @@ import {
   Center,
   Flex,
   Heading,
-  Link,
   Stack,
   Tab,
   TabList,
@@ -15,13 +14,11 @@ import {
   Tabs,
   Text,
   useColorModeValue,
-  useDisclosure,
 } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
-import { faAt, faUserPen } from "@fortawesome/free-solid-svg-icons";
+import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
 import { useDispatch, useSelector } from "react-redux";
 import foto from "../../Image/Image_not_available.png";
@@ -32,7 +29,7 @@ import { getFavsUser, getInfoUser, getPubs, getUserImage, getUserInfo } from "..
 export default function PerfilPropietario() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.infoUser);
+  // const user = useSelector((state) => state.infoUser);
   const allUserInfo = useSelector((state) => state.allUserInfo);
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const publicationsUserDeleted = useSelector((state) => state.publicationsUserDeleted);
@@ -92,39 +89,30 @@ export default function PerfilPropietario() {
               size={"2xl"}
               src={imageUser ? imageUser : foto}
               alt={"Avatar Alt"}
+              mt={4}
               mb={4}
               pos={"relative"}
             />
             <Heading fontSize={"2xl"} fontFamily={"body"}>
-              {infoUser[0].name}
+              Hola {infoUser[0].name}!
             </Heading>
             {/* <Text fontWeight={600} color={"gray.500"} mb={4}>
               @lindsey_jam3s
             </Text> */}
             <Flex justifyContent="center" alignContent="center">
-              <Rating allUserInfo={allUserInfo}/>
+              <Rating allUserInfo={allUserInfo} />
             </Flex>
             <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Ciudad: {infoUser[0].city}
               </Text>
+              <br />
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Descripción: {infoUser[0].description}
               </Text>
             </Flex>
             <br />
-            <Text fontWeight={600} color={"gray.500"} mb={4}>
-              Medios de Contacto:
-            </Text>
-            <Stack direction={"row"} justify={"center"} spacing={4}>
-              <Link href={`mailto:${infoUser[1].mail}`} p={0}>
-                <FontAwesomeIcon icon={faAt} fontSize="30px" />
-              </Link>
-              {/* <Button label={"WhatsApp"} href={infoUser.whatsapp} p={0}>
-                <FontAwesomeIcon icon={faWhatsapp} fontSize="30px" />
-              </Button> */}
-            </Stack>
           </Box>
         </Center>
         <Box
@@ -168,18 +156,19 @@ export default function PerfilPropietario() {
               </TabPanel>
               <TabPanel>
                 {favoritesUser?.map((f, index) => {
-                  if(!f.deleted){
-                  return (
-                    <Box key={index}>
-                      <CardPerfil
-                        id={f.id}
-                        img={f.property.propertyImages}
-                        precio={f.property.price}
-                        ciudad={f.property.city.name}
-                        premium={f.premium}
-                      />
-                    </Box>
-                  )}
+                  if (!f.deleted) {
+                    return (
+                      <Box key={index}>
+                        <CardPerfil
+                          id={f.id}
+                          img={f.property.propertyImages}
+                          precio={f.property.price}
+                          ciudad={f.property.city.name}
+                          premium={f.premium}
+                        />
+                      </Box>
+                    );
+                  }
                 })}
               </TabPanel>
               <TabPanel>

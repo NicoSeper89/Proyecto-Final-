@@ -19,12 +19,11 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import "./NavBar.module.css";
-import { useSelector } from "react-redux";
 
 const NavBar = () => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0(); // haciendo pruebas
+  const { loginWithRedirect, /*isAuthenticated,*/ logout } = useAuth0(); // haciendo pruebas
   const history = useHistory();
-  const infoUser = useSelector((state) => state.infoUser);
+  // const infoUser = useSelector((state) => state.infoUser);
   // const [displayMenu, setDisplayMenu] = useState(false);
 
   // const onClickMenu = (e) => {
@@ -85,22 +84,29 @@ const NavBar = () => {
         </Link>
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
-          
-
           {/* me oculta el boton si no esta logueado o es propietario */}
-          {user2 && user2[0].admin && 
-            <Button colorScheme="orange" variant="outline" onClick={buttonAdmin} marginRight={"10px"}>
-            Admin
-          </Button>
-          }
+          {user2 && user2[0].admin && (
+            <Button
+              colorScheme="orange"
+              variant="outline"
+              onClick={buttonAdmin}
+              marginRight={"10px"}
+            >
+              Admin
+            </Button>
+          )}
 
           {user2 && (
-            <Button colorScheme="orange" bg="orange" variant="outline" 
-            onClick={() => history.push("/createPost")}>
+            <Button
+              colorScheme="orange"
+              bg="orange"
+              variant="outline"
+              // onClick={() => history.push("/createPost")}>
+              onClick={(e) => buttonCreatePost(e)}
+            >
               Publicar
             </Button>
           )}
-          
 
           {/* <Box direction={"row"} spacing={6}> */}
           {/* <Box

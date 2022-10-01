@@ -3,22 +3,17 @@ import {
   Button,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
-  Input,
   Select,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getInfoUser, reportPublication } from "../../redux/actions";
-import Footer from "../Footer/Footer";
-import NavBarForms from "../NavBar/NavBarForms";
+import { reportPublication } from "../../redux/actions";
 
 function validation(input) {
   let errors = {};
@@ -107,7 +102,6 @@ export default function FormReport({ id, userId }) {
 
   return (
     <Box>
-      {/* <NavBarForms /> */}
       <Box
         bg={"blackAlpha.200"}
         position={"relative"}
@@ -136,7 +130,6 @@ export default function FormReport({ id, userId }) {
           alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          // minWidth={"57.7%"}
           width={"100%"}
         >
           <FormControl
@@ -191,7 +184,6 @@ export default function FormReport({ id, userId }) {
           </FormControl>
         </Flex>
       </Box>
-      {/* <Footer /> */}
     </Box>
   );
 }

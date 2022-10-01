@@ -11,8 +11,7 @@ import {
   updateFilterAmbient,
   updateFilterPets,
   setCurrentPage,
-  valueFilter,
-  updateSortingPrice
+  updateSortingPrice,
 } from "../../redux/actions";
 import { faFilterCircleXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
@@ -48,7 +47,7 @@ const SearchBar = () => {
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
-  const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  // const [alertSubmit, setAlertSubmit] = useState([false, false]);
 
   //BUSCADOR
   const changes = (e) => {
@@ -87,7 +86,7 @@ const SearchBar = () => {
 
     if (e.target.value === "Precio") orden = { name: "default", direccion: "minMax" };
     else orden = { name: "price", direccion: e.target.value };
-    dispatch(updateSortingPrice(orden))
+    dispatch(updateSortingPrice(orden));
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
   };

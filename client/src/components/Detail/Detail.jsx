@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getPublicationsDetail,
-  clean,
-  deletePublicaction,
-  getInfoUser, 
+  // clean,
+  // deletePublicaction,
+  getInfoUser,
   getComment,
   postComment,
   deleteComment,
 } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgNotAvailable from "../../Image/Image_not_available.png";
-import axios from "axios";
+// import axios from "axios";
 import {
-  /* faHeart, */
   faRulerCombined,
   faWarehouse,
   faEarthAmericas,
@@ -26,16 +25,9 @@ import {
   faCalendar,
   faCheck,
   faX,
-  faUser,
   faCircleUser,
-  faPhone,
-  faComment,
-  faCity,
   faLocationDot,
-  faStar,
-  faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { faAt } from "@fortawesome/free-solid-svg-icons";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer.jsx";
@@ -49,30 +41,25 @@ import {
   Button,
   Heading,
   Image,
-  SimpleGrid,
   Tab,
   TabList,
   TabPanels,
   TabPanel,
   Tabs,
-  Textarea,
   Input,
   FormControl,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
 import AlertDelete from "./AlertDeletePubli";
-import AlertDeleteComent from "./AlertDeletComent"
-import AlertAdminApprove from "./AlertAdminApprove"
-import AlertAdminDelete from "./AlertAdminDelete"
-// import Maps from "../Maps/Maps";
+import AlertDeleteComent from "./AlertDeletComent";
+import AlertAdminApprove from "./AlertAdminApprove";
+import AlertAdminDelete from "./AlertAdminDelete";
 import FormReport from "./FormReport";
 import Datos from "../Maps/Datos";
 import RequestScore from "./requestScore";
 // import Comentarios from "./Comentarios"
 import ReactStars from "react-rating-stars-component";
-
-// import { Carousel, } from "react-responsive-carousel";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -86,7 +73,7 @@ export default function Detail(props, id) {
   const commentState = useSelector((state) => state.comments);
   const [comentarios, setComments] = useState("");
   const [borradoComent, setBorrado] = useState(false);
-  const [alertComent, setAlertCommet] = useState([false, false])
+  const [alertComent, setAlertCommet] = useState([false, false]);
 
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
@@ -99,10 +86,9 @@ export default function Detail(props, id) {
       dispatch(getInfoUser(user));
     }
     dispatch(getComment(props.match.params.id));
-  }, [dispatch, props.match.params.id, borradoComent]);
+  }, [dispatch, props.match.params.id, borradoComent, myUser]);
 
   function handleDelete() {
-    /* dispatch(deletePublicaction(props.match.params.id)); */
     setAlertSubmit([true, true]);
     window.scroll({
       top: 0,
@@ -110,9 +96,11 @@ export default function Detail(props, id) {
       behavior: "smooth",
     });
   }
+
   function handleReclaim() {
-    console.log('mail')
+    console.log("mail");
   }
+
   function handleApprove() {
     setAlertAdminApprove([true, true]);
     window.scroll({
@@ -121,6 +109,7 @@ export default function Detail(props, id) {
       behavior: "smooth",
     });
   }
+
   function handleDeleteAdmin() {
     setAlertAdminDelete([true, true]);
     window.scroll({
@@ -129,6 +118,7 @@ export default function Detail(props, id) {
       behavior: "smooth",
     });
   }
+
   const onChangeInputComment = (e) => {
     e.preventDefault();
     setComments(e.target.value);
@@ -166,11 +156,7 @@ export default function Detail(props, id) {
         pt={"50px"}
         pb={"50px"}
         direction={"column"}
-        // alignItems={"center"}
-        // alignContent={"center"}
         justifyContent={"flex-start"}
-      // p={".5rem"}
-      // position="relative"
       >
         {Object.entries(miStateDetail).length > 0 ? (
           <Box>
@@ -183,30 +169,16 @@ export default function Detail(props, id) {
             // gap={"2rem"}
             >
               <Box display={"flex"} justifyContent="space-evenly">
-                <Flex
-                  flexDirection={"row"}
-                  justifyContent={"center"}
-                  p={"0rem .8rem"}
-                // position={"relative"}
-                >
+                <Flex flexDirection={"row"} justifyContent={"center"} p={"0rem .8rem"}>
                   {miStateDetail.property.propertyImages.length > 0 ? (
                     <Box w={"42rem"} h={"42rem"}>
-                      <ImageSlider
-                        slides={miStateDetail.property.propertyImages}
-                      />
+                      <ImageSlider slides={miStateDetail.property.propertyImages} />
                     </Box>
                   ) : (
                     <Image src={imgNotAvailable} />
                   )}
                 </Flex>
 
-                {/* <Flex
-            justifyContent="flex-start"
-            flexDirection={"column"}
-            alignItems={"center"}
-            gap={"15px"}
-            w={"500px"}
-            > */}
                 <Flex direction={"column"}>
                   <Box
                     w={"350px"}
@@ -225,84 +197,42 @@ export default function Detail(props, id) {
                     <FontAwesomeIcon icon={faX} />
                   }</ListItem> */}
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faEarthAmericas} />
-                      <Text>
-                        Ubicación: {miStateDetail.property.city.name}, Argentina{" "}
-                      </Text>
+                      <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faLocationDot} />
                       <Text>Dirección: {miStateDetail.property.address}</Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faLandmark} />
                       <Text>Precio: ${miStateDetail.property.price}</Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faHouse} />
-                      <Text>
-                        Tipo de propiedad:{" "}
-                        {miStateDetail.property.TypeOfProp.name}
-                      </Text>
+                      <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
                     </Flex>
 
-                    {/* <SimpleGrid columns={2} flexWrap={"wrap"} rowGap={"2px"}> */}
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faDoorOpen} />
-                      <Text>
-                        Ambientes: {miStateDetail.property.environments}
-                      </Text>
+                      <Text>Ambientes: {miStateDetail.property.environments}</Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faRulerCombined} />
-                      <Text>
-                        Superficie: {miStateDetail.property.surface}m²
-                      </Text>
+                      <Text>Superficie: {miStateDetail.property.surface}m²</Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faBed} />
                       <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faCalendar} />
                       <Text>
                         Antigüedad: {miStateDetail.property.age}{" "}
@@ -310,20 +240,12 @@ export default function Detail(props, id) {
                       </Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faToilet} />
                       <Text>Baños: {miStateDetail.property.bathrooms}</Text>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faPaw} />
                       <Flex>
                         Mascotas:
@@ -335,21 +257,15 @@ export default function Detail(props, id) {
                       </Flex>
                     </Flex>
 
-                    <Flex
-                      alignItems={"center"}
-                      m="10px"
-                      justifyContent={"space-between"}
-                    >
+                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faWarehouse} />
                       <Text>Garage: {miStateDetail.property.garage}</Text>
                     </Flex>
-                    {/* </SimpleGrid> */}
 
                     <Flex m="15px" direction={"row"} justifyContent={"center"}>
                       {miStateDetail.property.services.map((e, i) => (
                         <Flex key={i} alignItems={"center"} m="10px">
-                          <FontAwesomeIcon icon={faCheck} />{" "}
-                          <Text>{e.name}</Text>
+                          <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
                         </Flex>
                       ))}
                     </Flex>
@@ -358,11 +274,7 @@ export default function Detail(props, id) {
               </Box>
 
               <Flex direction={"row-reverse"} justifyContent="space-evenly">
-                <Flex
-                  direction={"column"}
-                  alignItems="center"
-                  justifyContent="space-evenly"
-                >
+                <Flex direction={"column"} alignItems="center" justifyContent="space-evenly">
                   <Box
                     w={"350px"}
                     h={"200px"}
@@ -385,10 +297,9 @@ export default function Detail(props, id) {
                         edit={false}
                         value={miStateDetail.user.rating}
                         isHalf={true}
-                    />
+                      />
                       <Text fontSize="lg">
-                        <FontAwesomeIcon icon={faCircleUser} />{" "}
-                        {miStateDetail.user.name}
+                        <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
                       </Text>
 
                       <Box alignItems="center" fontSize="lg">
@@ -410,9 +321,7 @@ export default function Detail(props, id) {
                           fontSize="xl"
                           as="b"
                           onClick={() =>
-                            history.push(
-                              "/updatePublicaction/" + props.match.params.id
-                            )
+                            history.push("/updatePublicaction/" + props.match.params.id)
                           }
                         >
                           Actualizar datos
@@ -431,69 +340,66 @@ export default function Detail(props, id) {
                         </Button>
 
                         <RequestScore publicationsId={props.match.params.id} />
-
+                      </Flex>
+                    ) : myUser[0].id === miStateDetail.userId && miStateDetail.deleted ? (
+                      <Flex>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleReclaim(e);
+                          }}
+                        >
+                          Pedir restauración
+                        </Button>
+                      </Flex>
+                    ) : myUser[0].admin && !miStateDetail.approved ? (
+                      <Flex>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleApprove(e);
+                          }}
+                        >
+                          Aprobar publicación
+                        </Button>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleDeleteAdmin(e);
+                          }}
+                        >
+                          Borrar publicación
+                        </Button>
+                      </Flex>
+                    ) : myUser[0].admin && miStateDetail.approved ? (
+                      <Flex>
+                        <Button
+                          w={"350px"}
+                          colorScheme="green"
+                          m="8px"
+                          fontSize="xl"
+                          as="b"
+                          onClick={(e) => {
+                            handleDeleteAdmin(e);
+                          }}
+                        >
+                          {!miStateDetail.deleted ? "Borrar publicación" : "Restaurar publicación"}
+                        </Button>
                       </Flex>
                     ) : (
-                      myUser[0].id === miStateDetail.userId && miStateDetail.deleted ?
-                        <Flex>
-                          <Button
-                            w={"350px"}
-                            colorScheme="green"
-                            m="8px"
-                            fontSize="xl"
-                            as="b"
-                            onClick={(e) => {
-                              handleReclaim(e);
-                            }}
-                          >
-                            Pedir restauración
-                          </Button>
-                        </Flex> : (
-                          myUser[0].admin && !miStateDetail.approved ?
-                            <Flex>
-                              <Button
-                                w={"350px"}
-                                colorScheme="green"
-                                m="8px"
-                                fontSize="xl"
-                                as="b"
-                                onClick={(e) => {
-                                  handleApprove(e);
-                                }}
-                              >
-                                Aprobar publicación
-                              </Button>
-                              <Button
-                                w={"350px"}
-                                colorScheme="green"
-                                m="8px"
-                                fontSize="xl"
-                                as="b"
-                                onClick={(e) => {
-                                  handleDeleteAdmin(e);
-                                }}
-                              >
-                                Borrar publicación
-                              </Button>
-                            </Flex> : (
-                              myUser[0].admin && miStateDetail.approved  ?
-                                <Flex>
-                                  <Button
-                                    w={"350px"}
-                                    colorScheme="green"
-                                    m="8px"
-                                    fontSize="xl"
-                                    as="b"
-                                    onClick={(e) => {
-                                      handleDeleteAdmin(e);
-                                    }}
-                                  >
-                                    {!miStateDetail.deleted?"Borrar publicación":"Restaurar publicación"}
-                                  </Button>
-                                </Flex> :
-                                <Flex>   
-                                </Flex>)
-                        )
+                      <Flex></Flex>
                     )}
                   </Box>
                 </Flex>
@@ -537,7 +443,7 @@ export default function Detail(props, id) {
                           justifyContent="center"
                           alignItems="center"
                         >
-                          {/* {showMap && <Maps position={miStateDetail} />} */}
+                          {/* {showMap && <Datos position={miStateDetail} />} */}
                         </Flex>
                       </TabPanel>
                       <TabPanel>
@@ -568,29 +474,11 @@ export default function Detail(props, id) {
                         </Flex>
                       </TabPanel>
                     </TabPanels>
-                    {/* <Box textAlign={"center"} mb={"5px"}>
-                    <Text fontSize="xl" as="b">
-                      Descripción
-                    </Text>
-                  </Box> */}
-                    {/* <Box alignItems="flex-start" p={"1rem"}>
-                    <Text fontSize="lg">{miStateDetail.description}</Text>
-                  </Box>
-                  <Box
-                    w={"350px"}
-                    h={"200px"}
-                    boxShadow="dark-lg"
-                    p="10px"
-                    border="1px solid grey.600"
-                    borderRadius={"0.5rem"}
-                    >
-                    {showMap && <Maps position={miStateDetail} />}
-                  </Box> */}
                   </Tabs>
                 </Box>
               </Flex>
             </Box>
-            {/* ESTO ES BOTONES */}
+
             <Box
               variant="soft-rounded"
               /* colorScheme="green" */
@@ -603,13 +491,14 @@ export default function Detail(props, id) {
               borderRadius={"0.5rem"}
             >
               <FormControl>
-                {
-                  myUser[0].admin ?
-                    commentState.map((e) => (
-                      <Text fontWeight={"semiBold"}
+                {myUser[0].admin
+                  ? commentState.map((e) => (
+                      <Text
+                        fontWeight={"semiBold"}
                         fontSize="1.2rem"
                         color="gray.500"
-                        border="gray.500">
+                        border="gray.500"
+                      >
                         {miStateDetail.user.name} :
                         <Text
                           fontWeight={"semiBold"}
@@ -628,12 +517,13 @@ export default function Detail(props, id) {
                         </Text>{" "}
                       </Text>
                     ))
-                    :
-                    commentState.map((e) => (
-                      <Text fontWeight={"semiBold"}
+                  : commentState.map((e) => (
+                      <Text
+                        fontWeight={"semiBold"}
                         fontSize="1.2rem"
                         color="gray.500"
-                        border="gray.500">
+                        border="gray.500"
+                      >
                         {miStateDetail.user.name} :
                         <Text
                           fontWeight={"semiBold"}
@@ -642,35 +532,38 @@ export default function Detail(props, id) {
                           border="gray.500"
                         >
                           {e.message}{" "}
-
                         </Text>{" "}
                       </Text>
                     ))}
-                <Input placeholder="deja tu comentario aqui..." onChange={onChangeInputComment} value={comentarios} />
+                <Input
+                  placeholder="deja tu comentario aqui..."
+                  onChange={onChangeInputComment}
+                  value={comentarios}
+                />
                 <Button onClick={onSubmitComent}>enviar</Button>
               </FormControl>
-              {/* <Carousel>
-                {Object.entries(commentState).length > 0 ? (
-                  <Box>
-                    <Input
-                      onChange={onChangeInputComment}
-                      value={comentarios}
-                      name="message"
-                    ></Input>
-                    <Button onClick={onSubmitComent}>x</Button>
-                  </Box>
-                ) : null}
-              </Carousel> */}
             </Box>
           </Box>
         ) : (
           <Loading />
         )}
       </Flex>
-      <AlertDelete alertSubmit={alertSubmit} id={props.match.params.id} deleted={miStateDetail.deleted} />
+      <AlertDelete
+        alertSubmit={alertSubmit}
+        id={props.match.params.id}
+        deleted={miStateDetail.deleted}
+      />
       <AlertDeleteComent alertComent={alertComent} id={id} />
-      <AlertAdminApprove alertSubmit={alertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} />
-      <AlertAdminDelete alertSubmit={alertAdminDelete} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
+      <AlertAdminApprove
+        alertSubmit={alertAdminApprove}
+        pubId={props.match.params.id}
+        userId={miStateDetail.userId}
+      />
+      <AlertAdminDelete
+        alertSubmit={alertAdminDelete}
+        pubId={props.match.params.id}
+        deleted={miStateDetail.deleted}
+      />
       <Footer />
       {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>

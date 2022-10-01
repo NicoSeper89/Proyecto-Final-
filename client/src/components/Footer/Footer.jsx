@@ -1,5 +1,5 @@
 import React from "react";
-import style from "./Footer.module.css";
+// import style from "./Footer.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faSquareTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -36,7 +36,7 @@ export default function Footer() {
           <Link href={"/"}>Inicio</Link>
           <Link href={"/about"}>Conocenos</Link>
           <Link href={"/help"}>Ayuda</Link>
-          <Link href={"mailto:lookhousepf@gmail.com"} >Contactanos</Link>
+          <Link href={"mailto:lookhousepf@gmail.com"}>Contactanos</Link>
         </Stack>
       </Container>
 

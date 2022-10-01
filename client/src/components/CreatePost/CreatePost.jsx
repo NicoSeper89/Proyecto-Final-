@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import UploadImg from "../UploadImg/UploadImg";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { setPublication } from "../../redux/actions";
+// import { setPublication } from "../../redux/actions";
 import {
   Stack,
-  Input,
   Heading,
   Text,
   Textarea,
@@ -28,11 +26,11 @@ import AlertSubmit from "./AlertSubmit";
 import Places from "./Places";
 
 const CreatePost = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const propertys = useSelector((state) => state.typeOfProperties);
   const cities = useSelector((state) => state.cities);
   const services = useSelector((state) => state.services);
-  const history = useHistory();
+  // const history = useHistory();
   const [infoFormProp, setInfoFormProp] = useState({
     city: "",
     address: "",
@@ -63,7 +61,7 @@ const CreatePost = () => {
   const [disableButtonContinue, setDisableButtonContinue] = useState(true);
   const [continueForm, setContinueForm] = useState(true);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
-  const [propertyId, setPropertyId] = useState("");
+  const [propertyId /*setPropertyId*/] = useState("");
 
   useEffect(() => {
     const {
@@ -248,8 +246,10 @@ const CreatePost = () => {
                   </Select>
                 </FormLabel>
 
-
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Dirección</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    Dirección
+                  </Text>
                   {/* <Input color="gray.500"
                     autoComplete={"true"}
                     type="text"

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "./Card";
-import style from "./Card.module.css";
+// import style from "./Card.module.css";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { setCurrentCarrusel } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight /*faCircle*/ } from "@fortawesome/free-solid-svg-icons";
 
 export default function PremiumCards() {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export default function PremiumCards() {
       }
     }, 5000);
     return () => clearInterval(interval);
-  }, [currentCarrusel]);
+  }, [dispatch, currentCarrusel, pages.length]);
 
   // const handleClick = (e) => {
   //   dispatch(setCurrentCarrusel(Number(e.target.id)));
