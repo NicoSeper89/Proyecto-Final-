@@ -16,35 +16,37 @@ import {
   setCurrentPage,
   saveSort,
   clearFilters,
-  getUserInfo
+  getUserInfo,
 } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 function SavedFilters({ filterToSave, savedSort, savedCity }) {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.allUserInfo)
+  const user = useSelector((state) => state.allUserInfo);
   const [value, setValue] = useState("");
   const [savedValue, setSavedValue] = useState([]);
   const [storedValues, setStoredValues] = useState([]);
 
   useEffect(() => {
-    const loginUser = JSON.parse(window.localStorage.getItem('User'))
-    if(loginUser){
-      dispatch(getUserInfo(loginUser[0].id))
-      setTimeout(()=>{
+    const loginUser = JSON.parse(window.localStorage.getItem("User"));
+    if (loginUser) {
+      dispatch(getUserInfo(loginUser[0].id));
+      setTimeout(() => {
         setStoredValues(Object.keys(localStorage).filter((k) => k.includes(loginUser[1].mail)));
-      },100)
+      }, 100);
     }
-  }, [savedValue]);
+  }, [dispatch, savedValue]);
 
   const handleLocalStorage = (keyValue) => {
-    if(user.length === 0){
-      alert('Debe inciar session para poder guardar un filtro de busqueda!!!')
-      setValue("")
-    }
-    else if (keyValue) {
-      window.localStorage.setItem(keyValue + " " + user.loginInfo.mail, JSON.stringify([filterToSave, savedSort, savedCity]));
+    if (user.length === 0) {
+      alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
+      setValue("");
+    } else if (keyValue) {
+      window.localStorage.setItem(
+        keyValue + " " + user.loginInfo.mail,
+        JSON.stringify([filterToSave, savedSort, savedCity])
+      );
       setSavedValue([...savedValue, keyValue]);
       setValue("");
     }
@@ -57,8 +59,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
       dispatch(clearFilters());
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
-    }
-    else if(event.target.value){
+    } else if (event.target.value) {
       let filter = localStorage.getItem(event.target.value + " " + user.loginInfo.mail);
       let newFilter = JSON.parse(filter);
       dispatch(saveFilter(newFilter[0]));
@@ -90,7 +91,6 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
             cursor={"pointer"}
           />
         </InputGroup>
-        
       </Stack>
       <Box width={"8rem"}>
         <Menu
@@ -113,7 +113,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
             placeholder="Mis Filtros"
           >
             {storedValues?.map((v, i) => (
-              <option key={i}>{v.split(' ')[0]}</option>
+              <option key={i}>{v.split(" ")[0]}</option>
             ))}
           </Select>
         </Menu>

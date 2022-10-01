@@ -1,20 +1,11 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import {
-  Button,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
 import { deleteComment } from "../../redux/actions";
 
-const AlertDeleteComent = ({ alertComent, id  }) => {
+const AlertDeleteComent = ({ alertComent, id }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -26,16 +17,8 @@ const AlertDeleteComent = ({ alertComent, id  }) => {
     // history.push("/");
   };
   const onNo = () => {
-    history.push("/")
+    history.push("/");
   };
-  /*  const onTest = async () => {
-    history.push("/PaymentOk");
-  }; */
-  /*  const handleDestacar = () => {
-    
-    let res = axios.post("http://localhost:3001/sell/premium", {});
-    console.log('soy',res)
-  }; */
 
   return (
     <Alert

@@ -1,26 +1,21 @@
 import React, { useState } from "react";
-import { Avatar, Box, Button, Flex, FormLabel, Heading, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, FormLabel, Heading, Input } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
-import Rating from "./Rating";
 import { editUser, getInfoUser } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import UserUploadImg from "../UploadImg/UserUploadImg";
-import { useHistory } from "react-router-dom";
 import AlertPerfil from "./AlertPerfil";
 
 export default function EditPerfil(props) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const infoUser = useSelector((state) => state.infoUser);
   const [disabledButton, setDisabledButton] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [input, setInput] = useState({
-    // img: "",
     name: "",
     city: "",
     description: "",
-    // contacto: "",
   });
 
   useEffect(() => {
@@ -28,7 +23,6 @@ export default function EditPerfil(props) {
       dispatch(getInfoUser(props.match.params.id));
     } else {
       setInput({
-        // img: infoUser.propertyImages,
         name: infoUser[0].name,
         city: infoUser[0].city,
         description: infoUser[0].description,
@@ -65,9 +59,6 @@ export default function EditPerfil(props) {
       left: 0,
       behavior: "smooth",
     });
-
-    // alert("perfil actualizado");
-    // history.push("/perfilPropietario");
   }
 
   return (

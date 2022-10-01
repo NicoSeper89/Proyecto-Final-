@@ -2,35 +2,33 @@ import "./App.css";
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Login from "./components/Login/Login";
+// import Login from "./components/Login/Login";
 import Home from "./components/Home/Home.jsx";
 import CreatePost from "./components/CreatePost/CreatePost.jsx";
 import About from "./components/About/About";
 import Help from "./components/Help/Help";
 import Detail from "./components/Detail/Detail";
-import NewUser from "./components/Check_in/Check_in";
+// import NewUser from "./components/Check_in/Check_in";
 import Error404 from "./components/Error404/Error404.jsx";
 import { getCities, getServices, getTypesOfProperties } from "./redux/actions/index.js";
 import UpdatePost from "./components/UpdatePost/UpdatePost";
 import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
 // import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
 import PaymentOk from "./components/Payment/PaymentOk";
-import PaymentFail from "./components/Payment/PaymentFail.jsx";
+// import PaymentFail from "./components/Payment/PaymentFail.jsx";
 import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
 import AlertCard from "./components/Cards/AlertCard";
 import FormReport from "./components/Detail/FormReport";
-import Rank from "./components/Rank/Rank.jsx"
+import Rank from "./components/Rank/Rank.jsx";
 import AdminAcces from "./components/Administrador/AdminAcces";
 import Admin from "./components/Administrador/Admin.jsx";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
 import UsersAdmin from "./components/Perfiles/UsersAdmin";
 
-
-
 function App() {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { loginWithRedirect /*, isAuthenticated, logout*/ } = useAuth0();
   const dispatch = useDispatch();
 
   const infoUser = useSelector((state) => state.infoUser);
@@ -87,21 +85,36 @@ function App() {
         />
         <Route exact path="/select" component={Select} />
         <Route exact path="/adminAcces" component={AdminAcces} />
-        <Route exact path="/details/:id/rank" render={({match}) => {
-           let userRank = window.localStorage.getItem("User");
-           userRank = JSON.parse(userRank);
+        <Route
+          exact
+          path="/details/:id/rank"
+          render={({ match }) => {
+            let userRank = window.localStorage.getItem("User");
+            userRank = JSON.parse(userRank);
 
-           if (userRank){return <Rank match={match} userRank={userRank}/>} 
-           else {window.localStorage.setItem("Rank_Publications", match.params.id);
-                 return loginWithRedirect()}
-         }}/>
-        <Route exact path="/admin" render={() => {
-          return user2 && user2[0].admin ? <Admin/> : <Redirect to="*"/>
-        }} />
-         
-         <Route exact path="/viewUser" render={() => {
-          return user2 && user2[0].admin ? <UsersAdmin/> : <Redirect to="*"/>
-         }} />
+            if (userRank) {
+              return <Rank match={match} userRank={userRank} />;
+            } else {
+              window.localStorage.setItem("Rank_Publications", match.params.id);
+              return loginWithRedirect();
+            }
+          }}
+        />
+        <Route
+          exact
+          path="/admin"
+          render={() => {
+            return user2 && user2[0].admin ? <Admin /> : <Redirect to="*" />;
+          }}
+        />
+
+        <Route
+          exact
+          path="/viewUser"
+          render={() => {
+            return user2 && user2[0].admin ? <UsersAdmin /> : <Redirect to="*" />;
+          }}
+        />
 
         <Route path="*" component={Error404} />
       </Switch>

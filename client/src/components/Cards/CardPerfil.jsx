@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Image, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Image, Text } from "@chakra-ui/react";
 import style from "./Card.module.css";
 import React from "react";
 import imgNotAvailable from "../../Image/Image_not_available.png";
