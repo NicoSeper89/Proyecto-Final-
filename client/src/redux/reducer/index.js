@@ -46,12 +46,11 @@ import {
   GET_FOR_APPROVAL,
   APPROVE_POST_USER,
   TOTAL_USERS,
-
   DELETE_PUBLICACTION_PERMANENT,
-
   TOTAL_DATES,
-  TOTAL_USER_DATES
-
+  TOTAL_USER_DATES,
+  RESTORE_USER,
+  BLOCK_USER
 } from "../actions";
 
 const initialState = {
@@ -84,7 +83,7 @@ const initialState = {
   imageUser: "",
   comments: [],
   reports: [],
-  reportsId: [], 
+  reportsId: [],
   forApproval: [],
   dates: [],
   userDates: []
@@ -159,7 +158,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case FILTER_GAR:
+    case FILTER_GAR:
       if (action.payload === "") {
         //default action entonces limpia el filtro ok
         let index = state.filters.property.findIndex((i) => i.name === "garage");
@@ -177,7 +176,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      
+
     case FILTER_PET:
       let value = true;
       if (action.payload === "Mascotas") {
@@ -206,7 +205,7 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         sorting: { name: action.payload.name, direccion: action.payload.direccion },
       };
-      
+
     case CLEAR_FILTERS:
       state.filters = {
         publication: [],
@@ -258,7 +257,7 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case DELETE_PUBLICACTION_PERMANENT:
+    case DELETE_PUBLICACTION_PERMANENT:
       return {
         ...state,
       };
@@ -393,9 +392,15 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         userDates: action.payload
       }
-
+    case BLOCK_USER:
+      return {
+        ...state,
+      };
+    case RESTORE_USER:
+      return {
+        ...state,
+      };
     default:
       return state;
-
   }
 }

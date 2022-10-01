@@ -359,5 +359,23 @@ router.get("/getFavs/:id", async (req, res, next) => {
     next(error);
   }
 });
+router.put("/deleteUser/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await User.update({ banned: true }, { where: { id: id } });
+    res.send("Se baneo al usuario");
+  } catch (error) {
+    next(error);
+  }
+});
+router.put("/restoreUser/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await User.update({ banned: false }, { where: { id: id } });
+    res.send("Se restauro al usuario");
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
