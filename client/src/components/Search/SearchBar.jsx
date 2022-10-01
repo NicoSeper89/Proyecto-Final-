@@ -49,7 +49,7 @@ const SearchBar = () => {
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
-  const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  // const [alertSubmit, setAlertSubmit] = useState([false, false]);
 
   //BUSCADOR
   const changes = (e) => {

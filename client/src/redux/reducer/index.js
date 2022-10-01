@@ -34,7 +34,6 @@ import {
   GETUSER,
   UPLOAD_IMG_USER,
   GET_USER_IMAGE,
-  FAV_ID_LIST,
   GET_COMMENT,
   POST_COMMENT,
   REPORT_PUBLICATION,
@@ -49,8 +48,10 @@ import {
   DELETE_PUBLICACTION_PERMANENT,
   TOTAL_DATES,
   TOTAL_USER_DATES,
+
   RESTORE_USER,
   BLOCK_USER
+
 } from "../actions";
 
 const initialState = {
@@ -86,7 +87,7 @@ const initialState = {
   reportsId: [],
   forApproval: [],
   dates: [],
-  userDates: []
+  userDates: [],
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -385,11 +386,14 @@ export default function rootReducer(state = initialState, action) {
     case TOTAL_DATES:
       return {
         ...state,
-        dates: action.payload
-      }
+        dates: action.payload,
+      };
     case TOTAL_USER_DATES:
       return {
         ...state,
+         userDates: action.payload,
+      }; 
+
         userDates: action.payload
       }
     case BLOCK_USER:

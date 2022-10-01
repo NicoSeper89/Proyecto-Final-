@@ -1,8 +1,5 @@
 import React from "react";
 import Cards from "../Cards/Cards";
-import Footer from "../Footer/Footer.jsx";
-import Header from "../Header/Header.jsx";
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,16 +9,16 @@ import {
   getInfoUser,
 } from "../../redux/actions/index.js";
 import { Box, Select } from "@chakra-ui/react";
+// import style from "./Home.module.css";
 
 const DeletedLogicUAd = () => {
-  // import style from "./Home.module.css";
-
   const dispatch = useDispatch();
 
-  const infoPublications = useSelector((state) => state.houses);
+  // const infoPublications = useSelector((state) => state.houses);
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
-  const infoUser = useSelector((state) => state.infoUser);
+  // const infoUser = useSelector((state) => state.infoUser);
+
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
   useEffect(() => {

@@ -2,11 +2,11 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertDescription } from "@chakra-ui/react";
 
 const AlertCard = ({ alertSubmit }) => {
   const history = useHistory();
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0(); // haciendo pruebas
+  const { loginWithRedirect /*, isAuthenticated, logout*/ } = useAuth0(); // haciendo pruebas
 
   const onDown = () => {
     history.push("/");

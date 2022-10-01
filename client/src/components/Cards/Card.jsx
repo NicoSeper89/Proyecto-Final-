@@ -4,12 +4,12 @@ import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faToilet, faBed, faDoorOpen, faPaw } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
+import { Badge, Box, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavsUser, setFav, removeFav } from "../../redux/actions";
 /* import { useHistory } from "react-router-dom"; */
-import Select from "../SelectTypeUser/Select";
-import AlertCard from "./AlertCard";
+// import Select from "../SelectTypeUser/Select";
+// import AlertCard from "./AlertCard";
 import { useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";

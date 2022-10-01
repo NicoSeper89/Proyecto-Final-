@@ -1,24 +1,24 @@
-import React, { isValidElement } from "react";
+import React /*{ ,isValidElement }*/ from "react";
 import {
-  HStack,
-  Radio,
-  FormHelperText,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  Alert,
+  // HStack,
+  // Radio,
+  // FormHelperText,
+  // FormControl,
+  // FormLabel,
+  // RadioGroup,
+  // Alert,
   Box,
-  useForceUpdate,
+  // useForceUpdate,
 } from "@chakra-ui/react";
-import { useAuth0, User } from "@auth0/auth0-react";
-import { Link, useHistory } from "react-router-dom";
+import { useAuth0 /*User*/ } from "@auth0/auth0-react";
+// import { useHistory } from "react-router-dom";
 import axios from "axios";
 import AlertLogin from "./AlertLogin";
 import { useEffect } from "react";
 import { useState } from "react";
 const Select = () => {
-  const { isAuthenticated, user, loginWithRedirect, logout, isLoading } = useAuth0();
-  const history = useHistory();
+  const { /*isAuthenticated,*/ user, /*loginWithRedirect, logout,*/ isLoading } = useAuth0();
+  // const history = useHistory();
   useEffect(() => {
     isLoading ? console.log("cargando") : buscarUser();
   }, [user]);

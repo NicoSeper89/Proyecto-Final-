@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+// import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import ReactStars from "react-rating-stars-component";
 
 export default function Rating(allUserInfo) {

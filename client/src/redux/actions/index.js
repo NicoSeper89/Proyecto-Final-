@@ -1,5 +1,5 @@
 import axios from "axios";
-import { bindActionCreators } from "redux";
+// import { bindActionCreators } from "redux";
 // import Cities from "../../components/Cities/Cities";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_DETAIL = "GET_PUBLICATIONS_DETAIL";
@@ -48,10 +48,12 @@ export const GET_REPORTS_ID = "GET_REPORTS_ID";
 export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
 export const APPROVE_POST_USER = "APPROVE_POST_USER";
 export const TOTAL_USERS = "TOTAL_USERS";
+
 export const TOTAL_DATES = "TOTAL_DATES"
 export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
 export const BLOCK_USER = "BLOCK_USER"
 export const RESTORE_USER = "RESTORE_USER"
+
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -345,6 +347,7 @@ export function setPublication(payload) {
 //ELIMINAR UNA PUBLICACION TEMPORALMENTE
 export function deletePublicaction(id) {
   return async function (dispatch) {
+
       let respuesta=await axios.put(`/publication/unavailable/${id}`);
       return dispatch({
         type: DELETE_PUBLICACTION,
@@ -354,10 +357,10 @@ export function deletePublicaction(id) {
 //ELIMINAR UNA PUBLICACION
 export function deletePublicactionPermanent(id) {
   return async function (dispatch) {
-      let respuesta=await axios.delete(`/publication/delete/${id}`);
-      return dispatch({
-        type: DELETE_PUBLICACTION_PERMANENT,
-      });
+    await axios.delete(`/publication/delete/${id}`);
+    return dispatch({
+      type: DELETE_PUBLICACTION_PERMANENT,
+    });
   };
 }
 
@@ -618,36 +621,36 @@ export function approvePostUser(pubId, userId) {
 export function deleteComment(id) {
   console.log("soy id", id);
   // console.log("soy publicationID", idComment)
-  try {
-    return async function (dispatch) {
+  return async function (dispatch) {
+    try {
       await axios.delete(`/publication/comment/${id}`);
       return dispatch({
         type: DELETE_COMMENT,
       });
-    };
-  } catch (error) {
-    console.log(error);
-  }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
-export function allDates(){
-  return async(dispatch)=>{
-   const resp = await axios.get('/admin/pubDates')
-   return dispatch({
-    type: TOTAL_DATES,
-    payload: resp.data
-   })
-  }
+export function allDates() {
+  return async (dispatch) => {
+    const resp = await axios.get("/admin/pubDates");
+    return dispatch({
+      type: TOTAL_DATES,
+      payload: resp.data,
+    });
+  };
 }
 
-export function allUserDates(){
-  return async(dispatch)=>{
-   const resp = await axios.get('/admin/userDates')
-   return dispatch({
-    type: TOTAL_USER_DATES,
-    payload: resp.data
-   })
-  }
+export function allUserDates() {
+  return async (dispatch) => {
+    const resp = await axios.get("/admin/userDates");
+    return dispatch({
+      type: TOTAL_USER_DATES,
+      payload: resp.data,
+    });
+  };
 }
 
 export function blockUser(id) {

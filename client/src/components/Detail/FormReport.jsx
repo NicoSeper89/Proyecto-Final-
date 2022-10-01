@@ -3,22 +3,17 @@ import {
   Button,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
-  Input,
   Select,
   Text,
   Textarea,
 } from "@chakra-ui/react";
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getInfoUser, reportPublication } from "../../redux/actions";
-import Footer from "../Footer/Footer";
-import NavBarForms from "../NavBar/NavBarForms";
+import { reportPublication } from "../../redux/actions";
 
 function validation(input) {
   let errors = {};
@@ -32,7 +27,7 @@ function validation(input) {
   }
 
   if (input.info.length <= 2 || input.info.length >= 120) {
-    errors.info = "La descripción del reporte debe tener de 2 a 120 dígitos.";
+    errors.info = "La descripción del reporte debe tener un máximo de 120 dígitos.";
   }
   return errors;
 }
@@ -108,17 +103,16 @@ export default function FormReport({ id, userId }) {
 
   return (
     <Box>
-      {/* <NavBarForms /> */}
       <Box
         bg={"blackAlpha.200"}
         position={"relative"}
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        justifyContent={"center"}
+        justifyContent={"space-evenly"}
         color={"gray.700"}
-        w={"500px"}
-        h={"250px"}
+        w={"550px"}
+        h={"300px"}
       >
         <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"100%"}>
           <Heading
@@ -137,7 +131,6 @@ export default function FormReport({ id, userId }) {
           alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          // minWidth={"57.7%"}
           width={"100%"}
         >
           <FormControl
@@ -176,6 +169,7 @@ export default function FormReport({ id, userId }) {
                 size="sm"
                 resize={"none"}
                 onChange={onChangeInput}
+                maxLength={120}
               />
               {errors.info && <span>{errors.info}</span>}
             </FormLabel>
@@ -192,7 +186,6 @@ export default function FormReport({ id, userId }) {
           </FormControl>
         </Flex>
       </Box>
-      {/* <Footer /> */}
     </Box>
   );
 }
