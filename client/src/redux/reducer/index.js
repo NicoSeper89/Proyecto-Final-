@@ -393,9 +393,6 @@ export default function rootReducer(state = initialState, action) {
         ...state,
          userDates: action.payload,
       }; 
-
-        userDates: action.payload
-      }
     case BLOCK_USER:
       return {
         ...state,
