@@ -96,9 +96,9 @@ export default function PerfilPropietario() {
             <Heading fontSize={"2xl"} fontFamily={"body"}>
               Hola {infoUser[0].name}!
             </Heading>
-            {/* <Text fontWeight={600} color={"gray.500"} mb={4}>
-              @lindsey_jam3s
-            </Text> */}
+            <Text fontWeight={600} color={"gray.500"} mb={4}>
+              {infoUser[1].mail}
+            </Text>
             <Flex justifyContent="center" alignContent="center">
               <Rating allUserInfo={allUserInfo} />
             </Flex>

@@ -95,9 +95,9 @@ export default function UsersAdmin() {
             <Heading fontSize={"2xl"} fontFamily={"body"}>
               {infoUser[0].name}
             </Heading>
-            {/* <Text fontWeight={600} color={"gray.500"} mb={4}>
-              @lindsey_jam3s
-            </Text> */}
+            <Text fontWeight={600} color={"gray.500"} mb={4}>
+              {infoUser[0].loginInfo.mail}
+            </Text>
             <Flex justifyContent="center" alignContent="center">
               <Rating rating={infoUser[0].rating} numReviews={""} />
             </Flex>
@@ -106,6 +106,7 @@ export default function UsersAdmin() {
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Ciudad: {infoUser[0].city}
               </Text>
+              <br />
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Descripción: {infoUser[0].description}
               </Text>

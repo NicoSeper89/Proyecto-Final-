@@ -8,6 +8,7 @@ import {
   getComment,
   postComment,
   deleteComment,
+  clean,
 } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgNotAvailable from "../../Image/Image_not_available.png";
@@ -65,7 +66,7 @@ export default function Detail(props, id) {
   const dispatch = useDispatch();
   const history = useHistory();
   const miStateDetail = useSelector((state) => state.detail);
-  
+
   const [showMap, setShowMap] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [alertAdminApprove, setAlertAdminApprove] = useState([false, false]);
@@ -75,19 +76,19 @@ export default function Detail(props, id) {
   const [borradoComent, setBorrado] = useState(false);
   const [alertComent, setAlertCommet] = useState([false, false]);
 
-   const myUser = JSON.parse(window.localStorage.getItem("User"));
+  const myUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
     dispatch(getPublicationsDetail(props.match.params.id));
     setTimeout(() => {
       setShowMap(true);
     }, 1000);
 
-      dispatch(getInfoUser(myUser));
-    
+    dispatch(getInfoUser(myUser));
+
     dispatch(getComment(props.match.params.id));
     return () => {
-      dispatch(clean())
-    }
+      dispatch(clean());
+    };
   }, [dispatch, props.match.params.id, borradoComent]);
 
   function handleDelete() {
@@ -155,23 +156,37 @@ export default function Detail(props, id) {
       </Box>
       <Flex
         backgroundColor={"#EDEDED"}
-        pt={"50px"}
+        // pt={"50px"}
         pb={"50px"}
-        direction={"column"}
-        justifyContent={"flex-start"}
+        direction={"row"}
+        justifyContent={"space-around"}
       >
         {Object.entries(miStateDetail).length > 0 ? (
           <Box>
             <Box
-            // flexDirection={"column"}
-            // justifyContent={"flex-start"}
-            // alignItems={"flex-start"}
-            // w={"100%"}
-            // p={"1rem"}
-            // gap={"2rem"}
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"flex-start"}
+              alignItems={"flex-start"}
+              w={"100%"}
+              h={"100%"}
+              // p={"1rem"}
+              gap={"2rem"}
             >
-              <Box display={"flex"} justifyContent="space-evenly">
-                <Flex flexDirection={"row"} justifyContent={"center"} p={"0rem .8rem"}>
+              <Box
+                display={"flex"}
+                justifyContent="space-evenly"
+                flexDirection={"column"}
+                m={"3rem"}
+              >
+                <Flex
+                  flexDirection={"row"}
+                  justifyContent={"center"}
+                  // p={"0rem .8rem"}
+                  border={"1px solid"}
+                  borderColor={"gray.300"}
+                  borderRadius={"0.5rem"}
+                >
                   {miStateDetail.property.propertyImages.length > 0 ? (
                     <Box w={"42rem"} h={"42rem"}>
                       <ImageSlider slides={miStateDetail.property.propertyImages} />
@@ -181,9 +196,150 @@ export default function Detail(props, id) {
                   )}
                 </Flex>
 
-                <Flex direction={"column"}>
+                <Box mt={"3rem"}>
+                  <Tabs
+                    variant="soft-rounded"
+                    colorScheme="green"
+                    w={"42rem"}
+                    h={"400px"}
+                    boxShadow="dark-lg"
+                    p="10px"
+                    border="1px solid grey.600"
+                    // bg={"rgba(216, 158, 26, 0.35)"}
+                    borderRadius={"0.5rem"}
+                  >
+                    <TabList>
+                      <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
+                        Mapa
+                      </Tab>
+                      <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
+                        Descripción
+                      </Tab>
+                      <Tab fontWeight={600} color={"gray.500"} mb={"5px"}>
+                        Comentarios
+                      </Tab>
+                      {myUser[0].id !== miStateDetail.userId ? (
+                        <Tab fontWeight={600} color={"red"} mb={"5px"}>
+                          Reportar
+                        </Tab>
+                      ) : (
+                        <></>
+                      )}
+                    </TabList>
+                    <TabPanels display={"flex"} justifyContent="center">
+                      <TabPanel>
+                        <Flex
+                          w={"550px"}
+                          h={"300px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.600"
+                          borderRadius={"0.5rem"}
+                          justifyContent="center"
+                          alignItems="center"
+                        >
+                          {/* {showMap && <Datos position={miStateDetail} />} */}
+                        </Flex>
+                      </TabPanel>
+                      <TabPanel>
+                        <Box
+                          alignItems="flex-start"
+                          w={"550px"}
+                          h={"300px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.300"
+                          borderRadius={"0.5rem"}
+                        >
+                          <Text fontSize="lg">{miStateDetail.description}</Text>
+                        </Box>
+                      </TabPanel>
+                      <TabPanel>
+                        <Box
+                          alignItems="flex-start"
+                          w={"550px"}
+                          h={"300px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.300"
+                          borderRadius={"0.5rem"}
+                          variant="soft-rounded"
+                        >
+                          <FormControl>
+                            {myUser[0].admin
+                              ? commentState.map((e) => (
+                                  <Text
+                                    fontWeight={"semiBold"}
+                                    fontSize="1.2rem"
+                                    color="gray.500"
+                                    border="gray.500"
+                                  >
+                                    {miStateDetail.user.name} :
+                                    <Text
+                                      fontWeight={"semiBold"}
+                                      fontSize="1.2rem"
+                                      color="gray.500"
+                                      border="gray.500"
+                                    >
+                                      {e.message}{" "}
+                                      <Button
+                                        onClick={() => {
+                                          deleteComments(e.id);
+                                        }}
+                                      >
+                                        borrar
+                                      </Button>
+                                    </Text>{" "}
+                                  </Text>
+                                ))
+                              : commentState.map((e) => (
+                                  <Text
+                                    fontWeight={"semiBold"}
+                                    fontSize="1.2rem"
+                                    color="gray.500"
+                                    border="gray.500"
+                                  >
+                                    {miStateDetail.user.name} :
+                                    <Text
+                                      fontWeight={"semiBold"}
+                                      fontSize="1.2rem"
+                                      color="gray.500"
+                                      border="gray.500"
+                                    >
+                                      {e.message}{" "}
+                                    </Text>{" "}
+                                  </Text>
+                                ))}
+                            <Input
+                              placeholder="deja tu comentario aqui..."
+                              onChange={onChangeInputComment}
+                              value={comentarios}
+                            />
+                            <Button onClick={onSubmitComent}>enviar</Button>
+                          </FormControl>
+                        </Box>
+                      </TabPanel>
+                      <TabPanel>
+                        <Flex
+                          alignItems="flex-start"
+                          w={"550px"}
+                          h={"300px"}
+                          boxShadow="dark-lg"
+                          p="10px"
+                          border="1px solid grey.300"
+                          borderRadius={"0.5rem"}
+                          justifyContent={"center"}
+                        >
+                          <FormReport id={props.match.params.id} userId={myUser[0].id} />
+                        </Flex>
+                      </TabPanel>
+                    </TabPanels>
+                  </Tabs>
+                </Box>
+
+                {/* <Flex direction={"column"} w={"400px"}>
                   <Box
-                    w={"350px"}
+                    w={"400px"}
                     borderRadius={"0.5rem"}
                     p={".3rem 0rem"}
                     textAlign={"center"}
@@ -191,15 +347,14 @@ export default function Detail(props, id) {
                   >
                     <Heading color={"white"}>Detalles</Heading>
                   </Box>
-                  <Box>
-                    {/* <FontAwesomeIcon icon={faHeart}  /> */}
-                    {/* <ListItem>premium: {miStateDetail.premium === true? (
+                  <Box> */}
+                {/* <FontAwesomeIcon icon={faHeart}  /> */}
+                {/* <ListItem>premium: {miStateDetail.premium === true? (
                   <FontAwesomeIcon icon={faCheck} />
                   ) : (
                     <FontAwesomeIcon icon={faX} />
                   }</ListItem> */}
-
-                    <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                {/* <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
                       <FontAwesomeIcon icon={faEarthAmericas} />
                       <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
                     </Flex>
@@ -272,141 +427,255 @@ export default function Detail(props, id) {
                       ))}
                     </Flex>
                   </Box>
-                </Flex>
+                </Flex> */}
               </Box>
 
-              <Flex direction={"row-reverse"} justifyContent="space-evenly">
-                <Flex direction={"column"} alignItems="center" justifyContent="space-evenly">
-                  <Box
-                    w={"350px"}
-                    h={"200px"}
-                    boxShadow="dark-lg"
-                    p="10px"
-                    border="1px solid grey.600"
-                    bg={"rgba(216, 158, 26, 0.35)"}
-                    borderRadius={"0.5rem"}
-                  >
-                    <Box textAlign={"center"} mb={"5px"}>
-                      <Text fontSize="xl" as="b">
-                        Datos del Propietario
-                      </Text>
+              <Flex
+                display={"flex"}
+                justifyContent="space-between"
+                flexDirection={"column"}
+                m={"3rem"}
+                h={"100%"}
+              >
+                <Flex
+                  direction={"column"}
+                  alignItems="center"
+                  justifyContent="space-evenly"
+                  bg={"rgba(216, 158, 26, 0.35)"}
+                >
+                  <Flex direction={"column"} w={"400px"} h={"42rem"}>
+                    <Box
+                      w={"400px"}
+                      borderRadius={"0.5rem"}
+                      p={".3rem 0rem"}
+                      textAlign={"center"}
+                      bg={"#F6AD55"}
+                    >
+                      <Heading color={"white"}>Detalles</Heading>
                     </Box>
-                    <Box alignItems="flex-start" p={"1rem"}>
-                      <ReactStars
-                        count={5}
-                        size={34}
-                        activeColor="#F6AD55"
-                        edit={false}
-                        value={miStateDetail.user.rating}
-                        isHalf={true}
-                      />
-                      <Text fontSize="lg">
-                        <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
-                      </Text>
+                    <Box>
+                      {/* <FontAwesomeIcon icon={faHeart}  /> */}
+                      {/* <ListItem>premium: {miStateDetail.premium === true? (
+                  <FontAwesomeIcon icon={faCheck} />
+                  ) : (
+                    <FontAwesomeIcon icon={faX} />
+                  }</ListItem> */}
 
-                      <Box alignItems="center" fontSize="lg">
-                        <FontAwesomeIcon icon={faAt} />
-                        <Link href={`mailto:${miStateDetail.user.contactInfo.mail}`}>
-                          {" "}
-                          {miStateDetail.user.contactInfo.mail}
-                        </Link>
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Ubicación: {miStateDetail.property.city.name}, Argentina </Text>
+                        <FontAwesomeIcon icon={faEarthAmericas} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Dirección: {miStateDetail.property.address}</Text>
+                        <FontAwesomeIcon icon={faLocationDot} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Precio: ${miStateDetail.property.price}</Text>
+                        <FontAwesomeIcon icon={faLandmark} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Tipo de propiedad: {miStateDetail.property.TypeOfProp.name}</Text>
+                        <FontAwesomeIcon icon={faHouse} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Ambientes: {miStateDetail.property.environments}</Text>
+                        <FontAwesomeIcon icon={faDoorOpen} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Superficie: {miStateDetail.property.surface}m²</Text>
+                        <FontAwesomeIcon icon={faRulerCombined} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Habitaciones: {miStateDetail.property.rooms}</Text>
+                        <FontAwesomeIcon icon={faBed} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>
+                          Antigüedad: {miStateDetail.property.age}{" "}
+                          {miStateDetail.property.age === 1 ? "Año" : "Años"}
+                        </Text>
+                        <FontAwesomeIcon icon={faCalendar} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text>Baños: {miStateDetail.property.bathrooms}</Text>
+                        <FontAwesomeIcon icon={faToilet} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Flex>
+                          Mascotas:
+                          {miStateDetail.property.pets === true ? (
+                            <FontAwesomeIcon icon={faCheck} />
+                          ) : (
+                            <FontAwesomeIcon icon={faX} />
+                          )}
+                        </Flex>
+                        <FontAwesomeIcon icon={faPaw} />
+                      </Flex>
+
+                      <Flex alignItems={"center"} m="10px" justifyContent={"space-between"}>
+                        <Text> Tamaño del garage: {miStateDetail.property.garage} autos</Text>
+                        <FontAwesomeIcon icon={faWarehouse} />
+                      </Flex>
+
+                      <Flex m="15px" direction={"row"} justifyContent={"center"}>
+                        {miStateDetail.property.services.map((e, i) => (
+                          <Flex key={i} alignItems={"center"} m="10px">
+                            <FontAwesomeIcon icon={faCheck} /> <Text>{e.name}</Text>
+                          </Flex>
+                        ))}
+                      </Flex>
+                    </Box>
+                  </Flex>
+
+                  <Flex direction="column" alignItems="center" mt={"3rem"}>
+                    <Box
+                      w={"400px"}
+                      borderRadius={"0.5rem"}
+                      p={".3rem 0rem"}
+                      textAlign={"center"}
+                      bg={"#F6AD55"}
+                    >
+                      <Heading color={"white"}>Datos del Propietario</Heading>
+                    </Box>
+                    <Box
+                      w={"350px"}
+                      h={"200px"}
+                      boxShadow="dark-lg"
+                      p="10px"
+                      border="1px solid grey.600"
+                      // bg={"rgba(216, 158, 26, 0.35)"}
+                      borderRadius={"0.5rem"}
+                      mt={"1.5rem"}
+                      mb={"1rem"}
+                    >
+                      <Box alignItems="flex-start" p={"1rem"}>
+                        <ReactStars
+                          count={5}
+                          size={34}
+                          activeColor="#F6AD55"
+                          edit={false}
+                          value={miStateDetail.user.rating}
+                          isHalf={true}
+                        />
+                        <Text fontSize="lg">
+                          <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                        </Text>
+
+                        <Box alignItems="center" fontSize="lg">
+                          <FontAwesomeIcon icon={faAt} />
+                          <Link href={`mailto:${miStateDetail.user.contactInfo.mail}`}>
+                            {" "}
+                            {miStateDetail.user.contactInfo.mail}
+                          </Link>
+                        </Box>
                       </Box>
                     </Box>
-                  </Box>
-                  <Box>
-                    {myUser[0].id === miStateDetail.userId && !miStateDetail.deleted ? (
-                      <Flex direction={"column"}>
-                        <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={() =>
-                            history.push("/updatePublicaction/" + props.match.params.id)
-                          }
-                        >
-                          Actualizar datos
-                        </Button>
-                        <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={(e) => {
-                            handleDelete(e);
-                          }}
-                        >
-                          Borrar publicación
-                        </Button>
+                    <Box>
+                      {myUser[0].id === miStateDetail.userId && !miStateDetail.deleted ? (
+                        <Flex direction={"column"}>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={() =>
+                              history.push("/updatePublicaction/" + props.match.params.id)
+                            }
+                          >
+                            Actualizar datos
+                          </Button>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={(e) => {
+                              handleDelete(e);
+                            }}
+                          >
+                            Borrar publicación
+                          </Button>
 
-                        <RequestScore publicationsId={props.match.params.id} />
-                      </Flex>
-                    ) : myUser[0].id === miStateDetail.userId && miStateDetail.deleted ? (
-                      <Flex>
-                        <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={(e) => {
-                            handleReclaim(e);
-                          }}
-                        >
-                          Pedir restauración
-                        </Button>
-                      </Flex>
-                    ) : myUser[0].admin && !miStateDetail.approved ? (
-                      <Flex>
-                        <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={(e) => {
-                            handleApprove(e);
-                          }}
-                        >
-                          Aprobar publicación
-                        </Button>
-                        <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={(e) => {
-                            handleDeleteAdmin(e);
-                          }}
-                        >
-                          Borrar publicación
-                        </Button>
-                      </Flex>
-                    ) : myUser[0].admin && miStateDetail.approved ? (
-                      <Flex>
-                        <Button
-                          w={"350px"}
-                          colorScheme="green"
-                          m="8px"
-                          fontSize="xl"
-                          as="b"
-                          onClick={(e) => {
-                            handleDeleteAdmin(e);
-                          }}
-                        >
-                          {!miStateDetail.deleted ? "Borrar publicación" : "Restaurar publicación"}
-                        </Button>
-                      </Flex>
-                    ) : (
-                      <Flex></Flex>
-                    )}
-                  </Box>
+                          <RequestScore publicationsId={props.match.params.id} />
+                        </Flex>
+                      ) : myUser[0].id === miStateDetail.userId && miStateDetail.deleted ? (
+                        <Flex>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={(e) => {
+                              handleReclaim(e);
+                            }}
+                          >
+                            Pedir restauración
+                          </Button>
+                        </Flex>
+                      ) : myUser[0].admin && !miStateDetail.approved ? (
+                        <Flex>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={(e) => {
+                              handleApprove(e);
+                            }}
+                          >
+                            Aprobar publicación
+                          </Button>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={(e) => {
+                              handleDeleteAdmin(e);
+                            }}
+                          >
+                            Borrar publicación
+                          </Button>
+                        </Flex>
+                      ) : myUser[0].admin && miStateDetail.approved ? (
+                        <Flex>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={(e) => {
+                              handleDeleteAdmin(e);
+                            }}
+                          >
+                            {!miStateDetail.deleted
+                              ? "Borrar publicación"
+                              : "Restaurar publicación"}
+                          </Button>
+                        </Flex>
+                      ) : (
+                        <Flex></Flex>
+                      )}
+                    </Box>
+                  </Flex>
                 </Flex>
 
-                <Box>
+                {/* <Box>
                   <Tabs
                     variant="soft-rounded"
                     colorScheme="green"
@@ -445,7 +714,7 @@ export default function Detail(props, id) {
                           justifyContent="center"
                           alignItems="center"
                         >
-                          {/* {showMap && <Datos position={miStateDetail} />} */}
+                           {showMap && <Datos position={miStateDetail} />}
                         </Flex>
                       </TabPanel>
                       <TabPanel>
@@ -477,19 +746,17 @@ export default function Detail(props, id) {
                       </TabPanel>
                     </TabPanels>
                   </Tabs>
-                </Box>
+                </Box>  */}
               </Flex>
             </Box>
 
-            <Box
+            {/* <Box
               variant="soft-rounded"
-              /* colorScheme="green" */
               w={"42rem"}
               h={"400px"}
               boxShadow="dark-lg"
               p="10px"
               border="1px solid grey.600"
-              // bg={"rgba(216, 158, 26, 0.35)"}
               borderRadius={"0.5rem"}
             >
               <FormControl>
@@ -544,8 +811,14 @@ export default function Detail(props, id) {
                 />
                 <Button onClick={onSubmitComent}>enviar</Button>
               </FormControl>
-            </Box>
-            <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
+            </Box> */}
+            <AlertAdminDelete
+              alertAdminDelete={alertAdminDelete}
+              setAlertAdminDelete={setAlertAdminDelete}
+              emailUser={miStateDetail.user.contactInfo.mail}
+              pubId={props.match.params.id}
+              deleted={miStateDetail.deleted}
+            />
           </Box>
         ) : (
           <Loading />
@@ -557,7 +830,11 @@ export default function Detail(props, id) {
         deleted={miStateDetail.deleted}
       />
       <AlertDeleteComent alertComent={alertComent} id={id} />
-      <AlertAdminApprove alertSubmit={alertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} />
+      <AlertAdminApprove
+        alertSubmit={alertAdminApprove}
+        pubId={props.match.params.id}
+        userId={miStateDetail.userId}
+      />
       <Footer />
       {/* {showMap && <Datos position={miStateDetail} />} */}
     </Box>
