@@ -61,6 +61,9 @@ import Datos from "../Maps/Datos";
 import RequestScore from "./requestScore";
 // import Comentarios from "./Comentarios"
 import ReactStars from "react-rating-stars-component";
+// import emailjs from "emailjs-com";
+import AlertRestoration from "./AlertRestoration";
+
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -74,7 +77,9 @@ export default function Detail(props, id) {
   const commentState = useSelector((state) => state.comments);
   const [comentarios, setComments] = useState("");
   const [borradoComent, setBorrado] = useState(false);
-  const [alertComent, setAlertCommet] = useState([false, false]);
+  const [alertComent, setAlertCommet] = useState([false, false])
+  const [requestRestoration, setRequestRestoration] = useState(false)
+
 
   const myUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
@@ -98,10 +103,6 @@ export default function Detail(props, id) {
       left: 0,
       behavior: "smooth",
     });
-  }
-
-  function handleReclaim() {
-    console.log("mail");
   }
 
   function handleApprove() {
@@ -140,14 +141,29 @@ export default function Detail(props, id) {
 
   const onSubmitComent = async (e) => {
     e.preventDefault();
-    if (comentarios !== "") {
-      dispatch(postComment(comentarios, props.match.params.id));
-      dispatch(getComment(props.match.params.id));
-      setComments("");
-    } else {
-      alert("you must complete the comment to send message");
+    try {
+      if (comentarios !== "") {
+        dispatch(postComment(comentarios, props.match.params.id));
+        dispatch(getComment(props.match.params.id));
+        setComments("");
+        /* await emailjs.sendForm("service_4xqps7g", "template_8suw4hd", e.target, "cF426xv2uIUBSdta_") */
+      } else {
+        alert("you must complete the comment to send message");
+      }
+    } catch (error) {
+      console.log(error)
     }
   };
+
+  const onClickRestoration = (e) => {
+
+    setRequestRestoration(true);
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }
 
   return (
     <Box zIndex={2}>
@@ -617,10 +633,7 @@ export default function Detail(props, id) {
                             m="8px"
                             fontSize="xl"
                             as="b"
-                            onClick={(e) => {
-                              handleReclaim(e);
-                            }}
-                          >
+                            onClick={onClickRestoration}>
                             Pedir restauración
                           </Button>
                         </Flex>
@@ -749,8 +762,7 @@ export default function Detail(props, id) {
                 </Box>  */}
               </Flex>
             </Box>
-
-            {/* <Box
+            <Box
               variant="soft-rounded"
               w={"42rem"}
               h={"400px"}
@@ -759,66 +771,49 @@ export default function Detail(props, id) {
               border="1px solid grey.600"
               borderRadius={"0.5rem"}
             >
-              <FormControl>
-                {myUser[0].admin
-                  ? commentState.map((e) => (
-                      <Text
+              <Box>
+                {commentState.map((element, i) => (
+                      <Flex key={i}
                         fontWeight={"semiBold"}
                         fontSize="1.2rem"
                         color="gray.500"
                         border="gray.500"
-                      >
-                        {miStateDetail.user.name} :
-                        <Text
-                          fontWeight={"semiBold"}
-                          fontSize="1.2rem"
-                          color="gray.500"
-                          border="gray.500"
-                        >
-                          {e.message}{" "}
-                          <Button
-                            onClick={() => {
-                              deleteComments(e.id);
-                            }}
-                          >
-                            borrar
-                          </Button>
-                        </Text>{" "}
-                      </Text>
-                    ))
-                  : commentState.map((e) => (
-                      <Text
-                        fontWeight={"semiBold"}
-                        fontSize="1.2rem"
-                        color="gray.500"
-                        border="gray.500"
-                      >
-                        {miStateDetail.user.name} :
-                        <Text
-                          fontWeight={"semiBold"}
-                          fontSize="1.2rem"
-                          color="gray.500"
-                          border="gray.500"
-                        >
-                          {e.message}{" "}
-                        </Text>{" "}
-                      </Text>
+                        gap={"1rem"}>
+                        {miStateDetail.user.name}
+                        <Text>
+                          {element.message}
+                        </Text>
+                        {myUser[0].admin? 
+                          <Button 
+                            onClick={(e) => {deleteComments(e, element.id);}}
+                            >X</Button>
+                          : 
+                          null
+                          }
+                      </Flex>
                     ))}
-                <Input
-                  placeholder="deja tu comentario aqui..."
-                  onChange={onChangeInputComment}
-                  value={comentarios}
-                />
-                <Button onClick={onSubmitComent}>enviar</Button>
-              </FormControl>
-            </Box> */}
-            <AlertAdminDelete
-              alertAdminDelete={alertAdminDelete}
-              setAlertAdminDelete={setAlertAdminDelete}
-              emailUser={miStateDetail.user.contactInfo.mail}
-              pubId={props.match.params.id}
-              deleted={miStateDetail.deleted}
-            />
+                    <form onSubmit={onSubmitComent}>
+                      <Input placeholder="deja tu comentario aqui..." onChange={onChangeInputComment} value={comentarios} name={"coment_publication"} />
+                      <Input display={"none"} value={miStateDetail.user.contactInfo.mail} name={"user_owner"} readOnly/>
+                      <Input display={"none"} value={`http://localhost:3000/details/${props.match.params.id}`} name={"url_publication"} readOnly/>
+                      <Button type="submit" >enviar</Button>
+                    </form>
+              </Box>
+              {/* <Carousel>
+                {Object.entries(commentState).length > 0 ? (
+                  <Box>
+                    <Input
+                      onChange={onChangeInputComment}
+                      value={comentarios}
+                      name="message"
+                    ></Input>
+                    <Button onClick={onSubmitComent}>x</Button>
+                  </Box>
+                ) : null}
+              </Carousel> */}
+            </Box>
+            <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
+            <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail}/>
           </Box>
         ) : (
           <Loading />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import emailjs from "emailjs-com";
+/* import emailjs from "emailjs-com"; */
 
 import {
   Button,
@@ -20,18 +20,18 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
   const dispatch = useDispatch();
 
   const [reasons, setReasons] = useState("");
-
-  const onSi = async (e) => {
-    e.preventDefault();
-
-    try {
-      dispatch(deletePublicaction(pubId));
-      await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF");
-      history.push("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
+    const onSi = async (e) => {
+        e.preventDefault();
+        
+        try {
+            dispatch(deletePublicaction(pubId));
+            /* await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF") */
+            history.push("/")
+          } catch (error) {
+            console.log(error)
+          }
+    };
 
   const onNo = () => {
     setAlertAdminDelete([false, false]);
