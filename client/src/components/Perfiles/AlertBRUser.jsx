@@ -29,11 +29,11 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned, userEmail })
         try {
             if (!banned) {
                 dispatch(blockUser(userId));
-                await emailjs.sendForm("service_jwhjfzk", "template_99r0cuj", e.target, "SfKZ1bVFvrovCVKCZ")
+                /* await emailjs.sendForm("service_jwhjfzk", "template_99r0cuj", e.target, "SfKZ1bVFvrovCVKCZ") */
                 history.push("/admin")
             } else {
                 dispatch(restoreUser(userId));
-                await emailjs.sendForm("service_jwhjfzk", "template_htqwacm", e.target, "SfKZ1bVFvrovCVKCZ")
+                /* await emailjs.sendForm("service_jwhjfzk", "template_htqwacm", e.target, "SfKZ1bVFvrovCVKCZ") */
                 history.push("/admin")
             }
 
