@@ -1,20 +1,29 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+/* import emailjs from "emailjs-com"; */
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Flex } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Flex, Input } from "@chakra-ui/react";
 import { approvePostUser } from "../../redux/actions";
 
-const AlertAdminApprove = ({ alertSubmit, pubId, userId }) => {
+const AlertAdminApprove = ({ alertSubmit, setAlertAdminApprove, pubId, userId, emailUser }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const onSi = () => {
-    dispatch(approvePostUser(pubId, userId));
-    history.push("/");
+  const onSi = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(approvePostUser(pubId, userId));
+      /* await emailjs.sendForm("service_6rkm2fe", "template_f6k09gh", e.target, "8MtXDr5Zt_CF-tD7t") */
+      history.push("/admin");
+    } catch (error) {
+      console.log(error)
+    }
+
   };
   const onNo = () => {
-    history.goBack();
+    setAlertAdminApprove([false,false])
   };
 
   return (
@@ -34,13 +43,16 @@ const AlertAdminApprove = ({ alertSubmit, pubId, userId }) => {
       <AlertTitle mt={4} mb={1} fontSize="lg">
         ¿Estás seguro de que queres aprobar la publicación?"
       </AlertTitle>
+      <form onSubmit={onSi}>
+      <Input display={"none"} value={emailUser} name="user_email" readOnly />
+      <Input display={"none"} value={pubId} name="publication_id" readOnly />
       <Flex direction={"column"}>
-        <Button mb={"10px"} onClick={(e) => onSi(e)}>
+        <Button type="submit" mb={"10px"} >
           Si
         </Button>
         <Button onClick={(e) => onNo(e)}>No</Button>
       </Flex>
-      <br />
+      </form>
       <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
     </Alert>
   );

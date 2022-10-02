@@ -796,6 +796,7 @@ export default function Detail(props, id) {
             </Box> */}
             <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
             <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail} />
+            <AlertAdminApprove alertSubmit={alertAdminApprove} setAlertAdminApprove={setAlertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} emailUser={miStateDetail.user.contactInfo.mail}/>
           </Box>
         ) : (
           <Loading />
@@ -807,11 +808,7 @@ export default function Detail(props, id) {
         deleted={miStateDetail.deleted}
       />
       <AlertDeleteComent alertComent={alertComent} id={id} />
-      <AlertAdminApprove
-        alertSubmit={alertAdminApprove}
-        pubId={props.match.params.id}
-        userId={miStateDetail.userId}
-      />
+      
       <Footer />
     </Box>
   );
