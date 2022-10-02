@@ -3,7 +3,7 @@ import React from "react";
 // import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import ReactStars from "react-rating-stars-component";
 
-export default function Rating(allUserInfo) {
+export default function Rating({rating, ratingAmount}) {
   /* const rating = 0;
   const numReviews = 0; */
 
@@ -33,11 +33,11 @@ export default function Rating(allUserInfo) {
           size={34}
           activeColor="#F6AD55"
           edit={false}
-          value={allUserInfo.rating}
+          value={rating}
           isHalf={true}
         />
         <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {allUserInfo.ratingAmount} {allUserInfo.ratingAmount > 1 && "s"}
+          {ratingAmount} {ratingAmount > 1 && "s"}
         </Box>
       </Box>
     </Box>
