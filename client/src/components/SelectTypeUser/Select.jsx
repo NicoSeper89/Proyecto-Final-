@@ -37,7 +37,8 @@ const Select = () => {
       setLoguear({loguear:true,banned:false});
       window.localStorage.setItem("User", JSON.stringify(user2.data.userInfo));
     } else {
-      setLoguear({loguear:false,banned:user2.data.userInfo[0].banned});
+      var banned = user2.data.userInfo? user2.data.userInfo[0].banned: false
+      setLoguear({loguear:false, banned});
     }
   };
 
