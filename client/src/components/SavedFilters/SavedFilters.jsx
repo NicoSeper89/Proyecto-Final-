@@ -21,7 +21,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
-function SavedFilters({ filterToSave, savedSort, savedCity }) {
+function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.allUserInfo);
   const [value, setValue] = useState("");
@@ -110,8 +110,8 @@ function SavedFilters({ filterToSave, savedSort, savedCity }) {
             _hover={{ bg: "#D9D9D9" }}
             _focus={{ bg: "#D9D9D9" }}
             onChange={handleValue}
-            placeholder="Mis Filtros"
           >
+            <option value={""} selected={clean}>Mis Filtros</option>
             {storedValues?.map((v, i) => (
               <option key={i}>{v.split(" ")[0]}</option>
             ))}
