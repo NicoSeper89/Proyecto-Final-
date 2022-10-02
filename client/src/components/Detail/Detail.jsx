@@ -73,6 +73,7 @@ import RequestScore from "./requestScore";
 import ReactStars from "react-rating-stars-component";
 // import emailjs from "emailjs-com";
 import AlertRestoration from "./AlertRestoration";
+import { getTotalUsers } from "../../redux/actions";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -86,6 +87,8 @@ export default function Detail(props, id) {
   const [borradoComent, setBorrado] = useState(false);
   const [alertComent, setAlertCommet] = useState([false, false]);
   const [requestRestoration, setRequestRestoration] = useState(false);
+  const totalUsers = useSelector((state) => state.totalUsers);
+ 
   const toast = useToast();
 
   const myUser = JSON.parse(window.localStorage.getItem("User"));
@@ -93,6 +96,7 @@ export default function Detail(props, id) {
     dispatch(getPublicationsDetail(props.match.params.id));
     dispatch(getInfoUser(myUser));
     dispatch(getComment(props.match.params.id));
+    dispatch(getTotalUsers)
     return () => {
       dispatch(clean());
     };
@@ -179,6 +183,14 @@ export default function Detail(props, id) {
       left: 0,
       behavior: "smooth",
     });
+  };
+
+  const viewUser = (id) => {
+    const userAdmin = totalUsers.filter((e) => e.id === id);
+    window.localStorage.setItem("ViewUser", JSON.stringify(userAdmin));
+
+    // window.localStorage.setItem("adminId", `${p.id}`)
+    history.push(`/viewUser`);
   };
 
   return (
@@ -533,9 +545,13 @@ export default function Detail(props, id) {
                         </Flex>
 
                         {/* ACA ESTARIA BUENO QUE EL ADMIN HAGA CLICK EN EL NOMBRE Y LO LLEVE AL PERFIL DEL USUARIO */}
-                        <Text fontSize="lg" mb={"10px"}>
+                        { myUser[0].admin ?<Text fontSize="lg" mb={"10px"} onClick={() => viewUser(miStateDetail.userId)}
+                        cursor= "pointer">
                           <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
                         </Text>
+                         :<Text fontSize="lg" mb={"10px"}>
+                          <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                        </Text>}
 
                         <Box alignItems="center" fontSize="lg">
                           <FontAwesomeIcon icon={faAt} />
