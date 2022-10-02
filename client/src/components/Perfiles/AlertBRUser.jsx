@@ -14,6 +14,7 @@ import {
   Flex,
   Textarea,
   useToast,
+  Box
 } from "@chakra-ui/react";
 import { blockUser, restoreUser } from "../../redux/actions";
 
@@ -61,8 +62,17 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
   };
 
   return (
+    <Box  zIndex={20}
+          position={"absolute"}
+          display={!alertBRUser[0] ? "none" : "flex"}
+          bg={"blackAlpha.100"}
+          top={"0px"}
+          left={"0px"}
+          w={"full"}
+          h={"full"}
+        >
     <Alert
-      zIndex={10}
+      
       position={"absolute"}
       display={!alertBRUser[0] ? "none" : "flex"}
       status={!alertBRUser[1] ? "error" : "info"}
@@ -72,7 +82,7 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
       justifyContent="center"
       textAlign="center"
       height="23rem"
-      top={"10rem"}
+      top={"6rem"}
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
@@ -88,6 +98,7 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
       </Flex>
       <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
     </Alert>
+    </Box>
   );
 };
 

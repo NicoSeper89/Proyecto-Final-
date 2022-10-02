@@ -76,9 +76,9 @@ export default function UsersAdmin() {
   });
 
   return (
-    <Box>
+    <Box >
       <NavBarForms />
-      <Stack
+      <Stack position={"relative"}
         align={"start"}
         justify={"center"}
         direction={"row"}
@@ -122,7 +122,7 @@ export default function UsersAdmin() {
               {infoUser[0].loginInfo.mail}
             </Text>
             <Flex justifyContent="center" alignContent="center">
-              <Rating rating={infoUser[0].rating} numReviews={""} />
+              <Rating rating={infoUser[0].rating} ratingAmount={infoUser[0].ratingAmount} />
             </Flex>
             <Flex direction={"column"} alignItems="flex-start" p={6}>
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
@@ -190,8 +190,8 @@ export default function UsersAdmin() {
             </TabPanels>
           </Tabs>
         </Box>
+        <AlertBRUser  alertBRUser={alertBRUser} setAlertBRUser={setAlertBRUser} userId={infoUser[0].id} banned={infoUser[0].banned} userEmail={infoUser[0].loginInfo.mail} />
       </Stack>
-      <AlertBRUser  alertBRUser={alertBRUser} setAlertBRUser={setAlertBRUser} userId={infoUser[0].id} banned={infoUser[0].banned} userEmail={infoUser[0].loginInfo.mail} />
       <Footer />
     </Box>
   );
