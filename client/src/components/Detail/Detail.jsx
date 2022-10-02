@@ -181,6 +181,7 @@ export default function Detail(props, id) {
     });
   };
 
+  console.log("AAAA", miStateDetail);
   return (
     <Box zIndex={2}>
       <Box>
