@@ -102,7 +102,6 @@ export default function PerfilPropietario() {
             <Flex justifyContent="center" alignContent="center">
               <Rating allUserInfo={allUserInfo} />
             </Flex>
-            <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Ciudad: {infoUser[0].city}

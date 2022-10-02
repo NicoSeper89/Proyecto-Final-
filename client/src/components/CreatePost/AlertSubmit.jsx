@@ -3,13 +3,19 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, useToast } from "@chakra-ui/react";
 
 const AlertSubmit = ({ alertSubmit, propertyId }) => {
   const history = useHistory();
+  const toast = useToast();
 
   const onDown = () => {
     history.push("/");
+    toast({
+      title: "Publicación creada correctamente.",
+      status: "success",
+      isClosable: true,
+    });
   };
   /*  const onTest = async () => {
      history.push("/PaymentOk");

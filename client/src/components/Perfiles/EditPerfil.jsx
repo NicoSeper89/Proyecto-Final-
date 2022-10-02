@@ -72,17 +72,8 @@ export default function EditPerfil(props) {
         justifyContent={"flex-start"}
         color={"gray.700"}
         bg={"blackAlpha.200"}
+        p={"3rem"}
       >
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"70%"} p={"1rem 0rem"} m={"1rem"}>
-          <Heading
-            color={"white"}
-            textShadow={"gray .1rem .1rem .2rem"}
-            textAlign={"center"}
-            fontSize="2.0rem"
-          >
-            EDITAR PERFIL
-          </Heading>
-        </Box>
         <Flex
           position="relative"
           flexDirection={"column"}
@@ -90,8 +81,18 @@ export default function EditPerfil(props) {
           alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          w={"90%"}
+          w={"80%"}
         >
+          <Box bg={"#F6AD55"} borderRadius={".2rem"} p={"1rem 0rem"} mb={"1rem"}>
+            <Heading
+              color={"white"}
+              textShadow={"gray .1rem .1rem .2rem"}
+              textAlign={"center"}
+              fontSize="2.0rem"
+            >
+              EDITAR PERFIL
+            </Heading>
+          </Box>
           <Box
             p={"1rem"}
             w={"80%"}
@@ -141,16 +142,19 @@ export default function EditPerfil(props) {
               <UserUploadImg />
             </Box>
           </Box>
-          <Button
-            fontSize="xl"
-            colorScheme="blue"
-            type="submit"
-            value="enviar"
-            onClick={handleSubmit}
-            disabled={disabledButton}
-          >
-            Confirmar cambios
-          </Button>
+          <Flex justifyContent={"flex-end"} p={"1rem"}>
+            <Button
+              w={"30%"}
+              fontSize="xl"
+              colorScheme="blue"
+              type="submit"
+              value="enviar"
+              onClick={handleSubmit}
+              disabled={disabledButton}
+            >
+              Confirmar cambios
+            </Button>
+          </Flex>
           <Box
             position={"absolute"}
             display={!alertSubmit[0] ? "none" : "flex"}

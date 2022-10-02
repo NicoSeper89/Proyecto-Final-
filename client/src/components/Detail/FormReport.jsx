@@ -8,6 +8,7 @@ import {
   Select,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
@@ -53,8 +54,7 @@ export default function FormReport({ id, userId }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const infoDetail = useSelector((state) => state.detail);
-  //   const [disableButtonSubmit, setDisableButtonSubmit] = useState(true);
-  //   const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const toast = useToast();
   const [errors, setErrors] = useState({});
 
   const infoUser = JSON.parse(window.localStorage.getItem("User"));
@@ -90,14 +90,24 @@ export default function FormReport({ id, userId }) {
     e.preventDefault();
     if (input.type && input.info) {
       dispatch(reportPublication(infoDetail.id, input));
-      alert("Su reporte fue enviado correctamente");
+      toast({
+        title: "Su reporte fue enviado correctamente",
+        status: "success",
+        isClosable: true,
+      });
+      // alert("Su reporte fue enviado correctamente");
       setInput({
         type: "",
         info: "",
       });
-      history.push("/");
+      // history.push("/");
     } else {
-      alert("Te falta completar datos");
+      // alert("Te falta completar datos");
+      toast({
+        title: "Te falta completar datos",
+        status: "error",
+        isClosable: true,
+      });
     }
   };
 
@@ -114,14 +124,9 @@ export default function FormReport({ id, userId }) {
         w={"550px"}
         h={"300px"}
       >
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"100%"}>
-          <Heading
-            color={"white"}
-            textShadow={"gray .1rem .1rem .2rem"}
-            textAlign={"center"}
-            fontSize="1.2rem"
-          >
-            REPORTAR PUBLICACIÓN
+        <Box borderRadius={".2rem"} w={"100%"}>
+          <Heading textAlign={"center"} fontSize="1.2rem">
+            Reportar Publicación
           </Heading>
         </Box>
         <Flex

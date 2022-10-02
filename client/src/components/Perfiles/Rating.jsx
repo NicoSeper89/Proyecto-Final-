@@ -37,7 +37,7 @@ export default function Rating(allUserInfo) {
           isHalf={true}
         />
         <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {allUserInfo.ratingAmount} review{allUserInfo.ratingAmount > 1 && "s"}
+          {allUserInfo.ratingAmount} {allUserInfo.ratingAmount > 1 && "s"}
         </Box>
       </Box>
     </Box>
