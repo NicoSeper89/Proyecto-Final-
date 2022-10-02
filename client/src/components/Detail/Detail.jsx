@@ -357,6 +357,8 @@ export default function Detail(props, id) {
                                     <Button
                                       cursor={"pointer"}
                                       size="xs"
+                                      bg="#5e5d5d"
+                                      color="white"
                                       _hover={{ bg: "#FF8181", color: "white" }}
                                       onClick={() => {
                                         deleteComments(e.id);
@@ -643,9 +645,26 @@ export default function Detail(props, id) {
                 </Flex>
               </Flex>
             </Box>
-            <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
-            <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail} />
-            <AlertAdminApprove alertSubmit={alertAdminApprove} setAlertAdminApprove={setAlertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} emailUser={miStateDetail.user.contactInfo.mail}/>
+            <AlertAdminDelete
+              alertAdminDelete={alertAdminDelete}
+              setAlertAdminDelete={setAlertAdminDelete}
+              emailUser={miStateDetail.user.contactInfo.mail}
+              pubId={props.match.params.id}
+              deleted={miStateDetail.deleted}
+            />
+            <AlertRestoration
+              requestRestoration={requestRestoration}
+              setRequestRestoration={setRequestRestoration}
+              pubId={props.match.params.id}
+              emailUser={miStateDetail.user.contactInfo.mail}
+            />
+            <AlertAdminApprove
+              alertSubmit={alertAdminApprove}
+              setAlertAdminApprove={setAlertAdminApprove}
+              pubId={props.match.params.id}
+              userId={miStateDetail.userId}
+              emailUser={miStateDetail.user.contactInfo.mail}
+            />
           </Box>
         ) : (
           <Loading />
@@ -657,7 +676,7 @@ export default function Detail(props, id) {
         deleted={miStateDetail.deleted}
       />
       <AlertDeleteComent alertComent={alertComent} id={id} />
-      
+
       <Footer />
     </Box>
   );
