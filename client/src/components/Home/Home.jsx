@@ -13,6 +13,7 @@ import {
   // getFavsUser,
   allDates,
   allUserDates,
+  getFavsUser,
 } from "../../redux/actions/index.js";
 import { Box } from "@chakra-ui/react";
 // import Loading from "../Loading/Loading.jsx";
@@ -28,12 +29,13 @@ const Home = () => {
   const dates = useSelector(state => state.dates)
   const userDates = useSelector(state => state.userDates)
   sessionStorage.setItem('dates', JSON.stringify([dates, userDates]))
-  // const infoUser = useSelector((state) => state.infoUser);;
+  const infoUser = useSelector((state) => state.infoUser);;
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
   useEffect(() => {
     const dataUser = window.localStorage.getItem("User");
     dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
+
     // if (dataUser) {
     //   dispatch(getFavsUser(infoUser[0].id));
     // }
@@ -44,6 +46,9 @@ const Home = () => {
     dispatch(getPublicationsPremium());
     dispatch(allDates());
     dispatch(allUserDates());
+    if (infoUser) {
+      dispatch(getFavsUser(infoUser[0].id))
+    }
   }, [dispatch, filters, sorting, cities]);
 
   return (

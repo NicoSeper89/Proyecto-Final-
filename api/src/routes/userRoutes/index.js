@@ -307,17 +307,19 @@ router.get("/getPubsDeleted/:id", async (req, res, next) => {
 router.put("/setFav", async (req, res, next) => {
   try {
     let { userId, pubId } = req.query;
-
-    await User.update(
-      {
-        favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),
-      },
-      {
-        where: {
-          id: userId,
+    let user=await User.findByPk(userId)
+    if(!user.favorites.includes(pubId)){
+      await User.update(
+        {
+          favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),
         },
-      }
-    );
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+    }   
     res.send(`añadido ${pubId} a ${userId}`);
   } catch (error) {
     next(error);
