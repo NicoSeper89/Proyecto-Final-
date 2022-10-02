@@ -63,10 +63,10 @@ export default function Footer() {
             >
               <FontAwesomeIcon icon={faSquareGithub} fontSize="30px" />
             </Button>
-            <Button label={"Twitter"} href={"#"} p={0}>
+            <Button label={"Instagram"} href={"https://www.instagram.com/lookhousepf/"} p={0}>
               <FontAwesomeIcon icon={faSquareInstagram} fontSize="30px" />
             </Button>
-            <Button label={"Instagram"} href={"#"} p={0}>
+            <Button label={"Twitter"} href={"https://www.instagram.com/lookhousepf/"} p={0}>
               <FontAwesomeIcon icon={faSquareTwitter} fontSize="30px" />
             </Button>
           </Stack>

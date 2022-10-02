@@ -59,6 +59,7 @@ import {
   useToast,
   InputGroup,
   InputRightElement,
+  Badge,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
@@ -196,6 +197,20 @@ export default function Detail(props, id) {
       >
         {Object.entries(miStateDetail).length > 0 ? (
           <Box>
+            <Flex mt={"1rem"} justifyContent={"center"}>
+              {miStateDetail.deleted === true ? (
+                <Badge colorScheme="red" variant="solid" fontSize="1.5em">
+                  {/* Publicacion Eliminada, solicita su restauración más abajo */}
+                  Publicacion Eliminada
+                </Badge>
+              ) : null}
+              {miStateDetail.approved === false ? (
+                <Badge colorScheme="red" variant="solid" fontSize="1.5em">
+                  {/* Publicacion Eliminada, solicita su restauración más abajo */}
+                  Publicacion pendiente de aprobación
+                </Badge>
+              ) : null}
+            </Flex>
             <Box
               display={"flex"}
               flexDirection={"row"}

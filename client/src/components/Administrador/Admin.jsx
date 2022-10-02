@@ -32,7 +32,7 @@ import {
   getTotalUsers,
   viewUser2,
   getUserImage,
-  deleteReport
+  deleteReport,
 } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
@@ -74,11 +74,11 @@ export default function Admin() {
     history.push(`/viewUser`);
   };
   const delReport = (id) => {
-    dispatch(deleteReport(id))
+    dispatch(deleteReport(id));
     // window.localStorage.setItem("adminId", `${p.id}`)
-    window.location.reload()
+    window.location.reload();
   };
-  
+
   let sessionDates = JSON.parse(sessionStorage.getItem("dates"));
   const dates = sessionDates[0];
   const userDates = sessionDates[1];
@@ -98,9 +98,9 @@ export default function Admin() {
     labels: labels,
     datasets: [
       {
-        label: "Cantidad de Publicaciones p/mes",
+        label: "Cantidad de Publicaciones por mes",
         data: labels.map((a) => amount(dates, a)),
-        backgroundColor: ["red", "blue", "green", "orange", "yellow"],
+        backgroundColor: ["rgba(216, 158, 26, 0.65)"],
       },
     ],
   });
@@ -110,9 +110,9 @@ export default function Admin() {
     labels: userLabels,
     datasets: [
       {
-        label: "Cantidad de Usuarios p/mes",
+        label: "Cantidad de Usuarios por mes",
         data: userLabels.map((a) => amount(userDates, a)),
-        backgroundColor: ["red", "blue", "green", "orange", "yellow"],
+        backgroundColor: ["rgba(216, 158, 26, 0.65)"],
       },
     ],
   });
@@ -185,6 +185,7 @@ export default function Admin() {
                         <Th>Fecha de creación</Th>
                         <Th>Usuario</Th>
                         <Th>Rating</Th>
+                        <Th>Estado</Th>
                         <Th>Perfil</Th>
                       </Tr>
                     </Thead>
@@ -195,6 +196,7 @@ export default function Admin() {
                             <Td>{p.createdAt}</Td>
                             <Td>{p.name}</Td>
                             <Td>{p.rating}</Td>
+                            <Td>{p.banned ? "Baneado" : "Activo"}</Td>
                             <Td>
                               <Button h="1.75rem" size="sm" onClick={() => viewUser(p.id)}>
                                 <FontAwesomeIcon icon={faUser} />
@@ -218,6 +220,7 @@ export default function Admin() {
                     <Tr>
                       <Th>Fecha de creación</Th>
                       <Th>Publicación</Th>
+                      <Th>Estado</Th>
                       <Th>Propiedad</Th>
                       <Th>Perfil de Propietario</Th>
                     </Tr>
@@ -228,6 +231,7 @@ export default function Admin() {
                         <Tr key={i}>
                           <Td>{p.createdAt}</Td>
                           <Td>{p.property.address}</Td>
+                          <Td>{p.status}</Td>
                           <Td>
                             <Button
                               h="1.75rem"
@@ -300,6 +304,7 @@ export default function Admin() {
                       <Tr>
                         <Th>Fecha de creación</Th>
                         <Th>Fecha de eliminación</Th>
+                        <Th>Motivo?</Th>
                         <Th>Propiedad</Th>
                         <Th>Perfil del propietario</Th>
                       </Tr>
@@ -310,6 +315,7 @@ export default function Admin() {
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.updatedAt}</Td>
+                            <Td>Motivo??</Td>
                             <Td>
                               <Button
                                 h="1.75rem"
@@ -410,7 +416,7 @@ export default function Admin() {
           boxShadow="dark-lg"
           p="10px"
           border="1px solid grey.600"
-          bg={"rgba(216, 158, 26, 0.35)"}
+          // bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
           textAlign={"center"}
         >
@@ -424,7 +430,7 @@ export default function Admin() {
           boxShadow="dark-lg"
           p="10px"
           border="1px solid grey.600"
-          bg={"rgba(216, 158, 26, 0.35)"}
+          // bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
           textAlign={"center"}
         >
