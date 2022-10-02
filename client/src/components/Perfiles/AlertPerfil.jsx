@@ -1,16 +1,27 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Button, Alert, AlertIcon, AlertDescription } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertDescription, useToast, Flex } from "@chakra-ui/react";
 
 const AlertPerfil = ({ alertSubmit }) => {
   const history = useHistory();
+  const toast = useToast();
 
   const onDown = () => {
     history.push("/");
+    toast({
+      title: "Perfil editado correctamente.",
+      status: "success",
+      isClosable: true,
+    });
   };
   const onUser = () => {
     history.push("/perfilPropietario");
+    toast({
+      title: "Perfil editado correctamente.",
+      status: "success",
+      isClosable: true,
+    });
   };
 
   return (
@@ -34,9 +45,15 @@ const AlertPerfil = ({ alertSubmit }) => {
           : "La publicación se Actualizo correctamente"}
       </AlertTitle> */}
       <AlertDescription maxWidth="sm">Perfil Actualizado!</AlertDescription>
-      <Button onClick={onUser}>Aceptar</Button>
-      <br />
-      <Button onClick={onDown}>Volver al inicio</Button>
+      <Flex direction={"row"} justifyContent="center">
+        <Button m={"1rem"} onClick={onUser}>
+          Aceptar
+        </Button>
+
+        <Button m={"1rem"} onClick={onDown}>
+          Volver al inicio
+        </Button>
+      </Flex>
     </Alert>
   );
 };

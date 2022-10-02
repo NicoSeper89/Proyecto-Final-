@@ -94,7 +94,6 @@ export default function Admin() {
   }
 
   let labels = [...new Set(dates)];
-
   const [data, setData] = useState({
     labels: labels,
     datasets: [
@@ -107,7 +106,6 @@ export default function Admin() {
   });
 
   let userLabels = [...new Set(userDates)];
-
   const [userData, setUserData] = useState({
     labels: userLabels,
     datasets: [

@@ -1,6 +1,4 @@
-
-import React, { useEffect,useState  } from "react";
-
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   Box,
@@ -30,7 +28,15 @@ import { useDispatch, useSelector } from "react-redux";
 import foto from "../../Image/Image_not_available.png";
 import CardPerfil from "../Cards/CardPerfil";
 import { useHistory } from "react-router-dom";
-import { getFavsUser, getInfoUser, getPubs, getUserImage, getUserInfo, blockUser, restoreUser } from "../../redux/actions";
+import {
+  getFavsUser,
+  getInfoUser,
+  getPubs,
+  getUserImage,
+  getUserInfo,
+  blockUser,
+  restoreUser,
+} from "../../redux/actions";
 import AlertBRUser from "./AlertBRUser";
 export default function UsersAdmin() {
   const history = useHistory();
@@ -53,7 +59,6 @@ export default function UsersAdmin() {
   };
 
   useEffect(() => {
-
     dispatch(getPubs(infoUser[0].id));
     dispatch(getFavsUser(infoUser[0].id));
     dispatch(getUserImage(infoUser[0].id));
@@ -92,17 +97,16 @@ export default function UsersAdmin() {
             textAlign={"center"}
           >
             <Flex>
-
-              {infoUser[0].banned ?
+              {infoUser[0].banned ? (
                 <Button onClick={() => handleRestore()}>
                   {/* <FontAwesomeIcon icon="fa-regular fa-ban" /> */}
-                  <FontAwesomeIcon icon={faBan} color='black' fontSize="30px" p={"0"} />
-                </Button> :
-                <Button onClick={() => handleBlock()}>
-                  <FontAwesomeIcon icon={faBan} color='red' fontSize="30px" p={"0"} />
+                  <FontAwesomeIcon icon={faBan} color="black" fontSize="30px" p={"0"} />
                 </Button>
-              }
-
+              ) : (
+                <Button onClick={() => handleBlock()}>
+                  <FontAwesomeIcon icon={faBan} color="red" fontSize="30px" p={"0"} />
+                </Button>
+              )}
             </Flex>
             <Avatar
               size={"2xl"}
@@ -120,7 +124,6 @@ export default function UsersAdmin() {
             <Flex justifyContent="center" alignContent="center">
               <Rating rating={infoUser[0].rating} numReviews={""} />
             </Flex>
-            <br />
             <Flex direction={"column"} alignItems="flex-start" p={6}>
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Ciudad: {infoUser[0].city}

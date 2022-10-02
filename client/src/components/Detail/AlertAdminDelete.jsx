@@ -12,26 +12,34 @@ import {
   Input,
   Flex,
   Textarea,
+  FormControl,
+  useToast,
 } from "@chakra-ui/react";
 import { deletePublicaction } from "../../redux/actions";
 
 const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pubId, deleted }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const [reasons, setReasons] = useState("");
-  
-    const onSi = async (e) => {
-        e.preventDefault();
-        
-        try {
-            dispatch(deletePublicaction(pubId));
-            /* await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF") */
-            history.push("/")
-          } catch (error) {
-            console.log(error)
-          }
-    };
+
+  const onSi = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(deletePublicaction(pubId));
+      /* await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF") */
+      history.push("/");
+      toast({
+        title: "Publicación eliminada correctamente.",
+        status: "success",
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onNo = () => {
     setAlertAdminDelete([false, false]);
@@ -47,6 +55,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
       alignItems="center"
       justifyContent="center"
       textAlign="center"
+      width={"100%"}
       height="23rem"
       top={"10rem"}
     >
@@ -56,7 +65,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
           ? " ¿Estás seguro de que queres restaurar la publicación?"
           : " ¿Estás seguro de que queres eliminar la publicación?"}
       </AlertTitle>
-      <form style={{ padding: "1rem" }} onSubmit={onSi}>
+      <FormControl style={{ padding: "1rem" }} onSubmit={onSi}>
         <Flex flexDirection={"column"} alignItems={"center"} gap={"1rem"}>
           <Textarea
             name={"reasons_delete"}
@@ -83,7 +92,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
             <Button onClick={(e) => onNo(e)}>No</Button>
           </Flex>
         </Flex>
-      </form>
+      </FormControl>
       <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
     </Alert>
   );

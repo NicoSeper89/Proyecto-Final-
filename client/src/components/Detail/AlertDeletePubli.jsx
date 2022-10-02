@@ -2,16 +2,30 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Flex } from "@chakra-ui/react";
+import {
+  Button,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
+  Flex,
+  useToast,
+} from "@chakra-ui/react";
 import { deletePublicaction } from "../../redux/actions";
 
 const AlertDelete = ({ alertSubmit, id, deleted }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const toast = useToast();
 
   const onSi = () => {
     dispatch(deletePublicaction(id));
     history.push("/");
+    toast({
+      title: "Publicación eliminada correctamente.",
+      status: "success",
+      isClosable: true,
+    });
   };
   const onNo = () => {
     history.goBack();
@@ -39,7 +53,7 @@ const AlertDelete = ({ alertSubmit, id, deleted }) => {
           ? "La publicación no se pudo borrar, lo sentimos mucho!"
           : "La publicación se borro correctamente"} */}
       </AlertTitle>
-      <Flex direction={"column"}>
+      <Flex gap={"1rem"}>
         <Button mb={"10px"} onClick={(e) => onSi(e)}>
           Si
         </Button>
