@@ -10,14 +10,14 @@ import {
   getPublications,
   getPublicationsPremium,
   getInfoUser,
-  getFavsUser,
+  // getFavsUser,
   allDates,
-  allUserDates
+  allUserDates,
+  getFavsUser,
 } from "../../redux/actions/index.js";
 import { Box } from "@chakra-ui/react";
 // import Loading from "../Loading/Loading.jsx";
 // import gif from "../../Image/1490.gif";
-import Maps from "../Maps/Maps.jsx";
 import PremiumCards from "../Cards/PremiumCards.jsx";
 import SearchBar from "../Search/SearchBar.jsx";
 
@@ -26,12 +26,16 @@ const Home = () => {
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
   const cities = useSelector((state) => state.cities);
-  // const infoUser = useSelector((state) => state.infoUser);;
+  const dates = useSelector(state => state.dates)
+  const userDates = useSelector(state => state.userDates)
+  sessionStorage.setItem('dates', JSON.stringify([dates, userDates]))
+  const infoUser = useSelector((state) => state.infoUser);;
   // const services = useSelector((state) => state.services);
   // const typeOfProperties = useSelector((state) => state.typeOfProperties);
   useEffect(() => {
     const dataUser = window.localStorage.getItem("User");
     dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
+
     // if (dataUser) {
     //   dispatch(getFavsUser(infoUser[0].id));
     // }
@@ -40,8 +44,11 @@ const Home = () => {
   useEffect(() => {
     dispatch(getPublications(filters, sorting, ""));
     dispatch(getPublicationsPremium());
-    dispatch(allDates())
-    dispatch(allUserDates())
+    dispatch(allDates());
+    dispatch(allUserDates());
+    if (infoUser) {
+      dispatch(getFavsUser(infoUser[0].id))
+    }
   }, [dispatch, filters, sorting, cities]);
 
   return (
@@ -54,7 +61,6 @@ const Home = () => {
         <Cards />
         <Footer />
       </Box>
-      {/* <Maps/> */}
     </Box>
   );
 };

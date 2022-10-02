@@ -3,22 +3,18 @@ import {
   Button,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
-  Input,
   Select,
   Text,
   Textarea,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getInfoUser, reportPublication } from "../../redux/actions";
-import Footer from "../Footer/Footer";
-import NavBarForms from "../NavBar/NavBarForms";
+import { reportPublication } from "../../redux/actions";
 
 function validation(input) {
   let errors = {};
@@ -32,7 +28,7 @@ function validation(input) {
   }
 
   if (input.info.length <= 2 || input.info.length >= 120) {
-    errors.info = "La descripción del reporte debe tener de 2 a 120 dígitos.";
+    errors.info = "La descripción del reporte debe tener un máximo de 120 dígitos.";
   }
   return errors;
 }
@@ -57,11 +53,11 @@ export default function FormReport({ id, userId }) {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const infoUser = useSelector((state) => state.infoUser);
   const infoDetail = useSelector((state) => state.detail);
-  //   const [disableButtonSubmit, setDisableButtonSubmit] = useState(true);
-  //   const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const toast = useToast();
   const [errors, setErrors] = useState({});
+
+  const infoUser = JSON.parse(window.localStorage.getItem("User"));
 
   //   const dataUser = window.localStorage.getItem("User");
   //   const infooo = JSON.parse(dataUser);
@@ -72,7 +68,7 @@ export default function FormReport({ id, userId }) {
   //   }, []);
 
   const [input, setInput] = useState({
-    userId: infoUser.userId,
+    userId: infoUser[0].id,
     type: "",
     info: "",
   });
@@ -94,39 +90,43 @@ export default function FormReport({ id, userId }) {
     e.preventDefault();
     if (input.type && input.info) {
       dispatch(reportPublication(infoDetail.id, input));
-      alert("Su reporte fue enviado correctamente");
+      toast({
+        title: "Su reporte fue enviado correctamente",
+        status: "success",
+        isClosable: true,
+      });
+      // alert("Su reporte fue enviado correctamente");
       setInput({
         type: "",
         info: "",
       });
-      history.push("/");
+      // history.push("/");
     } else {
-      alert("Te falta completar datos");
+      // alert("Te falta completar datos");
+      toast({
+        title: "Te falta completar datos",
+        status: "error",
+        isClosable: true,
+      });
     }
   };
 
   return (
     <Box>
-      {/* <NavBarForms /> */}
       <Box
         bg={"blackAlpha.200"}
         position={"relative"}
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
-        justifyContent={"center"}
+        justifyContent={"space-evenly"}
         color={"gray.700"}
-        w={"500px"}
-        h={"250px"}
+        w={"550px"}
+        h={"300px"}
       >
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"100%"}>
-          <Heading
-            color={"white"}
-            textShadow={"gray .1rem .1rem .2rem"}
-            textAlign={"center"}
-            fontSize="1.2rem"
-          >
-            REPORTAR PUBLICACIÓN
+        <Box borderRadius={".2rem"} w={"100%"}>
+          <Heading textAlign={"center"} fontSize="1.2rem">
+            Reportar Publicación
           </Heading>
         </Box>
         <Flex
@@ -136,7 +136,6 @@ export default function FormReport({ id, userId }) {
           alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          // minWidth={"57.7%"}
           width={"100%"}
         >
           <FormControl
@@ -175,6 +174,7 @@ export default function FormReport({ id, userId }) {
                 size="sm"
                 resize={"none"}
                 onChange={onChangeInput}
+                maxLength={120}
               />
               {errors.info && <span>{errors.info}</span>}
             </FormLabel>
@@ -191,7 +191,6 @@ export default function FormReport({ id, userId }) {
           </FormControl>
         </Flex>
       </Box>
-      {/* <Footer /> */}
     </Box>
   );
 }

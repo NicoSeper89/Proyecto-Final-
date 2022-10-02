@@ -307,17 +307,19 @@ router.get("/getPubsDeleted/:id", async (req, res, next) => {
 router.put("/setFav", async (req, res, next) => {
   try {
     let { userId, pubId } = req.query;
-
-    await User.update(
-      {
-        favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),
-      },
-      {
-        where: {
-          id: userId,
+    let user=await User.findByPk(userId)
+    if(!user.favorites.includes(pubId)){
+      await User.update(
+        {
+          favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),
         },
-      }
-    );
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+    }   
     res.send(`añadido ${pubId} a ${userId}`);
   } catch (error) {
     next(error);
@@ -355,6 +357,24 @@ router.get("/getFavs/:id", async (req, res, next) => {
       }
     }
     res.send(favoritos2);
+  } catch (error) {
+    next(error);
+  }
+});
+router.put("/deleteUser/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await User.update({ banned: true }, { where: { id: id } });
+    res.send("Se baneo al usuario");
+  } catch (error) {
+    next(error);
+  }
+});
+router.put("/restoreUser/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await User.update({ banned: false }, { where: { id: id } });
+    res.send("Se restauro al usuario");
   } catch (error) {
     next(error);
   }

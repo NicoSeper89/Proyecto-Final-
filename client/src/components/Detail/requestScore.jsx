@@ -13,7 +13,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import emailjs from "emailjs-com";
+/* import emailjs from "emailjs-com"; */
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
@@ -33,7 +33,7 @@ export default function RequestScore(props) {
 
       await axios.put(`user/requestScore/${props.publicationsId}`, {userEmail: email})
 
-      await emailjs.sendForm("service_0za37f4", "template_3aag90l", e.target, "E_nOOl9VRDZAxSlhF")
+      /* await emailjs.sendForm("service_0za37f4", "template_3aag90l", e.target, "E_nOOl9VRDZAxSlhF") */
 
       history.push("/")
 

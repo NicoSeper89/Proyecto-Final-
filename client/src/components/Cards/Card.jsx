@@ -8,8 +8,8 @@ import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavsUser, setFav, removeFav } from "../../redux/actions";
 /* import { useHistory } from "react-router-dom"; */
-import Select from "../SelectTypeUser/Select";
-import AlertCard from "./AlertCard";
+// import Select from "../SelectTypeUser/Select";
+// import AlertCard from "./AlertCard";
 import { useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -37,33 +37,34 @@ export default function Card({
   const user2 = JSON.parse(user);
   const [boton, setBoton] = useState(false);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (infoUser) {
       dispatch(getFavsUser(infoUser[0].id));
     }
-  }, [dispatch, boton]);
+  }, [dispatch, boton]); */
 
   const handleClickFav = () => {
     if (infoUser) {
       dispatch(setFav(infoUser[1].userId, id));
-      setBoton(true);
+      /* setBoton(true); */
       // if (boton === false) {
       //   setBoton(true);
       // } else if (boton === true) {
       //   setBoton(false);
       // }
+      window.location.reload()
     }
   };
   const handleClickRemoveFav = () => {
     dispatch(removeFav(infoUser[1].userId, id));
     /* dispatch(getFavsUser(infoUser[0].id)); */
-    setBoton(false);
+    /* setBoton(false); */
     // if (boton === false) {
     //   setBoton(true);
     // } else if (boton === true) {
     //   setBoton(false);
     // }
-    /* window.location.reload() */
+    window.location.reload()
   };
   const favState = () => {
     let result = false;
@@ -158,30 +159,21 @@ export default function Card({
           <Tag size={"sm"} variant="solid" backgroundColor={"grey.300"} w={"5rem"}>
             Propietario
           </Tag>
-        ) : favState() ? (
-          <FontAwesomeIcon
-            cursor={infoUser && "pointer"}
-            onClick={handleClickFav}
-            className={`${boton ? style.containerFavRed : style.containerFav}`}
-            h={"20px"}
-            icon={faHeart}
-          />
         ) : (
-          <FontAwesomeIcon
-            cursor={"pointer"}
-            onClick={handleClickRemoveFav}
-            className={`${boton ? style.containerFav : style.containerFavRed}`}
-            h={"20px"}
-            icon={faHeart}
-          />
-          // ) : (
-          //   <FontAwesomeIcon
-          //     cursor={infoUser && "pointer"}
-          //     onClick={favState() ? handleClickFav : handleClickRemoveFav}
-          //     className={`${boton ? style.containerFavRed : style.containerFav}`}
-          //     h={"20px"}
-          //     icon={faHeart}
-          //   />
+          !favState() ? (
+            <FontAwesomeIcon
+              cursor={infoUser && "pointer"}
+              onClick={handleClickRemoveFav}
+              className={style.containerFavRed}
+              h={"20px"}
+              icon={faHeart}
+            />) : (<FontAwesomeIcon
+              cursor={infoUser && "pointer"}
+              onClick={handleClickFav}
+              className={ style.containerFav}
+              h={"20px"}
+              icon={faHeart}
+            />)
         )}
 
         {/* </Link> */}

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import UploadImg from "../UploadImg/UploadImg";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
-import { setPublication } from "../../redux/actions";
+// import { setPublication } from "../../redux/actions";
 import {
   Stack,
-  Input,
   Heading,
   Text,
   Textarea,
@@ -28,13 +26,13 @@ import AlertSubmit from "./AlertSubmit";
 import Places from "./Places";
 
 const CreatePost = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const propertys = useSelector((state) => state.typeOfProperties);
   const cities = useSelector((state) => state.cities);
   const services = useSelector((state) => state.services);
-  const history = useHistory();
+  // const history = useHistory();
   const [infoFormProp, setInfoFormProp] = useState({
-    city: "",
+    // city: "",
     address: "",
     propImg: [],
     typProp: "",
@@ -63,11 +61,11 @@ const CreatePost = () => {
   const [disableButtonContinue, setDisableButtonContinue] = useState(true);
   const [continueForm, setContinueForm] = useState(true);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
-  const [propertyId, setPropertyId] = useState("");
+  const [propertyId /*setPropertyId*/] = useState("");
 
   useEffect(() => {
     const {
-      city,
+      // city,
       address,
       surface,
       price,
@@ -81,7 +79,7 @@ const CreatePost = () => {
     } = infoFormProp;
 
     if (
-      !city ||
+      // !city ||
       // (city === "default") ||
       !address ||
       /^[\s]+$/i.test(address) ||
@@ -228,7 +226,7 @@ const CreatePost = () => {
                 border="1px"
                 borderColor="gray.200"
               >
-                <FormLabel>
+                {/* <FormLabel>
                   <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                     Provincia
                   </Text>
@@ -239,17 +237,18 @@ const CreatePost = () => {
                     name={"city"}
                     onChange={onChangeInputProp}
                   >
-                    {/* <option value="default" >Default</option> */}
                     {cities.map((type, i) => (
                       <option key={i} value={type.name}>
                         {type.name}
                       </option>
                     ))}
                   </Select>
-                </FormLabel>
+                </FormLabel> */}
 
-
-                <FormLabel><Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">Dirección</Text>
+                <FormLabel>
+                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    Dirección
+                  </Text>
                   {/* <Input color="gray.500"
                     autoComplete={"true"}
                     type="text"
@@ -426,7 +425,7 @@ const CreatePost = () => {
 
                 <FormLabel>
                   <Text fontWeight={"semiBold"} fontSize="1.07rem" color="gray.500">
-                    Garage
+                    Tamaño del garage( n° autos)
                   </Text>
                   <NumberInput
                     value={infoFormProp.garage}
