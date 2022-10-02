@@ -68,7 +68,7 @@ export default function FormReport({ id, userId }) {
   //   }, []);
 
   const [input, setInput] = useState({
-    userId: infoUser.userId,
+    userId: infoUser[0].id,
     type: "",
     info: "",
   });

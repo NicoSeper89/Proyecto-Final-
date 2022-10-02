@@ -191,13 +191,7 @@ export default function UsersAdmin() {
           </Tabs>
         </Box>
       </Stack>
-      <AlertBRUser
-        alertBRUser={alertBRUser}
-        setAlertBRUser={setAlertBRUser}
-        userId={infoUser[0].id}
-        banned={infoUser[0].banned}
-      />
-
+      <AlertBRUser  alertBRUser={alertBRUser} setAlertBRUser={setAlertBRUser} userId={infoUser[0].id} banned={infoUser[0].banned} userEmail={infoUser[0].loginInfo.mail} />
       <Footer />
     </Box>
   );

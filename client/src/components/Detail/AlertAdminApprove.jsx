@@ -1,19 +1,13 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
+/* import emailjs from "emailjs-com"; */
 
-import {
-  Button,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-  Flex,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Flex, useToast, Input } from "@chakra-ui/react";
+  
 import { approvePostUser } from "../../redux/actions";
 
-const AlertAdminApprove = ({ alertSubmit, pubId, userId }) => {
+const AlertAdminApprove = ({ alertSubmit, setAlertAdminApprove, pubId, userId, emailUser }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const toast = useToast();
@@ -28,7 +22,7 @@ const AlertAdminApprove = ({ alertSubmit, pubId, userId }) => {
     });
   };
   const onNo = () => {
-    history.goBack();
+    setAlertAdminApprove([false,false])
   };
 
   return (
@@ -48,13 +42,16 @@ const AlertAdminApprove = ({ alertSubmit, pubId, userId }) => {
       <AlertTitle mt={4} mb={1} fontSize="lg">
         "¿Estás seguro de que queres aprobar la publicación?"
       </AlertTitle>
+      <form onSubmit={onSi}>
+      <Input display={"none"} value={emailUser} name="user_email" readOnly />
+      <Input display={"none"} value={pubId} name="publication_id" readOnly />
       <Flex gap={"1rem"}>
-        <Button mb={"10px"} onClick={(e) => onSi(e)}>
+        <Button type="submit" mb={"10px"} >
           Si
         </Button>
         <Button onClick={(e) => onNo(e)}>No</Button>
       </Flex>
-      <br />
+      </form>
       <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
     </Alert>
   );
