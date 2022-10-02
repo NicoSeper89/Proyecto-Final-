@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 /* import emailjs from "emailjs-com"; */
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Flex, useToast, Input } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Flex, useToast, Input, Box } from "@chakra-ui/react";
   
 import { approvePostUser } from "../../redux/actions";
 
@@ -12,20 +12,37 @@ const AlertAdminApprove = ({ alertSubmit, setAlertAdminApprove, pubId, userId, e
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const onSi = () => {
-    dispatch(approvePostUser(pubId, userId));
-    history.push("/");
-    toast({
+  const onSi = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(approvePostUser(pubId, userId));
+      /* await emailjs.sendForm("service_6rkm2fe", "template_f6k09gh", e.target, "8MtXDr5Zt_CF-tD7t") */
+      history.push("/");
+      toast({
       title: "Publicación aprobada correctamente.",
       status: "success",
       isClosable: true,
     });
-  };
+      
+    } catch (error) {
+      console.log(error)
+    }};
+
   const onNo = () => {
     setAlertAdminApprove([false,false])
   };
 
   return (
+    <Box
+          position={"absolute"}
+          display={!alertSubmit[0] ? "none" : "flex"}
+          bg={"blackAlpha.100"}
+          top={"0px"}
+          left={"0px"}
+          w={"full"}
+          h={"full"}
+        >
     <Alert
       position={"absolute"}
       display={!alertSubmit[0] ? "none" : "flex"}
@@ -54,6 +71,7 @@ const AlertAdminApprove = ({ alertSubmit, setAlertAdminApprove, pubId, userId, e
       </form>
       <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
     </Alert>
+    </Box>
   );
 };
 
