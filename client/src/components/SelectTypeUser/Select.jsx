@@ -23,7 +23,7 @@ const Select = () => {
     isLoading ? console.log("cargando") : buscarUser();
   }, [user]);
 
-  var [loguear, setLoguear] = useState();
+  var [loguear, setLoguear] = useState({loguear:undefined,banned:false });
 
   const buscarUser = async () => {
     const user2 = await axios.post("http://localhost:3001/user/LoginOrCreate", {
@@ -32,12 +32,12 @@ const Select = () => {
       mail: user.email,
       typUser: "Inquilino",
     });
-
-    if (user2.data.loguear) {
-      setLoguear(true);
+  console.log(user2)
+    if (user2.data.loguear && user2.data.userInfo[0].banned === false) {
+      setLoguear({loguear:true,banned:false});
       window.localStorage.setItem("User", JSON.stringify(user2.data.userInfo));
     } else {
-      setLoguear(false);
+      setLoguear({loguear:false,banned:user2.data.userInfo[0].banned});
     }
   };
 

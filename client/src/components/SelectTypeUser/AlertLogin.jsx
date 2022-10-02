@@ -10,7 +10,7 @@ const AlertLogin = ({ loguear }) => {
   const history = useHistory();
   const rankURL = window.localStorage.getItem("Rank_Publications");
   const [state, setState] = useState(false);
-
+ console.log(loguear)
   useEffect(() => {
     if (state) {
       const idUrl = rankURL;
@@ -20,7 +20,7 @@ const AlertLogin = ({ loguear }) => {
   }, [history, state, rankURL]);
 
   const onDown = () => {
-    if (loguear) {
+    if (loguear.loguear) {
       if (!rankURL) {
         history.push("/");
       } else {
@@ -30,11 +30,13 @@ const AlertLogin = ({ loguear }) => {
       logout();
     }
   };
+
+  //warning
   return (
     <Alert
       position={"absolute"}
       display={"flex"}
-      status={loguear === undefined ? "info" : loguear ? "success" : "error"}
+      status={loguear.loguear === undefined ? "info" : loguear.banned? "warning" : loguear.loguear ? "success" : "error"}
       variant="subtle"
       flexDirection="column"
       alignItems="center"
@@ -45,18 +47,20 @@ const AlertLogin = ({ loguear }) => {
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
-        {loguear === undefined
+        {loguear.loguear === undefined
           ? "Verificando Informacion"
-          : loguear
+          : loguear.banned? "Este usuario esta Bloqueado"
+          : loguear.loguear
           ? "Logueado Exitosamente"
           : "Informacion Incorrecta"}
       </AlertTitle>
       <AlertDescription maxWidth="sm">
-        {loguear !== false
+        {loguear.loguear !== false
           ? "Muchas gracias por utilizar nuestra web!"
+          : loguear.banned? "Ya no puedes acceder a tu cuenta"
           : "Si iniciaste sesion anteriormente con Google por favor elige esa opcion"}
       </AlertDescription>
-      {loguear !== undefined ? (
+      {loguear.loguear !== undefined ? (
         <Button padding="20px" marginTop="10px" onClick={onDown}>
           Volver
         </Button>
