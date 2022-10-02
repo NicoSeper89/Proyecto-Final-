@@ -182,11 +182,11 @@ export default function Detail(props, id) {
   };
 
   return (
-    <Box zIndex={2}>
+    <Box position={"relative"}>
       <Box>
         <NavBarForms />
       </Box>
-      <Flex
+      <Flex position={"relative"}
         backgroundColor={"#EDEDED"}
         // pt={"50px"}
         pb={"50px"}
@@ -194,7 +194,7 @@ export default function Detail(props, id) {
         justifyContent={"space-around"}
       >
         {Object.entries(miStateDetail).length > 0 ? (
-          <Box>
+          <Box >
             <Box
               display={"flex"}
               flexDirection={"row"}
@@ -643,6 +643,7 @@ export default function Detail(props, id) {
                 </Flex>
               </Flex>
             </Box>
+            <AlertDelete alertSubmit={alertSubmit} setAlertSubmit={setAlertSubmit} id={props.match.params.id} deleted={miStateDetail.deleted}/>
             <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
             <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail} />
             <AlertAdminApprove alertSubmit={alertAdminApprove} setAlertAdminApprove={setAlertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} emailUser={miStateDetail.user.contactInfo.mail}/>
@@ -651,11 +652,7 @@ export default function Detail(props, id) {
           <Loading />
         )}
       </Flex>
-      <AlertDelete
-        alertSubmit={alertSubmit}
-        id={props.match.params.id}
-        deleted={miStateDetail.deleted}
-      />
+  
       <AlertDeleteComent alertComent={alertComent} id={id} />
       
       <Footer />

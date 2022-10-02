@@ -10,15 +10,18 @@ import {
   AlertDescription,
   Flex,
   useToast,
+  Box
 } from "@chakra-ui/react";
 import { deletePublicaction } from "../../redux/actions";
 
-const AlertDelete = ({ alertSubmit, id, deleted }) => {
+const AlertDelete = ({ alertSubmit, setAlertSubmit, id, deleted }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const toast = useToast();
 
-  const onSi = () => {
+  const onSi = (e) => {
+    console.log("no admin")
+    console.log(e)
     dispatch(deletePublicaction(id));
     history.push("/");
     toast({
@@ -28,13 +31,21 @@ const AlertDelete = ({ alertSubmit, id, deleted }) => {
     });
   };
   const onNo = () => {
-    history.goBack();
+    setAlertSubmit([false,false])
   };
 
   return (
+    <Box
+          position={"absolute"}
+          display={!alertSubmit[0] ? "none" : "flex"}
+          bg={"blackAlpha.100"}
+          top={"0px"}
+          left={"0px"}
+          w={"full"}
+          h={"full"}
+        >
     <Alert
       position={"absolute"}
-      display={!alertSubmit[0] ? "none" : "flex"}
       status={!alertSubmit[1] ? "error" : "info"}
       variant="subtle"
       flexDirection="column"
@@ -62,6 +73,7 @@ const AlertDelete = ({ alertSubmit, id, deleted }) => {
       <br />
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
     </Alert>
+    </Box>
   );
 };
 

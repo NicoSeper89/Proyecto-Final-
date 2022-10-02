@@ -14,6 +14,7 @@ import {
   Textarea,
   FormControl,
   useToast,
+  Box
 } from "@chakra-ui/react";
 import { deletePublicaction } from "../../redux/actions";
 
@@ -28,6 +29,8 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
     e.preventDefault();
 
     try {
+      if(!deleted)
+      {
       dispatch(deletePublicaction(pubId));
       /* await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF") */
       history.push("/");
@@ -35,7 +38,14 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
         title: "Publicación eliminada correctamente.",
         status: "success",
         isClosable: true,
-      });
+      })
+    } else {
+      toast({
+        title: "Publicación restaurada.",
+        status: "success",
+        isClosable: true,
+      })
+    }
     } catch (error) {
       console.log(error);
     }
@@ -46,6 +56,15 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
   };
 
   return (
+    <Box
+          position={"absolute"}
+          display={!alertAdminDelete[0] ? "none" : "flex"}
+          bg={"blackAlpha.100"}
+          top={"0px"}
+          left={"0px"}
+          w={"full"}
+          h={"full"}
+        >
     <Alert
       position={"absolute"}
       display={!alertAdminDelete[0] ? "none" : "flex"}
@@ -56,7 +75,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
       justifyContent="center"
       textAlign="center"
       width={"100%"}
-      height="23rem"
+      height={deleted? "15rem" : "23rem"}
       top={"10rem"}
     >
       <AlertIcon boxSize="40px" mr={0} />
@@ -65,9 +84,11 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
           ? " ¿Estás seguro de que queres restaurar la publicación?"
           : " ¿Estás seguro de que queres eliminar la publicación?"}
       </AlertTitle>
-      <FormControl style={{ padding: "1rem" }} onSubmit={onSi}>
+      <form onSubmit={onSi}>
+      <FormControl style={{ padding: "1rem" }} >
         <Flex flexDirection={"column"} alignItems={"center"} gap={"1rem"}>
-          <Textarea
+          {!deleted && 
+          (<Textarea
             name={"reasons_delete"}
             value={reasons}
             size="sm"
@@ -77,7 +98,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
             onChange={(e) => {
               setReasons(e.target.value);
             }}
-          />
+          />)}
           <Input
             display={"none"}
             value={`http://localhost:3000/details/${pubId}`}
@@ -93,8 +114,10 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
           </Flex>
         </Flex>
       </FormControl>
+      </form>
       <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
     </Alert>
+    </Box>
   );
 };
 

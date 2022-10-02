@@ -10,6 +10,7 @@ import {
   Input,
   Flex,
   useToast,
+  Box
 } from "@chakra-ui/react";
 
 const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, emailUser }) => {
@@ -37,6 +38,15 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
   };
 
   return (
+    <Box
+          position={"absolute"}
+          display={!requestRestoration ? "none" : "flex"}
+          bg={"blackAlpha.100"}
+          top={"0px"}
+          left={"0px"}
+          w={"full"}
+          h={"full"}
+        >
     <Alert
       position={"absolute"}
       display={!requestRestoration ? "none" : "flex"}
@@ -72,6 +82,7 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
       </form>
       <AlertDescription maxWidth="sm">Recuerda elegir responsablemente.</AlertDescription>
     </Alert>
+    </Box>
   );
 };
 
