@@ -199,7 +199,7 @@ router.post("/createProperty", async (req, res, next) => {
     yard,
     pets,
     age,
-    city,
+    /* city, */
     service,
     typProp,
     propImg,
@@ -228,14 +228,14 @@ router.post("/createProperty", async (req, res, next) => {
       });
       property.addService(ser);
     }
-    let location = await City.findOne({
+    /* let location = await City.findOne({
       where: { name: city },
-    });
-    property.setCity(location);
+    }); */
+    /* property.setCity(location);
     let type = await TypeOfProp.findOne({
       where: { name: typProp },
-    });
-    property.setTypeOfProp(type);
+    }); */
+   /*  property.setTypeOfProp(type); */
 
     let img = await PropertyImage.findAll({
       where: { url: propImg },
