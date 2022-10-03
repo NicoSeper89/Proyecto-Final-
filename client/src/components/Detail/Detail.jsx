@@ -75,7 +75,7 @@ import ReactStars from "react-rating-stars-component";
 // import emailjs from "emailjs-com";
 import AlertRestoration from "./AlertRestoration";
 import { getTotalUsers } from "../../redux/actions";
-import axios from 'axios'
+import axios from "axios";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ export default function Detail(props, id) {
   const [alertComent, setAlertCommet] = useState([false, false]);
   const [requestRestoration, setRequestRestoration] = useState(false);
   const totalUsers = useSelector((state) => state.totalUsers);
- 
+
   const toast = useToast();
 
   const myUser = JSON.parse(window.localStorage.getItem("User"));
@@ -98,7 +98,7 @@ export default function Detail(props, id) {
     dispatch(getPublicationsDetail(props.match.params.id));
     dispatch(getInfoUser(myUser));
     dispatch(getComment(props.match.params.id));
-    dispatch(getTotalUsers)
+    dispatch(getTotalUsers);
     return () => {
       dispatch(clean());
     };
@@ -157,7 +157,11 @@ export default function Detail(props, id) {
     try {
       if (comentarios !== "") {
         /* dispatch(postComment(comentarios, props.match.params.id)); */
-        await axios.post(`/publication/comment`, { message: comentarios, publicationId: props.match.params.id, userId: myUser[0].id });
+        await axios.post(`/publication/comment`, {
+          message: comentarios,
+          publicationId: props.match.params.id,
+          userId: myUser[0].id,
+        });
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
@@ -201,7 +205,8 @@ export default function Detail(props, id) {
       <Box>
         <NavBarForms />
       </Box>
-      <Flex position={"relative"}
+      <Flex
+        position={"relative"}
         backgroundColor={"#EDEDED"}
         // pt={"50px"}
         pb={"50px"}
@@ -564,13 +569,20 @@ export default function Detail(props, id) {
                         </Flex>
 
                         {/* ACA ESTARIA BUENO QUE EL ADMIN HAGA CLICK EN EL NOMBRE Y LO LLEVE AL PERFIL DEL USUARIO */}
-                        { myUser[0].admin ?<Text fontSize="lg" mb={"10px"} onClick={() => viewUser(miStateDetail.userId)}
-                        cursor= "pointer">
-                          <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
-                        </Text>
-                         :<Text fontSize="lg" mb={"10px"}>
-                          <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
-                        </Text>}
+                        {myUser[0].admin ? (
+                          <Text
+                            fontSize="lg"
+                            mb={"10px"}
+                            onClick={() => viewUser(miStateDetail.userId)}
+                            cursor="pointer"
+                          >
+                            <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                          </Text>
+                        ) : (
+                          <Text fontSize="lg" mb={"10px"}>
+                            <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                          </Text>
+                        )}
 
                         <Box alignItems="center" fontSize="lg">
                           <FontAwesomeIcon icon={faAt} />
@@ -678,16 +690,38 @@ export default function Detail(props, id) {
                 </Flex>
               </Flex>
             </Box>
-            <AlertDelete alertSubmit={alertSubmit} setAlertSubmit={setAlertSubmit} id={props.match.params.id} deleted={miStateDetail.deleted}/>
-            <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
-            <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail} />
-            <AlertAdminApprove alertSubmit={alertAdminApprove} setAlertAdminApprove={setAlertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} emailUser={miStateDetail.user.contactInfo.mail}/>
+            <AlertDelete
+              alertSubmit={alertSubmit}
+              setAlertSubmit={setAlertSubmit}
+              id={props.match.params.id}
+              deleted={miStateDetail.deleted}
+            />
+            <AlertAdminDelete
+              alertAdminDelete={alertAdminDelete}
+              setAlertAdminDelete={setAlertAdminDelete}
+              emailUser={miStateDetail.user.contactInfo.mail}
+              pubId={props.match.params.id}
+              deleted={miStateDetail.deleted}
+            />
+            <AlertRestoration
+              requestRestoration={requestRestoration}
+              setRequestRestoration={setRequestRestoration}
+              pubId={props.match.params.id}
+              emailUser={miStateDetail.user.contactInfo.mail}
+            />
+            <AlertAdminApprove
+              alertSubmit={alertAdminApprove}
+              setAlertAdminApprove={setAlertAdminApprove}
+              pubId={props.match.params.id}
+              userId={miStateDetail.userId}
+              emailUser={miStateDetail.user.contactInfo.mail}
+            />
           </Box>
         ) : (
           <Loading />
         )}
       </Flex>
-  
+
       <AlertDeleteComent alertComent={alertComent} id={id} />
 
       <Footer />
