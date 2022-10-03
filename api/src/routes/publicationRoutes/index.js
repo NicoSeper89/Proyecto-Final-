@@ -443,6 +443,28 @@ router.post("/comment", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/comment/response", async (req, res, next) => {
+
+  const { messageId, response } = req.body;
+  
+  try {
+    
+   const publi = await PublicationComents.upsert(
+      {
+        id: messageId,
+        response: response
+      }
+    )
+    
+    return res.json(publi)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+})
+
 // crea un reporte a la pblicacion por params, con la info de body
 router.post("/report/:id", async (req, res, next) => {
   const { id } = req.params;

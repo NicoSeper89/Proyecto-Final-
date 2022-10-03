@@ -10,5 +10,8 @@ module.exports = (sequelize) => {
       type: DataTypes.UUID,
 
   },
+    response: {
+      type: DataTypes.STRING
+    }
   });
 };
