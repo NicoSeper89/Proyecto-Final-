@@ -10,6 +10,7 @@ const {
   Report,
   User,
   PublicationComents,
+  PropertyVideo
 } = require("../../db");
 const router = Router();
 const {
@@ -186,6 +187,18 @@ router.post("/image", async (req, res, next) => {
     next(error);
   }
 });
+router.post("/video", async (req, res, next) => {
+  const { url } = req.body;
+  try {
+    if (!url) return res.status(404).send("no video to upload");
+    await PropertyVideo.create({
+      url,
+    });
+    res.send("video upload successful");
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post("/createProperty", async (req, res, next) => {
   const {
@@ -203,6 +216,7 @@ router.post("/createProperty", async (req, res, next) => {
     service,
     typProp,
     propImg,
+    propVideo,
   } = req.body;
   try {
     if (
@@ -241,6 +255,11 @@ router.post("/createProperty", async (req, res, next) => {
       where: { url: propImg },
     });
     property.addPropertyImage(img);
+
+    let video = await PropertyVideo.findAll({
+      where: {url: propVideo}
+    })
+    property.setPropertyVideo(video)
 
     res.send(property.id);
   } catch (error) {
