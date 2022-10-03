@@ -25,7 +25,6 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
 import Places from "./Places";
-import UploadVideo from "../UploadVideo/UploadVideo.jsx"
 
 const CreatePost = () => {
   // const dispatch = useDispatch();
