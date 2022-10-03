@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UploadImg from "../UploadImg/UploadImg";
 import axios from "axios";
 // import { setPublication } from "../../redux/actions";
@@ -24,6 +24,7 @@ import {
 import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
 import Places from "./Places";
+import { getUserInfo } from "../../redux/actions";
 
 const CreatePost = () => {
   // const dispatch = useDispatch();
@@ -176,6 +177,13 @@ const CreatePost = () => {
       });
     }
   };
+  
+  const infoUser = JSON.parse(window.localStorage.getItem("User"));
+  const dispatch = useDispatch()  
+  
+  useEffect(() => {
+    infoUser && dispatch(getUserInfo(infoUser[0].id));
+  },[dispatch])
 
   return (
     <>

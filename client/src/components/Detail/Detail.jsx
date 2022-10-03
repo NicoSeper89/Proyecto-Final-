@@ -9,6 +9,7 @@ import {
   postComment,
   deleteComment,
   clean,
+  getUserInfo,
 } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgNotAvailable from "../../Image/Image_not_available.png";
@@ -93,6 +94,7 @@ export default function Detail(props, id) {
 
   const myUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
+    myUser && dispatch(getUserInfo(myUser[0].id));
     dispatch(getPublicationsDetail(props.match.params.id));
     dispatch(getInfoUser(myUser));
     dispatch(getComment(props.match.params.id));

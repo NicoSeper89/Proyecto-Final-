@@ -10,7 +10,7 @@ import Help from "./components/Help/Help";
 import Detail from "./components/Detail/Detail";
 // import NewUser from "./components/Check_in/Check_in";
 import Error404 from "./components/Error404/Error404.jsx";
-import { getCities, getServices, getTypesOfProperties } from "./redux/actions/index.js";
+import { getCities, getServices, getTypesOfProperties, getUserInfo } from "./redux/actions/index.js";
 import UpdatePost from "./components/UpdatePost/UpdatePost";
 import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
 // import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
@@ -26,23 +26,29 @@ import AdminAcces from "./components/Administrador/AdminAcces";
 import Admin from "./components/Administrador/Admin.jsx";
 import deletedLogicUAd from "./components/DeleteLogicUAd/DeletedLogicUAd.jsx";
 import UsersAdmin from "./components/Perfiles/UsersAdmin";
+import Baneado from "./components/UsuarioBaneado/Error404";
 
 function App() {
   const { loginWithRedirect /*, isAuthenticated, logout*/ } = useAuth0();
   const dispatch = useDispatch();
 
   const infoUser = useSelector((state) => state.infoUser);
+  const infoUser2 = useSelector((state) => state.allUserInfo);
 
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
 
+  
+
   useEffect(() => {
+    user2 && dispatch(getUserInfo(user2[0].id));
     dispatch(getCities());
     dispatch(getServices());
     dispatch(getTypesOfProperties());
   }, [dispatch]);
-
-  return (
+  
+   if(infoUser2.banned) return(<Baneado/>)
+    else return (
     <>
       <Switch>
         <Route exact path="/" component={Home} />
@@ -50,7 +56,7 @@ function App() {
           exact
           path="/createPost"
           render={() => {
-            return user2 ? <CreatePost /> : <Redirect to="*" />;
+            return user2 && !infoUser2.banned? <CreatePost /> : <Redirect to="*" />;
           }}
         />
         <Route exact path="/about" component={About} />
@@ -58,7 +64,9 @@ function App() {
         <Route exact path="/details/:id" component={Detail} />
         <Route exact path="/updatePublicaction/:id" component={UpdatePost} />
         <Route exact path="/updatePerfil/:id" component={EditPerfil} />
+        
         <Route exact path="/perfilPropietario" component={PerfilPropietario} />
+
         <Route exact path="/redirectRegister" component={AlertCard} />
         <Route exact path="/reportPublication" component={FormReport} />
         <Route exact path="/deletedLogicUAd" component={deletedLogicUAd} />
