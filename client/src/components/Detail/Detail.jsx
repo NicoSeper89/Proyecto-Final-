@@ -696,6 +696,18 @@ export default function Detail(props, id) {
                             m="8px"
                             fontSize="xl"
                             as="b"
+                            onClick={() =>
+                              history.push("/updatePublicaction/" + props.match.params.id)
+                            }
+                          >
+                            Actualizar datos
+                          </Button>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
                             onClick={onClickRestoration}
                             cursor={"pointer"}
                           >
