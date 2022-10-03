@@ -78,7 +78,7 @@ export default function PremiumCards() {
             idUser={r.userId}
             img={r.property.propertyImages}
             precio={r.property.price}
-            ciudad={r.property.city.name}
+            ciudad={r.property.address}
             metros={r.property.surface}
             baño={r.property.bathrooms}
             dormitorio={r.property.rooms}

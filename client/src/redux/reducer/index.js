@@ -48,11 +48,9 @@ import {
   DELETE_PUBLICACTION_PERMANENT,
   TOTAL_DATES,
   TOTAL_USER_DATES,
-
   RESTORE_USER,
   BLOCK_USER,
-  DELETE_REPORT
-
+  DELETE_REPORT,
 } from "../actions";
 
 const initialState = {
@@ -392,8 +390,8 @@ export default function rootReducer(state = initialState, action) {
     case TOTAL_USER_DATES:
       return {
         ...state,
-         userDates: action.payload,
-      }; 
+        userDates: action.payload,
+      };
     case BLOCK_USER:
       return {
         ...state,
@@ -402,10 +400,10 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-      case DELETE_REPORT:
-        return {
-          ...state,
-        };
+    case DELETE_REPORT:
+      return {
+        ...state,
+      };
     default:
       return state;
   }
