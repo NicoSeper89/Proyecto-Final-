@@ -20,10 +20,12 @@ import {
   Button,
   FormLabel,
   Box,
+  Input,
 } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
 import Places from "./Places";
+import UploadVideo from "../UploadVideo/UploadVideo.jsx"
 
 const CreatePost = () => {
   // const dispatch = useDispatch();
@@ -46,6 +48,7 @@ const CreatePost = () => {
     yard: "",
     pets: false,
     service: [],
+    propVideo: "",
   });
   console.log(infoFormProp.propImg);
 
@@ -126,6 +129,13 @@ const CreatePost = () => {
     });
   };
 
+  const onChangeVideo = (e) => {
+    setInfoFormProp({
+        ...infoFormProp,
+        [e.target.name]: e.target.value,
+    })
+  }
+
   const selectCheckBoxService = (e) => {
     if (e.target.checked === false) {
       setInfoFormProp({
@@ -176,6 +186,10 @@ const CreatePost = () => {
       });
     }
   };
+
+  // const onChangeInputVideo = () => {
+    
+  // }
 
   return (
     <>
@@ -597,6 +611,12 @@ const CreatePost = () => {
               >
                 Enviar
               </Button>
+              <FormLabel>
+              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    video
+                  </Text>
+              <Input name={"propVideo"} value={infoFormProp.propVideo} onChange={onChangeVideo}></Input>
+              </FormLabel>
             </Box>
           )}
         </Flex>

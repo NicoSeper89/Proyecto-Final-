@@ -71,7 +71,8 @@ const {
   TypeOfUser,
   User,
   UserImage,
-  ContactInfo
+  ContactInfo,
+  PropertyVideo
 } = sequelize.models;
 
 // //Relaciones usario
@@ -104,6 +105,10 @@ Property.belongsTo(City); //N a 1
 City.hasMany(Property); //1 a N
 Property.belongsTo(TypeOfProp); //N a 1
 TypeOfProp.hasMany(Property); //1 a N
+PropertyVideo.belongsTo(Property);
+Property.hasOne(PropertyVideo); 
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

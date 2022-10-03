@@ -60,6 +60,7 @@ import {
   InputGroup,
   InputRightElement,
   Badge,
+  AspectRatio
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
@@ -258,11 +259,25 @@ export default function Detail(props, id) {
                   {miStateDetail.property.propertyImages.length > 0 ? (
                     <Box w={"42rem"} h={"42rem"}>
                       <ImageSlider slides={miStateDetail.property.propertyImages} />
+
                     </Box>
                   ) : (
                     <Image src={imgNotAvailable} />
                   )}
                 </Flex>
+
+                  {miStateDetail.property.propertyVideo.url && (
+            
+                <AspectRatio maxW='560px' ratio={1}>
+  <iframe
+    title='naruto'
+    src={miStateDetail.property.propertyVideo.url}
+    allowFullScreen
+  />
+</AspectRatio>
+             
+                  )}
+                
 
                 <Box mt={"3rem"}>
                   <Tabs
