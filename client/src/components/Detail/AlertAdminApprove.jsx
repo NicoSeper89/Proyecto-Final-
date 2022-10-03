@@ -61,7 +61,7 @@ const AlertAdminApprove = ({ alertSubmit, setAlertAdminApprove, pubId, userId, e
       </AlertTitle>
       <form onSubmit={onSi}>
       <Input display={"none"} value={emailUser} name="user_email" readOnly />
-      <Input display={"none"} value={pubId} name="publication_id" readOnly />
+      <Input display={"none"} value={`http://localhost:3000/details/${pubId}`} name="publication_id" readOnly />
       <Flex gap={"1rem"}>
         <Button type="submit" mb={"10px"} >
           Si
