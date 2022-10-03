@@ -75,6 +75,7 @@ import emailjs from "emailjs-com";
 import AlertRestoration from "./AlertRestoration";
 import { getTotalUsers } from "../../redux/actions";
 import axios from 'axios'
+import ResponseComment from './ResponseComment';
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -375,6 +376,12 @@ export default function Detail(props, id) {
                                   border="gray.500"
                                 >
                                   {e.message}
+                                  {e.response? 
+                                  <Text>
+                                    {e.response}
+                                  </Text>
+                                  :
+                                  null}
                                   {myUser[0].admin ? (
                                     <Button
                                       cursor={"pointer"}
@@ -387,6 +394,10 @@ export default function Detail(props, id) {
                                       X
                                     </Button>
                                   ) : null}
+                                  {myUser[0].id === miStateDetail.user.id? 
+                                    <ResponseComment  idPublication={props.match.params.id} mId={e.id} enabledResponse={!e.response}  /> 
+                                    : 
+                                    null}
                                 </Flex>
                               </Box>
                             ))}
