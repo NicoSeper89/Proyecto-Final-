@@ -20,6 +20,7 @@ import {
   Button,
   FormLabel,
   Box,
+  Input,
 } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
 import AlertSubmit from "./AlertSubmit";
@@ -33,7 +34,7 @@ const CreatePost = () => {
   const services = useSelector((state) => state.services);
   // const history = useHistory();
   const [infoFormProp, setInfoFormProp] = useState({
-    // city: "",
+    city: "",
     address: "",
     propImg: [],
     typProp: "",
@@ -47,6 +48,7 @@ const CreatePost = () => {
     yard: "",
     pets: false,
     service: [],
+    propVideo: "",
   });
   console.log(infoFormProp.propImg);
 
@@ -66,7 +68,7 @@ const CreatePost = () => {
 
   useEffect(() => {
     const {
-      // city,
+      city,
       address,
       surface,
       price,
@@ -80,7 +82,7 @@ const CreatePost = () => {
     } = infoFormProp;
 
     if (
-      // !city ||
+      !city ||
       // (city === "default") ||
       !address ||
       /^[\s]+$/i.test(address) ||
@@ -126,6 +128,13 @@ const CreatePost = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const onChangeVideo = (e) => {
+    setInfoFormProp({
+        ...infoFormProp,
+        [e.target.name]: e.target.value,
+    })
+  }
 
   const selectCheckBoxService = (e) => {
     if (e.target.checked === false) {
@@ -185,6 +194,10 @@ const CreatePost = () => {
     infoUser && dispatch(getUserInfo(infoUser[0].id));
   },[dispatch])
 
+  // const onChangeInputVideo = () => {
+    
+  // }
+
   return (
     <>
       <NavBarForms />
@@ -234,7 +247,7 @@ const CreatePost = () => {
                 border="1px"
                 borderColor="gray.200"
               >
-                {/* <FormLabel>
+                <FormLabel>
                   <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                     Provincia
                   </Text>
@@ -251,7 +264,7 @@ const CreatePost = () => {
                       </option>
                     ))}
                   </Select>
-                </FormLabel> */}
+                </FormLabel>
 
                 <FormLabel>
                   <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
@@ -605,6 +618,12 @@ const CreatePost = () => {
               >
                 Enviar
               </Button>
+              <FormLabel>
+              <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
+                    video
+                  </Text>
+              <Input name={"propVideo"} value={infoFormProp.propVideo} onChange={onChangeVideo}></Input>
+              </FormLabel>
             </Box>
           )}
         </Flex>

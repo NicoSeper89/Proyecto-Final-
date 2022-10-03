@@ -32,7 +32,7 @@ import {
   getTotalUsers,
   viewUser2,
   getUserImage,
-  deleteReport
+  deleteReport,
 } from "../../redux/actions";
 import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
@@ -74,11 +74,11 @@ export default function Admin() {
     history.push(`/viewUser`);
   };
   const delReport = (id) => {
-    dispatch(deleteReport(id))
+    dispatch(deleteReport(id));
     // window.localStorage.setItem("adminId", `${p.id}`)
-    window.location.reload()
+    window.location.reload();
   };
-  
+
   let sessionDates = JSON.parse(sessionStorage.getItem("dates"));
   const dates = sessionDates[0];
   const userDates = sessionDates[1];
@@ -98,9 +98,9 @@ export default function Admin() {
     labels: labels,
     datasets: [
       {
-        label: "Cantidad de Publicaciones p/mes",
+        label: "Cantidad de Publicaciones por mes",
         data: labels.map((a) => amount(dates, a)),
-        backgroundColor: ["red", "blue", "green", "orange", "yellow"],
+        backgroundColor: ["rgba(216, 158, 26, 0.65)"],
       },
     ],
   });
@@ -110,9 +110,9 @@ export default function Admin() {
     labels: userLabels,
     datasets: [
       {
-        label: "Cantidad de Usuarios p/mes",
+        label: "Cantidad de Usuarios por mes",
         data: userLabels.map((a) => amount(userDates, a)),
-        backgroundColor: ["red", "blue", "green", "orange", "yellow"],
+        backgroundColor: ["rgba(216, 158, 26, 0.65)"],
       },
     ],
   });
@@ -184,8 +184,9 @@ export default function Admin() {
                       <Tr>
                         <Th>Fecha de creación</Th>
                         <Th>Usuario</Th>
-                        <Th>Rating</Th>
-                        <Th>Perfil</Th>
+                        <Th textAlign={"center"}>Rating</Th>
+                        <Th textAlign={"center"}>Estado</Th>
+                        <Th textAlign={"center"}>Perfil</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -194,8 +195,9 @@ export default function Admin() {
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.name}</Td>
-                            <Td>{p.rating}</Td>
-                            <Td>
+                            <Td textAlign={"center"}>{p.rating}</Td>
+                            <Td textAlign={"center"}>{p.banned ? "Baneado" : "Activo"}</Td>
+                            <Td textAlign={"center"}>
                               <Button h="1.75rem" size="sm" onClick={() => viewUser(p.id)}>
                                 <FontAwesomeIcon icon={faUser} />
                               </Button>
@@ -218,8 +220,9 @@ export default function Admin() {
                     <Tr>
                       <Th>Fecha de creación</Th>
                       <Th>Publicación</Th>
-                      <Th>Propiedad</Th>
-                      <Th>Perfil de Propietario</Th>
+                      <Th>Estado</Th>
+                      <Th textAlign={"center"}>Propiedad</Th>
+                      <Th textAlign={"center"}>Perfil de Propietario</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
@@ -227,8 +230,11 @@ export default function Admin() {
                       return (
                         <Tr key={i}>
                           <Td>{p.createdAt}</Td>
-                          <Td>{p.property.address}</Td>
-                          <Td>
+                          <Td maxWidth="350px" overflowY="hidden" overflowX="scroll">
+                            {p.property.address}
+                          </Td>
+                          <Td>{p.status}</Td>
+                          <Td textAlign={"center"}>
                             <Button
                               h="1.75rem"
                               size="sm"
@@ -237,7 +243,7 @@ export default function Admin() {
                               <FontAwesomeIcon icon={faEye} />
                             </Button>
                           </Td>
-                          <Td>
+                          <Td textAlign={"center"}>
                             <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
                               <FontAwesomeIcon icon={faUser} />
                             </Button>
@@ -259,8 +265,8 @@ export default function Admin() {
                       <Tr>
                         <Th>Fecha de creación</Th>
                         <Th>Publicación</Th>
-                        <Th>Propiedad</Th>
-                        <Th>Perfil de Propietario</Th>
+                        <Th textAlign={"center"}>Propiedad</Th>
+                        <Th textAlign={"center"}>Perfil de Propietario</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -269,7 +275,7 @@ export default function Admin() {
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.property.address}</Td>
-                            <Td>
+                            <Td textAlign={"center"}>
                               <Button
                                 h="1.75rem"
                                 size="sm"
@@ -278,7 +284,7 @@ export default function Admin() {
                                 <FontAwesomeIcon icon={faEye} />
                               </Button>
                             </Td>
-                            <Td>
+                            <Td textAlign={"center"}>
                               <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
                                 <FontAwesomeIcon icon={faUser} />
                               </Button>
@@ -300,8 +306,9 @@ export default function Admin() {
                       <Tr>
                         <Th>Fecha de creación</Th>
                         <Th>Fecha de eliminación</Th>
-                        <Th>Propiedad</Th>
-                        <Th>Perfil del propietario</Th>
+                        <Th>Motivo?</Th>
+                        <Th textAlign={"center"}>Propiedad</Th>
+                        <Th textAlign={"center"}>Perfil del propietario</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -310,7 +317,8 @@ export default function Admin() {
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.updatedAt}</Td>
-                            <Td>
+                            <Td>Motivo??</Td>
+                            <Td textAlign={"center"}>
                               <Button
                                 h="1.75rem"
                                 size="sm"
@@ -319,7 +327,7 @@ export default function Admin() {
                                 <FontAwesomeIcon icon={faEye} />
                               </Button>
                             </Td>
-                            <Td>
+                            <Td textAlign={"center"}>
                               <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
                                 <FontAwesomeIcon icon={faUser} />
                               </Button>
@@ -342,9 +350,9 @@ export default function Admin() {
                         <Th>Fecha de creación</Th>
                         <Th>Tipo de Reporte</Th>
                         <Th>Descripción</Th>
-                        <Th>Propiedad</Th>
-                        <Th>Usuario que reportó</Th>
-                        <Th>Borrar reporte</Th>
+                        <Th textAlign={"center"}>Propiedad</Th>
+                        <Th textAlign={"center"}>Usuario que reportó</Th>
+                        <Th textAlign={"center"}>Borrar reporte</Th>
                       </Tr>
                     </Thead>
                     <Tbody>
@@ -361,7 +369,7 @@ export default function Admin() {
                             >
                               {p.info}
                             </Td>
-                            <Td>
+                            <Td textAlign={"center"}>
                               <Button
                                 h="1.75rem"
                                 size="sm"
@@ -370,12 +378,12 @@ export default function Admin() {
                                 <FontAwesomeIcon icon={faEye} />
                               </Button>
                             </Td>
-                            <Td>
+                            <Td textAlign={"center"}>
                               <Button h="1.75rem" size="sm" onClick={() => viewUser(p.userId)}>
                                 <FontAwesomeIcon icon={faUser} />
                               </Button>
                             </Td>
-                            <Td>
+                            <Td textAlign={"center"}>
                               <Button h="1.75rem" size="sm" onClick={() => delReport(p.id)}>
                                 <FontAwesomeIcon icon={faUser} />
                               </Button>
@@ -410,7 +418,7 @@ export default function Admin() {
           boxShadow="dark-lg"
           p="10px"
           border="1px solid grey.600"
-          bg={"rgba(216, 158, 26, 0.35)"}
+          // bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
           textAlign={"center"}
         >
@@ -424,7 +432,7 @@ export default function Admin() {
           boxShadow="dark-lg"
           p="10px"
           border="1px solid grey.600"
-          bg={"rgba(216, 158, 26, 0.35)"}
+          // bg={"rgba(216, 158, 26, 0.35)"}
           borderRadius={"0.5rem"}
           textAlign={"center"}
         >

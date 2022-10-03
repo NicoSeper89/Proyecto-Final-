@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { blockUser, restoreUser } from "../../redux/actions";
 
-const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
+const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned, userEmail }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const toast = useToast();
@@ -30,7 +30,7 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
     try {
       if (!banned) {
         dispatch(blockUser(userId));
-        /* await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF") */
+        /* await emailjs.sendForm("service_jwhjfzk", "template_99r0cuj", e.target, "SfKZ1bVFvrovCVKCZ") */
         history.push("/admin");
         toast({
           title: "Perfil bloqueado correctamente.",
@@ -39,7 +39,7 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
         });
       } else {
         dispatch(restoreUser(userId));
-        /* await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF") */
+        /*  await emailjs.sendForm("service_jwhjfzk", "template_htqwacm", e.target, "SfKZ1bVFvrovCVKCZ") */
         history.push("/admin");
         toast({
           title: "Perfil restaurado correctamente.",
@@ -72,32 +72,51 @@ const AlertBRUser = ({ alertBRUser, setAlertBRUser, userId, banned }) => {
           h={"full"}
         >
     <Alert
-      
-      position={"absolute"}
-      display={!alertBRUser[0] ? "none" : "flex"}
-      status={!alertBRUser[1] ? "error" : "info"}
-      variant="subtle"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="center"
-      textAlign="center"
-      height="23rem"
-      top={"6rem"}
-    >
-      <AlertIcon boxSize="40px" mr={0} />
-      <AlertTitle mt={4} mb={1} fontSize="lg">
-        {banned
-          ? " ¿Estás seguro de que queres restaurar al usuario?"
-          : " ¿Estás seguro de que queres bloquear al usuario?"}
-      </AlertTitle>
-      <Flex gap={"1rem"}>
-        <Button mb={"10px"} onClick={(e) => onSi(e)}>
-          Si
-        </Button>
-        <Button onClick={(e) => onNo(e)}>No</Button>
-      </Flex>
-      <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
-    </Alert>
+            zIndex={5}
+            position={"absolute"}
+            display={!alertBRUser[0] ? "none" : "flex"}
+            status={!alertBRUser[1] ? "error" : "info"}
+            variant="subtle"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            textAlign="center"
+            height="23rem"
+            top={"10rem"}
+            gap={"0.5rem"}
+        >
+            <AlertIcon boxSize="40px" mr={0} />
+            <AlertTitle mt={4} mb={1} fontSize="lg">
+                {banned
+                    ? " ¿Estás seguro de que queres restaurar al usuario?"
+                    : " ¿Estás seguro de que queres bloquear al usuario?"}
+            </AlertTitle>
+            <form onSubmit={onSi}>
+                <Flex flexDirection={"column"} gap={"0.5rem"} alignItems={"center"}>
+                    {!banned ?
+                        <Textarea
+                            name={"reasons_ban"}
+                            value={reasons}
+                            size="sm"
+                            resize={"none"}
+                            w={"25rem"}
+                            bg={"gray.200"}
+                            onChange={(e) => {
+                                setReasons(e.target.value);
+                            }} />
+                        :
+                        null}
+                    <Flex gap={"1rem"}>
+                        <Input display={"none"} value={userEmail}  name="user_email" readOnly />
+                        <Button type="submit" mb={"10px"} >
+                            Si
+                        </Button>
+                        <Button onClick={(e) => onNo(e)}>No</Button>
+                    </Flex>
+                </Flex>
+            </form>
+            <AlertDescription maxWidth="sm">Recorda elegir responsablemente</AlertDescription>
+        </Alert>
     </Box>
   );
 };

@@ -60,6 +60,8 @@ import {
   useToast,
   InputGroup,
   InputRightElement,
+  Badge,
+  AspectRatio
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
@@ -72,9 +74,11 @@ import Datos from "../Maps/Datos";
 import RequestScore from "./requestScore";
 // import Comentarios from "./Comentarios"
 import ReactStars from "react-rating-stars-component";
-// import emailjs from "emailjs-com";
+import emailjs from "emailjs-com";
 import AlertRestoration from "./AlertRestoration";
 import { getTotalUsers } from "../../redux/actions";
+import axios from "axios";
+import ResponseComment from "./ResponseComment";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -89,7 +93,7 @@ export default function Detail(props, id) {
   const [alertComent, setAlertCommet] = useState([false, false]);
   const [requestRestoration, setRequestRestoration] = useState(false);
   const totalUsers = useSelector((state) => state.totalUsers);
- 
+
   const toast = useToast();
 
   const myUser = JSON.parse(window.localStorage.getItem("User"));
@@ -98,7 +102,7 @@ export default function Detail(props, id) {
     dispatch(getPublicationsDetail(props.match.params.id));
     dispatch(getInfoUser(myUser));
     dispatch(getComment(props.match.params.id));
-    dispatch(getTotalUsers)
+    dispatch(getTotalUsers);
     return () => {
       dispatch(clean());
     };
@@ -156,7 +160,12 @@ export default function Detail(props, id) {
     e.preventDefault();
     try {
       if (comentarios !== "") {
-        dispatch(postComment(comentarios, props.match.params.id));
+        /* dispatch(postComment(comentarios, props.match.params.id)); */
+        await axios.post(`/publication/comment`, {
+          message: comentarios,
+          publicationId: props.match.params.id,
+          userId: myUser[0].id,
+        });
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
@@ -164,6 +173,7 @@ export default function Detail(props, id) {
           status: "success",
           isClosable: true,
         });
+        console.log(e.target);
         /* await emailjs.sendForm("service_4xqps7g", "template_8suw4hd", e.target, "cF426xv2uIUBSdta_") */
       } else {
         toast({
@@ -200,7 +210,8 @@ export default function Detail(props, id) {
       <Box>
         <NavBarForms />
       </Box>
-      <Flex position={"relative"}
+      <Flex
+        position={"relative"}
         backgroundColor={"#EDEDED"}
         // pt={"50px"}
         pb={"50px"}
@@ -208,7 +219,21 @@ export default function Detail(props, id) {
         justifyContent={"space-around"}
       >
         {Object.entries(miStateDetail).length > 0 ? (
-          <Box >
+          <Box>
+            <Flex mt={"1rem"} justifyContent={"center"}>
+              {miStateDetail.deleted === true ? (
+                <Badge colorScheme="red" variant="solid" fontSize="1.5em">
+                  {/* Publicacion Eliminada, solicita su restauración más abajo */}
+                  Publicacion Eliminada
+                </Badge>
+              ) : null}
+              {miStateDetail.approved === false ? (
+                <Badge colorScheme="red" variant="solid" fontSize="1.5em">
+                  {/* Publicacion Eliminada, solicita su restauración más abajo */}
+                  Publicacion pendiente de aprobación
+                </Badge>
+              ) : null}
+            </Flex>
             <Box
               display={"flex"}
               flexDirection={"row"}
@@ -236,11 +261,25 @@ export default function Detail(props, id) {
                   {miStateDetail.property.propertyImages.length > 0 ? (
                     <Box w={"42rem"} h={"42rem"}>
                       <ImageSlider slides={miStateDetail.property.propertyImages} />
+
                     </Box>
                   ) : (
                     <Image src={imgNotAvailable} />
                   )}
                 </Flex>
+
+                  {miStateDetail.property.propertyVideo.url && (
+            
+                  <AspectRatio maxW='560px' ratio={1}>
+                    <iframe
+                    title='naruto'
+                    src={miStateDetail.property.propertyVideo.url}
+                    allowFullScreen
+                    />
+                  </AspectRatio>
+             
+                  )}
+                
 
                 <Box mt={"3rem"}>
                   <Tabs
@@ -320,34 +359,43 @@ export default function Detail(props, id) {
                           overflow={"scroll"}
                         >
                           <FormControl>
-                            <InputGroup mb={"1rem"}>
-                              <Input
-                                placeholder="Escriba su comentario..."
-                                onChange={onChangeInputComment}
-                                value={comentarios}
-                                name={"coment_publication"}
-                              />
-                              <InputRightElement
-                                cursor={"pointer"}
-                                onClick={onSubmitComent}
-                                p={"1rem"}
-                                _hover={{ bg: "#5e5d5d", color: "white" }}
-                                borderRadius={"0.5rem"}
-                                children={<FontAwesomeIcon icon={faComments} />}
-                              />
-                              <Input
-                                display={"none"}
-                                value={miStateDetail.user.contactInfo.mail}
-                                name={"user_owner"}
-                                readOnly
-                              />
-                              <Input
-                                display={"none"}
-                                value={`http://localhost:3000/details/${props.match.params.id}`}
-                                name={"url_publication"}
-                                readOnly
-                              />
-                            </InputGroup>
+                            <form onSubmit={onSubmitComent}>
+                              <InputGroup mb={"1rem"}>
+                                <Input
+                                  placeholder="Escriba su comentario..."
+                                  onChange={onChangeInputComment}
+                                  value={comentarios}
+                                  name={"coment_publication"}
+                                />
+                                <Input
+                                  display={"none"}
+                                  value={miStateDetail.user.contactInfo.mail}
+                                  name={"user_owner"}
+                                  readOnly
+                                />
+                                <Input
+                                  display={"none"}
+                                  value={myUser[0].name}
+                                  name={"user_comment"}
+                                  readOnly
+                                />
+                                <Input
+                                  display={"none"}
+                                  value={`http://localhost:3000/details/${props.match.params.id}`}
+                                  name={"url_publication"}
+                                  readOnly
+                                />
+                                <Button
+                                  type="submit"
+                                  cursor={"pointer"}
+                                  p={"1rem"}
+                                  _hover={{ bg: "#5e5d5d", color: "white" }}
+                                  borderRadius={"0.5rem"}
+                                >
+                                  <FontAwesomeIcon icon={faComments} />{" "}
+                                </Button>
+                              </InputGroup>
+                            </form>
                             {commentState.map((e, i) => (
                               <Box key={i} mb={"1rem"}>
                                 <Text
@@ -357,7 +405,7 @@ export default function Detail(props, id) {
                                   border="gray.500"
                                   as="em"
                                 >
-                                  {miStateDetail.user.name} :
+                                  {e.user} :
                                 </Text>
                                 <Flex
                                   justifyContent={"space-between"}
@@ -367,10 +415,13 @@ export default function Detail(props, id) {
                                   border="gray.500"
                                 >
                                   {e.message}
+                                  {e.response ? <Text>{e.response}</Text> : null}
                                   {myUser[0].admin ? (
                                     <Button
                                       cursor={"pointer"}
                                       size="xs"
+                                      bg="#5e5d5d"
+                                      color="white"
                                       _hover={{ bg: "#FF8181", color: "white" }}
                                       onClick={() => {
                                         deleteComments(e.id);
@@ -378,6 +429,13 @@ export default function Detail(props, id) {
                                     >
                                       X
                                     </Button>
+                                  ) : null}
+                                  {myUser[0].id === miStateDetail.user.id ? (
+                                    <ResponseComment
+                                      idPublication={props.match.params.id}
+                                      mId={e.id}
+                                      enabledResponse={!e.response}
+                                    />
                                   ) : null}
                                 </Flex>
                               </Box>
@@ -547,13 +605,20 @@ export default function Detail(props, id) {
                         </Flex>
 
                         {/* ACA ESTARIA BUENO QUE EL ADMIN HAGA CLICK EN EL NOMBRE Y LO LLEVE AL PERFIL DEL USUARIO */}
-                        { myUser[0].admin ?<Text fontSize="lg" mb={"10px"} onClick={() => viewUser(miStateDetail.userId)}
-                        cursor= "pointer">
-                          <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
-                        </Text>
-                         :<Text fontSize="lg" mb={"10px"}>
-                          <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
-                        </Text>}
+                        {myUser[0].admin ? (
+                          <Text
+                            fontSize="lg"
+                            mb={"10px"}
+                            onClick={() => viewUser(miStateDetail.userId)}
+                            cursor="pointer"
+                          >
+                            <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                          </Text>
+                        ) : (
+                          <Text fontSize="lg" mb={"10px"}>
+                            <FontAwesomeIcon icon={faCircleUser} /> {miStateDetail.user.name}
+                          </Text>
+                        )}
 
                         <Box alignItems="center" fontSize="lg">
                           <FontAwesomeIcon icon={faAt} />
@@ -661,18 +726,40 @@ export default function Detail(props, id) {
                 </Flex>
               </Flex>
             </Box>
-            <AlertDelete alertSubmit={alertSubmit} setAlertSubmit={setAlertSubmit} id={props.match.params.id} deleted={miStateDetail.deleted}/>
-            <AlertAdminDelete alertAdminDelete={alertAdminDelete} setAlertAdminDelete={setAlertAdminDelete} emailUser={miStateDetail.user.contactInfo.mail} pubId={props.match.params.id} deleted={miStateDetail.deleted} />
-            <AlertRestoration requestRestoration={requestRestoration} setRequestRestoration={setRequestRestoration} pubId={props.match.params.id} emailUser={miStateDetail.user.contactInfo.mail} />
-            <AlertAdminApprove alertSubmit={alertAdminApprove} setAlertAdminApprove={setAlertAdminApprove} pubId={props.match.params.id} userId={miStateDetail.userId} emailUser={miStateDetail.user.contactInfo.mail}/>
+            <AlertDelete
+              alertSubmit={alertSubmit}
+              setAlertSubmit={setAlertSubmit}
+              id={props.match.params.id}
+              deleted={miStateDetail.deleted}
+            />
+            <AlertAdminDelete
+              alertAdminDelete={alertAdminDelete}
+              setAlertAdminDelete={setAlertAdminDelete}
+              emailUser={miStateDetail.user.contactInfo.mail}
+              pubId={props.match.params.id}
+              deleted={miStateDetail.deleted}
+            />
+            <AlertRestoration
+              requestRestoration={requestRestoration}
+              setRequestRestoration={setRequestRestoration}
+              pubId={props.match.params.id}
+              emailUser={miStateDetail.user.contactInfo.mail}
+            />
+            <AlertAdminApprove
+              alertSubmit={alertAdminApprove}
+              setAlertAdminApprove={setAlertAdminApprove}
+              pubId={props.match.params.id}
+              userId={miStateDetail.userId}
+              emailUser={miStateDetail.user.contactInfo.mail}
+            />
           </Box>
         ) : (
           <Loading />
         )}
       </Flex>
-  
+
       <AlertDeleteComent alertComent={alertComent} id={id} />
-      
+
       <Footer />
     </Box>
   );

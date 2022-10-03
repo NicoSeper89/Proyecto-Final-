@@ -10,6 +10,7 @@ const {
   Report,
   User,
   PublicationComents,
+  PropertyVideo
 } = require("../../db");
 const router = Router();
 const {
@@ -186,6 +187,18 @@ router.post("/image", async (req, res, next) => {
     next(error);
   }
 });
+router.post("/video", async (req, res, next) => {
+  const { url } = req.body;
+  try {
+    if (!url) return res.status(404).send("no video to upload");
+    await PropertyVideo.create({
+      url,
+    });
+    res.send("video upload successful");
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.post("/createProperty", async (req, res, next) => {
   const {
@@ -203,6 +216,7 @@ router.post("/createProperty", async (req, res, next) => {
     service,
     typProp,
     propImg,
+    propVideo,
   } = req.body;
   try {
     if (
@@ -241,6 +255,11 @@ router.post("/createProperty", async (req, res, next) => {
       where: { url: propImg },
     });
     property.addPropertyImage(img);
+
+    let video = await PropertyVideo.findAll({
+      where: {url: propVideo}
+    })
+    property.setPropertyVideo(video)
 
     res.send(property.id);
   } catch (error) {
@@ -417,21 +436,10 @@ router.put("/unavailable/:id", async (req, res, next) => {
 router.get("/comment/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    console.log("soy el id:", id);
-    const comments = await PublicationComents.findAll({ where: { publicationId: id } });
-    console.log("soy comments:", comments);
-    res.status(200).send(comments);
-  } catch (error) {
-    next(error);
-  }
-});
 
-router.get("/comment/:id", async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    console.log("soy el id:", id);
-    const comments = await PublicationComents.findAll({ where: { publicationId: id } });
-    console.log("soy comments:", comments);
+    const comments = await PublicationComents.findAll({ where: { publicationId: id },
+                                                        include: User });
+
     res.status(200).send(comments);
   } catch (error) {
     next(error);
@@ -439,17 +447,43 @@ router.get("/comment/:id", async (req, res, next) => {
 });
 
 router.post("/comment", async (req, res, next) => {
-  const { message, publicationId } = req.body;
+  const { message, publicationId, userId } = req.body;
   try {
     let mensaje = await PublicationComents.create({
       message,
       publicationId,
     });
+    let userComment = await User.findByPk(userId);
+
+    userComment.addPublicationComents(mensaje)
+
     res.status(200).send(mensaje);
   } catch (error) {
     next(error);
   }
 });
+
+router.put("/comment/response", async (req, res, next) => {
+
+  const { messageId, response } = req.body;
+  
+  try {
+    
+   const publi = await PublicationComents.upsert(
+      {
+        id: messageId,
+        response: response
+      }
+    )
+    
+    return res.json(publi)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+})
+
 // crea un reporte a la pblicacion por params, con la info de body
 router.post("/report/:id", async (req, res, next) => {
   const { id } = req.params;

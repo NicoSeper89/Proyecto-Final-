@@ -9,6 +9,7 @@ const {
   Report,
   User,
   ContactInfo,
+  PropertyVideo,
 } = require("../../db");
 
 //habria que agregar FilterByParams que recibe publicaciones y filtros y devuelve las
@@ -41,6 +42,10 @@ const getAll = async () => {
           {
             model: PropertyImage,
             attributes: ["url", "cloudId"],
+          },
+          {
+            model:PropertyVideo,
+            attributes: ["url"]
           },
         ],
       },
@@ -75,6 +80,10 @@ const getDetail = async (id) => {
           {
             model: PropertyImage,
             attributes: ["url", "cloudId"],
+          },
+          {
+            model:PropertyVideo,
+            attributes: ["url"]
           },
         ],
       },

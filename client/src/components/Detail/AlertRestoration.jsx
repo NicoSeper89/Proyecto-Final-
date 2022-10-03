@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
-/* import emailjs from "emailjs-com"; */
+import emailjs from "emailjs-com";
 import {
   Button,
   Alert,
@@ -10,12 +10,15 @@ import {
   Input,
   Flex,
   useToast,
-  Box
+  Box,
+  Textarea
 } from "@chakra-ui/react";
 
 const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, emailUser }) => {
   const history = useHistory();
   const toast = useToast();
+
+  const [reasons, setReasons] = useState("");
 
   const onSi = async (e) => {
     e.preventDefault();
@@ -56,7 +59,7 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
       alignItems="center"
       justifyContent="center"
       textAlign="center"
-      height="15rem"
+      height="23rem"
       top={"10rem"}
     >
       <AlertIcon boxSize="40px" mr={0} />
@@ -65,6 +68,17 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
       </AlertTitle>
       <form style={{ padding: "1rem" }} onSubmit={onSi}>
         <Flex flexDirection={"column"} alignItems={"center"} gap={"1rem"}>
+        <Textarea
+            name={"reasons_restoration"}
+            value={reasons}
+            size="sm"
+            resize={"none"}
+            w={"25rem"}
+            bg={"gray.200"}
+            onChange={(e) => {
+              setReasons(e.target.value);
+            }}
+          />
           <Input
             display={"none"}
             value={`http://localhost:3000/details/${pubId}`}
