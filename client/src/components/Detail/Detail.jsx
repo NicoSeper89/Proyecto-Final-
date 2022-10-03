@@ -268,13 +268,13 @@ export default function Detail(props, id) {
 
                   {miStateDetail.property.propertyVideo.url && (
             
-                <AspectRatio maxW='560px' ratio={1}>
-  <iframe
-    title='naruto'
-    src={miStateDetail.property.propertyVideo.url}
-    allowFullScreen
-  />
-</AspectRatio>
+                  <AspectRatio maxW='560px' ratio={1}>
+                    <iframe
+                    title='naruto'
+                    src={miStateDetail.property.propertyVideo.url}
+                    allowFullScreen
+                    />
+                  </AspectRatio>
              
                   )}
                 
