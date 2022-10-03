@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, Flex, FormLabel, Heading, Input } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
-import { editUser, getInfoUser } from "../../redux/actions";
+import { editUser, getInfoUser, getUserInfo } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import UserUploadImg from "../UploadImg/UserUploadImg";
@@ -17,10 +17,12 @@ export default function EditPerfil(props) {
     city: "",
     description: "",
   });
-
+  const infoUser2 = JSON.parse(window.localStorage.getItem("User"));
+  
   useEffect(() => {
-    if (!Object.entries(infoUser).length) {
-      dispatch(getInfoUser(props.match.params.id));
+    infoUser && dispatch(getUserInfo(infoUser[0].id));
+    if (!infoUser) {
+      dispatch(getInfoUser(infoUser2));
     } else {
       setInput({
         name: infoUser[0].name,
