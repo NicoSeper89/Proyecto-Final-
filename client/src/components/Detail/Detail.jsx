@@ -74,6 +74,7 @@ import ReactStars from "react-rating-stars-component";
 // import emailjs from "emailjs-com";
 import AlertRestoration from "./AlertRestoration";
 import { getTotalUsers } from "../../redux/actions";
+import axios from 'axios'
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -154,7 +155,8 @@ export default function Detail(props, id) {
     e.preventDefault();
     try {
       if (comentarios !== "") {
-        dispatch(postComment(comentarios, props.match.params.id));
+        /* dispatch(postComment(comentarios, props.match.params.id)); */
+        await axios.post(`/publication/comment`, { message: comentarios, publicationId: props.match.params.id, userId: myUser[0].id });
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
@@ -355,7 +357,7 @@ export default function Detail(props, id) {
                                   border="gray.500"
                                   as="em"
                                 >
-                                  {miStateDetail.user.name} :
+                                  {e.user.name} :
                                 </Text>
                                 <Flex
                                   justifyContent={"space-between"}

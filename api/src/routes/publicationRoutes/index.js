@@ -417,21 +417,10 @@ router.put("/unavailable/:id", async (req, res, next) => {
 router.get("/comment/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    console.log("soy el id:", id);
-    const comments = await PublicationComents.findAll({ where: { publicationId: id } });
-    console.log("soy comments:", comments);
-    res.status(200).send(comments);
-  } catch (error) {
-    next(error);
-  }
-});
 
-router.get("/comment/:id", async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    console.log("soy el id:", id);
-    const comments = await PublicationComents.findAll({ where: { publicationId: id } });
-    console.log("soy comments:", comments);
+    const comments = await PublicationComents.findAll({ where: { publicationId: id },
+                                                        include: User });
+
     res.status(200).send(comments);
   } catch (error) {
     next(error);
@@ -439,12 +428,16 @@ router.get("/comment/:id", async (req, res, next) => {
 });
 
 router.post("/comment", async (req, res, next) => {
-  const { message, publicationId } = req.body;
+  const { message, publicationId, userId } = req.body;
   try {
     let mensaje = await PublicationComents.create({
       message,
       publicationId,
     });
+    let userComment = await User.findByPk(userId);
+
+    userComment.addPublicationComents(mensaje)
+
     res.status(200).send(mensaje);
   } catch (error) {
     next(error);

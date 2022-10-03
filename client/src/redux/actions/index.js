@@ -555,7 +555,7 @@ export function getPubliNoAvail() {
   };
 }
 
-export function postComment(message, publicationId) {
+/* export function postComment(message, publicationId) {
   return async function (dispatch) {
     try {
       await axios.post(`/publication/comment`, { message, publicationId });
@@ -568,7 +568,7 @@ export function postComment(message, publicationId) {
       }
     }
   };
-}
+} */
 
 //todos los reportes
 export function getReports() {
