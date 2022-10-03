@@ -71,7 +71,7 @@ import Datos from "../Maps/Datos";
 import RequestScore from "./requestScore";
 // import Comentarios from "./Comentarios"
 import ReactStars from "react-rating-stars-component";
-// import emailjs from "emailjs-com";
+import emailjs from "emailjs-com";
 import AlertRestoration from "./AlertRestoration";
 import { getTotalUsers } from "../../redux/actions";
 import axios from 'axios'
@@ -164,6 +164,7 @@ export default function Detail(props, id) {
           status: "success",
           isClosable: true,
         });
+        console.log(e.target)
         /* await emailjs.sendForm("service_4xqps7g", "template_8suw4hd", e.target, "cF426xv2uIUBSdta_") */
       } else {
         toast({
@@ -318,22 +319,15 @@ export default function Detail(props, id) {
                           borderRadius={"0.5rem"}
                           variant="soft-rounded"
                           overflow={"scroll"}
-                        >
+                        > 
                           <FormControl>
+                          <form onSubmit={onSubmitComent}>
                             <InputGroup mb={"1rem"}>
                               <Input
                                 placeholder="Escriba su comentario..."
                                 onChange={onChangeInputComment}
                                 value={comentarios}
                                 name={"coment_publication"}
-                              />
-                              <InputRightElement
-                                cursor={"pointer"}
-                                onClick={onSubmitComent}
-                                p={"1rem"}
-                                _hover={{ bg: "#5e5d5d", color: "white" }}
-                                borderRadius={"0.5rem"}
-                                children={<FontAwesomeIcon icon={faComments} />}
                               />
                               <Input
                                 display={"none"}
@@ -343,11 +337,25 @@ export default function Detail(props, id) {
                               />
                               <Input
                                 display={"none"}
+                                value={myUser[0].name}
+                                name={"user_comment"}
+                                readOnly
+                              />
+                              <Input
+                                display={"none"}
                                 value={`http://localhost:3000/details/${props.match.params.id}`}
                                 name={"url_publication"}
                                 readOnly
                               />
+                              <Button
+                                type="submit"
+                                cursor={"pointer"}
+                                p={"1rem"}
+                                _hover={{ bg: "#5e5d5d", color: "white" }}
+                                borderRadius={"0.5rem"}
+                              ><FontAwesomeIcon icon={faComments} /> </Button>
                             </InputGroup>
+                            </form>
                             {commentState.map((e, i) => (
                               <Box key={i} mb={"1rem"}>
                                 <Text
