@@ -36,6 +36,8 @@ import {
   getUserInfo,
   blockUser,
   restoreUser,
+  getUserImage2,
+  limpiar
 } from "../../redux/actions";
 import AlertBRUser from "./AlertBRUser";
 export default function UsersAdmin() {
@@ -45,7 +47,7 @@ export default function UsersAdmin() {
   // const allUserInfo = useSelector((state) => state.allUserInfo);
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const favoritesUser = useSelector((state) => state.favoritesUser);
-  const imageUser = useSelector((state) => state.imageUser);
+  const imageUser = useSelector((state) => state.imageUser2);
   const [alertBRUser, setAlertBRUser] = useState([false, false]);
   /* const [infoUser,setInfoUser] = useState(user) */
   const infoUser = JSON.parse(window.localStorage.getItem("ViewUser"));
@@ -66,6 +68,10 @@ export default function UsersAdmin() {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
       dispatch(getUserInfo(infoUser[0].id));
+    }
+    return () => {
+      dispatch(limpiar())
+      window.localStorage.removeItem("ViewUser")
     }
   }, [dispatch]);
 
