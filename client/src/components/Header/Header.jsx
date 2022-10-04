@@ -16,7 +16,7 @@ export default function Header() {
         as="b"
         fontSize="3xl"
       >
-        ENCONTRA TU PROXIMO HOGAR
+        ENCONTRÁ TU PRÓXIMO HOGAR
       </Text>
       <Image src={imgHeader} alt="imgHeader" />
     </Box>

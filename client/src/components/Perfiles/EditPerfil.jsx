@@ -1,34 +1,30 @@
 import React, { useState } from "react";
-import { Avatar, Box, Button, Flex, FormLabel, Heading, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, FormLabel, Heading, Input } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
-import Rating from "./Rating";
-import { editUser, getInfoUser } from "../../redux/actions";
+import { editUser, getInfoUser, getUserInfo } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import UserUploadImg from "../UploadImg/UserUploadImg";
-import { useHistory } from "react-router-dom";
 import AlertPerfil from "./AlertPerfil";
 
 export default function EditPerfil(props) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const infoUser = useSelector((state) => state.infoUser);
   const [disabledButton, setDisabledButton] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [input, setInput] = useState({
-    // img: "",
     name: "",
     city: "",
     description: "",
-    // contacto: "",
   });
-
+  const infoUser2 = JSON.parse(window.localStorage.getItem("User"));
+  
   useEffect(() => {
-    if (!Object.entries(infoUser).length) {
-      dispatch(getInfoUser(props.match.params.id));
+    infoUser && dispatch(getUserInfo(infoUser[0].id));
+    if (!infoUser) {
+      dispatch(getInfoUser(infoUser2));
     } else {
       setInput({
-        // img: infoUser.propertyImages,
         name: infoUser[0].name,
         city: infoUser[0].city,
         description: infoUser[0].description,
@@ -65,9 +61,6 @@ export default function EditPerfil(props) {
       left: 0,
       behavior: "smooth",
     });
-
-    // alert("perfil actualizado");
-    // history.push("/perfilPropietario");
   }
 
   return (
@@ -81,17 +74,8 @@ export default function EditPerfil(props) {
         justifyContent={"flex-start"}
         color={"gray.700"}
         bg={"blackAlpha.200"}
+        p={"3rem"}
       >
-        <Box bg={"#F6AD55"} borderRadius={".2rem"} w={"70%"} p={"1rem 0rem"} m={"1rem"}>
-          <Heading
-            color={"white"}
-            textShadow={"gray .1rem .1rem .2rem"}
-            textAlign={"center"}
-            fontSize="2.0rem"
-          >
-            EDITAR PERFIL
-          </Heading>
-        </Box>
         <Flex
           position="relative"
           flexDirection={"column"}
@@ -99,8 +83,18 @@ export default function EditPerfil(props) {
           alignContent={"center"}
           wrap="wrap"
           overflow="hidden"
-          w={"90%"}
+          w={"80%"}
         >
+          <Box bg={"#F6AD55"} borderRadius={".2rem"} p={"1rem 0rem"} mb={"1rem"}>
+            <Heading
+              color={"white"}
+              textShadow={"gray .1rem .1rem .2rem"}
+              textAlign={"center"}
+              fontSize="2.0rem"
+            >
+              EDITAR PERFIL
+            </Heading>
+          </Box>
           <Box
             p={"1rem"}
             w={"80%"}
@@ -150,16 +144,19 @@ export default function EditPerfil(props) {
               <UserUploadImg />
             </Box>
           </Box>
-          <Button
-            fontSize="xl"
-            colorScheme="blue"
-            type="submit"
-            value="enviar"
-            onClick={handleSubmit}
-            disabled={disabledButton}
-          >
-            Confirmar cambios
-          </Button>
+          <Flex justifyContent={"flex-end"} p={"1rem"}>
+            <Button
+              w={"30%"}
+              fontSize="xl"
+              colorScheme="blue"
+              type="submit"
+              value="enviar"
+              onClick={handleSubmit}
+              disabled={disabledButton}
+            >
+              Confirmar cambios
+            </Button>
+          </Flex>
           <Box
             position={"absolute"}
             display={!alertSubmit[0] ? "none" : "flex"}

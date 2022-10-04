@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   Button,
@@ -9,38 +8,43 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  Text,
   Flex,
+  useToast,
+  Box
 } from "@chakra-ui/react";
 import { deletePublicaction } from "../../redux/actions";
 
-const AlertDelete = ({ alertSubmit, id }) => {
+const AlertDelete = ({ alertSubmit, setAlertSubmit, id, deleted }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const toast = useToast();
 
-  const onDown = () => {
-    history.push("/");
-  };
-  const onSi = () => {
+  const onSi = (e) => {
     dispatch(deletePublicaction(id));
     history.push("/");
+    toast({
+      title: "Publicación eliminada correctamente.",
+      status: "success",
+      isClosable: true,
+    });
   };
   const onNo = () => {
-    history.goBack();
+    setAlertSubmit([false,false])
   };
-  /*  const onTest = async () => {
-    history.push("/PaymentOk");
-  }; */
-  /*  const handleDestacar = () => {
-    
-    let res = axios.post("/sell/premium", {});
-    console.log('soy',res)
-  }; */
+
 
   return (
+    <Box
+          position={"absolute"}
+          display={!alertSubmit[0] ? "none" : "flex"}
+          bg={"blackAlpha.100"}
+          top={"0px"}
+          left={"0px"}
+          w={"full"}
+          h={"full"}
+        >
     <Alert
       position={"absolute"}
-      display={!alertSubmit[0] ? "none" : "flex"}
       status={!alertSubmit[1] ? "error" : "info"}
       variant="subtle"
       flexDirection="column"
@@ -52,12 +56,14 @@ const AlertDelete = ({ alertSubmit, id }) => {
     >
       <AlertIcon boxSize="40px" mr={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
-        ¿Estás seguro de eliminar la publicación?
+        {deleted
+          ? " ¿Estás seguro de que queres restaurar la publicación?"
+          : " ¿Estás seguro de que queres eliminar la publicación?"}
         {/* {!alertSubmit[1]
           ? "La publicación no se pudo borrar, lo sentimos mucho!"
           : "La publicación se borro correctamente"} */}
       </AlertTitle>
-      <Flex direction={"column"}>
+      <Flex gap={"1rem"}>
         <Button mb={"10px"} onClick={(e) => onSi(e)}>
           Si
         </Button>
@@ -65,10 +71,8 @@ const AlertDelete = ({ alertSubmit, id }) => {
       </Flex>
       <br />
       <AlertDescription maxWidth="sm">Muchas gracias por utilizar nuestra web!</AlertDescription>
-      {/* <Button onClick={onDown}>Volver al inicio</Button> */}
-      {/* <Button onClick={onTest}>test mp</Button> */}
-      {/* <Button onClick={handleDestacar}>Destacar Publicación</Button> */}
     </Alert>
+    </Box>
   );
 };
 

@@ -1,18 +1,19 @@
 import axios from "axios";
-import { bindActionCreators } from "redux";
+// import { bindActionCreators } from "redux";
 // import Cities from "../../components/Cities/Cities";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_DETAIL = "GET_PUBLICATIONS_DETAIL";
 export const GET_DETAILS = "GET_DETAILS";
-export const GET_CITIES = "GET_CITIES";
+/* export const GET_CITIES = "GET_CITIES"; */
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
 export const UPLOAD_IMG_USER = "UPLOAD_IMG_USER";
 export const FILTER_PROP = "FILTER_PROP";
 export const FILTER_AMB = "FILTER_AMB";
+export const FILTER_GAR = "FILTER_GAR";
 export const FILTER_PET = "FILTER_PET";
-export const SORT_PRICE = "SORT_PRICE";
+export const SORT = "SORT";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
 export const SET_PUBLICATION = "SET_PUBLICATION";
 export const SAVEFILTER = "SAVEFILTER";
@@ -24,6 +25,7 @@ export const VALUE_FILTER = "VALUE_FILTER";
 export const SAVESORT = "SAVESORT";
 export const DELETE_PUBLICACTION_IMAGE = "DELETE_PUBLICACTION_IMAGE";
 export const DELETE_PUBLICACTION = "DELETE_PUBLICACTION";
+export const DELETE_PUBLICACTION_PERMANENT = "DELETE_PUBLICACTION_PERMANENT";
 export const UPDATE_PROP = "UPDATE_PROP";
 export const GET_PUBLICATIONS_PREMIUM = "GET_PUBLICATIONS_PREMIUM";
 export const INFO_USER = "INFO_USER";
@@ -33,9 +35,25 @@ export const GET_PUBLICATION_USER = "GET_PUBLICATION_USER";
 export const GET_FAVORITES_USER = "GET_FAVORITES_USER";
 export const SET_FAVORITE = "SET_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
-export const GETUSER = "GETUSER"
-export const GET_USER_IMAGE = "GET_USER_IMAGE"
-
+export const GETUSER = "GETUSER";
+export const GET_USER_IMAGE = "GET_USER_IMAGE";
+export const GET_COMMENT = "GET_COMMENT";
+export const POST_COMMENT = "POST_COMMENT";
+export const REPORT_PUBLICATION = "REPORT_PUBLICATION";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const GET_ALL_PUBLICATIONS = "GET_ALL_PUBLICATIONS";
+export const GET_PUBLICATIONS_NAVAILABLE = "GET_PUBLICATIONS_NAVAILABLE";
+export const GET_REPORTS = "GET_REPORTS";
+export const GET_REPORTS_ID = "GET_REPORTS_ID";
+export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
+export const APPROVE_POST_USER = "APPROVE_POST_USER";
+export const TOTAL_USERS = "TOTAL_USERS";
+export const SET_CITY = "SET_CITY"
+export const TOTAL_DATES = "TOTAL_DATES"
+export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
+export const BLOCK_USER = "BLOCK_USER"
+export const RESTORE_USER = "RESTORE_USER"
+export const DELETE_REPORT = "DELETE_REPORT"
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -71,7 +89,7 @@ export function getPublicationsDetail(id) {
 }
 
 //Esto trae las Provincias
-export function getCities() {
+/* export function getCities() {
   return async function (dispatch) {
     try {
       let infoBack = await axios.get("/publication/city");
@@ -85,7 +103,7 @@ export function getCities() {
       }
     }
   };
-}
+} */
 
 //Esto trae los servicios de luz, agua, gas, internet y calefaccion
 export function getServices() {
@@ -140,9 +158,14 @@ export function getPubs(id) {
   return async function (dispatch) {
     try {
       let info = await axios.get(`/user/getPubs/${id}`);
+      let infoDeleted = await axios.get(`/user/getPubsDeleted/${id}`);
+      let response = {
+        pubs: info.data,
+        pubsBorradas: infoDeleted.data,
+      };
       return dispatch({
         type: GET_PUBLICATION_USER,
-        payload: info.data,
+        payload: response,
       });
     } catch (error) {
       alert(error.response.data);
@@ -206,15 +229,22 @@ export function updateFilterAmbient(value) {
     payload: value,
   };
 }
+export function updateFilterGarage(value) {
+  return {
+    type: FILTER_GAR,
+    payload: value,
+  };
+}
+
 export function updateFilterPets(value) {
   return {
     type: FILTER_PET,
     payload: value,
   };
 }
-export function updateSortingPrice(value) {
+export function updateSorting(value) {
   return {
-    type: SORT_PRICE,
+    type: SORT,
     payload: value,
   };
 }
@@ -300,6 +330,13 @@ export function saveFilter(payload) {
   };
 }
 
+export function setCity(payload) {
+  return {
+    type: SET_CITY,
+    payload,
+  };
+}
+
 export function saveSort(payload) {
   return {
     type: SAVESORT,
@@ -308,25 +345,28 @@ export function saveSort(payload) {
 }
 
 export function setPublication(payload) {
-  console.log("en setpub", payload);
   return {
     type: SET_PUBLICATION,
     payload,
   };
 }
 
-//ELIMINAR UNA PUBLICACION
+//ELIMINAR UNA PUBLICACION TEMPORALMENTE
 export function deletePublicaction(id) {
-  console.log(id, "id");
   return async function (dispatch) {
-    try {
-      await axios.delete(`/publication/delete/${id}`);
-      return dispatch({
-        type: DELETE_PUBLICACTION,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    let respuesta = await axios.put(`/publication/unavailable/${id}`);
+    return dispatch({
+      type: DELETE_PUBLICACTION,
+    });
+  };
+}
+//ELIMINAR UNA PUBLICACION
+export function deletePublicactionPermanent(id) {
+  return async function (dispatch) {
+    await axios.delete(`/publication/delete/${id}`);
+    return dispatch({
+      type: DELETE_PUBLICACTION_PERMANENT,
+    });
   };
 }
 
@@ -346,7 +386,6 @@ export function deletePublicactionImage(url) {
 
 // ACTUALIZAR DATOS DE PROPIEDAD
 export function updatedProp(id, inputPropiedad) {
-  console.log(inputPropiedad, "id de actualizacion", id);
   return async function (dispatch) {
     try {
       await axios.put(`/publication/editProperty/${id}`, inputPropiedad);
@@ -396,21 +435,266 @@ export function getInfoUser(user) {
 
 export function getUserInfo(id) {
   return async function (dispatch) {
-    const resp = await axios.get(`/user/userInfo/${id}`);
+    try {
+      const resp = await axios.get(`/user/userInfo/${id}`);
+      return dispatch({
+        type: GETUSER,
+        payload: resp.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+
+export async function getTotalUsers(dispatch) {
+  try {
+    const res = await axios.get("/admin/totalUsers");
     return dispatch({
-      type: GETUSER,
-      payload: resp.data
+      type: TOTAL_USERS,
+      payload: res.data,
     });
+  } catch (error) {
+    alert(error.data);
   }
 }
+
 export function getUserImage(id) {
   return async function (dispatch) {
-    const resp = await axios.get(`/user/getImage/${id}`);
-    return dispatch({
-      type: GET_USER_IMAGE,
-      payload: resp.data
-    });
-  }
+    try {
+      const resp = await axios.get(`/user/getImage/${id}`);
+      return dispatch({
+        type: GET_USER_IMAGE,
+        payload: resp.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
 }
 
+export function getComment(publicationId) {
+  return async function (dispatch) {
+    try {
+      const comments = await axios.get(`/publication/comment/${publicationId}`);
+      return dispatch({
+        type: GET_COMMENT,
+        payload: comments.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+// Esto es para reportar una publicación
+export function reportPublication(id, input) {
+  return async function (dispatch) {
+    try {
+      const res = await axios.post(`/publication/report/${id}`, input);
+      return dispatch({
+        type: REPORT_PUBLICATION,
+        payload: res.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+// Esto es para reportar una publicación
+export function deleteReport(id) {
+  return async function (dispatch) {
+    try {
+      const res = await axios.delete(`/publication/report/${id}`);
+      return dispatch({
+        type: DELETE_REPORT,
+        payload: res.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+//trae todas las publis
+export function getAll() {
+  return async function (dispatch) {
+    try {
+      const respuesta = await axios.get("/publication/allpublications");
+      return dispatch({
+        type: GET_ALL_PUBLICATIONS,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
 
+//trae publis borradas
+export function getPubliNoAvail() {
+  return async function (dispatch) {
+    try {
+      const respuesta = await axios.get("/publication/allpublications");
+      return dispatch({
+        type: GET_PUBLICATIONS_NAVAILABLE,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+
+/* export function postComment(message, publicationId) {
+  return async function (dispatch) {
+    try {
+      await axios.post(`/publication/comment`, { message, publicationId });
+      return dispatch({
+        type: POST_COMMENT,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+} */
+
+//todos los reportes
+export function getReports() {
+  return async function (dispatch) {
+    try {
+      const respuesta = await axios.get("/publication/reportList");
+      return dispatch({
+        type: GET_REPORTS,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+//todos los reportes de una publciacion
+export function getReportsId(id) {
+  return async function (dispatch) {
+    try {
+      const respuesta = await axios.get("/publication/reportList/" + id);
+      return dispatch({
+        type: GET_REPORTS_ID,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+//todas las pubis a aprobar
+export function getForApproval() {
+  return async function (dispatch) {
+    try {
+      const respuesta = await axios.get("/publication/forApproval");
+      return dispatch({
+        type: GET_FOR_APPROVAL,
+        payload: respuesta.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+//aprobar publicacion
+export function approvePostUser(pubId, userId) {
+  return async function (dispatch) {
+    try {
+      const respuesta = await axios.put("/publication/approvePost/" + pubId);
+      const respuesta2 = await axios.put("/publication/approveUser/" + userId);
+      return dispatch({
+        type: APPROVE_POST_USER,
+        /*       payload: respuesta.data */
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+
+export function deleteComment(id) {
+
+  // console.log("soy publicationID", idComment)
+  return async function (dispatch) {
+    try {
+      await axios.delete(`/publication/comment/${id}`);
+      return dispatch({
+        type: DELETE_COMMENT,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function allDates() {
+  return async (dispatch) => {
+    const resp = await axios.get("/admin/pubDates");
+    return dispatch({
+      type: TOTAL_DATES,
+      payload: resp.data,
+    });
+  };
+}
+
+export function allUserDates() {
+  return async (dispatch) => {
+    const resp = await axios.get("/admin/userDates");
+    return dispatch({
+      type: TOTAL_USER_DATES,
+      payload: resp.data,
+    });
+  };
+}
+
+export function blockUser(id) {
+  try {
+    return async function (dispatch) {
+      await axios.put(`/user/deleteUser/${id}`);
+      return dispatch({
+        type: BLOCK_USER,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function restoreUser(id) {
+  try {
+    return async function (dispatch) {
+      await axios.put(`/user/restoreUser/${id}`);
+      return dispatch({
+        type: RESTORE_USER,
+      });
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}

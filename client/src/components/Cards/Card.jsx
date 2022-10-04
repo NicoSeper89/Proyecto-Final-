@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import style from "./Card.module.css";
 import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,8 +9,8 @@ import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavsUser, setFav, removeFav } from "../../redux/actions";
 /* import { useHistory } from "react-router-dom"; */
-import Select from "../SelectTypeUser/Select";
-import AlertCard from "./AlertCard";
+// import Select from "../SelectTypeUser/Select";
+// import AlertCard from "./AlertCard";
 import { useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -36,33 +37,44 @@ export default function Card({
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
   const [boton, setBoton] = useState(false);
-//use effect
-  useEffect(async () => {
+
+
+  /* useEffect(() => {
+
     if (infoUser) {
       dispatch(getFavsUser(infoUser[0].id));
     }
-    console.log("useEffect");
-  }, [dispatch, boton]);
+  }, [dispatch, boton]); */
 
-  const handleClickFav = () => {
+  const handleClickFav = async () => {
     if (infoUser) {
-      dispatch(setFav(infoUser[1].userId, id));
-      if (boton === false) {
-        setBoton(true);
-      } else if (boton === true) {
-        setBoton(false);
-      }
+      await axios.put(`/user/setFav?userId=${infoUser[1].userId}&pubId=${id}`, {});
+      dispatch(getFavsUser(infoUser[1].userId, id));
+      /* dispatch(setFav(infoUser[1].userId, id)); */
+      //no despachar set favs, pero despues despachar un get favs
+
+      /* setBoton(true); */
+      // if (boton === false) {
+      //   setBoton(true);
+      // } else if (boton === true) {
+      //   setBoton(false);
+      // }
+      /* window.location.reload() */
     }
   };
-  const handleClickRemoveFav = () => {
-    dispatch(removeFav(infoUser[1].userId, id));
-    /* dispatch(getFavsUser(infoUser[0].id)); */
-    if (boton === false) {
-      setBoton(true);
-    } else if (boton === true) {
-      setBoton(false);
-    }
+  const handleClickRemoveFav = async () => {
+    await axios.put(`/user/removeFav?userId=${infoUser[1].userId}&pubId=${id}`, {});
+    /* dispatch(removeFav(infoUser[1].userId, id)); */
+    dispatch(getFavsUser(infoUser[1].userId, id));
     /* window.location.reload() */
+    /* dispatch(getFavsUser(infoUser[0].id)); */
+    /* setBoton(false); */
+    // if (boton === false) {
+    //   setBoton(true);
+    // } else if (boton === true) {
+    //   setBoton(false);
+    // }
+    
   };
   const favState = () => {
     let result = false;
@@ -104,26 +116,27 @@ export default function Card({
           )}
         </Box>
 
-        {!img[0] ? <Image
-          src={imgNotAvailable}
-          alt="Img not found"
-          h={"230px"}
-          backgroundSize={"cover"}
-          backgroundRepeat={"no-repeat"}
-          backgroundPosition={"center"}
-          borderBottom='1px solid grey'
-        />
-          : <Carousel
+        {!img[0] ? (
+          <Image
+            src={imgNotAvailable}
+            alt="Img not found"
+            h={"230px"}
+            backgroundSize={"cover"}
+            backgroundRepeat={"no-repeat"}
+            backgroundPosition={"center"}
+            borderBottom="1px solid grey"
+          />
+        ) : (
+          <Carousel
             zIndex={2}
-
             thumbWidth={"13%"}
             h={"230px"}
             infiniteLoop
             borderBottom={"0.2px solid rgb(126, 125, 125)"}
           >
-            {img.map((s) => {
+            {img.map((s, i) => {
               return (
-                <Box>
+                <Box key={i}>
                   <Image
                     src={s.url ? s.url : imgNotAvailable}
                     key={s.id}
@@ -137,9 +150,8 @@ export default function Card({
               );
             })}
           </Carousel>
-        }
+        )}
         {/* </Box> */}
-
 
         {/* <Image
           src={img[img.length-1] ? img[img.length-1].url : imgNotAvailable}
@@ -157,22 +169,21 @@ export default function Card({
           <Tag size={"sm"} variant="solid" backgroundColor={"grey.300"} w={"5rem"}>
             Propietario
           </Tag>
-        ) : favState() ? (
-          <FontAwesomeIcon
-            cursor={infoUser&&"pointer"}
-            onClick={handleClickFav}
-            className={style.containerFav}
-            h={"20px"}
-            icon={faHeart}
-          />
         ) : (
-          <FontAwesomeIcon
-            cursor={"pointer"}
-            onClick={handleClickRemoveFav}
-            className={style.containerFavRed}
-            h={"20px"}
-            icon={faHeart}
-          />
+          !favState() ? (
+            <FontAwesomeIcon
+              cursor={infoUser && "pointer"}
+              onClick={handleClickRemoveFav}
+              className={style.containerFavRed}
+              h={"20px"}
+              icon={faHeart}
+            />) : (<FontAwesomeIcon
+              cursor={infoUser && "pointer"}
+              onClick={handleClickFav}
+              className={ style.containerFav}
+              h={"20px"}
+              icon={faHeart}
+            />)
         )}
 
         {/* </Link> */}

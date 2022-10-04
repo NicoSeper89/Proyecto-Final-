@@ -31,10 +31,9 @@ export default function NavBarForms() {
     if (rutaArr[1] === "details") {
       if (!infoUser) dispatch(getInfoUser());
       return history.goBack();
-    
     }
 
-    history.push("/");
+    window.history.back();
   }
 
   return (
@@ -43,6 +42,7 @@ export default function NavBarForms() {
         className={style.container}
         /* bg={useColorModeValue("gray.50", "gray.900")} */
         color={useColorModeValue("gray.700", "gray.200")}
+        overflow={"hidden"}
       >
         <Flex
           alignItems={"center"}

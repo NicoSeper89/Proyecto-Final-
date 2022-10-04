@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import style from "./NavBar.module.css";
 import { Link } from "react-router-dom";
@@ -19,18 +21,36 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import "./NavBar.module.css";
-import { useSelector } from "react-redux";
+import { getPubs, getUserInfo } from "../../redux/actions";
 
 const NavBar = () => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0(); // haciendo pruebas
+  const { loginWithRedirect, /*isAuthenticated,*/ logout } = useAuth0(); // haciendo pruebas
   const history = useHistory();
+  const dispatch = useDispatch();
+  const publicationsUser = useSelector((state) => state.publicationsUser);
   const infoUser = useSelector((state) => state.infoUser);
+  const infoUser2 = useSelector((state) => state.allUserInfo);
   // const [displayMenu, setDisplayMenu] = useState(false);
 
   // const onClickMenu = (e) => {
   //   e.preventDefault();
   //   setDisplayMenu(!displayMenu);
   // };
+  /* const havePublications = async (identificador) => {
+    let result = await axios.get(`/user/getPubs/${identificador}`);
+    result = result.data.length ? true : false;
+    console.log('result',result)
+    return result
+  } */
+
+  const user = window.localStorage.getItem("User");
+  const user2 = JSON.parse(user);
+
+  useEffect(() => {
+    if (user2) {dispatch(getPubs(user2[0].id))
+    dispatch(getUserInfo(user2[0].id));}
+  }, [dispatch]);
+
   const closeUser = () => {
     window.localStorage.removeItem("User"); // me elimina el user de localStorage, cierra sesion
     logout();
@@ -52,8 +72,10 @@ const NavBar = () => {
     history.push("/createPost");
   };
 
-  const user = window.localStorage.getItem("User");
-  const user2 = JSON.parse(user);
+  const buttonAdmin = (e) => {
+    e.preventDefault();
+    history.push("/admin");
+  };
 
   const detallesUser = () => {
     history.push("/perfilPropietario");
@@ -73,6 +95,7 @@ const NavBar = () => {
         w={"100%"}
         h={"60px"}
         // backgroundColor={"gray.100"}
+        overflow={"hidden"}
       >
         <Link to="/">
           <Image h={"200px"} marginTop={"35px"} src={logoImg} alt="homeLogo" />
@@ -80,8 +103,25 @@ const NavBar = () => {
 
         <Box display={"flex"} alignItems={"center"} marginRight={"10px"}>
           {/* me oculta el boton si no esta logueado o es propietario */}
-          {user2 && (
-            <Button colorScheme="orange" bg="orange" variant="outline" onClick={buttonCreatePost}>
+          {user2 && user2[0].admin && (
+            <Button
+              colorScheme="orange"
+              variant="outline"
+              onClick={buttonAdmin}
+              marginRight={"10px"}
+            >
+              Admin
+            </Button>
+          )}
+
+          {user2 && (infoUser2.approved || !publicationsUser.length) && (
+            <Button
+              colorScheme="orange"
+              bg="orange"
+              variant="outline"
+              // onClick={() => history.push("/createPost")}>
+              onClick={(e) => buttonCreatePost(e)}
+            >
               Publicar
             </Button>
           )}
@@ -202,22 +242,22 @@ const NavBar = () => {
                         position="absolute"
                         bgColor={activeColor}
                         borderRadius="50%"
-                        // _before={{
-                        //   content: "''",
-                        //   position: 'relative',
-                        //   display: 'block',
-                        //   width: '300%',
-                        //   height: '300%',
-                        //   boxSizing: 'border-box',
-                        //   marginLeft: '-100%',
-                        //   marginTop: '-100%',
-                        //   borderRadius: '50%',
-                        //   bgColor: activeColor,
-                        //   animation: `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
-                        // }}
-                        // _after={{
-                        //   animation: `2.25s ${pulseDot} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
-                        // }}
+                      // _before={{
+                      //   content: "''",
+                      //   position: 'relative',
+                      //   display: 'block',
+                      //   width: '300%',
+                      //   height: '300%',
+                      //   boxSizing: 'border-box',
+                      //   marginLeft: '-100%',
+                      //   marginTop: '-100%',
+                      //   borderRadius: '50%',
+                      //   bgColor: activeColor,
+                      //   animation: `2.25s ${pulseRing} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
+                      // }}
+                      // _after={{
+                      //   animation: `2.25s ${pulseDot} cubic-bezier(0.455, 0.03, 0.515, 0.955) -0.4s infinite`,
+                      // }}
                       />
                     </Tooltip>
                   </Box>

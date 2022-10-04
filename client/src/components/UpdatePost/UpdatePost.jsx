@@ -24,6 +24,7 @@ import {
   FormLabel,
   Box,
 } from "@chakra-ui/react";
+import Places from "../CreatePost/Places";
 /* import { faArrowTrendUp } from "@fortawesome/free-solid-svg-icons"; */
 
 const UpdatePost = (props) => {
@@ -48,7 +49,7 @@ const UpdatePost = (props) => {
     yard: "",
     pets: "",
     age: "",
-    city: "",
+    /* city: "", */
     service: [],
     typProp: "",
     propImg: [],
@@ -74,7 +75,7 @@ const UpdatePost = (props) => {
         yard: publication.property.yard,
         pets: publication.property.pets,
         age: publication.property.age,
-        city: publication.property.city.name,
+       /*  city: publication.property.city.name, */
         service: publication.property.services.map((s) => s.name),
         typProp: publication.property.TypeOfProp.name,
         propImg: [...publication.property.propertyImages],
@@ -180,7 +181,7 @@ const UpdatePost = (props) => {
               borderColor="gray.200"
               bg={"white"}
             >
-              <FormLabel>
+              {/* <FormLabel>
                 <Text
                   fontWeight={"semiBold"}
                   fontSize="1.2rem"
@@ -196,14 +197,14 @@ const UpdatePost = (props) => {
                   required
                   value={inputPropiedad.city}
                 >
-                  {/* <option value={inputPropiedad.city}>{inputPropiedad.city}</option> */}
+                  
                   {cities.map((city, i) => (
                     <option key={i} value={city.name}>
                       {city.name}
                     </option>
                   ))}
                 </Select>
-              </FormLabel>
+              </FormLabel> */}
 
               <FormLabel >
                 <Text
@@ -213,6 +214,8 @@ const UpdatePost = (props) => {
                 >
                   Dirección
                 </Text>
+                {!inputPropiedad.address ?
+                <Places infoFormProp={inputPropiedad} setInfoFormProp={setInputPropiedad} /> :
                 <Input 
                   color="gray.500"
                   autoComplete={"true"}
@@ -222,6 +225,7 @@ const UpdatePost = (props) => {
                   onChange={HandleChangePropiedad}
                   required
                 />
+                }
               </FormLabel>
 
               <FormLabel>

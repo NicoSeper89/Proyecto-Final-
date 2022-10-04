@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Text } from "@chakra-ui/react";
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
 
 const AlertSubmitUpdate = ({ alertSubmit, premium }) => {
   const history = useHistory();

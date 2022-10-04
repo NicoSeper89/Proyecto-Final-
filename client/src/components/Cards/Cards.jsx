@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentPage } from "../../redux/actions";
 import Loading from "../Loading/Loading";
 import Card from "./Card";
 import style from "./Cards.module.css";
 import { Box, List, ListItem } from "@chakra-ui/react";
-import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function Cards() {
   const dispatch = useDispatch();
@@ -59,35 +60,41 @@ export default function Cards() {
 
   /* **************** RENDER CARDS **************** */
   return (
-    <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%" zIndex={"90"}>
+    <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%">
       {/* {loading ? (
         <Loading /> */}
       {Object.entries(houses).length > 0 ? (
         <Box>
           <List className={style.paginadoBtn}>
-            <ListItem onClick={handlePrev}>Prev</ListItem>
+            <ListItem className={style.paginadoBtn} onClick={handlePrev}>
+              <FontAwesomeIcon icon={faChevronLeft} fontSize="20px" />
+            </ListItem>
             {renderPaginado}
-            <ListItem onClick={handleNext}>Next</ListItem>
+            <ListItem className={style.paginadoBtn} onClick={handleNext}>
+              <FontAwesomeIcon icon={faChevronRight} fontSize="20px" />
+            </ListItem>
           </List>
           <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"30px"}>
             {currentHouse?.map((r) => {
-              return (
-                <Box key={r.id}>
-                  <Card
-                    id={r.id}
-                    idUser={r.userId}
-                    img={r.property.propertyImages}
-                    precio={r.property.price}
-                    ciudad={r.property.city.name}
-                    metros={r.property.surface}
-                    baño={r.property.bathrooms}
-                    dormitorio={r.property.rooms}
-                    ambientes={r.property.environments}
-                    mascota={r.property.pets}
-                    premium={r.premium}
-                  />
-                </Box>
-              );
+              if (r.approved) {
+                return (
+                  <Box key={r.id}>
+                    <Card
+                      id={r.id}
+                      idUser={r.userId}
+                      img={r.property.propertyImages}
+                      precio={r.property.price}
+                      ciudad={r.property.address}
+                      metros={r.property.surface}
+                      baño={r.property.bathrooms}
+                      dormitorio={r.property.rooms}
+                      ambientes={r.property.environments}
+                      mascota={r.property.pets}
+                      premium={r.premium}
+                    />
+                  </Box>
+                );
+              }
             })}
           </Box>
         </Box>

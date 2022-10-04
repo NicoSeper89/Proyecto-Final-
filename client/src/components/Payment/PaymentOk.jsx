@@ -1,17 +1,8 @@
 import React from "react";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Button,
-  Text,
-} from "@chakra-ui/react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Button } from "@chakra-ui/react";
 
 export default function PaymentOk() {
   /*  const [loading, setLoading] = useState(false); */
@@ -44,8 +35,7 @@ export default function PaymentOk() {
     createSuscription(userInfo);
   } */
 
-    let pubID=window.localStorage.getItem('publicationID')
-
+    let pubID = window.localStorage.getItem("publicationID");
 
     asignPremium(pubID);
   }, []);

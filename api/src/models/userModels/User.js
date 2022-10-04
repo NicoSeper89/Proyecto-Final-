@@ -16,15 +16,31 @@ module.exports = (sequelize) => {
       defaultValue: "",
     },
     rating: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: true,
       defaultValue: 0,
     },
     ratingAmount: {
       type: DataTypes.INTEGER,
+      defaultValue: 0
     },
     favorites: {
       type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    userRank: {
+      type: DataTypes.ARRAY(DataTypes.STRING)
+    },
+    approved: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    banned: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     },
   });
 };

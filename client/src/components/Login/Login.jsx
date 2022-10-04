@@ -1,19 +1,16 @@
 import React from "react";
 import { useState } from "react";
 import style from "./Login.module.css";
-import { Link, Redirect } from "react-router-dom";
+import { Link /*, Redirect*/ } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Input,
   Box,
-  InputGroup,
   Button,
   InputRightElement,
   FormControl,
   FormErrorMessage,
-  // Stack,
-  // Checkbox,
 } from "@chakra-ui/react";
 import logoImg from "../../Image/Logo LookHouse.png";
 import { getInfoUser } from "../../redux/actions";
@@ -32,9 +29,8 @@ const Login = () => {
   };
   const log_in = async (e) => {
     // ruta para loguearme **********************************
-    console.log("enviando datos", login);
-    alert(respuesta.data.mensaje);
     const respuesta = await axios.post("/user/logueado", login);
+    alert(respuesta.data.mensaje);
 
     if (respuesta.data.loguear) {
       dispatch(getInfoUser(respuesta.data.userInfo));
