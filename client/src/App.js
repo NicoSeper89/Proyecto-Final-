@@ -15,7 +15,7 @@ import UpdatePost from "./components/UpdatePost/UpdatePost";
 import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
 // import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
 import PaymentOk from "./components/Payment/PaymentOk";
-// import PaymentFail from "./components/Payment/PaymentFail.jsx";
+import PaymentFail from "./components/Payment/PaymentFail.jsx";
 import Select from "./components/SelectTypeUser/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import EditPerfil from "./components/Perfiles/EditPerfil";
