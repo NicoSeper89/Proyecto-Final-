@@ -7,7 +7,7 @@ const mercadopago = require("mercadopago");
 mercadopago.configure({
 	access_token: "TEST-3705955665092617-092117-68b6617138b1d100ce1f79b25e556585-111259691",
 });
-
+//mp
 const premiumController = async (req, res) => {
 	try {
 		let preference = {
@@ -19,9 +19,9 @@ const premiumController = async (req, res) => {
 				},
 			],
 			back_urls: {
-				failure: "https://proyecto-final-client-ool4.vercel.app/PaymentFail",
-				pending: "https://proyecto-final-client-ool4.vercel.app/PaymentFail",
-				success: "https://proyecto-final-client-ool4.vercel.app/PaymentOk",
+				failure: "https://look-house.vercel.app/PaymentFail",
+				pending: "https://look-house.vercel.app/PaymentFail",
+				success: "https://look-house.vercel.app/PaymentOk",
 			},
 			auto_return: "approved",
 		};

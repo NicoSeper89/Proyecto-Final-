@@ -38,7 +38,9 @@ export default function Card({
   const user2 = JSON.parse(user);
   const [boton, setBoton] = useState(false);
 
+
   /* useEffect(() => {
+
     if (infoUser) {
       dispatch(getFavsUser(infoUser[0].id));
     }

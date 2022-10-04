@@ -40,7 +40,7 @@ import { Box } from "@chakra-ui/react";
 // import { filter } from "../../redux/actions";
 // import { precio } from "../../redux/actions";
 
-// http://localhost:3001/publication/propertyTypes   ruta para traer los tipos de propiedades ya esta lista
+// http://publication/propertyTypes   ruta para traer los tipos de propiedades ya esta lista
 // pasar ciudad para que la pueda encontrar esta nos llega desde el input
 // para el sort by podemos ordenar por orden alfabetico
 
@@ -152,7 +152,9 @@ const SearchBar = () => {
               _expanded={{ bg: "white" }}
               _focus={{ bg: "#D9D9D9" }}
               type="text"
+
               placeholder="Buscar por ubicación..."
+
               color={"black"}
               onChange={changes}
               value={city}

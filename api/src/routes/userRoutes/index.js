@@ -151,7 +151,9 @@ router.post("/imageUser", async (req, res, next) => {
     if (!url) return res.status(404).send("no image to upload");
     let thisUser = await getOneUser(userId);
     // cloudinary.uploader.destroy(thisUser.userImage.cloudId)
+
     // thisUser.userImage.destroy();
+
     let user = await User.findByPk(userId);
     let img = await UserImage.create({
       url,

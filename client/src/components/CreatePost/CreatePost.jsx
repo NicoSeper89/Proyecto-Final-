@@ -167,8 +167,10 @@ const CreatePost = () => {
         id: res.data,
         userId: user[0].id,
       });
+
       window.localStorage.setItem("publicationID", idPub.data);
       /*  dispatch(setPublication(idPub.data)); */
+
       setAlertSubmit([true, true]);
       window.scroll({
         top: 0,

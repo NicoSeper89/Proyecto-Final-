@@ -26,7 +26,9 @@ const Select = () => {
   var [loguear, setLoguear] = useState({loguear:undefined,banned:false });
 
   const buscarUser = async () => {
-    const user2 = await axios.post("https://look-house.vercel.app/user/LoginOrCreate", {
+
+    const user2 = await axios.post("/user/LoginOrCreate", {
+
       name: user.nickname,
       password: user.sub,
       mail: user.email,

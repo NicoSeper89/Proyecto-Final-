@@ -101,6 +101,7 @@ export default function Detail(props, id) {
   useEffect(() => {
     myUser && dispatch(getUserInfo(myUser[0].id));
     dispatch(getPublicationsDetail(props.match.params.id));
+
     dispatch(getInfoUser(myUser));
     dispatch(getComment(props.match.params.id));
     dispatch(getTotalUsers);
@@ -108,6 +109,7 @@ export default function Detail(props, id) {
       dispatch(clean());
     };
   }, [dispatch, props.match.params.id, borradoComent]);
+
 
   function handleDelete() {
     setAlertSubmit([true, true]);

@@ -32,6 +32,7 @@ const AlertDelete = ({ alertSubmit, setAlertSubmit, id, deleted }) => {
     setAlertSubmit([false,false])
   };
 
+
   return (
     <Box
           position={"absolute"}
