@@ -71,9 +71,9 @@ export function getPublications(filters, sorting, city) {
         payload: infoBack.data,
       });
     } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      }
+      // if (error.response) {
+      //   alert(error.response.data);
+      // }
     }
   };
 }
