@@ -71,8 +71,7 @@ const {
   TypeOfUser,
   User,
   UserImage,
-  ContactInfo,
-  PropertyVideo
+  ContactInfo
 } = sequelize.models;
 
 // //Relaciones usario
@@ -105,8 +104,6 @@ Property.belongsTo(City); //N a 1
 City.hasMany(Property); //1 a N
 Property.belongsTo(TypeOfProp); //N a 1
 TypeOfProp.hasMany(Property); //1 a N
-PropertyVideo.belongsTo(Property);
-Property.hasOne(PropertyVideo); 
 
 
 

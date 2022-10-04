@@ -53,7 +53,7 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
     <Alert
       position={"absolute"}
       display={!requestRestoration ? "none" : "flex"}
-      status={"warning"}
+      status={"info"}
       variant="subtle"
       flexDirection="column"
       alignItems="center"
@@ -66,6 +66,9 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
       <AlertTitle mt={4} mb={1} fontSize="lg">
         ¿Seguro quiere solicitar que se restaure su publicación?
       </AlertTitle>
+      <AlertDescription maxWidth="sm">
+        Recuerda actualizar los datos de tu publicación si fue eliminada por un Admin por incumplir normas 
+      </AlertDescription>
       <form style={{ padding: "1rem" }} onSubmit={onSi}>
         <Flex flexDirection={"column"} alignItems={"center"} gap={"1rem"}>
         <Textarea
