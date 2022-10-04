@@ -5,7 +5,7 @@ import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faToilet, faBed, faDoorOpen, faPaw } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Badge, Box, Button, Flex, Image, Tag, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Flex, Image, Tag, Text, useToast } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavsUser, setFav, removeFav } from "../../redux/actions";
 /* import { useHistory } from "react-router-dom"; */
@@ -37,6 +37,7 @@ export default function Card({
   const user = window.localStorage.getItem("User");
   const user2 = JSON.parse(user);
   const [boton, setBoton] = useState(false);
+  const toast = useToast();
 
   /* useEffect(() => {
     if (infoUser) {
@@ -48,6 +49,11 @@ export default function Card({
     if (infoUser) {
       await axios.put(`/user/setFav?userId=${infoUser[1].userId}&pubId=${id}`, {});
       dispatch(getFavsUser(infoUser[1].userId, id));
+      toast({
+        title: "Guardado en favoritos.",
+        status: "success",
+        isClosable: true,
+      });
       /* dispatch(setFav(infoUser[1].userId, id)); */
       //no despachar set favs, pero despues despachar un get favs
 
@@ -64,6 +70,11 @@ export default function Card({
     await axios.put(`/user/removeFav?userId=${infoUser[1].userId}&pubId=${id}`, {});
     /* dispatch(removeFav(infoUser[1].userId, id)); */
     dispatch(getFavsUser(infoUser[1].userId, id));
+    toast({
+      title: "Se removió de favoritos.",
+      status: "success",
+      isClosable: true,
+    });
     /* window.location.reload() */
     /* dispatch(getFavsUser(infoUser[0].id)); */
     /* setBoton(false); */
@@ -72,7 +83,6 @@ export default function Card({
     // } else if (boton === true) {
     //   setBoton(false);
     // }
-    
   };
   const favState = () => {
     let result = false;
@@ -167,21 +177,22 @@ export default function Card({
           <Tag size={"sm"} variant="solid" backgroundColor={"grey.300"} w={"5rem"}>
             Propietario
           </Tag>
+        ) : !favState() ? (
+          <FontAwesomeIcon
+            cursor={infoUser && "pointer"}
+            onClick={handleClickRemoveFav}
+            className={style.containerFavRed}
+            h={"20px"}
+            icon={faHeart}
+          />
         ) : (
-          !favState() ? (
-            <FontAwesomeIcon
-              cursor={infoUser && "pointer"}
-              onClick={handleClickRemoveFav}
-              className={style.containerFavRed}
-              h={"20px"}
-              icon={faHeart}
-            />) : (<FontAwesomeIcon
-              cursor={infoUser && "pointer"}
-              onClick={handleClickFav}
-              className={ style.containerFav}
-              h={"20px"}
-              icon={faHeart}
-            />)
+          <FontAwesomeIcon
+            cursor={infoUser && "pointer"}
+            onClick={handleClickFav}
+            className={style.containerFav}
+            h={"20px"}
+            icon={faHeart}
+          />
         )}
 
         {/* </Link> */}
@@ -195,7 +206,7 @@ export default function Card({
       {/* <Tag size={"sm"} variant="solid" colorScheme="teal"></Tag> */}
       {/* <FontAwesomeIcon className={style.containerIcon} icon={faHeart} /> */}
       <Box className={style.container2}>
-        <Flex direction={"column"}>
+        <Flex direction={"column"} overflow={"hidden"}>
           <Text as="b" textTransform={"uppercase"} fontSize="xl">
             $ {precio}
           </Text>

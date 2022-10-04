@@ -100,6 +100,9 @@ const Home = () => {
                 // color={"gray.500"}
                 variant="outline"
                 ml={"10px"}
+                // transform={"scale(1)"}
+                // _hover={{ transform: "scale(1)" }}
+                // transition="all 0.2s"
                 onClick={() => handleClick()}
               >
                 Más info
