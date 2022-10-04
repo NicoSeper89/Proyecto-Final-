@@ -60,6 +60,7 @@ const AlertLogin = ({ loguear }) => {
           : loguear.banned? "Ya no puedes acceder a tu cuenta"
           : "Si iniciaste sesion anteriormente con Google por favor elige esa opcion"}
       </AlertDescription>
+      {loguear.banned?<AlertDescription>Te enviamos un Gmail con toda la informacion</AlertDescription>: null}
       {loguear.loguear !== undefined ? (
         <Button padding="20px" marginTop="10px" onClick={onDown}>
           Volver

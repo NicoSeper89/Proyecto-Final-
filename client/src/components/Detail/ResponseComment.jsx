@@ -1,58 +1,82 @@
 import React, { useState } from "react";
-import {useDispatch} from 'react-redux';
-import { Box, Input, Button } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { Box, Input, Button, InputGroup, Flex } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect } from "react";
-import {getComment} from "../../redux/actions/index.js"
+import { getComment } from "../../redux/actions/index.js";
+import { faComments, faReply } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ResponseComment = ({idPublication, mId, enabledResponse}) => {
+const ResponseComment = ({ idPublication, mId, enabledResponse }) => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  const [buttonResponse, setButtonResponse] = useState(false);
+  const [response, setResponse] = useState("");
+  const [toUpdate, setToUpdate] = useState(false);
 
-    const [buttonResponse, setButtonResponse] = useState(false)
-    const [response, setResponse] = useState("");
-    const [toUpdate, setToUpdate] = useState(false);
+  useEffect(() => {}, [toUpdate]);
 
-    useEffect(() => {
-
-    }, [toUpdate])
-
-    const onSubmitResponse = async (e) => {
-        try {
-            await axios.put(`/publication/comment/response`, {messageId: mId, response});
-            dispatch(getComment(idPublication));
-            setToUpdate(!toUpdate);
-            setButtonResponse(false)
-        } catch (error) {
-            console.log(error)
-        }
+  const onSubmitResponse = async (e) => {
+    try {
+      await axios.put(`/publication/comment/response`, { messageId: mId, response });
+      dispatch(getComment(idPublication));
+      setToUpdate(!toUpdate);
+      setButtonResponse(false);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    return (
-        <Box>
-            {(buttonResponse) ?
-                <Box>
-                    <Input value={response} onChange={(e) => {setResponse(e.target.value)}} ></Input>
-                    <Button
-                        cursor={"pointer"}
-                        size="xs"
-                        _hover={{ bg: "#FF8181", color: "white" }}
-                        onClick={onSubmitResponse}>
-                        Enviar respuesta
-                    </Button>
-                </Box>
-                :
-                null}
-            {enabledResponse? <Button
-                cursor={"pointer"}
-                size="xs"
-                _hover={{ bg: "#FF8181", color: "white" }}
-                onClick={() => { setButtonResponse(true) }}>
-                Responder
-            </Button>: null}
-            
-        </Box>
-    )
-}
+  return (
+    <Flex
+      direction={"row-reverse"}
+      alignItems={"center"}
+      justifyContent={"space-between"}
+      border="1px solid rgba(217, 217, 217, 0.55)"
+      bg={"#D9D9D9"}
+    >
+      {enabledResponse ? (
+        <InputGroup
+          alignItems={"center"}
+          border="1px solid rgba(217, 217, 217, 0.80)"
+          borderRadius={"0.4rem"}
+        >
+          <Input
+            placeholder="Escriba su respuesta..."
+            value={response}
+            onChange={(e) => {
+              setResponse(e.target.value);
+            }}
+          />
+          <Button
+            cursor={"pointer"}
+            size="xs"
+            bg="#5e5d5d"
+            color="white"
+            _hover={{ bg: "#bebcbc", color: "black" }}
+            onClick={onSubmitResponse}
+          >
+            <FontAwesomeIcon icon={faReply} />
+          </Button>
+        </InputGroup>
+      ) : null}
+      {/* {enabledResponse ? (
+        <Button
+          cursor={"pointer"}
+          size="xs"
+          bg="#5e5d5d"
+          color="white"
+          _hover={{ bg: "#5e5d5d", color: "white" }}
+          _focus={{ bg: "#D9D9D9" }}
+          onClick={() => {
+            setButtonResponse(true);
+          }}
+        >
+          <FontAwesomeIcon icon={faComments} />
+        </Button>
+      ) : null} */}
+    </Flex>
+  );
+};
 
 export default ResponseComment;
