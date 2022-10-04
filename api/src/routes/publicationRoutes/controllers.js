@@ -4,7 +4,7 @@ const {
   Property,
   Service,
   TypeOfProp,
-  City,
+ /*  City, */
   PropertyImage,
   Report,
   User,
@@ -23,10 +23,10 @@ const getAll = async () => {
       {
         model: Property,
         include: [
-          {
+        /*   {
             model: City,
             attributes: ["name"],
-          },
+          }, */
           {
             model: TypeOfProp,
             attributes: ["name"],
@@ -57,10 +57,10 @@ const getDetail = async (id) => {
       {
         model: Property,
         include: [
-          {
+        /*   {
             model: City,
             attributes: ["name"],
-          },
+          }, */
           {
             model: TypeOfProp,
             attributes: ["name"],
@@ -143,13 +143,13 @@ const sortBy = async (publications, sorting) => {
   return result;
 };
 
-const getCity = async () => {
+/* const getCity = async () => {
   const info = await axios.get("https://apis.datos.gob.ar/georef/api/provincias");
   const names = await info.data.provincias.map((a) => {
     return a.nombre;
   });
   return names;
-};
+}; */
 const findAllReports = async()=> {
   return await Report.findAll({
     include: [{
@@ -219,7 +219,7 @@ module.exports = {
   //   cityArr,
   propTypArr,
   serviceTypes,
-  getCity,
-  findAllReports,
+/*   getCity,
+ */  findAllReports,
   findReportById
 };

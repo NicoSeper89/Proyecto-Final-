@@ -4,7 +4,7 @@ import React from "react";
 import imgNotAvailable from "../../Image/Image_not_available.png";
 import { useHistory } from "react-router-dom";
 
-export default function CardPerfil({ id, img, precio, ciudad, premium }) {
+export default function CardPerfil({ id, img, precio,  premium }) {
   const history = useHistory();
 
   const handleDetalle = (e) => {
@@ -74,9 +74,9 @@ export default function CardPerfil({ id, img, precio, ciudad, premium }) {
         <Text as="b" fontSize="xl" marginBottom={"0px"}>
           $ {precio}
         </Text>
-        <Text as="samp" fontSize="l" textAlign={"center"} width="150px">
+        {/* <Text as="samp" fontSize="l" textAlign={"center"} width="150px">
           {ciudad}
-        </Text>
+        </Text> */}
         {/* {premium === true ? (
           <FontAwesomeIcon className={style.containerIcon} icon={faStar} />
         ) : (

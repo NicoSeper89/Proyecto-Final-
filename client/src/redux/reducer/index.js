@@ -2,7 +2,7 @@ import {
   GET_PUBLICATIONS,
   GET_PUBLICATIONS_DETAIL,
   GET_DETAILS,
-  GET_CITIES,
+  /* GET_CITIES, */
   GET_SERVICES,
   GET_PROPERTY_TYPES,
   CLEAN,
@@ -112,11 +112,11 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         detail: action.payload,
       };
-    case GET_CITIES:
+    /* case GET_CITIES:
       return {
         ...state,
         cities: action.payload,
-      };
+      }; */
     case GET_SERVICES:
       return {
         ...state,

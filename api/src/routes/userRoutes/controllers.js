@@ -3,7 +3,7 @@ const {
     Property,
     Service,
     TypeOfProp,
-    City,
+    /* City, */
     PropertyImage,
     Report,
     ContactInfo
@@ -36,10 +36,10 @@ const getPubs = async (id) => {
         {
           model: Property,
           include: [
-            {
+            /* {
               model: City,
               attributes: ["name"],
-            },
+            }, */
             {
               model: TypeOfProp,
               attributes: ["name"],
@@ -71,10 +71,10 @@ const getPubs = async (id) => {
         {
           model: Property,
           include: [
-            {
+            /* {
               model: City,
               attributes: ["name"],
-            },
+            }, */
             {
               model: TypeOfProp,
               attributes: ["name"],

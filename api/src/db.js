@@ -59,7 +59,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const {
-  City,
+  /* City, */
   Property,
   Publication,
   PublicationComents,
@@ -100,8 +100,8 @@ Property.hasMany(PropertyImage); // 1 a N
 PropertyImage.belongsTo(Property); // N a 1
 Property.belongsToMany(Service, { through: "PropertyServices" }); //N a N
 Service.belongsToMany(Property, { through: "PropertyServices" }); //N a N
-Property.belongsTo(City); //N a 1
-City.hasMany(Property); //1 a N
+/* Property.belongsTo(City); //N a 1
+City.hasMany(Property); //1 a N */
 Property.belongsTo(TypeOfProp); //N a 1
 TypeOfProp.hasMany(Property); //1 a N
 
