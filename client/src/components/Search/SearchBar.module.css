@@ -1,8 +1,9 @@
 .continer {
   padding: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  margin-left: 5%;
 }
 .select {
   width: 5.5rem;

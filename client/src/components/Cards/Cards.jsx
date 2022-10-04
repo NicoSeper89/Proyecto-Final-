@@ -58,7 +58,7 @@ export default function Cards() {
 
   /* **************** RENDER CARDS **************** */
   return (
-    <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%" zIndex={"90"}>
+    <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%">
       {/* {loading ? (
         <Loading /> */}
       {Object.entries(houses).length > 0 ? (
