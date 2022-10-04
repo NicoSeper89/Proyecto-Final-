@@ -97,6 +97,7 @@ export default function UsersAdmin() {
             p={6}
             textAlign={"center"}
           >
+            {!infoUser[0].admin &&
             <Flex>
               {infoUser[0].banned ? (
                 <Button onClick={() => handleRestore()}>
@@ -108,7 +109,7 @@ export default function UsersAdmin() {
                   <FontAwesomeIcon icon={faBan} color="red" fontSize="30px" p={"0"} />
                 </Button>
               )}
-            </Flex>
+            </Flex>}
             <Avatar
               size={"2xl"}
               src={imageUser ? imageUser : foto}

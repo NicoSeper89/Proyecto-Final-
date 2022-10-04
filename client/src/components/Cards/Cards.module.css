@@ -8,6 +8,7 @@
   list-style: none;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   text-transform: uppercase;
   gap: 0.5rem;

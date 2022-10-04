@@ -102,7 +102,7 @@ export default function PerfilPropietario() {
               {infoUser[1].mail}
             </Text>
             <Flex justifyContent="center" alignContent="center">
-              <Rating rating={infoUser[0].rating} ratingAmount={infoUser[0].ratingAmount} />
+              <Rating rating={allUserInfo.rating} ratingAmount={allUserInfo.ratingAmount}/>
             </Flex>
             <Flex direction={"column"} alignItems="flex-start" p={6}>
               <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>

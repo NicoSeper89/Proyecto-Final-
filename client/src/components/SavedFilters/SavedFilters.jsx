@@ -32,6 +32,7 @@ import {
   saveSort,
   clearFilters,
   getUserInfo,
+  setCity
 } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
@@ -71,7 +72,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
     setValue(event.target.value);
   };
   const handleValue = (event) => {
-    if (!event.target.value) {
+    if (event.target.value === "") {
       dispatch(clearFilters());
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
@@ -80,8 +81,10 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
       let newFilter = JSON.parse(filter);
       dispatch(saveFilter(newFilter[0]));
       dispatch(saveSort(newFilter[1]));
-      dispatch(setCurrentPage(1));
+      dispatch(setCity(newFilter[2]))
       dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
+      dispatch(setCurrentPage(1));
+      console.log(newFilter[2]);
     }
   };
 

@@ -53,14 +53,13 @@ const SearchBar = () => {
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
   const [clean, setClean] = useState(false);
-  const [clearNumbers, setClearNumbers] = useState(false);
-  const [buttonResponse, setButtonResponse] = useState(false);
   // const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const [buttonResponse, setButtonResponse] = useState(false);
   const toast = useToast();
 
   useEffect(() => {
-    console.log("I cleared the filter values");
-  }, [clean, clearNumbers]);
+    return () => dispatch(clearFilters());
+  }, [clean]);
 
   //BUSCADOR
   const changes = (e) => {
@@ -123,10 +122,8 @@ const SearchBar = () => {
     dispatch(getPublications(filters, sorting, city));
     dispatch(setCurrentPage(1));
     setCity("");
-    setClearNumbers(true);
     setClean(true);
     setTimeout(() => {
-      setClearNumbers(false);
       setClean(false);
     }, 1);
   }
@@ -194,7 +191,7 @@ const SearchBar = () => {
       <Flex direction={"row"}>
         {buttonResponse ? (
           <Flex direction={"row"}>
-            {!clearNumbers && (
+            {!clean && (
               <NumberInput
                 marginRight={"10px"}
                 transition="all 0.2s"
@@ -217,7 +214,7 @@ const SearchBar = () => {
                 </NumberInputStepper>
               </NumberInput>
             )}
-            {!clearNumbers && (
+            {!clean && (
               <NumberInput
                 marginRight={"10px"}
                 transition="all 0.2s"

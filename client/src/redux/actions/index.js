@@ -4,7 +4,7 @@ import axios from "axios";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_DETAIL = "GET_PUBLICATIONS_DETAIL";
 export const GET_DETAILS = "GET_DETAILS";
-export const GET_CITIES = "GET_CITIES";
+/* export const GET_CITIES = "GET_CITIES"; */
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
@@ -48,12 +48,12 @@ export const GET_REPORTS_ID = "GET_REPORTS_ID";
 export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
 export const APPROVE_POST_USER = "APPROVE_POST_USER";
 export const TOTAL_USERS = "TOTAL_USERS";
-
-export const TOTAL_DATES = "TOTAL_DATES";
-export const TOTAL_USER_DATES = "TOTAL_USER_DATES";
-export const BLOCK_USER = "BLOCK_USER";
-export const RESTORE_USER = "RESTORE_USER";
-export const DELETE_REPORT = "DELETE_REPORT";
+export const SET_CITY = "SET_CITY"
+export const TOTAL_DATES = "TOTAL_DATES"
+export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
+export const BLOCK_USER = "BLOCK_USER"
+export const RESTORE_USER = "RESTORE_USER"
+export const DELETE_REPORT = "DELETE_REPORT"
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -89,7 +89,7 @@ export function getPublicationsDetail(id) {
 }
 
 //Esto trae las Provincias
-export function getCities() {
+/* export function getCities() {
   return async function (dispatch) {
     try {
       let infoBack = await axios.get("/publication/city");
@@ -103,7 +103,7 @@ export function getCities() {
       }
     }
   };
-}
+} */
 
 //Esto trae los servicios de luz, agua, gas, internet y calefaccion
 export function getServices() {
@@ -326,6 +326,13 @@ export function valueFilter(payload) {
 export function saveFilter(payload) {
   return {
     type: SAVEFILTER,
+    payload,
+  };
+}
+
+export function setCity(payload) {
+  return {
+    type: SET_CITY,
     payload,
   };
 }

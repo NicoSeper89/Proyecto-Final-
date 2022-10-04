@@ -5,6 +5,8 @@ import Loading from "../Loading/Loading";
 import Card from "./Card";
 import style from "./Cards.module.css";
 import { Box, List, ListItem } from "@chakra-ui/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 export default function Cards() {
   const dispatch = useDispatch();
@@ -64,9 +66,13 @@ export default function Cards() {
       {Object.entries(houses).length > 0 ? (
         <Box>
           <List className={style.paginadoBtn}>
-            <ListItem onClick={handlePrev}>Prev</ListItem>
+            <ListItem className={style.paginadoBtn} onClick={handlePrev}>
+              <FontAwesomeIcon icon={faChevronLeft} fontSize="20px" />
+            </ListItem>
             {renderPaginado}
-            <ListItem onClick={handleNext}>Next</ListItem>
+            <ListItem className={style.paginadoBtn} onClick={handleNext}>
+              <FontAwesomeIcon icon={faChevronRight} fontSize="20px" />
+            </ListItem>
           </List>
           <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"30px"}>
             {currentHouse?.map((r) => {

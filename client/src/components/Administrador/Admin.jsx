@@ -94,24 +94,34 @@ export default function Admin() {
   }
 
   let labels = [...new Set(dates)];
+  let sortedLabels = labels.map(a => a.split('-'))
+    .sort((a,b) => a[0]-b[0])
+    .sort((a,b) => a[1]-b[1])
+    .map(a => a.join('-'))
+
   const [data, setData] = useState({
-    labels: labels,
+    labels: sortedLabels,
     datasets: [
       {
         label: "Cantidad de Publicaciones por mes",
-        data: labels.map((a) => amount(dates, a)),
+        data: sortedLabels.map((a) => amount(dates, a)),
         backgroundColor: ["rgba(216, 158, 26, 0.65)"],
       },
     ],
   });
 
   let userLabels = [...new Set(userDates)];
+  let sortedUserLabels = userLabels.map(a => a.split('-'))
+    .sort((a,b) => a[0]-b[0])
+    .sort((a,b) => a[1]-b[1])
+    .map(a => a.join('-'))
+
   const [userData, setUserData] = useState({
-    labels: userLabels,
+    labels: sortedUserLabels,
     datasets: [
       {
         label: "Cantidad de Usuarios por mes",
-        data: userLabels.map((a) => amount(userDates, a)),
+        data: sortedUserLabels.map((a) => amount(userDates, a)),
         backgroundColor: ["rgba(216, 158, 26, 0.65)"],
       },
     ],

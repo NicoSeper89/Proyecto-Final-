@@ -15,7 +15,7 @@ import {
   allUserDates,
   getFavsUser,
 } from "../../redux/actions/index.js";
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
 // import Loading from "../Loading/Loading.jsx";
 // import gif from "../../Image/1490.gif";
 import PremiumCards from "../Cards/PremiumCards.jsx";
@@ -27,6 +27,7 @@ const Home = () => {
   const history = useHistory();
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
+  const city = useSelector((state) => state.city);
   const cities = useSelector((state) => state.cities);
   const dates = useSelector((state) => state.dates);
   const userDates = useSelector((state) => state.userDates);
@@ -44,7 +45,7 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getPublications(filters, sorting, ""));
+    dispatch(getPublications(filters, sorting, city));
     dispatch(getPublicationsPremium());
     dispatch(allDates());
     dispatch(allUserDates());
@@ -60,15 +61,22 @@ const Home = () => {
   return (
     <Box backgroundColor={"#EDEDED"}>
       <NavBar />
-      <Box zIndex={"100px"}>
+      <Box>
         <Header />
         <PremiumCards />
-        <Box mb={"4rem"} border={"2px solid #D89E1A"} p={"2rem"}>
+        <Box
+          mx={"2px"}
+          mb={"5rem"}
+          border={"4px solid #F6AD55"}
+          borderX={"8px solid #F6AD55"}
+          p={"2rem"}
+        >
           <Text
             display={"flex"}
             justifyContent={"center"}
             w={"100%"}
-            color="#D89E1A"
+            // color="#D89E1A"
+            color=" Black"
             as="b"
             fontSize="2xl"
             textTransform={"uppercase"}
@@ -80,11 +88,20 @@ const Home = () => {
               display={"flex"}
               justifyContent={"center"}
               w={"100%"}
-              color="#D89E1A"
+              color=" Black"
               fontSize="2xl"
             >
               Si te interesa saber más, ¡Hacé click en más info!
-              <Button fontSize="2xl" onClick={() => handleClick()}>
+              <Button
+                fontSize="2xl"
+                colorScheme="orange"
+                border={"1px solid"}
+                // borderColor={"gray.500"}
+                // color={"gray.500"}
+                variant="outline"
+                ml={"10px"}
+                onClick={() => handleClick()}
+              >
                 Más info
               </Button>
             </Text>

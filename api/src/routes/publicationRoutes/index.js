@@ -19,7 +19,7 @@ const {
   sortBy,
   propTypArr,
   serviceTypes,
-  getCity,
+  /* getCity, */
   findAllReports,
   findReportById,
 } = require("./controllers");
@@ -88,7 +88,7 @@ router.get("/forApproval", async (req, res, next) => {
   }
 });
 
-router.get("/city", async (req, res, next) => {
+/* router.get("/city", async (req, res, next) => {
   try {
     let names = await getCity();
     names.map((c) => City.findOrCreate({ where: { name: c } }));
@@ -97,7 +97,7 @@ router.get("/city", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+}); */
 
 router.get("/serviceTypes", async (req, res, next) => {
   try {
@@ -199,7 +199,7 @@ router.post("/createProperty", async (req, res, next) => {
     yard,
     pets,
     age,
-    city,
+    /* city, */
     service,
     typProp,
     propImg,
@@ -230,10 +230,10 @@ router.post("/createProperty", async (req, res, next) => {
       });
       property.addService(ser);
     }
-    let location = await City.findOne({
+    /* let location = await City.findOne({
       where: { name: city },
     });
-    property.setCity(location);
+    property.setCity(location); */
     let type = await TypeOfProp.findOne({
       where: { name: typProp },
     });
@@ -298,7 +298,7 @@ router.put("/editProperty/:id", async (req, res, next) => {
     yard,
     pets,
     age,
-    city,
+    /* city, */
     service,
     typProp,
     propImg,
@@ -336,10 +336,10 @@ router.put("/editProperty/:id", async (req, res, next) => {
       updatedProp.addService(ser);
     }
 
-    let location = await City.findOne({
+   /*  let location = await City.findOne({
       where: { name: city },
     });
-    updatedProp.setCity(location);
+    updatedProp.setCity(location); */
     let type = await TypeOfProp.findOne({
       where: { name: typProp },
     });
