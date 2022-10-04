@@ -167,7 +167,7 @@ export default function Detail(props, id) {
         let rta = await axios.post(`/publication/comment`, {
           message: comentarios,
           publicationId: props.match.params.id,
-          userId: myUser[0].id,
+          userId: myUser[0].name,
         });
         dispatch(getComment(props.match.params.id));
         setComments("");
