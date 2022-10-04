@@ -1,32 +1,36 @@
 import React, { useState } from "react";
 import { Box, Button, Flex, FormLabel, Heading, Input } from "@chakra-ui/react";
 import NavBarForms from "../NavBar/NavBarForms";
-import { editUser, getUserInfo } from "../../redux/actions";
+import { editUser, getInfoUser, getUserInfo } from "../../redux/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import UserUploadImg from "../UploadImg/UserUploadImg";
 import AlertPerfil from "./AlertPerfil";
 
-export default function EditPerfil() {
+export default function EditPerfil(props) {
   const dispatch = useDispatch();
-  const allUserInfo = useSelector((state) => state.allUserInfo);
+  const infoUser = useSelector((state) => state.infoUser);
   const [disabledButton, setDisabledButton] = useState(false);
   const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [input, setInput] = useState({
     name: "",
     city: "",
-    description: ""
+    description: "",
   });
-
+  const infoUser2 = JSON.parse(window.localStorage.getItem("User"));
+  
   useEffect(() => {
-    let user = JSON.parse(window.localStorage.getItem('User'))
-    dispatch(getUserInfo(user[0].id));
+    infoUser && dispatch(getUserInfo(infoUser[0].id));
+    if (!infoUser) {
+      dispatch(getInfoUser(infoUser2));
+    } else {
       setInput({
-        name: user[0].name,
-        city: user[0].city,
-        description: user[0].description
-      })
-  }, [dispatch]);
+        name: infoUser[0].name,
+        city: infoUser[0].city,
+        description: infoUser[0].description,
+      });
+    }
+  }, [dispatch, props.match.params.id, infoUser]);
 
   useEffect(() => {
     !input.name || !input.city || /^[\s]+$/i.test(input.description)
@@ -35,7 +39,6 @@ export default function EditPerfil() {
   }, [input.name, input.city]);
 
   function handleEdit(e) {
-    e.preventDefault()
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -44,9 +47,9 @@ export default function EditPerfil() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(editUser(allUserInfo.id, input));
+    dispatch(editUser(infoUser[0].id, input));
 
-    let user = [allUserInfo, allUserInfo.loginInfo]
+    let user = infoUser;
     user[0].city = input.city;
     user[0].name = input.name;
     user[0].description = input.description;
