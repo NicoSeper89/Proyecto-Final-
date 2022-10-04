@@ -161,11 +161,12 @@ export default function Detail(props, id) {
     try {
       if (comentarios !== "") {
         /* dispatch(postComment(comentarios, props.match.params.id)); */
-        await axios.post(`/publication/comment`, {
+        let rta = await axios.post(`/publication/comment`, {
           message: comentarios,
           publicationId: props.match.params.id,
           userId: myUser[0].id,
         });
+        console.log('rta back',rta)
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
