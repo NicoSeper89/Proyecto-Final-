@@ -91,8 +91,8 @@ Publication.belongsTo(User); // N a 1
 Publication.belongsToMany(Report, { through: "reportsPublications" }); // N a N
 Report.belongsToMany(Publication, { through: "reportsPublications" }); // N a N
 Publication.belongsTo(Property); // 1 a 1
-User.hasMany(PublicationComents);
-PublicationComents.belongsTo(User);
+/* User.hasMany(PublicationComents);
+PublicationComents.belongsTo(User); */
 
 // //Relaciones propiedad
 Property.hasOne(Publication); // 1 a 1

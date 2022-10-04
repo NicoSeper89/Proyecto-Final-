@@ -54,7 +54,8 @@ router.post("/", async (req, res, next) => {
       );
       cityFiltered.length
         ? (publications = cityFiltered)
-        : res.status(404).send("No hay publicaciones en esa ciudad");
+        : res.status(200).send([])
+        /* res.status(404).send("No hay publicaciones en esa ciudad") */;
     }
     if (sorting.name !== "default") {
       // aca las sortea
@@ -421,7 +422,7 @@ router.get("/comment/:id", async (req, res, next) => {
   try {
     const comments = await PublicationComents.findAll({
       where: { publicationId: id },
-      include: User,
+      /* include: User, */
     });
     console.log("enviado", comments);
     res.status(200).send(comments);
@@ -436,9 +437,10 @@ router.post("/comment", async (req, res, next) => {
     let mensaje = await PublicationComents.create({
       message,
       publicationId,
+      userId
     });
-    let userComment = await User.findByPk(userId);
-    mensaje.setUser(userComment);
+    /* let userComment = await User.findByPk(userId);
+    mensaje.setUser(userComment); */
     /* userComment.addPublicationComents(mensaje) */
     console.log("creado", mensaje);
     res.status(200).send(mensaje);
