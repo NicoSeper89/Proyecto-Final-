@@ -51,6 +51,7 @@ import {
   RESTORE_USER,
   BLOCK_USER,
   DELETE_REPORT,
+  SET_CITY
 } from "../actions";
 
 const initialState = {
@@ -62,7 +63,7 @@ const initialState = {
   housesEliminadas: [], //publicaciones eliminadas
   services: [],
   typeOfProperties: [],
-  cities: [],
+  city: "",
   detail: {},
   filters: {
     publication: [], //se lo llena con {name:'nombre como en el modelo',value:'string o num'},
@@ -91,6 +92,11 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_CITY:
+      return {
+        ...state,
+        city: action.payload
+      }
     case GET_DETAILS:
       return {
         ...state,
@@ -214,6 +220,7 @@ export default function rootReducer(state = initialState, action) {
         services: [],
       };
       state.sorting = { name: "default", direccion: "minMax" };
+      state.city = ""
       return {
         ...state,
       };

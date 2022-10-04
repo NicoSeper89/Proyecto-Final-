@@ -48,7 +48,7 @@ export const GET_REPORTS_ID = "GET_REPORTS_ID";
 export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
 export const APPROVE_POST_USER = "APPROVE_POST_USER";
 export const TOTAL_USERS = "TOTAL_USERS";
-
+export const SET_CITY = "SET_CITY"
 export const TOTAL_DATES = "TOTAL_DATES"
 export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
 export const BLOCK_USER = "BLOCK_USER"
@@ -327,6 +327,13 @@ export function valueFilter(payload) {
 export function saveFilter(payload) {
   return {
     type: SAVEFILTER,
+    payload,
+  };
+}
+
+export function setCity(payload) {
+  return {
+    type: SET_CITY,
     payload,
   };
 }

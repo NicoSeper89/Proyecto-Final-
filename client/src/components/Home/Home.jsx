@@ -25,7 +25,8 @@ const Home = () => {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
   const sorting = useSelector((state) => state.sorting);
-  const cities = useSelector((state) => state.cities);
+  const city = useSelector((state) => state.city);
+  const cities = useSelector(state => state.cities)
   const dates = useSelector(state => state.dates)
   const userDates = useSelector(state => state.userDates)
   sessionStorage.setItem('dates', JSON.stringify([dates, userDates]))
@@ -42,7 +43,7 @@ const Home = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getPublications(filters, sorting, ""));
+    dispatch(getPublications(filters, sorting, city));
     dispatch(getPublicationsPremium());
     dispatch(allDates());
     dispatch(allUserDates());
