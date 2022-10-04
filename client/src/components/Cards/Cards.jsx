@@ -60,7 +60,7 @@ export default function Cards() {
 
   /* **************** RENDER CARDS **************** */
   return (
-    <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%">
+    <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%" marginX={"10%"} paddingBottom={"60px"}>
       {/* {loading ? (
         <Loading /> */}
       {Object.entries(houses).length > 0 ? (
@@ -97,6 +97,15 @@ export default function Cards() {
               }
             })}
           </Box>
+           <List className={style.paginadoBtn}>
+            <ListItem className={style.paginadoBtn} onClick={handlePrev}>
+              <FontAwesomeIcon icon={faChevronLeft} fontSize="20px" />
+            </ListItem>
+            {renderPaginado}
+            <ListItem className={style.paginadoBtn} onClick={handleNext}>
+              <FontAwesomeIcon icon={faChevronRight} fontSize="20px" />
+            </ListItem>
+          </List>
         </Box>
       ) : (
         <Loading />
