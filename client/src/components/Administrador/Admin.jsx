@@ -38,7 +38,7 @@ import Footer from "../Footer/Footer";
 import NavBarForms from "../NavBar/NavBarForms";
 import BarChart from "../BarChart/Barchart.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faTrash, faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Admin() {
   const history = useHistory();
@@ -385,7 +385,7 @@ export default function Admin() {
                             </Td>
                             <Td textAlign={"center"}>
                               <Button h="1.75rem" size="sm" onClick={() => delReport(p.id)}>
-                                <FontAwesomeIcon icon={faUser} />
+                                <FontAwesomeIcon icon={faTrash} />
                               </Button>
                             </Td>
                           </Tr>

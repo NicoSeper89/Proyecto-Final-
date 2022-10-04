@@ -13,7 +13,7 @@ import {
   setCurrentPage,
   valueFilter,
   updateFilterGarage,
-  updateSorting
+  updateSorting,
 } from "../../redux/actions";
 import { faFilterCircleXmark, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import style from "./SearchBar.module.css";
@@ -49,13 +49,13 @@ const SearchBar = () => {
   const sorting = useSelector((state) => state.sorting);
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
-  const [clean, setClean] = useState(false)
-  const [clearNumbers, setClearNumbers] = useState(false)
+  const [clean, setClean] = useState(false);
+  const [clearNumbers, setClearNumbers] = useState(false);
   // const [alertSubmit, setAlertSubmit] = useState([false, false]);
 
-  useEffect(()=>{
-    console.log('I cleared the filter values');
-  },[clean, clearNumbers])
+  useEffect(() => {
+    console.log("I cleared the filter values");
+  }, [clean, clearNumbers]);
 
   //BUSCADOR
   const changes = (e) => {
@@ -97,10 +97,10 @@ const SearchBar = () => {
   //SORT PLATA
   const orderByPrice = (e) => {
     let orden;
-    let values= e.target.value.split('/')
+    let values = e.target.value.split("/");
     if (values[0] === "Ordenar por") orden = { name: "default", direccion: "minMax" };
     else orden = { name: values[0], direccion: values[1] };
-    dispatch(updateSorting(orden))
+    dispatch(updateSorting(orden));
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
   };
@@ -111,13 +111,13 @@ const SearchBar = () => {
     dispatch(clearFilters());
     dispatch(getPublications(filters, sorting, city));
     dispatch(setCurrentPage(1));
-    setCity('')
-    setClearNumbers(true)
-    setClean(true)
-    setTimeout(()=>{
-      setClearNumbers(false)
-      setClean(false)
-    },1)
+    setCity("");
+    setClearNumbers(true);
+    setClean(true);
+    setTimeout(() => {
+      setClearNumbers(false);
+      setClean(false);
+    }, 1);
   }
 
   return (
@@ -155,50 +155,55 @@ const SearchBar = () => {
           </Button> */}
         </Stack>
       </Box>
-      {!clearNumbers &&
-      <NumberInput
-        marginRight={"10px"}
-        transition="all 0.2s"
-        borderColor={"black"}
-        width="80px"
-        defaultValue={""}
-        min={1}
-        max={20}
-        onChange={selectAmbients}
-      >
-        <NumberInputField
-          _hover={{ bg: "#D9D9D9" }}
-          _expanded={{ bg: "white" }}
-          _focus={{ bg: "#D9D9D9" }}
-          placeholder="Amb"
-        />
-        <NumberInputStepper borderColor={"black"}>
-          <NumberIncrementStepper borderColor={"black"} />
-          <NumberDecrementStepper borderColor={"black"} />
-        </NumberInputStepper>
-      </NumberInput>}
-      {!clearNumbers &&
-      <NumberInput
-        marginRight={"10px"}
-        transition="all 0.2s"
-        borderColor={"black"}
-        width="80px"
-        defaultValue={""}
-        min={1}
-        max={20}
-        onChange={selectGarageSize}
-      >
-        <NumberInputField
-          _hover={{ bg: "#D9D9D9" }}
-          _expanded={{ bg: "white" }}
-          _focus={{ bg: "#D9D9D9" }}
-          placeholder="Garage"
-        />
-        <NumberInputStepper borderColor={"black"}>
-          <NumberIncrementStepper borderColor={"black"} />
-          <NumberDecrementStepper borderColor={"black"} />
-        </NumberInputStepper>
-      </NumberInput>}
+      <Box>
+        <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={city} clean={clean} />
+      </Box>
+      {!clearNumbers && (
+        <NumberInput
+          marginRight={"10px"}
+          transition="all 0.2s"
+          borderColor={"black"}
+          width="80px"
+          defaultValue={""}
+          min={1}
+          max={20}
+          onChange={selectAmbients}
+        >
+          <NumberInputField
+            _hover={{ bg: "#D9D9D9" }}
+            _expanded={{ bg: "white" }}
+            _focus={{ bg: "#D9D9D9" }}
+            placeholder="Amb"
+          />
+          <NumberInputStepper borderColor={"black"}>
+            <NumberIncrementStepper borderColor={"black"} />
+            <NumberDecrementStepper borderColor={"black"} />
+          </NumberInputStepper>
+        </NumberInput>
+      )}
+      {!clearNumbers && (
+        <NumberInput
+          marginRight={"10px"}
+          transition="all 0.2s"
+          borderColor={"black"}
+          width="80px"
+          defaultValue={""}
+          min={1}
+          max={20}
+          onChange={selectGarageSize}
+        >
+          <NumberInputField
+            _hover={{ bg: "#D9D9D9" }}
+            _expanded={{ bg: "white" }}
+            _focus={{ bg: "#D9D9D9" }}
+            placeholder="Garage"
+          />
+          <NumberInputStepper borderColor={"black"}>
+            <NumberIncrementStepper borderColor={"black"} />
+            <NumberDecrementStepper borderColor={"black"} />
+          </NumberInputStepper>
+        </NumberInput>
+      )}
       <Box marginRight={"10px"}>
         <Menu
           px={"1rem"}
@@ -218,7 +223,9 @@ const SearchBar = () => {
             _hover={{ bg: "#D9D9D9" }}
             _focus={{ bg: "#D9D9D9" }}
           >
-            <option value={"Propiedad"} selected={clean}>Propiedad</option>
+            <option value={"Propiedad"} selected={clean}>
+              Propiedad
+            </option>
             {propertys.map((e) => {
               return (
                 <option key={e.id} value={e.name}>
@@ -250,7 +257,9 @@ const SearchBar = () => {
             _hover={{ bg: "#D9D9D9" }}
             _focus={{ bg: "#D9D9D9" }}
           >
-            <option value={"Mascotas"} selected={clean}>Mascotas</option>
+            <option value={"Mascotas"} selected={clean}>
+              Mascotas
+            </option>
             <option value={true}>Si</option>
             <option value={false}>No</option>
           </Select>
@@ -276,7 +285,9 @@ const SearchBar = () => {
             _hover={{ bg: "#D9D9D9" }}
             _focus={{ bg: "#D9D9D9" }}
           >
-            <option value="Ordenar por/nada" selected={clean}>Ordenar Por</option>
+            <option value="Ordenar por/nada" selected={clean}>
+              Ordenar Por
+            </option>
             <option value="price/maxMin">Mayor Precio</option>
             <option value="price/minMax">Menor Precio</option>
             <option value="age/minMax">Mas Nuevo</option>
@@ -285,9 +296,6 @@ const SearchBar = () => {
             <option value="surface/minMax">Menos superficie</option>
           </Select>
         </Menu>
-      </Box>
-      <Box>
-        <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={city} clean={clean}/>
       </Box>
     </Box>
   );
