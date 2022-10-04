@@ -22,6 +22,7 @@ const ResponseComment = ({ idPublication, mId, enabledResponse }) => {
       dispatch(getComment(idPublication));
       setToUpdate(!toUpdate);
       setButtonResponse(false);
+      setResponse("");
     } catch (error) {
       console.log(error);
     }
