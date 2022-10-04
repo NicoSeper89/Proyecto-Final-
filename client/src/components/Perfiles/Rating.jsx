@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 // import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
-import ReactStars from "react-rating-stars-component";
+import StarRatings from 'react-star-ratings';
 
 export default function Rating({rating, ratingAmount}) {
   /* const rating = 0;
@@ -28,13 +28,12 @@ export default function Rating({rating, ratingAmount}) {
             }
             return <BsStar key={i} style={{ marginLeft: "1" }} />;
           })} */}
-        <ReactStars
-          count={5}
-          size={34}
-          activeColor="#F6AD55"
-          edit={false}
-          value={rating}
-          isHalf={true}
+        <StarRatings
+         starDimension={"2rem"}
+          rating={rating}
+          starRatedColor="#F6AD55"
+          numberOfStars={5}
+          name='rating'
         />
         <Box as="span" ml="2" color="gray.600" fontSize="sm">
           {ratingAmount} {ratingAmount > 1 && "s"}

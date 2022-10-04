@@ -79,6 +79,7 @@ import AlertRestoration from "./AlertRestoration";
 import { getTotalUsers } from "../../redux/actions";
 import axios from "axios";
 import ResponseComment from "./ResponseComment";
+import StarRatings from 'react-star-ratings';
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -230,7 +231,7 @@ export default function Detail(props, id) {
               ) : null}
               {miStateDetail.approved === false ? (
                 <Badge colorScheme="red" variant="solid" fontSize="1.5em">
-              
+                  
                   Publicacion pendiente de aprobación
                 </Badge>
               ) : null}
@@ -268,7 +269,7 @@ export default function Detail(props, id) {
                   )}
                 </Flex>
 
-                {/* {miStateDetail.property.propVideo && (
+                  {/* {miStateDetail.property.propVideo && (
                   <AspectRatio maxW='560px' ratio={1}>
                     <iframe
                     title='naruto'
@@ -360,6 +361,7 @@ export default function Detail(props, id) {
                           overflow={"scroll"}
                         >
                           <FormControl>
+                          {(myUser[0].id !== miStateDetail.userId)?
                             <form onSubmit={onSubmitComent}>
                               <InputGroup
                                 mb={"1rem"}
@@ -401,6 +403,8 @@ export default function Detail(props, id) {
                                 </Button>
                               </InputGroup>
                             </form>
+                                :
+                                null}
                             {commentState.map((e, i) => (
                               <Box
                                 key={i}
@@ -417,7 +421,7 @@ export default function Detail(props, id) {
                                       border="gray.500"
                                       as="em"
                                     >
-                                      {e.user.name} :
+                                      {e.userId} :
                                     </Text>
                                     {myUser[0].admin ? (
                                       <Button
@@ -505,7 +509,7 @@ export default function Detail(props, id) {
                   bg={"rgba(216, 158, 26, 0.35)"}
                 >
                   <Flex direction={"column"} w={"400px"} h={"35rem"}>
-                    <Flex>
+                  <Flex>
                       {miStateDetail.deleted === true ? (
                         <Badge w={"100%"} colorScheme="red" variant="solid" fontSize="1.5em">
                           {/* Publicacion Eliminada, solicita su restauración más abajo */}
@@ -636,14 +640,21 @@ export default function Detail(props, id) {
                     >
                       <Box alignItems="flex-start" p={"1rem"}>
                         <Flex justifyContent={"center"} alignItems={"center"} mb={"10px"}>
-                          <ReactStars
+                          {/* <ReactStars
                             count={5}
                             size={34}
                             activeColor="#F6AD55"
                             edit={false}
                             value={miStateDetail.user.rating}
                             isHalf={true}
-                          />
+                            /> */}
+                          <StarRatings
+                            starDimension={"1.5rem"}
+                             rating={miStateDetail.user.rating}
+                             starRatedColor="#F6AD55"
+                             numberOfStars={5}
+                             name='rating'
+                           />
                           <Text ml={"10px"}>{miStateDetail.user.rating}</Text>
                         </Flex>
 
