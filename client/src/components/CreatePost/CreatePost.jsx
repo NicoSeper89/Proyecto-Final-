@@ -49,7 +49,6 @@ const CreatePost = () => {
     service: [],
     propVideo: "",
   });
-  console.log(infoFormProp.propImg);
 
   const [infoFormPub, setInfoFormPub] = useState({
     description: "",
@@ -129,6 +128,7 @@ const CreatePost = () => {
   };
 
   const onChangeVideo = (e) => {
+    e.preventDefault()
     setInfoFormProp({
         ...infoFormProp,
         [e.target.name]: e.target.value,
@@ -185,10 +185,6 @@ const CreatePost = () => {
       });
     }
   };
-
-  // const onChangeInputVideo = () => {
-    
-  // }
 
   return (
     <>
@@ -610,12 +606,12 @@ const CreatePost = () => {
               >
                 Enviar
               </Button>
-              <FormLabel>
+              {/* <FormLabel>
               <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                     video
                   </Text>
-              <Input name={"propVideo"} value={infoFormProp.propVideo} onChange={onChangeVideo}></Input>
-              </FormLabel>
+              <Input name={"propVideo"} value={infoFormProp.propVideo} onChange={onChangeVideo}/>
+              </FormLabel> */}
             </Box>
           )}
         </Flex>
