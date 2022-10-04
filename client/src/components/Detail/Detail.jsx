@@ -268,16 +268,14 @@ export default function Detail(props, id) {
                   )}
                 </Flex>
 
-                {/* {miStateDetail.property.propertyVideo.url && (
-            
+                  {/* {miStateDetail.property.propVideo && (
                   <AspectRatio maxW='560px' ratio={1}>
                     <iframe
                     title='naruto'
-                    src={miStateDetail.property.propertyVideo.url}
+                    src={miStateDetail.property.propVideo}
                     allowFullScreen
                     />
                   </AspectRatio>
-             
                   )} */}
 
                 <Box mt={"3rem"}>

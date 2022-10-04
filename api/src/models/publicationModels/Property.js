@@ -47,6 +47,9 @@ module.exports = (sequelize) => {
         age:{
             type: DataTypes.INTEGER,
             allowNull: false,
+        },
+        propVideo:{
+            type: DataTypes.TEXT
         }
     });
 };
