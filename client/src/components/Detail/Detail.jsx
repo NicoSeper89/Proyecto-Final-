@@ -161,11 +161,12 @@ export default function Detail(props, id) {
     try {
       if (comentarios !== "") {
         /* dispatch(postComment(comentarios, props.match.params.id)); */
-        await axios.post(`/publication/comment`, {
+        let rta = await axios.post(`/publication/comment`, {
           message: comentarios,
           publicationId: props.match.params.id,
           userId: myUser[0].id,
         });
+        console.log('rta back',rta)
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
@@ -704,6 +705,18 @@ export default function Detail(props, id) {
                         </Flex>
                       ) : myUser[0].id === miStateDetail.userId && miStateDetail.deleted ? (
                         <Flex direction={"column"}>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={() =>
+                              history.push("/updatePublicaction/" + props.match.params.id)
+                            }
+                          >
+                            Actualizar datos
+                          </Button>
                           <Button
                             w={"350px"}
                             colorScheme="green"
