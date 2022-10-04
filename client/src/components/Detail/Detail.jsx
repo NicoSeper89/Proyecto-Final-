@@ -9,6 +9,7 @@ import {
   postComment,
   deleteComment,
   clean,
+  getUserInfo,
 } from "../../redux/actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import imgNotAvailable from "../../Image/Image_not_available.png";
@@ -60,7 +61,7 @@ import {
   InputGroup,
   InputRightElement,
   Badge,
-  AspectRatio
+  AspectRatio,
 } from "@chakra-ui/react";
 import ImageSlider from "./ImageSlider";
 import { useHistory } from "react-router-dom";
@@ -97,6 +98,7 @@ export default function Detail(props, id) {
 
   const myUser = JSON.parse(window.localStorage.getItem("User"));
   useEffect(() => {
+    myUser && dispatch(getUserInfo(myUser[0].id));
     dispatch(getPublicationsDetail(props.match.params.id));
     dispatch(getInfoUser(myUser));
     dispatch(getComment(props.match.params.id));
@@ -221,8 +223,8 @@ export default function Detail(props, id) {
             <Flex mt={"1rem"} justifyContent={"center"}>
               {miStateDetail.deleted === true ? (
                 <Badge colorScheme="red" variant="solid" fontSize="1.5em">
-                  {/* Publicacion Eliminada, solicita su restauración más abajo */}
-                  Publicacion Eliminada
+                  Publicacion Eliminada, solicita su restauración más abajo
+                  {/* Publicacion Eliminada */}
                 </Badge>
               ) : null}
               {miStateDetail.approved === false ? (
@@ -259,7 +261,6 @@ export default function Detail(props, id) {
                   {miStateDetail.property.propertyImages.length > 0 ? (
                     <Box w={"42rem"} h={"42rem"}>
                       <ImageSlider slides={miStateDetail.property.propertyImages} />
-
                     </Box>
                   ) : (
                     <Image src={imgNotAvailable} />
@@ -275,7 +276,6 @@ export default function Detail(props, id) {
                     />
                   </AspectRatio>
                   )} */}
-                
 
                 <Box mt={"3rem"}>
                   <Tabs
@@ -308,11 +308,10 @@ export default function Detail(props, id) {
                       )}
                     </TabList>
                     <TabPanels display={"flex"} justifyContent="center">
-                      <TabPanel>
+                      <TabPanel w={"100%"}>
                         <Flex
-                          w={"550px"}
                           h={"300px"}
-                          boxShadow="dark-lg"
+                          // boxShadow="dark-lg"
                           p="7px"
                           border="1px solid grey.600"
                           borderRadius={"0.5rem"}
@@ -322,32 +321,37 @@ export default function Detail(props, id) {
                           {/* <Datos position={miStateDetail} /> */}
                         </Flex>
                       </TabPanel>
-                      <TabPanel>
-                        <Box
+                      <TabPanel w={"100%"}>
+                        {/* <Box>Breve descripción de la publicación:</Box> */}
+                        <Flex
+                          direction={"column"}
                           alignItems="flex-start"
-                          w={"550px"}
                           h={"300px"}
-                          boxShadow="dark-lg"
+                          // boxShadow="dark-lg"
                           p="10px"
-                          border="1px solid grey.300"
+                          border="1px solid #D9D9D9"
                           borderRadius={"0.5rem"}
+                          // bg={"#D9D9D9"}
                         >
                           <Text
-                            fontWeight={"semiBold"}
-                            fontSize="1.2rem"
+                            fontWeight={"Bold"}
+                            fontSize="1rem"
                             color="gray.600"
-                            border="gray.500"
+                            as="em"
+                            mb={"1rem"}
                           >
+                            Breve descripción de la publicación:
+                          </Text>
+                          <Text fontWeight={"semiBold"} fontSize="1rem" color="gray.600">
                             {miStateDetail.description}
                           </Text>
-                        </Box>
+                        </Flex>
                       </TabPanel>
-                      <TabPanel>
+                      <TabPanel w={"100%"}>
                         <Box
                           alignItems="flex-start"
-                          w={"550px"}
                           h={"300px"}
-                          boxShadow="dark-lg"
+                          // boxShadow="dark-lg"
                           p="10px"
                           border="1px solid grey.300"
                           borderRadius={"0.5rem"}
@@ -356,7 +360,11 @@ export default function Detail(props, id) {
                         >
                           <FormControl>
                             <form onSubmit={onSubmitComent}>
-                              <InputGroup mb={"1rem"}>
+                              <InputGroup
+                                mb={"1rem"}
+                                border="1px solid rgba(217, 217, 217, 0.80)"
+                                borderRadius={"0.4rem"}
+                              >
                                 <Input
                                   placeholder="Escriba su comentario..."
                                   onChange={onChangeInputComment}
@@ -388,63 +396,87 @@ export default function Detail(props, id) {
                                   _hover={{ bg: "#5e5d5d", color: "white" }}
                                   borderRadius={"0.5rem"}
                                 >
-                                  <FontAwesomeIcon icon={faComments} />{" "}
+                                  <FontAwesomeIcon icon={faComments} />
                                 </Button>
                               </InputGroup>
                             </form>
                             {commentState.map((e, i) => (
-                              <Box key={i} mb={"1rem"}>
-                                <Text
-                                  fontWeight={"Bold"}
-                                  fontSize="1rem"
-                                  color="gray.600"
-                                  border="gray.500"
-                                  as="em"
-                                >
-                                  {e.user} :
-                                </Text>
-                                <Flex
-                                  justifyContent={"space-between"}
-                                  fontWeight={"semiBold"}
-                                  fontSize="1.2rem"
-                                  color="gray.600"
-                                  border="gray.500"
-                                >
-                                  {e.message}
-                                  {e.response ? <Text>{e.response}</Text> : null}
-                                  {myUser[0].admin ? (
-                                    <Button
-                                      cursor={"pointer"}
-                                      size="xs"
-                                      bg="#5e5d5d"
-                                      color="white"
-                                      _hover={{ bg: "#FF8181", color: "white" }}
-                                      onClick={() => {
-                                        deleteComments(e.id);
-                                      }}
+                              <Box
+                                key={i}
+                                mb={"1rem"}
+                                border="1px solid rgba(217, 217, 217, 0.80)"
+                                borderRadius={"0.4rem"}
+                              >
+                                <Box ml={"5px"}>
+                                  <Flex justifyContent={"space-between"}>
+                                    <Text
+                                      fontWeight={"Bold"}
+                                      fontSize="1rem"
+                                      color="gray.600"
+                                      border="gray.500"
+                                      as="em"
                                     >
-                                      X
-                                    </Button>
+                                      {e.user.name} :
+                                    </Text>
+                                    {myUser[0].admin ? (
+                                      <Button
+                                        cursor={"pointer"}
+                                        size="xs"
+                                        // m={"5px"}
+                                        bg="#5e5d5d"
+                                        color="white"
+                                        _hover={{ bg: "#FF8181", color: "white" }}
+                                        onClick={() => {
+                                          deleteComments(e.id);
+                                        }}
+                                      >
+                                        X
+                                      </Button>
+                                    ) : null}
+                                  </Flex>
+                                  <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.600">
+                                    {e.message}
+                                  </Text>
+                                </Box>
+                                {myUser[0].id === miStateDetail.user.id ? (
+                                  <ResponseComment
+                                    idPublication={props.match.params.id}
+                                    mId={e.id}
+                                    enabledResponse={!e.response}
+                                  />
+                                ) : null}
+                                <Box bg={"#D9D9D9"}>
+                                  {e.response ? (
+                                    <Box ml={"15px"}>
+                                      <Text
+                                        fontWeight={"Bold"}
+                                        fontSize="1rem"
+                                        color="gray.600"
+                                        border="gray.500"
+                                        as="em"
+                                      >
+                                        Propiertario :
+                                      </Text>
+                                      <Text
+                                        fontWeight={"semiBold"}
+                                        fontSize="1.2rem"
+                                        color="gray.600"
+                                      >
+                                        {e.response}
+                                      </Text>
+                                    </Box>
                                   ) : null}
-                                  {myUser[0].id === miStateDetail.user.id ? (
-                                    <ResponseComment
-                                      idPublication={props.match.params.id}
-                                      mId={e.id}
-                                      enabledResponse={!e.response}
-                                    />
-                                  ) : null}
-                                </Flex>
+                                </Box>
                               </Box>
                             ))}
                           </FormControl>
                         </Box>
                       </TabPanel>
-                      <TabPanel>
+                      <TabPanel w={"100%"}>
                         <Flex
                           alignItems="flex-start"
-                          w={"550px"}
                           h={"300px"}
-                          boxShadow="dark-lg"
+                          // boxShadow="dark-lg"
                           p="10px"
                           border="1px solid grey.300"
                           borderRadius={"0.5rem"}
@@ -626,7 +658,7 @@ export default function Detail(props, id) {
                     </Box>
                     <Box>
                       {myUser[0].id === miStateDetail.userId && !miStateDetail.deleted ? (
-                        <Flex direction={"column"}>
+                        <Flex direction={"column"} mb={"1rem"}>
                           <Button
                             w={"350px"}
                             colorScheme="green"
@@ -656,6 +688,18 @@ export default function Detail(props, id) {
                         </Flex>
                       ) : myUser[0].id === miStateDetail.userId && miStateDetail.deleted ? (
                         <Flex direction={"column"}>
+                          <Button
+                            w={"350px"}
+                            colorScheme="green"
+                            m="8px"
+                            fontSize="xl"
+                            as="b"
+                            onClick={() =>
+                              history.push("/updatePublicaction/" + props.match.params.id)
+                            }
+                          >
+                            Actualizar datos
+                          </Button>
                           <Button
                             w={"350px"}
                             colorScheme="green"

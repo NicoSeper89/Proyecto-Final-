@@ -55,7 +55,7 @@ import {
 
 const initialState = {
   totalUsers: [], //Total de usuarios
-  allUserInfo: [],
+  allUserInfo: {},
   infoUser: null,
   houses: [], //Todas las publicaciones
   housePrem: [], //Publicación Premium

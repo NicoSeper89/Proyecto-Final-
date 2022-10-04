@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import style from "./Card.module.css";
 import imgNotAvailable from "../../Image/Image_not_available.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -43,20 +44,27 @@ export default function Card({
     }
   }, [dispatch, boton]); */
 
-  const handleClickFav = () => {
+  const handleClickFav = async () => {
     if (infoUser) {
-      dispatch(setFav(infoUser[1].userId, id));
+      await axios.put(`/user/setFav?userId=${infoUser[1].userId}&pubId=${id}`, {});
+      dispatch(getFavsUser(infoUser[1].userId, id));
+      /* dispatch(setFav(infoUser[1].userId, id)); */
+      //no despachar set favs, pero despues despachar un get favs
+
       /* setBoton(true); */
       // if (boton === false) {
       //   setBoton(true);
       // } else if (boton === true) {
       //   setBoton(false);
       // }
-      window.location.reload()
+      /* window.location.reload() */
     }
   };
-  const handleClickRemoveFav = () => {
-    dispatch(removeFav(infoUser[1].userId, id));
+  const handleClickRemoveFav = async () => {
+    await axios.put(`/user/removeFav?userId=${infoUser[1].userId}&pubId=${id}`, {});
+    /* dispatch(removeFav(infoUser[1].userId, id)); */
+    dispatch(getFavsUser(infoUser[1].userId, id));
+    /* window.location.reload() */
     /* dispatch(getFavsUser(infoUser[0].id)); */
     /* setBoton(false); */
     // if (boton === false) {
@@ -64,7 +72,7 @@ export default function Card({
     // } else if (boton === true) {
     //   setBoton(false);
     // }
-    window.location.reload()
+    
   };
   const favState = () => {
     let result = false;
