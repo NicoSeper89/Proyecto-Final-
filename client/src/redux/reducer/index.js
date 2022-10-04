@@ -241,10 +241,10 @@ export default function rootReducer(state = initialState, action) {
         currentCarrusel: action.payload,
       };
     case GET_PUBLICATIONS_PREMIUM:
-      let premNotDeleted = action.payload.filter(h => !h.deleted)
+      let premNotDeleted = action.payload.filter((h) => !h.deleted);
       return {
         ...state,
-        housePrem: premNotDeleted
+        housePrem: premNotDeleted,
       };
     case VALUE_FILTER:
       return {

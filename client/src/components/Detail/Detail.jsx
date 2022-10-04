@@ -166,7 +166,7 @@ export default function Detail(props, id) {
           publicationId: props.match.params.id,
           userId: myUser[0].id,
         });
-        console.log('rta back',rta)
+        console.log("rta back", rta);
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
@@ -221,20 +221,20 @@ export default function Detail(props, id) {
       >
         {Object.entries(miStateDetail).length > 0 ? (
           <Box>
-            <Flex mt={"1rem"} justifyContent={"center"}>
+            {/* <Flex mt={"1rem"} justifyContent={"center"}>
               {miStateDetail.deleted === true ? (
                 <Badge colorScheme="red" variant="solid" fontSize="1.5em">
                   Publicacion Eliminada, solicita su restauración más abajo
-                  {/* Publicacion Eliminada */}
+                  
                 </Badge>
               ) : null}
               {miStateDetail.approved === false ? (
                 <Badge colorScheme="red" variant="solid" fontSize="1.5em">
-                  {/* Publicacion Eliminada, solicita su restauración más abajo */}
+              
                   Publicacion pendiente de aprobación
                 </Badge>
               ) : null}
-            </Flex>
+            </Flex> */}
             <Box
               display={"flex"}
               flexDirection={"row"}
@@ -268,7 +268,7 @@ export default function Detail(props, id) {
                   )}
                 </Flex>
 
-                  {/* {miStateDetail.property.propVideo && (
+                {/* {miStateDetail.property.propVideo && (
                   <AspectRatio maxW='560px' ratio={1}>
                     <iframe
                     title='naruto'
@@ -505,6 +505,20 @@ export default function Detail(props, id) {
                   bg={"rgba(216, 158, 26, 0.35)"}
                 >
                   <Flex direction={"column"} w={"400px"} h={"35rem"}>
+                    <Flex>
+                      {miStateDetail.deleted === true ? (
+                        <Badge w={"100%"} colorScheme="red" variant="solid" fontSize="1.5em">
+                          {/* Publicacion Eliminada, solicita su restauración más abajo */}
+                          Publicacion Eliminada
+                        </Badge>
+                      ) : null}
+                      {miStateDetail.approved === false ? (
+                        <Badge w={"100%"} colorScheme="red" variant="solid" fontSize="1.5em">
+                          {/* Publicacion Eliminada, solicita su restauración más abajo */}
+                          Pendiente de aprobación
+                        </Badge>
+                      ) : null}
+                    </Flex>
                     <Box
                       w={"400px"}
                       borderRadius={"0.5rem"}

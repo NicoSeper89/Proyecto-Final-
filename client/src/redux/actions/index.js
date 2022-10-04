@@ -55,7 +55,6 @@ export const BLOCK_USER = "BLOCK_USER"
 export const RESTORE_USER = "RESTORE_USER"
 export const DELETE_REPORT = "DELETE_REPORT"
 
-
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
 export function getPublications(filters, sorting, city) {
@@ -356,11 +355,10 @@ export function setPublication(payload) {
 //ELIMINAR UNA PUBLICACION TEMPORALMENTE
 export function deletePublicaction(id) {
   return async function (dispatch) {
-
-      let respuesta=await axios.put(`/publication/unavailable/${id}`);
-      return dispatch({
-        type: DELETE_PUBLICACTION,
-      });
+    let respuesta = await axios.put(`/publication/unavailable/${id}`);
+    return dispatch({
+      type: DELETE_PUBLICACTION,
+    });
   };
 }
 //ELIMINAR UNA PUBLICACION

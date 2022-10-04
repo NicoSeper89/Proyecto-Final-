@@ -39,7 +39,6 @@ export default function PerfilPropietario() {
   const infoUser = JSON.parse(window.localStorage.getItem("User"));
 
   const handleEdit = () => {
-    
     history.push("/updatePerfil/" + infoUser[0].id);
   };
 
@@ -48,7 +47,7 @@ export default function PerfilPropietario() {
     dispatch(getPubs(infoUser[0].id));
     dispatch(getFavsUser(infoUser[0].id));
     dispatch(getUserImage(infoUser[0].id));
-    
+
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
@@ -149,7 +148,7 @@ export default function PerfilPropietario() {
                         id={f.id}
                         img={f.property.propertyImages}
                         precio={f.property.price}
-                        /* ciudad={f.property.city.name} */
+                        ciudad={f.property.TypeOfProp.name}
                         premium={f.premium}
                       />
                     </Box>
@@ -165,7 +164,7 @@ export default function PerfilPropietario() {
                           id={f.id}
                           img={f.property.propertyImages}
                           precio={f.property.price}
-                         /*  ciudad={f.property.city.name} */
+                          ciudad={f.property.address}
                           premium={f.premium}
                         />
                       </Box>
@@ -181,7 +180,7 @@ export default function PerfilPropietario() {
                         id={f.id}
                         img={f.property.propertyImages}
                         precio={f.property.price}
-                        /* ciudad={f.property.city.name} */
+                        ciudad={f.property.address}
                         premium={f.premium}
                       />
                     </Box>

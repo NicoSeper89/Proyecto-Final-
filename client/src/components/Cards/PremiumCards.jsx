@@ -99,18 +99,20 @@ export default function PremiumCards() {
       marginTop="5rem"
       minHeight="100%"
       zIndex={"3"}
-      marginBottom={"8rem"}
+      marginBottom={"5rem"}
     >
       <Box>
-        <Text
+        {/* <Text
           display={"flex"}
           justifyContent={"center"}
           fontSize={"2xl"}
-          /*fontFamily={"body"}*/ as="samp"
+          fontFamily={"body"}
+          as="samp"
           textTransform={"uppercase"}
         >
           Publicaciones Destacadas
-        </Text>
+        </Text> */}
+
         <Flex direction={"row"} alignItems="center" w={"1500px"} justifyContent="space-between">
           {/* {currentCarrusel !== 1 ? <Button onClick={handlePrev}>Prev</Button> : null} */}
           <Button

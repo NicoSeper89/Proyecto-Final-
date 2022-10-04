@@ -76,9 +76,10 @@ export default function UsersAdmin() {
   });
 
   return (
-    <Box >
+    <Box>
       <NavBarForms />
-      <Stack position={"relative"}
+      <Stack
+        position={"relative"}
         align={"start"}
         justify={"center"}
         direction={"row"}
@@ -191,7 +192,13 @@ export default function UsersAdmin() {
             </TabPanels>
           </Tabs>
         </Box>
-        <AlertBRUser  alertBRUser={alertBRUser} setAlertBRUser={setAlertBRUser} userId={infoUser[0].id} banned={infoUser[0].banned} userEmail={infoUser[0].loginInfo.mail} />
+        <AlertBRUser
+          alertBRUser={alertBRUser}
+          setAlertBRUser={setAlertBRUser}
+          userId={infoUser[0].id}
+          banned={infoUser[0].banned}
+          userEmail={infoUser[0].loginInfo.mail}
+        />
       </Stack>
       <Footer />
     </Box>
