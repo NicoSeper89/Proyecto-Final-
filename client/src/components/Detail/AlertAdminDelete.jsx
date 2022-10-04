@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-/* import emailjs from "emailjs-com"; */
+import emailjs from "emailjs-com";
 
 import {
   Button,
@@ -40,11 +40,14 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
         isClosable: true,
       })
     } else {
+      dispatch(deletePublicaction(pubId));
+      /* await emailjs.sendForm("service_6rkm2fe", "template_uban03v", e.target, "8MtXDr5Zt_CF-tD7t") */
       toast({
         title: "Publicación restaurada.",
         status: "success",
         isClosable: true,
       })
+      history.push("/");
     }
     } catch (error) {
       console.log(error);
