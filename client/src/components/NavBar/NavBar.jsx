@@ -10,6 +10,7 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 // import SearchBar from "../Search/SearchBar";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
+  Avatar,
   Box,
   Button,
   Flex,
@@ -21,7 +22,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import "./NavBar.module.css";
-import { getPubs, getUserInfo } from "../../redux/actions";
+import { getPubs, getUserInfo, getUserImage } from "../../redux/actions";
 
 const NavBar = () => {
   const { loginWithRedirect, /*isAuthenticated,*/ logout } = useAuth0(); // haciendo pruebas
@@ -30,6 +31,7 @@ const NavBar = () => {
   const publicationsUser = useSelector((state) => state.publicationsUser);
   const infoUser = useSelector((state) => state.infoUser);
   const infoUser2 = useSelector((state) => state.allUserInfo);
+  const imageUser = useSelector((state) => state.imageUser);
   // const [displayMenu, setDisplayMenu] = useState(false);
 
   // const onClickMenu = (e) => {
@@ -47,8 +49,11 @@ const NavBar = () => {
   const user2 = JSON.parse(user);
 
   useEffect(() => {
-    if (user2) {dispatch(getPubs(user2[0].id))
-    dispatch(getUserInfo(user2[0].id));}
+    if (user2) {
+      dispatch(getPubs(user2[0].id));
+      dispatch(getUserInfo(user2[0].id));
+      dispatch(getUserImage(user2[0].id));
+    }
   }, [dispatch]);
 
   const closeUser = () => {
@@ -121,6 +126,7 @@ const NavBar = () => {
               variant="outline"
               // onClick={() => history.push("/createPost")}>
               onClick={(e) => buttonCreatePost(e)}
+              marginRight={"10px"}
             >
               Publicar
             </Button>
@@ -215,10 +221,10 @@ const NavBar = () => {
 
           <Menu>
             <Box position={"relative"} display="flex" alignItems="flex-end">
-              <MenuButton aria-label="Options" variant="outline" px={"1rem"} py={".5rem"}>
+              <MenuButton as={Button} rounded={"full"} variant={"link"} cursor={"pointer"} minW={0}>
+                <Avatar size={"md"} src={imageUser ? imageUser : null} />
                 {!user2 && (
                   <Box position={"relative"} display="flex" alignItems="flex-end">
-                    <FontAwesomeIcon icon={faCircleUser} className={style.img} />
                     <Tooltip label={`Status: Inactive`} textTransform="capitalize">
                       <Box
                         as="div"
@@ -233,7 +239,6 @@ const NavBar = () => {
                 )}
                 {user2 && (
                   <Box position={"relative"} display="flex" alignItems="flex-end">
-                    <FontAwesomeIcon icon={faCircleUser} className={style.img} />
                     <Tooltip label={`Status: Active`} textTransform="capitalize">
                       <Box
                         as="div"
