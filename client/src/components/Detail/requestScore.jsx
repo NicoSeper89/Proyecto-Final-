@@ -11,11 +11,15 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Flex,
+  Text
 } from "@chakra-ui/react";
 import { useState } from "react";
 /* import emailjs from "emailjs-com"; */
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import {deletePublicaction} from "../../redux/actions/index.js"
 
 export default function RequestScore(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -23,6 +27,8 @@ export default function RequestScore(props) {
 
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+
+  const dispatch = useDispatch()
 
   const [email, setEmail] = useState("");
 
@@ -32,9 +38,8 @@ export default function RequestScore(props) {
     try {
 
       await axios.put(`user/requestScore/${props.publicationsId}`, {userEmail: email})
-
+      dispatch(deletePublicaction(props.publicationsId))
       /* await emailjs.sendForm("service_0za37f4", "template_3aag90l", e.target, "E_nOOl9VRDZAxSlhF") */
-
       history.push("/")
 
     } catch (error) {
@@ -60,8 +65,8 @@ export default function RequestScore(props) {
           <ModalCloseButton />
           <ModalBody pb={6}>
             <form onSubmit={sendEmail}>
-              <FormControl>
-                <FormLabel>Email</FormLabel>
+              <FormLabel>Email</FormLabel>
+              <FormControl display={"flex"} flexDirection={"column"} gap={".4rem"}> 
                 <Input
                   ref={initialRef}
                   onChange={(e) => {
@@ -70,6 +75,7 @@ export default function RequestScore(props) {
                   value={email}
                   name="user_email"
                 />
+                <Flex gap={".1rem"}>
                 <Input
                   display={"none"}
                   value={`http://localhost:3000/details/${props.publicationsId}/rank`}
@@ -80,8 +86,11 @@ export default function RequestScore(props) {
                   Enviar
                 </Button>
                 <Button onClick={onClose}>Cancelar</Button>
+                </Flex>
               </FormControl>
             </form>
+            <Text paddingTop={"1.4rem"} textAlign={"justify"}>Pedir a otro usuario que califique tu publicación hará que sea eliminada de las publicaciones activas. <br /> Puedes pedir su restauración luego, pero estará sujeta a revisión. <br /> Tu publicación seguira apareciendo en tu perfil, en la seccion "publicaciones borradas"
+            </Text>
           </ModalBody>
         </ModalContent>
       </Modal>
