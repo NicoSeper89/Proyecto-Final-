@@ -13,7 +13,6 @@ router.put("/acces", async (req, res) => {
     await User.update({ admin: true }, { where: { id: id } });
     res.send("todo bien");
   } catch (e) {
-    console.log(e);
     req.send("todo mal");
   }
 });

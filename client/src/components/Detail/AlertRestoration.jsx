@@ -24,7 +24,7 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
     e.preventDefault();
 
     try {
-      /* await emailjs.sendForm("service_4xqps7g", "template_aftwdaf", e.target, "cF426xv2uIUBSdta_") */
+      await emailjs.sendForm("service_4xqps7g", "template_aftwdaf", e.target, "cF426xv2uIUBSdta_")
       history.push("/");
       toast({
         title: "Solicitud enviada correctamente.",
@@ -84,7 +84,7 @@ const AlertRestoration = ({ requestRestoration, setRequestRestoration, pubId, em
           />
           <Input
             display={"none"}
-            value={`http://localhost:3000/details/${pubId}`}
+            value={`https://look-house.vercel.app/details/${pubId}`}
             name="url_publication"
             readOnly
           />

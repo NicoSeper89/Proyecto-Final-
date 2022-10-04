@@ -275,7 +275,6 @@ export default function rootReducer(state = initialState, action) {
         ...state,
       };
     case SET_PUBLICATION:
-      console.log("en setpub reducer", action.payload);
       return {
         ...state,
         publicationP: action.payload,

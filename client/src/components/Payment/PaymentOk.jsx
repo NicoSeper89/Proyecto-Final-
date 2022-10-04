@@ -35,7 +35,6 @@ export default function PaymentOk() {
     createSuscription(userInfo);
   } */
     let pubID = window.localStorage.getItem("publicationID");
-    console.log("en payment", pubID);
     asignPremium(pubID);
   }, []);
 

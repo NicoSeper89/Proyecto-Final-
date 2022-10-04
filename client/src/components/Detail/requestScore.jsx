@@ -15,7 +15,7 @@ import {
   Text
 } from "@chakra-ui/react";
 import { useState } from "react";
-/* import emailjs from "emailjs-com"; */
+import emailjs from "emailjs-com";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -39,7 +39,7 @@ export default function RequestScore(props) {
 
       await axios.put(`user/requestScore/${props.publicationsId}`, {userEmail: email})
       dispatch(deletePublicaction(props.publicationsId))
-      /* await emailjs.sendForm("service_0za37f4", "template_3aag90l", e.target, "E_nOOl9VRDZAxSlhF") */
+      await emailjs.sendForm("service_0za37f4", "template_3aag90l", e.target, "E_nOOl9VRDZAxSlhF")
       history.push("/")
 
     } catch (error) {
@@ -78,7 +78,7 @@ export default function RequestScore(props) {
                 <Flex gap={".1rem"}>
                 <Input
                   display={"none"}
-                  value={`http://localhost:3000/details/${props.publicationsId}/rank`}
+                  value={`https://look-house.vercel.app/details/${props.publicationsId}/rank`}
                   name="url_publication"
                   readOnly
                 />

@@ -20,8 +20,6 @@ const AlertDelete = ({ alertSubmit, setAlertSubmit, id, deleted }) => {
   const toast = useToast();
 
   const onSi = (e) => {
-    console.log("no admin")
-    console.log(e)
     dispatch(deletePublicaction(id));
     history.push("/");
     toast({

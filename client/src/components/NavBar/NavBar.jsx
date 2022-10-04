@@ -84,7 +84,6 @@ const NavBar = () => {
   const activeColor = "green.500";
   const inactiveColor = "gray.400";
 
-  console.log("AAAA: ", publicationsUser);
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
       <Flex

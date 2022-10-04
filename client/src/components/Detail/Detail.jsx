@@ -167,7 +167,6 @@ export default function Detail(props, id) {
           publicationId: props.match.params.id,
           userId: myUser[0].id,
         });
-        console.log("rta back", rta);
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
@@ -175,8 +174,7 @@ export default function Detail(props, id) {
           status: "success",
           isClosable: true,
         });
-        console.log(e.target);
-        /* await emailjs.sendForm("service_4xqps7g", "template_8suw4hd", e.target, "cF426xv2uIUBSdta_") */
+        await emailjs.sendForm("service_4xqps7g", "template_8suw4hd", e.target, "cF426xv2uIUBSdta_")
       } else {
         toast({
           title: "Debes escribir algo para enviar un mensaje!",
@@ -320,7 +318,7 @@ export default function Detail(props, id) {
                           justifyContent="center"
                           alignItems="center"
                         >
-                          {/* <Datos position={miStateDetail} /> */}
+                          <Datos position={miStateDetail} />
                         </Flex>
                       </TabPanel>
                       <TabPanel w={"100%"}>
@@ -388,7 +386,7 @@ export default function Detail(props, id) {
                                 />
                                 <Input
                                   display={"none"}
-                                  value={`http://localhost:3000/details/${props.match.params.id}`}
+                                  value={`https://look-house.vercel.app/details/${props.match.params.id}`}
                                   name={"url_publication"}
                                   readOnly
                                 />

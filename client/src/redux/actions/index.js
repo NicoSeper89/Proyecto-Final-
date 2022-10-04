@@ -345,7 +345,6 @@ export function saveSort(payload) {
 }
 
 export function setPublication(payload) {
-  console.log("en setpub", payload);
   return {
     type: SET_PUBLICATION,
     payload,
@@ -387,7 +386,6 @@ export function deletePublicactionImage(url) {
 
 // ACTUALIZAR DATOS DE PROPIEDAD
 export function updatedProp(id, inputPropiedad) {
-  console.log(inputPropiedad, "id de actualizacion", id);
   return async function (dispatch) {
     try {
       await axios.put(`/publication/editProperty/${id}`, inputPropiedad);
@@ -642,7 +640,7 @@ export function approvePostUser(pubId, userId) {
 }
 
 export function deleteComment(id) {
-  console.log("soy id", id);
+
   // console.log("soy publicationID", idComment)
   return async function (dispatch) {
     try {

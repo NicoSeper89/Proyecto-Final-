@@ -66,7 +66,6 @@ const NewUser = () => {
     si_no = false;
   else si_no = true;
   var usuario = user;
-  console.log(usuario);
 
   // const loginGoogle = async () => {
   //     const redirec = await loginWithRedirect()

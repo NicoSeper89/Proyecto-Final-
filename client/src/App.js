@@ -84,13 +84,14 @@ function App() {
           <Redirect to="*"/>
         }} /> */}
 
-        <Route
+        {/* <Route
           exact
           path="/PaymentOk"
           render={() => {
             return infoUser ? <PaymentOk /> : <Redirect to="*" />;
           }}
-        />
+        /> */}
+         <Route exact path="/PaymentOk" component={PaymentOk} />
         <Route exact path="/select" component={Select} />
         <Route exact path="/adminAcces" component={AdminAcces} />
         <Route

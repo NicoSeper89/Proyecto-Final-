@@ -32,7 +32,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
       if(!deleted)
       {
       dispatch(deletePublicaction(pubId));
-      /* await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF") */
+      await emailjs.sendForm("service_0za37f4", "template_wo7kki4", e.target, "E_nOOl9VRDZAxSlhF")
       history.push("/");
       toast({
         title: "Publicación eliminada correctamente.",
@@ -41,7 +41,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
       })
     } else {
       dispatch(deletePublicaction(pubId));
-      /* await emailjs.sendForm("service_6rkm2fe", "template_uban03v", e.target, "8MtXDr5Zt_CF-tD7t") */
+      await emailjs.sendForm("service_6rkm2fe", "template_uban03v", e.target, "8MtXDr5Zt_CF-tD7t")
       toast({
         title: "Publicación restaurada.",
         status: "success",
@@ -104,7 +104,7 @@ const AlertAdminDelete = ({ alertAdminDelete, setAlertAdminDelete, emailUser, pu
           />)}
           <Input
             display={"none"}
-            value={`http://localhost:3000/details/${pubId}`}
+            value={`https://look-house.vercel.app/details/${pubId}`}
             name="url_publication"
             readOnly
           />

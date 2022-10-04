@@ -25,7 +25,7 @@ const DeletedLogicUAd = () => {
     const dataUser = window.localStorage.getItem("User");
     dataUser && dispatch(getInfoUser(JSON.parse(dataUser)));
     dispatch(getAll());
-    console.log(JSON.parse(dataUser)); //si tengo un usuario iniciado me lo setea en el global
+//si tengo un usuario iniciado me lo setea en el global
     // if (dataUser) {
     //   dispatch(getFavsUser(infoUser[0].id));
     // }

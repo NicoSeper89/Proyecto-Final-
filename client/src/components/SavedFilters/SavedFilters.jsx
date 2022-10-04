@@ -84,7 +84,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
       dispatch(setCity(newFilter[2]))
       dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
       dispatch(setCurrentPage(1));
-      console.log(newFilter[2]);
+
     }
   };
 

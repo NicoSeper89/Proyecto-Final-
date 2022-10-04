@@ -26,13 +26,12 @@ const Select = () => {
   var [loguear, setLoguear] = useState({loguear:undefined,banned:false });
 
   const buscarUser = async () => {
-    const user2 = await axios.post("http://localhost:3001/user/LoginOrCreate", {
+    const user2 = await axios.post("https://look-house.vercel.app/user/LoginOrCreate", {
       name: user.nickname,
       password: user.sub,
       mail: user.email,
       typUser: "Inquilino",
     });
-  console.log(user2)
     if (user2.data.loguear && user2.data.userInfo[0].banned === false) {
       setLoguear({loguear:true,banned:false});
       window.localStorage.setItem("User", JSON.stringify(user2.data.userInfo));

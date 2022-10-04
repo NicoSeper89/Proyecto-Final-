@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-/* import emailjs from "emailjs-com"; */
+import emailjs from "emailjs-com";
 
 import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Flex, useToast, Input, Box } from "@chakra-ui/react";
   
@@ -17,7 +17,7 @@ const AlertAdminApprove = ({ alertSubmit, setAlertAdminApprove, pubId, userId, e
 
     try {
       dispatch(approvePostUser(pubId, userId));
-      /* await emailjs.sendForm("service_6rkm2fe", "template_f6k09gh", e.target, "8MtXDr5Zt_CF-tD7t") */
+      await emailjs.sendForm("service_6rkm2fe", "template_f6k09gh", e.target, "8MtXDr5Zt_CF-tD7t")
       history.push("/");
       toast({
       title: "Publicación aprobada correctamente.",
@@ -61,7 +61,7 @@ const AlertAdminApprove = ({ alertSubmit, setAlertAdminApprove, pubId, userId, e
       </AlertTitle>
       <form onSubmit={onSi}>
       <Input display={"none"} value={emailUser} name="user_email" readOnly />
-      <Input display={"none"} value={`http://localhost:3000/details/${pubId}`} name="publication_id" readOnly />
+      <Input display={"none"} value={`https://look-house.vercel.app/details/${pubId}`} name="publication_id" readOnly />
       <Flex gap={"1rem"}>
         <Button type="submit" mb={"10px"} >
           Si

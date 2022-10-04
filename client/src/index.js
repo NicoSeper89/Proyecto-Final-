@@ -22,7 +22,7 @@ const clienId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 //redirectUri="*/checkin"
 ReactDOM.render(
-  <Auth0Provider domain={domain} clientId={clienId} redirectUri="http://localhost:3000/select">
+  <Auth0Provider domain={domain} clientId={clienId} redirectUri="https://look-house.vercel.app/select">
   <ChakraProvider>
     <Provider store={store}>
       <BrowserRouter>

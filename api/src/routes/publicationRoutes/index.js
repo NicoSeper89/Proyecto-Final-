@@ -424,7 +424,6 @@ router.get("/comment/:id", async (req, res, next) => {
       where: { publicationId: id },
       /* include: User, */
     });
-    console.log("enviado", comments);
     res.status(200).send(comments);
   } catch (error) {
     next(error);
@@ -442,7 +441,6 @@ router.post("/comment", async (req, res, next) => {
     /* let userComment = await User.findByPk(userId);
     mensaje.setUser(userComment); */
     /* userComment.addPublicationComents(mensaje) */
-    console.log("creado", mensaje);
     res.status(200).send(mensaje);
   } catch (error) {
     next(error);
