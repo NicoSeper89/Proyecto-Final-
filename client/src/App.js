@@ -42,7 +42,7 @@ function App() {
 
   useEffect(() => {
     user2 && dispatch(getUserInfo(user2[0].id));
-    dispatch(getCities());
+    /* dispatch(getCities()); */
     dispatch(getServices());
     dispatch(getTypesOfProperties());
   }, [dispatch]);

@@ -34,7 +34,7 @@ const CreatePost = () => {
   const services = useSelector((state) => state.services);
   // const history = useHistory();
   const [infoFormProp, setInfoFormProp] = useState({
-    city: "",
+    /* city: "", */
     address: "",
     propImg: [],
     typProp: "",
@@ -67,7 +67,7 @@ const CreatePost = () => {
 
   useEffect(() => {
     const {
-      city,
+      /* city, */
       address,
       surface,
       price,
@@ -81,7 +81,7 @@ const CreatePost = () => {
     } = infoFormProp;
 
     if (
-      !city ||
+      /* !city || */
       // (city === "default") ||
       !address ||
       /^[\s]+$/i.test(address) ||
@@ -243,7 +243,7 @@ const CreatePost = () => {
                 border="1px"
                 borderColor="gray.200"
               >
-                <FormLabel>
+               {/*  <FormLabel>
                   <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">
                     Provincia
                   </Text>
@@ -260,7 +260,7 @@ const CreatePost = () => {
                       </option>
                     ))}
                   </Select>
-                </FormLabel>
+                </FormLabel> */}
 
                 <FormLabel>
                   <Text fontWeight={"semiBold"} fontSize="1.2rem" color="gray.500">

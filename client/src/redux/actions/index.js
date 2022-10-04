@@ -4,7 +4,7 @@ import axios from "axios";
 export const GET_PUBLICATIONS = "GET_PUBLICATIONS";
 export const GET_PUBLICATIONS_DETAIL = "GET_PUBLICATIONS_DETAIL";
 export const GET_DETAILS = "GET_DETAILS";
-export const GET_CITIES = "GET_CITIES";
+/* export const GET_CITIES = "GET_CITIES"; */
 export const GET_SERVICES = "GET_SERVICES,";
 export const GET_PROPERTY_TYPES = "GET_PROPERTY_TYPES";
 export const ULPOAD_IMG = "ULPOAD_IMG";
@@ -90,7 +90,7 @@ export function getPublicationsDetail(id) {
 }
 
 //Esto trae las Provincias
-export function getCities() {
+/* export function getCities() {
   return async function (dispatch) {
     try {
       let infoBack = await axios.get("/publication/city");
@@ -104,7 +104,7 @@ export function getCities() {
       }
     }
   };
-}
+} */
 
 //Esto trae los servicios de luz, agua, gas, internet y calefaccion
 export function getServices() {

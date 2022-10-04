@@ -149,7 +149,7 @@ export default function PerfilPropietario() {
                         id={f.id}
                         img={f.property.propertyImages}
                         precio={f.property.price}
-                        ciudad={f.property.city.name}
+                        /* ciudad={f.property.city.name} */
                         premium={f.premium}
                       />
                     </Box>
@@ -165,7 +165,7 @@ export default function PerfilPropietario() {
                           id={f.id}
                           img={f.property.propertyImages}
                           precio={f.property.price}
-                          ciudad={f.property.city.name}
+                         /*  ciudad={f.property.city.name} */
                           premium={f.premium}
                         />
                       </Box>
@@ -181,7 +181,7 @@ export default function PerfilPropietario() {
                         id={f.id}
                         img={f.property.propertyImages}
                         precio={f.property.price}
-                        ciudad={f.property.city.name}
+                        /* ciudad={f.property.city.name} */
                         premium={f.premium}
                       />
                     </Box>
