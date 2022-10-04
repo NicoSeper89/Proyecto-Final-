@@ -8,24 +8,6 @@ import { Box, Button, Container, Link, Stack, Text, useColorModeValue } from "@c
 
 export default function Footer() {
   return (
-    // <div className={style.container}>
-    //   <div className={style.containerIcons}>
-    //     <a href="https://github.com/TomasTinto1234/Proyecto-Final-">
-    //       <FontAwesomeIcon icon={faSquareGithub} />
-    //     </a>
-    //     <FontAwesomeIcon icon={faSquareInstagram} />
-    //     <FontAwesomeIcon icon={faSquareTwitter} />
-    //   </div>
-    //   <div className={style.containerItems}>
-    //     <a href="/about">
-    //       <h3>About</h3>
-    //     </a>
-    //     <a href="/help">
-    //       <h3>Help</h3>
-    //     </a>
-    //     <h3>Contact</h3>
-    //   </div>
-    // </div>
     <Box
       bg={useColorModeValue("gray.50", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}
@@ -33,7 +15,6 @@ export default function Footer() {
       <Container as={Stack} maxW={"6xl"} py={4} spacing={4} justify={"center"} align={"center"}>
         {/* <Logo /> */}
         <Stack direction={"row"} spacing={6}>
-          <Link href={"/"}>Inicio</Link>
           <Link href={"/about"}>Conocenos</Link>
           <Link href={"/help"}>Ayuda</Link>
           <Link href={"mailto:lookhousepf@gmail.com"}>Contactanos</Link>
