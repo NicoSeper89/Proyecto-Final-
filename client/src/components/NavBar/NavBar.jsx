@@ -47,8 +47,8 @@ const NavBar = () => {
   const user2 = JSON.parse(user);
 
   useEffect(() => {
-    dispatch(getPubs(user2[0].id))
-    dispatch(getUserInfo(user2[0].id));
+    if (user2) {dispatch(getPubs(user2[0].id))
+    dispatch(getUserInfo(user2[0].id));}
   }, [dispatch]);
 
   const closeUser = () => {
