@@ -19,10 +19,13 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import "./NavBar.module.css";
+import { useSelector } from "react-redux";
 
 const NavBar = () => {
   const { loginWithRedirect, /*isAuthenticated,*/ logout } = useAuth0(); // haciendo pruebas
   const history = useHistory();
+  const publicationsUser = useSelector((state) => state.publicationsUser);
+
   // const infoUser = useSelector((state) => state.infoUser);
   // const [displayMenu, setDisplayMenu] = useState(false);
 
@@ -66,6 +69,7 @@ const NavBar = () => {
   const activeColor = "green.500";
   const inactiveColor = "gray.400";
 
+  console.log("AAAA: ", publicationsUser);
   return (
     <div className={`${navbar ? style.containerBg : style.containerBgTop}`}>
       <Flex

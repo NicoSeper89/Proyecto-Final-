@@ -9,7 +9,7 @@ const {
   PropertyImage,
   Report,
   User,
-  PublicationComents
+  PublicationComents,
 } = require("../../db");
 const router = Router();
 const {
@@ -187,7 +187,6 @@ router.post("/image", async (req, res, next) => {
   }
 });
 
-
 router.post("/createProperty", async (req, res, next) => {
   const {
     address,
@@ -223,7 +222,7 @@ router.post("/createProperty", async (req, res, next) => {
       yard,
       pets,
       age,
-      propVideo
+      propVideo,
     });
     if (service) {
       let ser = await Service.findAll({
@@ -258,14 +257,14 @@ router.post("/postProperty", async (req, res, next) => {
     let user = await User.findByPk(userId);
     let post;
     if (user.approved) {
-       post = await Publication.create({
+      post = await Publication.create({
         description,
         status,
         premium,
         approved: true,
       });
     } else {
-       post = await Publication.create({
+      post = await Publication.create({
         description,
         status,
         premium,
@@ -420,10 +419,11 @@ router.put("/unavailable/:id", async (req, res, next) => {
 router.get("/comment/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-
-    const comments = await PublicationComents.findAll({ where: { publicationId: id },
-                                                        include: User });
-    console.log('enviado',comments)
+    const comments = await PublicationComents.findAll({
+      where: { publicationId: id },
+      include: User,
+    });
+    console.log("enviado", comments);
     res.status(200).send(comments);
   } catch (error) {
     next(error);
@@ -438,9 +438,9 @@ router.post("/comment", async (req, res, next) => {
       publicationId,
     });
     let userComment = await User.findByPk(userId);
-    mensaje.setUser(userComment)
+    mensaje.setUser(userComment);
     /* userComment.addPublicationComents(mensaje) */
-    console.log('creado',mensaje)
+    console.log("creado", mensaje);
     res.status(200).send(mensaje);
   } catch (error) {
     next(error);
@@ -448,25 +448,19 @@ router.post("/comment", async (req, res, next) => {
 });
 
 router.put("/comment/response", async (req, res, next) => {
-
   const { messageId, response } = req.body;
-  
+
   try {
-    
-   const publi = await PublicationComents.upsert(
-      {
-        id: messageId,
-        response: response
-      }
-    )
-    
-    return res.json(publi)
+    const publi = await PublicationComents.upsert({
+      id: messageId,
+      response: response,
+    });
 
+    return res.json(publi);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-
-})
+});
 
 // crea un reporte a la pblicacion por params, con la info de body
 router.post("/report/:id", async (req, res, next) => {
@@ -498,18 +492,18 @@ router.delete("/report/:id", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-})
+});
 
 //ELIMINAR COMENTARIO
-router.delete("/comment/:id", async (req, res, next)=> {
-  const { id } = req.params
+router.delete("/comment/:id", async (req, res, next) => {
+  const { id } = req.params;
   try {
-      await PublicationComents.destroy({ where: { id : id}})
-      res.send("borraste el comentario")
-    } catch (error) {
-    next(error)
+    await PublicationComents.destroy({ where: { id: id } });
+    res.send("borraste el comentario");
+  } catch (error) {
+    next(error);
   }
-})
+});
 
 router.put("/approvePost/:id", async (req, res, next) => {
   const { id } = req.params;

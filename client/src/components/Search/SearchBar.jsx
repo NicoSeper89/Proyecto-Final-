@@ -32,6 +32,7 @@ import {
   Select,
   Button,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 
@@ -55,6 +56,7 @@ const SearchBar = () => {
   const [clearNumbers, setClearNumbers] = useState(false);
   const [buttonResponse, setButtonResponse] = useState(false);
   // const [alertSubmit, setAlertSubmit] = useState([false, false]);
+  const toast = useToast();
 
   useEffect(() => {
     console.log("I cleared the filter values");
@@ -68,6 +70,12 @@ const SearchBar = () => {
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
     setCity("");
+
+    // toast({
+    //   title: "Busqueda inexistente.",
+    //   status: "error",
+    //   isClosable: true,
+    // });
   };
 
   //SELECT PROPIEDADES

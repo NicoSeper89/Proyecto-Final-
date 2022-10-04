@@ -74,7 +74,7 @@ export default function CardPerfil({ id, img, precio, ciudad, premium }) {
         <Text as="b" fontSize="xl" marginBottom={"0px"}>
           $ {precio}
         </Text>
-        <Text as="samp" fontSize="l" textAlign={"center"} width="150px">
+        <Text as="samp" fontSize="l" textAlign={"center"} width="150px" maxWidth="350px">
           {ciudad}
         </Text>
         {/* {premium === true ? (

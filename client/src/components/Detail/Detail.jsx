@@ -166,7 +166,7 @@ export default function Detail(props, id) {
           publicationId: props.match.params.id,
           userId: myUser[0].id,
         });
-        console.log('rta back',rta)
+        console.log("rta back", rta);
         dispatch(getComment(props.match.params.id));
         setComments("");
         toast({
@@ -268,7 +268,7 @@ export default function Detail(props, id) {
                   )}
                 </Flex>
 
-                  {/* {miStateDetail.property.propVideo && (
+                {/* {miStateDetail.property.propVideo && (
                   <AspectRatio maxW='560px' ratio={1}>
                     <iframe
                     title='naruto'
