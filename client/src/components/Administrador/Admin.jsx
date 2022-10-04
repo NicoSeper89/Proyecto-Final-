@@ -230,7 +230,6 @@ export default function Admin() {
                     <Tr>
                       <Th>Fecha de creación</Th>
                       <Th>Publicación</Th>
-                      <Th>Estado</Th>
                       <Th textAlign={"center"}>Propiedad</Th>
                       <Th textAlign={"center"}>Perfil de Propietario</Th>
                     </Tr>
@@ -243,7 +242,6 @@ export default function Admin() {
                           <Td maxWidth="350px" overflowY="hidden" overflowX="scroll">
                             {p.property.address}
                           </Td>
-                          <Td>{p.status}</Td>
                           <Td textAlign={"center"}>
                             <Button
                               h="1.75rem"
@@ -316,7 +314,6 @@ export default function Admin() {
                       <Tr>
                         <Th>Fecha de creación</Th>
                         <Th>Fecha de eliminación</Th>
-                        <Th>Motivo?</Th>
                         <Th textAlign={"center"}>Propiedad</Th>
                         <Th textAlign={"center"}>Perfil del propietario</Th>
                       </Tr>
@@ -327,7 +324,6 @@ export default function Admin() {
                           <Tr key={i}>
                             <Td>{p.createdAt}</Td>
                             <Td>{p.updatedAt}</Td>
-                            <Td>Motivo??</Td>
                             <Td textAlign={"center"}>
                               <Button
                                 h="1.75rem"
