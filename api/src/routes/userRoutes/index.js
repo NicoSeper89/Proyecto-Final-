@@ -310,7 +310,7 @@ router.put("/setFav", async (req, res, next) => {
   try {
     let { userId, pubId } = req.query;
     let user=await User.findByPk(userId)
-    if(!user.favorites.includes(pubId)){
+     if(!user.favorites){
       await User.update(
         {
           favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),
@@ -321,7 +321,19 @@ router.put("/setFav", async (req, res, next) => {
           },
         }
       );
-    }   
+    }
+    else if( !user.favorites.includes(pubId)){
+      await User.update(
+        {
+          favorites: Sequelize.fn("array_append", Sequelize.col("favorites"), pubId),
+        },
+        {
+          where: {
+            id: userId,
+          },
+        }
+      );
+    }
     res.send(`añadido ${pubId} a ${userId}`);
   } catch (error) {
     next(error);
