@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Rating from "./Rating";
 import { useDispatch, useSelector } from "react-redux";
-import foto from "../../Image/Image_not_available.png";
+
 import CardPerfil from "../Cards/CardPerfil";
 import { useHistory } from "react-router-dom";
 import { getFavsUser, getInfoUser, getPubs, getUserImage, getUserInfo } from "../../redux/actions";
@@ -89,7 +89,7 @@ export default function PerfilPropietario() {
             </Flex>
             <Avatar
               size={"2xl"}
-              src={imageUser ? imageUser : foto}
+              src={imageUser ? imageUser : null}
               alt={"Avatar Alt"}
               mt={4}
               mb={4}
@@ -102,18 +102,27 @@ export default function PerfilPropietario() {
               {infoUser[1].mail}
             </Text>
             <Flex justifyContent="center" alignContent="center">
-              <Rating rating={allUserInfo.rating} ratingAmount={allUserInfo.ratingAmount}/>
+              <Rating rating={allUserInfo.rating} ratingAmount={allUserInfo.ratingAmount} />
             </Flex>
-            <Flex direction={"column"} alignItems="flex-start" p={6}>
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+            <Flex direction={"column"} alignItems="flex-start" p={5} w={"350px"}>
+              <Text
+                w={"100%"}
+                textAlign={"left"}
+                color={useColorModeValue("gray.700", "gray.400")}
+                px={3}
+              >
                 Ciudad: {infoUser[0].city}
               </Text>
-              <br />
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+              <Text
+                h={"85px"}
+                w={"100%"}
+                textAlign={"left"}
+                color={useColorModeValue("gray.700", "gray.400")}
+                px={3}
+              >
                 Descripción: {infoUser[0].description}
               </Text>
             </Flex>
-            <br />
           </Box>
         </Center>
         <Box

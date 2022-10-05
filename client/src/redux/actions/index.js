@@ -48,12 +48,12 @@ export const GET_REPORTS_ID = "GET_REPORTS_ID";
 export const GET_FOR_APPROVAL = "GET_FOR_APPROVAL";
 export const APPROVE_POST_USER = "APPROVE_POST_USER";
 export const TOTAL_USERS = "TOTAL_USERS";
-export const SET_CITY = "SET_CITY"
-export const TOTAL_DATES = "TOTAL_DATES"
-export const TOTAL_USER_DATES = "TOTAL_USER_DATES"
-export const BLOCK_USER = "BLOCK_USER"
-export const RESTORE_USER = "RESTORE_USER"
-export const DELETE_REPORT = "DELETE_REPORT"
+export const SET_CITY = "SET_CITY";
+export const TOTAL_DATES = "TOTAL_DATES";
+export const TOTAL_USER_DATES = "TOTAL_USER_DATES";
+export const BLOCK_USER = "BLOCK_USER";
+export const RESTORE_USER = "RESTORE_USER";
+export const DELETE_REPORT = "DELETE_REPORT";
 
 /* ************ GETs ************ */
 //Este get realiza el filtrado, ordenamiento y search
@@ -65,14 +65,15 @@ export function getPublications(filters, sorting, city) {
         sorting,
       };
       let infoBack = await axios.post("/publication?city=" + city, info); //,?city='+city
+      console.log("INFOOO: ", infoBack.data);
       return dispatch({
         type: GET_PUBLICATIONS,
         payload: infoBack.data,
       });
     } catch (error) {
-      if (error.response) {
-        alert(error.response.data);
-      }
+      // if (error.response) {
+      //   alert(error.response.data);
+      // }
     }
   };
 }

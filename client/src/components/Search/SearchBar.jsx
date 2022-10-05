@@ -33,6 +33,9 @@ import {
   Button,
   Flex,
   useToast,
+  useDisclosure,
+  ScaleFade,
+  Fade,
 } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
 
@@ -53,10 +56,11 @@ const SearchBar = () => {
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
   const [clean, setClean] = useState(false);
-  const [saveCity, setSaveCity] = useState("")
+  const [saveCity, setSaveCity] = useState("");
   // const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [buttonResponse, setButtonResponse] = useState(false);
   const toast = useToast();
+  const { isOpen, onToggle } = useDisclosure();
 
   useEffect(() => {
     return () => dispatch(clearFilters());
@@ -67,7 +71,7 @@ const SearchBar = () => {
     setCity(e.target.value);
   };
   const search_House = () => {
-    setSaveCity(city)
+    setSaveCity(city);
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
     setCity("");
@@ -124,7 +128,7 @@ const SearchBar = () => {
     dispatch(getPublications(filters, sorting, city));
     dispatch(setCurrentPage(1));
     setCity("");
-    setSaveCity("")
+    setSaveCity("");
     setClean(true);
     setTimeout(() => {
       setClean(false);
@@ -132,7 +136,7 @@ const SearchBar = () => {
   }
 
   return (
-    <Box className={sty.continer}>
+    <Box className={sty.continer} marginX={"10%"}>
       <Box marginRight={"10px"}>
         <FontAwesomeIcon
           icon={faFilterCircleXmark}
@@ -167,7 +171,13 @@ const SearchBar = () => {
         </Stack>
       </Box>
       <Box>
-        <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={saveCity} setSavedCity={setSaveCity} clean={clean} />
+        <SavedFilters
+          filterToSave={filters}
+          savedSort={sorting}
+          savedCity={saveCity}
+          setSavedCity={setSaveCity}
+          clean={clean}
+        />
       </Box>
 
       <Button
@@ -179,20 +189,22 @@ const SearchBar = () => {
         borderColor={"black"}
         _hover={{ bg: "#5e5d5d", color: "white" }}
         _focus={{ bg: "#5e5d5d", color: "white" }}
-        transition="all 0.2s"
-        onClick={() => {
-          if (buttonResponse) {
-            setButtonResponse(false);
-          } else {
-            setButtonResponse(true);
-          }
-        }}
+        // transition="all 0.2s"
+        transition="all 2s ease-in-out"
+        // onClick={() => {
+        //   if (buttonResponse) {
+        //     setButtonResponse(false);
+        //   } else {
+        //     setButtonResponse(true);
+        //   }
+        // }}
+        onClick={onToggle}
       >
         Filtros
       </Button>
-
-      <Flex direction={"row"}>
-        {buttonResponse ? (
+      <Fade initialScale={0.9} in={isOpen}>
+        <Flex direction={"row"} rounded="md">
+          {/* {buttonResponse ? ( */}
           <Flex direction={"row"}>
             {!clean && (
               <NumberInput
@@ -334,8 +346,9 @@ const SearchBar = () => {
               </Menu>
             </Box>
           </Flex>
-        ) : null}
-      </Flex>
+          {/* // ) : null} */}
+        </Flex>
+      </Fade>
     </Box>
   );
 };

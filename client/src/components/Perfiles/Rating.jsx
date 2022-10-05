@@ -1,9 +1,9 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 // import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
-import StarRatings from 'react-star-ratings';
+import StarRatings from "react-star-ratings";
 
-export default function Rating({rating, ratingAmount}) {
+export default function Rating({ rating, ratingAmount }) {
   /* const rating = 0;
   const numReviews = 0; */
 
@@ -29,14 +29,14 @@ export default function Rating({rating, ratingAmount}) {
             return <BsStar key={i} style={{ marginLeft: "1" }} />;
           })} */}
         <StarRatings
-         starDimension={"2rem"}
+          starDimension={"2rem"}
           rating={rating}
           starRatedColor="#F6AD55"
           numberOfStars={5}
-          name='rating'
+          name="rating"
         />
         <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {ratingAmount} {ratingAmount > 1 && "s"}
+          {ratingAmount}
         </Box>
       </Box>
     </Box>

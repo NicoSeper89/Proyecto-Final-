@@ -65,10 +65,8 @@ router.post("/", async (req, res, next) => {
       let cityFiltered = await publications.filter((el) =>
         el.property.address.toLowerCase().includes(city)
       );
-      cityFiltered.length
-        ? (publications = cityFiltered)
-        : res.status(200).send([])
-        /* res.status(404).send("No hay publicaciones en esa ciudad") */;
+      cityFiltered.length ? (publications = cityFiltered) : res.status(200).send([]);
+      /* res.status(404).send("No hay publicaciones en esa ciudad") */
     }
     if (sorting.name !== "default") {
       // aca las sortea
@@ -350,7 +348,7 @@ router.put("/editProperty/:id", async (req, res, next) => {
       updatedProp.addService(ser);
     }
 
-   /*  let location = await City.findOne({
+    /*  let location = await City.findOne({
       where: { name: city },
     });
     updatedProp.setCity(location); */
@@ -450,7 +448,7 @@ router.post("/comment", async (req, res, next) => {
     let mensaje = await PublicationComents.create({
       message,
       publicationId,
-      userId
+      userId,
     });
     /* let userComment = await User.findByPk(userId);
     mensaje.setUser(userComment); */

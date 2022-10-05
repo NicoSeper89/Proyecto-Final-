@@ -12,9 +12,17 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Select,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -24,27 +32,28 @@ import {
   saveSort,
   clearFilters,
   getUserInfo,
-  setCity
+  setCity,
 } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 const validate = (input) => {
-  const errors = {}
+  const errors = {};
   if (/^\S*$/.test(input)) {
-    errors.value = 'sin espacios'
+    errors.value = "sin espacios";
   }
-  return errors
-}
+  return errors;
+};
 
-function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean }) {
+export default function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity, clean }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.allUserInfo);
   const [value, setValue] = useState("");
-  const [error, setError] = useState({})
+  const [error, setError] = useState({});
   const [savedValue, setSavedValue] = useState([]);
   const [storedValues, setStoredValues] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
   const loginUser = JSON.parse(window.localStorage.getItem("User"));
 
   useEffect(() => {
@@ -65,29 +74,39 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
     setIsHovering(false);
   };
 
+  //AGREGAR LLAVE AL FINAL
   const handleLocalStorage = (keyValue) => {
-    if(!keyValue) return 
+    if (!keyValue) return;
     if (!loginUser) {
       alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
-      setValue("");
-    } else{
-      window.localStorage.setItem(
-        keyValue + " " + user.loginInfo.mail,
-        JSON.stringify([filterToSave, savedSort, savedCity])
-      );
-      setSavedValue([...savedValue, keyValue]);
-      setValue("");
+      if (user.length === 0) {
+        toast({
+          title: "Debe inciar session para poder guardar un filtro de busqueda!!!",
+          status: "error",
+          isClosable: true,
+        });
+        // alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
+        setValue("");
+      } else {
+        window.localStorage.setItem(
+          keyValue + " " + user.loginInfo.mail,
+          JSON.stringify([filterToSave, savedSort, savedCity])
+        );
+        setSavedValue([...savedValue, keyValue]);
+        setValue("");
+      }
     }
   };
+
   const handleChange = (event) => {
-    setValue(event.target.value)
-    setError(validate(value))
+    setValue(event.target.value);
+    setError(validate(value));
   };
   const handleValue = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (event.target.value === "") {
       dispatch(clearFilters());
-      setSavedCity("")
+      setSavedCity("");
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
     } else if (event.target.value) {
@@ -95,10 +114,10 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
       let newFilter = JSON.parse(filter);
       dispatch(saveFilter(newFilter[0]));
       dispatch(saveSort(newFilter[1]));
-      dispatch(setCity(newFilter[2]))
+      dispatch(setCity(newFilter[2]));
       dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
       dispatch(setCurrentPage(1));
-      setSavedCity("")
+      setSavedCity("");
     }
   };
 
@@ -118,8 +137,10 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Mis Filtros</ModalHeader>
-          <ModalCloseButton />
+          <ModalHeader textAlign={"center"} fontSize="1.5em">
+            Mis Filtros
+          </ModalHeader>
+          <ModalCloseButton _hover={{ bg: "#FF8181", color: "white" }} />
           <ModalBody>
             <Text textAlign={"center"}>
               Podes guardar tus filtros personalizados y volver a utilizarlos.
@@ -142,7 +163,6 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
                 onClick={() => handleLocalStorage(value)}
                 children={<FontAwesomeIcon icon={faBookmark} color="gray.300" />}
                 cursor={"pointer"}
-
               />
             </InputGroup>
             <br />
@@ -162,15 +182,57 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
           </ModalBody>
           <br />
           <ModalFooter>
-            
-          {isHovering && 
-        <Text border={"1px solid black"} bg={"yellow.100"} width={"260px"} height={"230px"} position={"relative"}>
-          Para poder guardar el filtro deseado asegurese de tenerlo ya aplicado en la pagina.
-          Ej: buscar ubicacion Mendoza, que sea departamento y de menor precio.
-          Luego escriba como quiere que se llame (sin espacios) el filtro y guardelo.
-        </Text>}
-            <Text border={"1px solid black"} width={"30px"} height={"30px"} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>?</Text>
-            
+            <Popover>
+              <PopoverTrigger>
+                <Button
+                  border={"1px solid black"}
+                  // width={"30px"}
+                  // height={"30px"}
+                  onMouseOver={handleMouseOver}
+                  onMouseOut={handleMouseOut}
+                  colorScheme="gray"
+                  mr={3}
+                >
+                  ?
+                </Button>
+              </PopoverTrigger>
+              {isHovering && (
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader textAlign={"center"}>
+                    Para poder guardar el filtro deseado asegúrese de tenerlo ya aplicado en la
+                    página.
+                  </PopoverHeader>
+                  <PopoverBody>
+                    Ej: Buscar ubicación "Mendoza", que sea "departamento" y de "menor precio".
+                    Luego escriba cómo quiere que se llame (sin espacios) el filtro y guárdelo.
+                  </PopoverBody>
+                </PopoverContent>
+              )}
+            </Popover>
+            {/* {isHovering && (
+              <Text
+                border={"1px solid black"}
+                bg={"yellow.100"}
+                width={"260px"}
+                height={"230px"}
+                position={"relative"}
+              >
+                Para poder guardar el filtro deseado asegurese de tenerlo ya aplicado en la pagina.
+                Ej: buscar ubicacion Mendoza, que sea departamento y de menor precio. Luego escriba
+                como quiere que se llame (sin espacios) el filtro y guardelo.
+              </Text>
+            )}
+            <Text
+              border={"1px solid black"}
+              width={"30px"}
+              height={"30px"}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+            >
+              ?
+            </Text> */}
+
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Cerrar
             </Button>
@@ -180,4 +242,3 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
     </Flex>
   );
 }
-export default SavedFilters;

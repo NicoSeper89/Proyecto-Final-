@@ -33,7 +33,6 @@ export default function Footer() {
       <Container as={Stack} maxW={"6xl"} py={4} spacing={4} justify={"center"} align={"center"}>
         {/* <Logo /> */}
         <Stack direction={"row"} spacing={6}>
-          <Link href={"/"}>Inicio</Link>
           <Link href={"/about"}>Conocenos</Link>
           <Link href={"/help"}>Ayuda</Link>
           <Link href={"mailto:lookhousepf@gmail.com"}>Contactanos</Link>

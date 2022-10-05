@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "../NavBar/NavBar.jsx";
 import Cards from "../Cards/Cards";
 import Footer from "../Footer/Footer.jsx";
@@ -15,8 +15,8 @@ import {
   allUserDates,
   getFavsUser,
 } from "../../redux/actions/index.js";
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
-// import Loading from "../Loading/Loading.jsx";
+import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import Loading from "../Loading/Loading.jsx";
 // import gif from "../../Image/1490.gif";
 import PremiumCards from "../Cards/PremiumCards.jsx";
 import SearchBar from "../Search/SearchBar.jsx";

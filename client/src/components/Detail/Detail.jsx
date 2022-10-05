@@ -79,7 +79,7 @@ import AlertRestoration from "./AlertRestoration";
 import { getTotalUsers } from "../../redux/actions";
 import axios from "axios";
 import ResponseComment from "./ResponseComment";
-import StarRatings from 'react-star-ratings';
+import StarRatings from "react-star-ratings";
 
 export default function Detail(props, id) {
   const dispatch = useDispatch();
@@ -269,7 +269,7 @@ export default function Detail(props, id) {
                   )}
                 </Flex>
 
-                  {/* {miStateDetail.property.propVideo && (
+                {/* {miStateDetail.property.propVideo && (
                   <AspectRatio maxW='560px' ratio={1}>
                     <iframe
                     title='naruto'
@@ -315,12 +315,12 @@ export default function Detail(props, id) {
                           h={"300px"}
                           // boxShadow="dark-lg"
                           p="7px"
-                          border="1px solid grey.600"
+                          border="1px solid #D9D9D9"
                           borderRadius={"0.5rem"}
                           justifyContent="center"
                           alignItems="center"
                         >
-                          {/* <Datos position={miStateDetail} /> */}
+                          <Datos position={miStateDetail} />
                         </Flex>
                       </TabPanel>
                       <TabPanel w={"100%"}>
@@ -361,50 +361,49 @@ export default function Detail(props, id) {
                           overflow={"scroll"}
                         >
                           <FormControl>
-                          {(myUser[0].id !== miStateDetail.userId)?
-                            <form onSubmit={onSubmitComent}>
-                              <InputGroup
-                                mb={"1rem"}
-                                border="1px solid rgba(217, 217, 217, 0.80)"
-                                borderRadius={"0.4rem"}
-                              >
-                                <Input
-                                  placeholder="Escriba su comentario..."
-                                  onChange={onChangeInputComment}
-                                  value={comentarios}
-                                  name={"coment_publication"}
-                                />
-                                <Input
-                                  display={"none"}
-                                  value={miStateDetail.user.contactInfo.mail}
-                                  name={"user_owner"}
-                                  readOnly
-                                />
-                                <Input
-                                  display={"none"}
-                                  value={myUser[0].name}
-                                  name={"user_comment"}
-                                  readOnly
-                                />
-                                <Input
-                                  display={"none"}
-                                  value={`http://localhost:3000/details/${props.match.params.id}`}
-                                  name={"url_publication"}
-                                  readOnly
-                                />
-                                <Button
-                                  type="submit"
-                                  cursor={"pointer"}
-                                  p={"1rem"}
-                                  _hover={{ bg: "#5e5d5d", color: "white" }}
-                                  borderRadius={"0.5rem"}
+                            {myUser[0].id !== miStateDetail.userId ? (
+                              <form onSubmit={onSubmitComent}>
+                                <InputGroup
+                                  mb={"1rem"}
+                                  border="1px solid rgba(217, 217, 217, 0.80)"
+                                  borderRadius={"0.4rem"}
                                 >
-                                  <FontAwesomeIcon icon={faComments} />
-                                </Button>
-                              </InputGroup>
-                            </form>
-                                :
-                                null}
+                                  <Input
+                                    placeholder="Escriba su comentario..."
+                                    onChange={onChangeInputComment}
+                                    value={comentarios}
+                                    name={"coment_publication"}
+                                  />
+                                  <Input
+                                    display={"none"}
+                                    value={miStateDetail.user.contactInfo.mail}
+                                    name={"user_owner"}
+                                    readOnly
+                                  />
+                                  <Input
+                                    display={"none"}
+                                    value={myUser[0].name}
+                                    name={"user_comment"}
+                                    readOnly
+                                  />
+                                  <Input
+                                    display={"none"}
+                                    value={`http://localhost:3000/details/${props.match.params.id}`}
+                                    name={"url_publication"}
+                                    readOnly
+                                  />
+                                  <Button
+                                    type="submit"
+                                    cursor={"pointer"}
+                                    p={"1rem"}
+                                    _hover={{ bg: "#5e5d5d", color: "white" }}
+                                    borderRadius={"0.5rem"}
+                                  >
+                                    <FontAwesomeIcon icon={faComments} />
+                                  </Button>
+                                </InputGroup>
+                              </form>
+                            ) : null}
                             {commentState.map((e, i) => (
                               <Box
                                 key={i}
@@ -509,7 +508,7 @@ export default function Detail(props, id) {
                   bg={"rgba(216, 158, 26, 0.35)"}
                 >
                   <Flex direction={"column"} w={"400px"} h={"35rem"}>
-                  <Flex>
+                    <Flex>
                       {miStateDetail.deleted === true ? (
                         <Badge w={"100%"} colorScheme="red" variant="solid" fontSize="1.5em">
                           {/* Publicacion Eliminada, solicita su restauración más abajo */}
@@ -650,11 +649,11 @@ export default function Detail(props, id) {
                             /> */}
                           <StarRatings
                             starDimension={"1.5rem"}
-                             rating={miStateDetail.user.rating}
-                             starRatedColor="#F6AD55"
-                             numberOfStars={5}
-                             name='rating'
-                           />
+                            rating={miStateDetail.user.rating}
+                            starRatedColor="#F6AD55"
+                            numberOfStars={5}
+                            name="rating"
+                          />
                           <Text ml={"10px"}>{miStateDetail.user.rating}</Text>
                         </Flex>
 
