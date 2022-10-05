@@ -56,6 +56,7 @@ const SearchBar = () => {
   const propertys = useSelector((state) => state.typeOfProperties);
   const [city, setCity] = useState("");
   const [clean, setClean] = useState(false);
+  const [saveCity, setSaveCity] = useState("")
   // const [alertSubmit, setAlertSubmit] = useState([false, false]);
   const [buttonResponse, setButtonResponse] = useState(false);
   const toast = useToast();
@@ -70,6 +71,7 @@ const SearchBar = () => {
     setCity(e.target.value);
   };
   const search_House = () => {
+    setSaveCity(city)
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
     setCity("");
@@ -170,7 +172,7 @@ const SearchBar = () => {
         </Stack>
       </Box>
       <Box>
-        <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={city} clean={clean} />
+        <SavedFilters filterToSave={filters} savedSort={sorting} savedCity={saveCity} setSavedCity={setSaveCity} clean={clean} />
       </Box>
 
       <Button
