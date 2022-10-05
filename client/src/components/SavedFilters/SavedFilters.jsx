@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
   Button,
   Flex,
   Input,
   InputGroup,
   InputRightElement,
-  Menu,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -20,7 +13,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
-  Stack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
@@ -37,13 +29,23 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
-function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
+const validate = (input) => {
+  const errors = {}
+  if (/^\S*$/.test(input)) {
+    errors.value = 'sin espacios'
+  }
+  return errors
+}
+
+function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.allUserInfo);
   const [value, setValue] = useState("");
+  const [error, setError] = useState({})
   const [savedValue, setSavedValue] = useState([]);
   const [storedValues, setStoredValues] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const loginUser = JSON.parse(window.localStorage.getItem("User"));
 
   useEffect(() => {
     const loginUser = JSON.parse(window.localStorage.getItem("User"));
@@ -55,11 +57,20 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
     }
   }, [dispatch, savedValue]);
 
+  const [isHovering, setIsHovering] = useState(false);
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
+
   const handleLocalStorage = (keyValue) => {
-    if (user.length === 0) {
+    if(!keyValue) return 
+    if (!loginUser) {
       alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
       setValue("");
-    } else if (keyValue) {
+    } else{
       window.localStorage.setItem(
         keyValue + " " + user.loginInfo.mail,
         JSON.stringify([filterToSave, savedSort, savedCity])
@@ -69,11 +80,14 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
     }
   };
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setValue(event.target.value)
+    setError(validate(value))
   };
   const handleValue = (event) => {
+    event.preventDefault()
     if (event.target.value === "") {
       dispatch(clearFilters());
+      setSavedCity("")
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
     } else if (event.target.value) {
@@ -84,7 +98,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
       dispatch(setCity(newFilter[2]))
       dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
       dispatch(setCurrentPage(1));
-      console.log(newFilter[2]);
+      setSavedCity("")
     }
   };
 
@@ -128,6 +142,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
                 onClick={() => handleLocalStorage(value)}
                 children={<FontAwesomeIcon icon={faBookmark} color="gray.300" />}
                 cursor={"pointer"}
+
               />
             </InputGroup>
             <br />
@@ -147,6 +162,15 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
           </ModalBody>
           <br />
           <ModalFooter>
+            
+          {isHovering && 
+        <Text border={"1px solid black"} bg={"yellow.100"} width={"260px"} height={"230px"} position={"relative"}>
+          Para poder guardar el filtro deseado asegurese de tenerlo ya aplicado en la pagina.
+          Ej: buscar ubicacion Mendoza, que sea departamento y de menor precio.
+          Luego escriba como quiere que se llame (sin espacios) el filtro y guardelo.
+        </Text>}
+            <Text border={"1px solid black"} width={"30px"} height={"30px"} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut}>?</Text>
+            
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Cerrar
             </Button>
