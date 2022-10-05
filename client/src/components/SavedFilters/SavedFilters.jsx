@@ -23,6 +23,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -45,6 +46,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
   const [storedValues, setStoredValues] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const loginUser = JSON.parse(window.localStorage.getItem("User"));
+  const toast = useToast();
 
   useEffect(() => {
     const loginUser = JSON.parse(window.localStorage.getItem("User"));
@@ -59,7 +61,11 @@ function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean 
   const handleLocalStorage = (keyValue) => {
      if(!keyValue) return 
      if (!loginUser) {
-      alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
+      toast({
+        title: "Debe inciar session para poder guardar un filtro de busqueda!!!",
+        status: "error",
+        isClosable: true,
+      });
       setValue("");
      } else{
       window.localStorage.setItem(
