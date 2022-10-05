@@ -55,19 +55,21 @@ export default function Footer() {
         >
           <Text>© 2022 Proyecto final grupal realizado en el bootcamp SoyHenry.</Text>
           <Stack direction={"row"} spacing={6}>
-            <Button
-              label={"GitHub"}
-              href={"https://github.com/TomasTinto1234/Proyecto-Final-"}
-              p={0}
-            >
-              <FontAwesomeIcon icon={faSquareGithub} fontSize="30px" />
-            </Button>
-            <Button label={"Instagram"} href={"https://www.instagram.com/lookhousepf/"} p={0}>
-              <FontAwesomeIcon icon={faSquareInstagram} fontSize="30px" />
-            </Button>
-            <Button label={"Twitter"} href={"https://www.instagram.com/lookhousepf/"} p={0}>
-              <FontAwesomeIcon icon={faSquareTwitter} fontSize="30px" />
-            </Button>
+            <Link href={"https://github.com/NicoSeper89/Proyecto-Final-"}>
+              <Button label={"GitHub"} p={0}>
+                <FontAwesomeIcon icon={faSquareGithub} fontSize="30px" />
+              </Button>
+            </Link>
+            <Link href={"https://www.instagram.com/lookhousepf/"}>
+              <Button label={"Instagram"} p={0}>
+                <FontAwesomeIcon icon={faSquareInstagram} fontSize="30px" />
+              </Button>
+            </Link>
+            <Link href={"https://twitter.com/LookhousePf"}>
+              <Button label={"Twitter"} p={0}>
+                <FontAwesomeIcon icon={faSquareTwitter} fontSize="30px" />
+              </Button>
+            </Link>
           </Stack>
         </Container>
       </Box>

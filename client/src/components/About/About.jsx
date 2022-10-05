@@ -2,7 +2,7 @@ import React from "react";
 import NavBarForms from "../NavBar/NavBarForms";
 import Footer from "../Footer/Footer";
 // import style from "./About.module.css";
-import { Flex, Icon, Image, Link, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Image, Link, Stack, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareJs, faReact, faNodeJs } from "@fortawesome/free-brands-svg-icons";
 import logoMySql from "../../Image/icons8-logo-de-mysql-50.png";
@@ -79,6 +79,7 @@ export default function About() {
               </Link>
             </Stack>
           </Flex>
+          <br />
           <Flex
             direction={"row"}
             spacing={6}
@@ -86,74 +87,90 @@ export default function About() {
             w={"250px"}
             flexWrap="wrap"
             justifyContent="space-between"
+            alignItems={"center"}
           >
-            <FontAwesomeIcon icon={faSquareJs} fontSize="30px" />
-            <FontAwesomeIcon icon={faReact} fontSize="30px" />
-            <FontAwesomeIcon icon={faNodeJs} fontSize="30px" />
-            <Image
-              src={"https://cdn.icon-icons.com/icons2/2148/PNG/512/redux_icon_132038.png"}
-              alt={"redux"}
-              w="30px"
-              m={"5px"}
-            />
-            <Image
-              src={
-                "https://cdn.icon-icons.com/icons2/512/PNG/512/dbs-postgresql_icon-icons.com_50907.png"
-              }
-              alt={"postgresql"}
-              w="30px"
-              m={"5px"}
-            />
-            <Image
-              src={"https://cdn.icon-icons.com/icons2/2389/PNG/512/auth_logo_icon_145471.png"}
-              alt={"auth0"}
-              w="30px"
-              m={"5px"}
-            />
-            <Image
-              src={
-                "https://cdn.icon-icons.com/icons2/2428/PNG/512/figma_black_logo_icon_147134.png"
-              }
-              alt={"figma"}
-              w="30px"
-              m={"5px"}
-            />
-            <Image
-              src={"https://cdn.icon-icons.com/icons2/2148/PNG/512/sequelize_icon_132004.png"}
-              alt={"sequelize"}
-              w="30px"
-              m={"5px"}
-            />
-            <Image
-              src={"https://cdn.icon-icons.com/icons2/2248/PNG/512/google_maps_icon_138521.png"}
-              alt={"googleMaps"}
-              w="30px"
-              m={"5px"}
-            />
-            <Image
-              src={
-                "https://cdn.discordapp.com/attachments/650434022429950012/1027283245554995371/rzylUjaf_400x400.png"
-              }
-              alt={"chakra"}
-              w="30px"
-              m={"5px"}
-            />
-            <Image
-              src={
-                "https://cdn.discordapp.com/attachments/650434022429950012/1027286855533723788/0IR57HDN_400x400.png"
-              }
-              alt={"mercado pago"}
-              w="40px"
-              m={"5px"}
-            />
-            <Image
-              src={
-                "https://cdn.discordapp.com/attachments/650434022429950012/1027286880137510912/2182976911536207307-512.png"
-              }
-              alt={"cloudinary"}
-              w="40px"
-              m={"5px"}
-            />
+            <Text as="b" textTransform={"uppercase"} fontSize="2xl" textAlign="center">
+              Tecnologías Utilizadas
+            </Text>
+
+            <Flex
+              direction={"row"}
+              marginTop={"30px"}
+              spacing={6}
+              w={"250px"}
+              flexWrap="wrap"
+              justifyContent="space-between"
+              alignItems={"center"}
+            >
+              <FontAwesomeIcon icon={faSquareJs} fontSize="30px" />
+              <FontAwesomeIcon icon={faReact} fontSize="30px" />
+
+              <Image
+                src={"https://cdn.icon-icons.com/icons2/2148/PNG/512/redux_icon_132038.png"}
+                alt={"redux"}
+                w="30px"
+                m={"5px"}
+              />
+              <Image
+                src={
+                  "https://cdn.icon-icons.com/icons2/512/PNG/512/dbs-postgresql_icon-icons.com_50907.png"
+                }
+                alt={"postgresql"}
+                w="30px"
+                m={"5px"}
+              />
+              <Image
+                src={"https://cdn.icon-icons.com/icons2/2389/PNG/512/auth_logo_icon_145471.png"}
+                alt={"auth0"}
+                w="30px"
+                m={"5px"}
+              />
+              <Image
+                src={
+                  "https://cdn.icon-icons.com/icons2/2428/PNG/512/figma_black_logo_icon_147134.png"
+                }
+                alt={"figma"}
+                w="30px"
+                m={"5px"}
+              />
+              <Image
+                src={"https://cdn.icon-icons.com/icons2/2148/PNG/512/sequelize_icon_132004.png"}
+                alt={"sequelize"}
+                w="30px"
+                m={"5px"}
+              />
+              <Image
+                src={"https://cdn.icon-icons.com/icons2/2248/PNG/512/google_maps_icon_138521.png"}
+                alt={"googleMaps"}
+                w="30px"
+                m={"5px"}
+              />
+              <Image
+                src={
+                  "https://cdn.discordapp.com/attachments/650434022429950012/1027283245554995371/rzylUjaf_400x400.png"
+                }
+                alt={"chakra"}
+                w="30px"
+                m={"5px"}
+              />
+              <Image
+                src={
+                  "https://cdn.discordapp.com/attachments/650434022429950012/1027286855533723788/0IR57HDN_400x400.png"
+                }
+                alt={"mercado pago"}
+                w="40px"
+                m={"5px"}
+              />
+              <Image
+                src={
+                  "https://cdn.discordapp.com/attachments/650434022429950012/1027286880137510912/2182976911536207307-512.png"
+                }
+                alt={"cloudinary"}
+                w="40px"
+                m={"5px"}
+              />
+              <FontAwesomeIcon icon={faNodeJs} fontSize="30px" />
+            </Flex>
           </Flex>
         </Flex>
       </Flex>
