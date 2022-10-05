@@ -88,6 +88,7 @@ const initialState = {
   forApproval: [],
   dates: [],
   userDates: [],
+  imageUser2: ""
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -411,6 +412,19 @@ export default function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
+      case "GET_USER_IMAGE2":
+        let imagen2 = action.payload[0] ? action.payload[0].url : null;
+      return {
+        ...state,
+        imageUser2: imagen2,
+      };
+      case "LIMPIAR_VIEW_USER":
+        return {
+          ...state,
+          publicationsUser:[],
+          favoritesUser:[],
+          imageUser2:""
+        }
     default:
       return state;
   }
