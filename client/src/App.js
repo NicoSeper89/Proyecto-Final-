@@ -10,7 +10,7 @@ import Help from "./components/Help/Help";
 import Detail from "./components/Detail/Detail";
 // import NewUser from "./components/Check_in/Check_in";
 import Error404 from "./components/Error404/Error404.jsx";
-import { getCities, getServices, getTypesOfProperties, getUserInfo } from "./redux/actions/index.js";
+import { getCities, getServices, getTypesOfProperties, getUserInfo, getPublicationsDetail} from "./redux/actions/index.js";
 import UpdatePost from "./components/UpdatePost/UpdatePost";
 import PerfilPropietario from "./components/Perfiles/PerfilPropietario";
 // import PerfilInquilino from "./components/Perfiles/PerfilInquilino";
@@ -99,6 +99,7 @@ function App() {
             userRank = JSON.parse(userRank);
 
             if (userRank) {
+              dispatch(getPublicationsDetail(match.params.id))
               return <Rank match={match} userRank={userRank} />;
             } else {
               window.localStorage.setItem("Rank_Publications", match.params.id);

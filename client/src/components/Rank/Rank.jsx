@@ -3,14 +3,20 @@ import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Flex, Stack, Heading, Text, Button, useColorModeValue, Image } from "@chakra-ui/react";
-import logoImg from "../../Image/Logo LookHouse.png";
+import { Flex, Stack, Heading, Text, Button, useColorModeValue, Image, Divider } from "@chakra-ui/react";
+import logoImg from "../../Image/LogoMin.png";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {clean} from '../../redux/actions/index.js'
 
 export default function Rank(prop) {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [start, setStart] = useState(0);
+  const [dataNull, setDataNull] = useState(false)
+
+  const userOwner = useSelector(state => state.detail.user)
 
   useEffect(() => {
     axios
@@ -19,6 +25,16 @@ export default function Rank(prop) {
       )
       .then((res) => (!res.data ? history.push("/*") : null));
   });
+  
+  useEffect(() => {
+   if (userOwner) setDataNull(true)
+  }, [userOwner])
+
+  useEffect(() => {
+    return () => {
+      dispatch(clean());
+    };
+   }, [dispatch])
 
   const ratingChanged = (e) => {
     setStart(e);
@@ -42,41 +58,44 @@ export default function Rank(prop) {
       justify={"center"}
       py={12}
       bg={useColorModeValue("gray.50", "gray.800")}
-    >
+    > {dataNull?
       <Stack
         boxShadow={"2xl"}
-        bg={useColorModeValue("white", "gray.700")}
+        bg={"gray.50"}
         rounded={"xl"}
-        p={10}
+        p={5}
         spacing={8}
         align={"center"}
       >
-        <Image h={"200px"} marginTop={"35px"} src={logoImg} alt="homeLogo" />
-        <Stack align={"center"} spacing={2}>
+        <Image h={"10rem"} src={logoImg} alt="homeLogo" />
+        <Stack spacing={2} alignItems={"center"} w={"full"}>
+          <Divider borderColor={"yellow.500"} />
           <Heading
             textTransform={"uppercase"}
             fontSize={"2xl"}
-            color={useColorModeValue("gray.800", "gray.200")}
+            color={"gray.600"}
           >
             CALIFICAR PROPIETARIO
           </Heading>
-          <Text fontSize={"lg"} color={"gray.500"}>
-            El propietario blabla solicitó que lo califiques
+          <Divider borderColor={"yellow.500"} />
+          <Text pt={"1rem"} fontSize={"1.3rem"} color={"gray.500"} textAlign={"center"} maxW={"400px"}>
+             El usuario <Text as='b' display={"inline"} color={"yellow.500"}> {userOwner.name} </Text> solicitó que lo califiques sobre tu experiencia con él en nuestro sitio.
           </Text>
-        </Stack>
-        <Stack spacing={4} alignItems={"center"} w={"full"}>
+        <Flex>
           <ReactStars
             count={5}
             onChange={ratingChanged}
-            size={52}
+            size={55}
             activeColor="#F6AD55"
             edit={true}
           />
+          </Flex>
           <Button colorScheme="green" onClick={onClickButton}>
             Enviar
           </Button>
         </Stack>
       </Stack>
+      : null}
     </Flex>
   );
 }
