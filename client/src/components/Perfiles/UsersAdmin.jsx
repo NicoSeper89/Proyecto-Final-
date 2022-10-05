@@ -25,7 +25,6 @@ import { faBan } from "@fortawesome/free-solid-svg-icons";
 
 import Rating from "./Rating";
 import { useDispatch, useSelector } from "react-redux";
-import foto from "../../Image/Image_not_available.png";
 import CardPerfil from "../Cards/CardPerfil";
 import { useHistory } from "react-router-dom";
 import {
@@ -118,7 +117,7 @@ export default function UsersAdmin() {
             </Flex>}
             <Avatar
               size={"2xl"}
-              src={imageUser ? imageUser : foto}
+              src={imageUser ? imageUser : null}
               alt={"Avatar Alt"}
               mb={4}
               pos={"relative"}
@@ -132,12 +131,12 @@ export default function UsersAdmin() {
             <Flex justifyContent="center" alignContent="center">
               <Rating rating={infoUser[0].rating} ratingAmount={infoUser[0].ratingAmount} />
             </Flex>
-            <Flex direction={"column"} alignItems="flex-start" p={6}>
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+            <Flex direction={"column"} alignItems="flex-start" p={5} w={"350px"}>
+              <Text w={"100%"} textAlign={"left"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Ciudad: {infoUser[0].city}
               </Text>
               <br />
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+              <Text w={"100%"} textAlign={"left"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
                 Descripción: {infoUser[0].description}
               </Text>
             </Flex>
