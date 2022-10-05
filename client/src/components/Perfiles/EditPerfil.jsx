@@ -119,6 +119,7 @@ export default function EditPerfil(props) {
               Descripción:{" "}
             </FormLabel>
             <Input
+              maxLength={100}
               type="text"
               name={"description"}
               value={input.description}
