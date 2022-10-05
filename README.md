@@ -12,7 +12,7 @@ You can access the site with the following link: [LookHouse](https://look-house.
 ## Authors
 - [Darío Gabriel Torres](https://www.linkedin.com/in/dario-gabriel-torres-576a3561/)
 - [Andrea Melissa Hellrigl](https://www.linkedin.com/in/melissa-hellrigl-908441134/)
-- [Thomas Alfons NeuhausN](https://www.linkedin.com/in/thom-neuhaus-62899923b/)
+- [Thomas Alfons Neuhaus](https://www.linkedin.com/in/thom-neuhaus-62899923b/)
 - [José Garcia](https://www.linkedin.com/in/jose-garcia-025766241/)
 - [Nicolás Sepertino](https://www.linkedin.com/in/nicolassepertino/)
 - [Tomas Tinto](https://www.linkedin.com/in/tomas-tinto-320a85236/)
@@ -32,7 +32,7 @@ You can access the site with the following link: [LookHouse](https://look-house.
 - Upload and edit posts.
 - View and filter posts from other users.
 - User profile page with editing options, posts, favourites and deleted posts lists.
-- Ranking sistem between users
+- Ranking sistem between users.
 - Admin panel to block or restore users, posts, and comments.
 - Link to validate the registration by mail.
 
@@ -40,7 +40,7 @@ You can access the site with the following link: [LookHouse](https://look-house.
 
 **Environment Variables**
 
-To run this project, you will need to add the following environment variables to your .env file
+To run this project, you will need to add the following environment variables to your .env file:
 
 **API**
 
@@ -73,6 +73,6 @@ To run this project, you will need to add the following environment variables to
 
 ## Run Locally
 
--Clone the project
--Install dependencies in both folders (API and CLIENT)
--Start both servers
+-Clone the project.
+-Install dependencies in both folders (API and CLIENT).
+-Start both servers.
