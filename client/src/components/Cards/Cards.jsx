@@ -4,9 +4,10 @@ import { setCurrentPage } from "../../redux/actions";
 import Loading from "../Loading/Loading";
 import Card from "./Card";
 import style from "./Cards.module.css";
-import { Box, List, ListItem } from "@chakra-ui/react";
+import { Box, List, ListItem, Image } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import imgSearch from "../../Image/18058225_888_search_houseasdad.png";
 
 export default function Cards() {
   const dispatch = useDispatch();
@@ -61,9 +62,6 @@ export default function Cards() {
   /* **************** RENDER CARDS **************** */
   return (
     <Box display={"flex"} justifyContent="center" marginTop="1rem" minHeight="100%" marginX={"10%"} paddingBottom={"60px"}>
-      {/* {loading ? (
-        <Loading /> */}
-      {Object.entries(houses).length > 0 ? (
         <Box>
           <List className={style.paginadoBtn}>
             <ListItem className={style.paginadoBtn} onClick={handlePrev}>
@@ -74,6 +72,7 @@ export default function Cards() {
               <FontAwesomeIcon icon={faChevronRight} fontSize="20px" />
             </ListItem>
           </List>
+       {currentHouse.length ? (
           <Box display={"flex"} flexWrap={"wrap"} justifyContent="space-evenly" m={"30px"}>
             {currentHouse?.map((r) => {
               if (r.approved) {
@@ -97,6 +96,11 @@ export default function Cards() {
               }
             })}
           </Box>
+           ) : (
+          <Box position="relative" zIndex={"2"} display={"flex"} justifyContent={"center"}>
+            <Image src={imgSearch} alt="imgSearch" w={"50%"} />
+           </Box>
+           )}
            <List className={style.paginadoBtn}>
             <ListItem className={style.paginadoBtn} onClick={handlePrev}>
               <FontAwesomeIcon icon={faChevronLeft} fontSize="20px" />
@@ -107,9 +111,6 @@ export default function Cards() {
             </ListItem>
           </List>
         </Box>
-      ) : (
-        <Loading />
-      )}
     </Box>
   );
 }
