@@ -698,3 +698,25 @@ export function restoreUser(id) {
     console.log(error);
   }
 }
+export function getUserImage2(id) {
+  return async function (dispatch) {
+    try {
+      const resp = await axios.get(`/user/getImage/${id}`);
+      return dispatch({
+        type: "GET_USER_IMAGE2",
+        payload: resp.data,
+      });
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data);
+      }
+    }
+  };
+}
+
+export function limpiar() {
+  return function(dispatch){
+    return dispatch({type:"LIMPIAR_VIEW_USER"})
+  }
+  
+}
