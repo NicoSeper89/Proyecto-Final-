@@ -36,7 +36,7 @@ export default function Rating({rating, ratingAmount}) {
           name='rating'
         />
         <Box as="span" ml="2" color="gray.600" fontSize="sm">
-          {ratingAmount} {ratingAmount > 1 && "s"}
+          {ratingAmount}
         </Box>
       </Box>
     </Box>
