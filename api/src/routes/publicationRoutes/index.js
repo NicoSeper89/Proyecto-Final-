@@ -22,8 +22,21 @@ const {
   /* getCity, */
   findAllReports,
   findReportById,
+  fakeProperties,
+  fakePub
 } = require("./controllers");
 const { where } = require("sequelize");
+
+router.get("/falseInfo", async(req,res,next)=>{
+  try{
+  await Property.bulkCreate(fakeProperties)
+  await Publication.bulkCreate(fakePub)
+  res.send("info successful")
+  }
+  catch(error){
+    next(error)
+  }
+})
 
 //para el home y para el searchbar get con query
 router.get("/allPublications", async (req, res, next) => {
