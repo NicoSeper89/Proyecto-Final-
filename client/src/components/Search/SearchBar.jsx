@@ -128,6 +128,7 @@ const SearchBar = () => {
     dispatch(getPublications(filters, sorting, city));
     dispatch(setCurrentPage(1));
     setCity("");
+    setSaveCity("")
     setClean(true);
     setTimeout(() => {
       setClean(false);
