@@ -63,7 +63,7 @@ export default function UsersAdmin() {
   useEffect(() => {
     dispatch(getPubs(infoUser[0].id));
     dispatch(getFavsUser(infoUser[0].id));
-    dispatch(getUserImage(infoUser[0].id));
+    dispatch(getUserImage2(infoUser[0].id));
     if (!infoUser) {
       const user = JSON.parse(window.localStorage.getItem("User"));
       dispatch(getInfoUser(user));
@@ -71,7 +71,7 @@ export default function UsersAdmin() {
     }
     return () => {
       dispatch(limpiar())
-      window.localStorage.removeItem("ViewUser")
+    //  window.localStorage.removeItem("ViewUser")
     }
   }, [dispatch]);
 
