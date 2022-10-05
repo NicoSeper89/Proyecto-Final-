@@ -141,6 +141,7 @@ export default function Card({
             h={"230px"}
             infiniteLoop
             borderBottom={"0.2px solid rgb(126, 125, 125)"}
+            showThumbs={false}
           >
             {img.map((s, i) => {
               return (

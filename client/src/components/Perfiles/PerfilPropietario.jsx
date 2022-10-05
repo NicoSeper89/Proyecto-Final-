@@ -104,16 +104,25 @@ export default function PerfilPropietario() {
             <Flex justifyContent="center" alignContent="center">
               <Rating rating={allUserInfo.rating} ratingAmount={allUserInfo.ratingAmount} />
             </Flex>
-            <Flex direction={"column"} alignItems="flex-start" p={6}>
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+            <Flex direction={"column"} alignItems="flex-start" p={5} w={"350px"}>
+              <Text
+                w={"100%"}
+                textAlign={"left"}
+                color={useColorModeValue("gray.700", "gray.400")}
+                px={3}
+              >
                 Ciudad: {infoUser[0].city}
               </Text>
-              <br />
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+              <Text
+                h={"85px"}
+                w={"100%"}
+                textAlign={"left"}
+                color={useColorModeValue("gray.700", "gray.400")}
+                px={3}
+              >
                 Descripción: {infoUser[0].description}
               </Text>
             </Flex>
-            <br />
           </Box>
         </Center>
         <Box

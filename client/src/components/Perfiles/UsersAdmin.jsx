@@ -97,22 +97,23 @@ export default function UsersAdmin() {
             p={6}
             textAlign={"center"}
           >
-            {!infoUser[0].admin &&
-            <Flex>
-              {infoUser[0].banned ? (
-                <Button onClick={() => handleRestore()}>
-                  {/* <FontAwesomeIcon icon="fa-regular fa-ban" /> */}
-                  <FontAwesomeIcon icon={faBan} color="black" fontSize="30px" p={"0"} />
-                </Button>
-              ) : (
-                <Button onClick={() => handleBlock()}>
-                  <FontAwesomeIcon icon={faBan} color="red" fontSize="30px" p={"0"} />
-                </Button>
-              )}
-            </Flex>}
+            {!infoUser[0].admin && (
+              <Flex>
+                {infoUser[0].banned ? (
+                  <Button onClick={() => handleRestore()}>
+                    {/* <FontAwesomeIcon icon="fa-regular fa-ban" /> */}
+                    <FontAwesomeIcon icon={faBan} color="black" fontSize="30px" p={"0"} />
+                  </Button>
+                ) : (
+                  <Button onClick={() => handleBlock()}>
+                    <FontAwesomeIcon icon={faBan} color="red" fontSize="30px" p={"0"} />
+                  </Button>
+                )}
+              </Flex>
+            )}
             <Avatar
               size={"2xl"}
-              src={imageUser ? imageUser : foto}
+              src={imageUser ? imageUser : null}
               alt={"Avatar Alt"}
               mb={4}
               pos={"relative"}
@@ -126,12 +127,23 @@ export default function UsersAdmin() {
             <Flex justifyContent="center" alignContent="center">
               <Rating rating={infoUser[0].rating} ratingAmount={infoUser[0].ratingAmount} />
             </Flex>
-            <Flex direction={"column"} alignItems="flex-start" p={6}>
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+            <Flex direction={"column"} alignItems="flex-start" p={5} w={"350px"}>
+              <Text
+                w={"100%"}
+                textAlign={"left"}
+                color={useColorModeValue("gray.700", "gray.400")}
+                px={3}
+              >
                 Ciudad: {infoUser[0].city}
               </Text>
               <br />
-              <Text textAlign={"center"} color={useColorModeValue("gray.700", "gray.400")} px={3}>
+              <Text
+                h={"85px"}
+                w={"100%"}
+                textAlign={"left"}
+                color={useColorModeValue("gray.700", "gray.400")}
+                px={3}
+              >
                 Descripción: {infoUser[0].description}
               </Text>
             </Flex>

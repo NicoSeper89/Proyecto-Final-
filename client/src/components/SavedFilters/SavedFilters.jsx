@@ -23,6 +23,7 @@ import {
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -32,7 +33,7 @@ import {
   saveSort,
   clearFilters,
   getUserInfo,
-  setCity
+  setCity,
 } from "../../redux/actions/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
@@ -44,6 +45,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
   const [savedValue, setSavedValue] = useState([]);
   const [storedValues, setStoredValues] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   useEffect(() => {
     const loginUser = JSON.parse(window.localStorage.getItem("User"));
@@ -57,7 +59,12 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
 
   const handleLocalStorage = (keyValue) => {
     if (user.length === 0) {
-      alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
+      toast({
+        title: "Debe inciar session para poder guardar un filtro de busqueda!!!",
+        status: "error",
+        isClosable: true,
+      });
+      // alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
       setValue("");
     } else if (keyValue) {
       window.localStorage.setItem(
@@ -81,7 +88,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
       let newFilter = JSON.parse(filter);
       dispatch(saveFilter(newFilter[0]));
       dispatch(saveSort(newFilter[1]));
-      dispatch(setCity(newFilter[2]))
+      dispatch(setCity(newFilter[2]));
       dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
       dispatch(setCurrentPage(1));
       console.log(newFilter[2]);

@@ -9,7 +9,7 @@ import logoMySql from "../../Image/icons8-logo-de-mysql-50.png";
 
 export default function About() {
   return (
-    <Flex direction={"column"} backgroundColor={"#EDEDED"}>
+    <Flex direction={"column"} backgroundColor={"#EDEDED"} w={"100%"} h={"100%"}>
       <NavBarForms />
       <Flex
         direction={"row"}

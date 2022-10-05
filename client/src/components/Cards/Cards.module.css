@@ -12,7 +12,6 @@
   flex-wrap: wrap;
   text-transform: uppercase;
   gap: 0.5rem;
-  z-index: 90;
 }
 
 .paginadoBtn li {

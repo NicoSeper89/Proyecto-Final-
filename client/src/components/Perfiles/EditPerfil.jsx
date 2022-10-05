@@ -18,7 +18,7 @@ export default function EditPerfil(props) {
     description: "",
   });
   const infoUser2 = JSON.parse(window.localStorage.getItem("User"));
-  
+
   useEffect(() => {
     infoUser && dispatch(getUserInfo(infoUser[0].id));
     if (!infoUser) {
@@ -119,6 +119,7 @@ export default function EditPerfil(props) {
               Descripción:{" "}
             </FormLabel>
             <Input
+              maxLength={100}
               type="text"
               name={"description"}
               value={input.description}
