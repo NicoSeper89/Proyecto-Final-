@@ -74,7 +74,7 @@ const SearchBar = () => {
     setSaveCity(city)
     dispatch(setCurrentPage(1));
     dispatch(getPublications(filters, sorting, city));
-    setCity("");
+    //setCity("");
 
     // toast({
     //   title: "Busqueda inexistente.",
