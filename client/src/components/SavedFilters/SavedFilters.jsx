@@ -72,16 +72,13 @@ export default function SavedFilters({ filterToSave, savedSort, savedCity, setSa
 
   //AGREGAR LLAVE AL FINAL
   const handleLocalStorage = (keyValue) => {
-    if (!keyValue) return;
+    if (!keyValue || error) return;
     if (!loginUser) {
-      // alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
-      // if (user.length === 0) {
       toast({
         title: "Debe inciar session para poder guardar un filtro de busqueda!!!",
         status: "error",
         isClosable: true,
       });
-      // alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
       setValue("");
     } else {
       window.localStorage.setItem(
