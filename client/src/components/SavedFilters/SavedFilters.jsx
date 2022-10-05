@@ -186,6 +186,8 @@ export default function SavedFilters({ filterToSave, savedSort, savedCity, setSa
                   onMouseOut={handleMouseOut}
                   colorScheme="gray"
                   mr={3}
+                  fontWeight={"extrabold"}
+                  fontSize={"x-large"}
                 >
                   ?
                 </Button>
