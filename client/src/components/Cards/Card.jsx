@@ -66,6 +66,11 @@ export default function Card({
       // }
       /* window.location.reload() */
     }
+    toast({
+      title: "Debes iniciar sesión para guardar favoritos.",
+      status: "error",
+      isClosable: true,
+    });
   };
   const handleClickRemoveFav = async () => {
     await axios.put(`/user/removeFav?userId=${infoUser[1].userId}&pubId=${id}`, {});
