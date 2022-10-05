@@ -90,7 +90,7 @@ export default function Detail(props, id) {
   const [alertAdminDelete, setAlertAdminDelete] = useState([false, false]);
   const commentState = useSelector((state) => state.comments);
   const [comentarios, setComments] = useState("");
-  const [borradoComent, setBorrado] = useState(false);
+//  const [borradoComent, setBorrado] = useState(false);
   const [alertComent, setAlertCommet] = useState([false, false]);
   const [requestRestoration, setRequestRestoration] = useState(false);
   const totalUsers = useSelector((state) => state.totalUsers);
@@ -108,7 +108,7 @@ export default function Detail(props, id) {
     return () => {
       dispatch(clean());
     };
-  }, [dispatch, props.match.params.id, borradoComent]);
+  }, [dispatch, props.match.params.id/* , borradoComent */]);
 
 
   function handleDelete() {
@@ -143,8 +143,9 @@ export default function Detail(props, id) {
     setComments(e.target.value);
   };
 
-  function deleteComments(id) {
-    dispatch(deleteComment(id));
+ async function deleteComments(id) {
+    /* dispatch(deleteComment(id)); */
+    await axios.delete(`/publication/comment/${id}`);
     // setAlertCommet([true, true]);
     // window.scroll({
     //   top: 0,
@@ -156,7 +157,8 @@ export default function Detail(props, id) {
       status: "success",
       isClosable: true,
     });
-    setBorrado(!borradoComent);
+    dispatch(getComment(props.match.params.id));
+    /* setBorrado(!borradoComent); */
   }
 
   const onSubmitComent = async (e) => {
