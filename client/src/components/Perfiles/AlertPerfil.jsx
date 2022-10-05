@@ -46,10 +46,6 @@ const AlertPerfil = ({ alertSubmit }) => {
       </AlertTitle> */}
       <AlertDescription maxWidth="sm">Perfil Actualizado!</AlertDescription>
       <Flex direction={"row"} justifyContent="center">
-        <Button m={"1rem"} onClick={onUser}>
-          Aceptar
-        </Button>
-
         <Button m={"1rem"} onClick={onDown}>
           Volver al inicio
         </Button>
