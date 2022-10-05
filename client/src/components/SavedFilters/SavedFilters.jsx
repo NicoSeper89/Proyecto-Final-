@@ -37,13 +37,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
-function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
+function SavedFilters({ filterToSave, savedSort, savedCity, setSavedCity ,clean }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.allUserInfo);
   const [value, setValue] = useState("");
   const [savedValue, setSavedValue] = useState([]);
   const [storedValues, setStoredValues] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const loginUser = JSON.parse(window.localStorage.getItem("User"));
 
   useEffect(() => {
     const loginUser = JSON.parse(window.localStorage.getItem("User"));
@@ -56,10 +57,11 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
   }, [dispatch, savedValue]);
 
   const handleLocalStorage = (keyValue) => {
-    if (user.length === 0) {
+     if(!keyValue) return 
+     if (!loginUser) {
       alert("Debe inciar session para poder guardar un filtro de busqueda!!!");
       setValue("");
-    } else if (keyValue) {
+     } else{
       window.localStorage.setItem(
         keyValue + " " + user.loginInfo.mail,
         JSON.stringify([filterToSave, savedSort, savedCity])
@@ -72,8 +74,10 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
     setValue(event.target.value);
   };
   const handleValue = (event) => {
+    event.preventDefault()
     if (event.target.value === "") {
       dispatch(clearFilters());
+      setSavedCity("")
       dispatch(getPublications(filterToSave, savedSort, savedCity));
       setCurrentPage(1);
     } else if (event.target.value) {
@@ -84,7 +88,7 @@ function SavedFilters({ filterToSave, savedSort, savedCity, clean }) {
       dispatch(setCity(newFilter[2]))
       dispatch(getPublications(filterToSave, savedSort, newFilter[2]));
       dispatch(setCurrentPage(1));
-
+      setSavedCity("")
     }
   };
 
