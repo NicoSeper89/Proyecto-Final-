@@ -1,4 +1,4 @@
-# LOOKHOUSE APP
+# LOOKHOUSE
 ## Final Project - Henry - ft28a - Group 4
 
 ![LookhousePreview](https://user-images.githubusercontent.com/91290739/194177651-51420a99-d437-4207-8535-db34e9a2545e.PNG)
@@ -16,7 +16,7 @@ You can access the site with the following link: [LookHouse](https://look-house.
 - [José Garcia](https://www.linkedin.com/in/jose-garcia-025766241/)
 - [Nicolás Sepertino](https://www.linkedin.com/in/nicolassepertino/)
 - [Tomas Tinto](https://www.linkedin.com/in/tomas-tinto-320a85236/)
-- [Rodrigo Jesús Bastidas]()
+- [Rodrigo Jesús Bastidas](https://www.linkedin.com/in/rodrigo-jes%C3%BAs-bastidas-bastidas-61a89762/)
 
 ## Tech Stack
 **Client**: ReactJS, Redux Toolkit, Auth0 , Chakra , Pure CSS, Cloudinary
