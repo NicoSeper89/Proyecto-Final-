@@ -22,7 +22,7 @@ const user =  JSON.parse(dataUser)
   
    const acces = async () => {
     if(password === "12345"){
-    await axios.put(`https://pf-lookhouse.herokuapp.com/admin/acces?id=${user[0].id}`)
+    await axios.put(`https://proyecto-final-production-0014.up.railway.app/admin/acces?id=${user[0].id}`)
     setPassword("")
 
     window.localStorage.removeItem("User")
